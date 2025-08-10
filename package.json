@@ -1,0 +1,34 @@
+{
+  "name": "hockey-club-thaur",
+  "version": "2.0.0",
+  "description": "Modern website for Hockey Club Thaur - Eishockey mit Herz",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "build": "echo 'Build process for production'",
+    "lint": "echo 'Linting CSS and JS files'",
+    "optimize": "echo 'Optimize images and assets'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dugi42/hct.github.io"
+  },
+  "keywords": [
+    "hockey",
+    "eishockey",
+    "thaur",
+    "tirol",
+    "austria",
+    "sports",
+    "website"
+  ],
+  "author": "Hockey Club Thaur",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hockey Club Thaur - Eishockey mit Herz in Tirol. Traditioneller Eishockeyverein mit starker lokaler Verankerung.">
+    <meta name="keywords" content="Hockey, Eishockey, Thaur, Tirol, Verein, Sport, Ice Hockey">
+    <meta name="author" content="Hockey Club Thaur">
+    <meta name="theme-color" content="#d90429">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Hockey Club Thaur - Eishockey mit Herz">
+    <meta property="og:description" content="Traditioneller Eishockeyverein aus Thaur, Tirol mit starker lokaler Verankerung.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hct.github.io">
+    <meta property="og:image" content="./images/logo.png">
+    
+    <title>Hockey Club Thaur - Eishockey mit Herz</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="hockey-puck"></div>
+    </div>
+
+    <!-- Animated Background Particles -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation Indicator -->
+    <nav class="nav-indicator" aria-label="Section Navigation">
+        <div class="nav-dot active" data-section="0" aria-label="Home"></div>
+        <div class="nav-dot" data-section="1" aria-label="About"></div>
+        <div class="nav-dot" data-section="2" aria-label="Schedule"></div>
+        <div class="nav-dot" data-section="3" aria-label="Team"></div>
+        <div class="nav-dot" data-section="4" aria-label="Gallery"></div>
+        <div class="nav-dot" data-section="5" aria-label="Sponsors"></div>
+        <div class="nav-dot" data-section="6" aria-label="Social"></div>
+        <div class="nav-dot" data-section="7" aria-label="Contact"></div>
+    </nav>
+
+    <!-- Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v18.0" nonce="XyZ123"></script>
+
+    <!-- Main container that holds all sections -->
+    <main id="main-container">
+        <!-- Home Section -->
+        <section id="home" class="fullpage-section active">
+            <div class="logo-container">
+                <img src="./images/logo.png" alt="Hockey Club Thaur Logo" width="280" height="280">
+            </div>
+            <h1>Hockey Club Thaur</h1>
+            <p class="subtitle">Eishockey mit Herz • Tradition seit Jahren • Thaur, Tirol</p>
+            <div>
+                <a href="#about" class="cta-button">
+                    <i class="fas fa-users"></i>
+                    Über uns erfahren
+                </a>
+                <a href="#contact" class="cta-button">
+                    <i class="fas fa-hockey-puck"></i>
+                    Mitmachen
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="fullpage-section">
+            <div class="container">
+                <h2><i class="fas fa-heart"></i> Über den Verein</h2>
+                <p>Der Hockey Club Thaur ist ein Eishockeyverein mit Herz und starker lokaler Verankerung in Thaur, Tirol. Wir sind eine Gemeinschaft von Eishockey-Begeisterten aller Altersklassen und fördern den sportlichen Zusammenhalt in der Region.</p>
+                <p>Als aktiver Teil der Dorfgemeinschaft nehmen wir regelmäßig an lokalen Veranstaltungen teil. Dabei stehen für uns der Spaß am Spiel und der familiäre Charakter des Vereins im Vordergrund.</p>
+                <p>Unser Verein bietet sowohl erfahrenen Spielern als auch Neueinsteigern die Möglichkeit, das faszinierende Spiel des Eishockey zu erleben. Wir legen großen Wert auf Teamgeist, Fairplay und die Förderung des Nachwuchses.</p>
+                <a href="#team" class="cta-button">
+                    <i class="fas fa-users"></i>
+                    Unser Team kennenlernen
+                </a>
+            </div>
+        </section>
+        
+        <!-- Schedule Section -->
+        <section id="schedule" class="fullpage-section">
+            <div class="container">
+                <h2><i class="fas fa-calendar-alt"></i> Spielplan</h2>
+                <div class="schedule-container">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-clock"></i> Datum & Zeit</th>
+                                <th><i class="fas fa-hockey-puck"></i> Begegnung</th>
+                                <th><i class="fas fa-map-marker-alt"></i> Ort</th>
+                                <th><i class="fas fa-info-circle"></i> Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12.10.2025, 20:00</td>
+                                <td>HC Thaur vs. Ice Tigers</td>
+                                <td>Eisarena Thaur</td>
+                                <td><span style="color: var(--primary-color); font-weight: bold;">Heimspiel</span></td>
+                            </tr>
+                            <tr>
+                                <td>19.10.2025, 18:30</td>
+                                <td>Gletscherhaie vs. HC Thaur</td>
+                                <td>Auswärtshalle</td>
+                                <td><span style="color: var(--dark-color); font-weight: bold;">Auswärts</span></td>
+                            </tr>
+                            <tr>
+                                <td>26.10.2025, 20:00</td>
+                                <td>HC Thaur vs. Adler Kitzbühel</td>
+                                <td>Eisarena Thaur</td>
+                                <td><span style="color: var(--primary-color); font-weight: bold;">Heimspiel</span></td>
+                            </tr>
+                            <tr>
+                                <td>02.11.2025, 20:00</td>
+                                <td>HC Thaur vs. Wattens Penguins</td>
+                                <td>Eisarena Thaur</td>
+                                <td><span style="color: var(--primary-color); font-weight: bold;">Heimspiel</span></td>
+                            </tr>
+                            <tr>
+                                <td>09.11.2025, 19:00</td>
+                                <td>Innsbruck Sharks vs. HC Thaur</td>
+                                <td>Olympiahalle</td>
+                                <td><span style="color: var(--dark-color); font-weight: bold;">Auswärts</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a href="#contact" class="cta-button">
+                    <i class="fas fa-ticket-alt"></i>
+                    Tickets & Info
+                </a>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="fullpage-section">
+            <div class="container">
+                <h2><i class="fas fa-users"></i> Unser Team</h2>
+                <div class="team-grid">
+                    <div class="player-card">
+                        <div class="photo">#1</div>
+                        <h3>Max Mustermann</h3>
+                        <p>Torwart</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#7</div>
+                        <h3>Peter Plank</h3>
+                        <p>Verteidiger</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#10</div>
+                        <h3>Stefan Schmidt</h3>
+                        <p>Stürmer</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#23</div>
+                        <h3>Lukas Lang</h3>
+                        <p>Verteidiger</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#88</div>
+                        <h3>Thomas Tiroler</h3>
+                        <p>Stürmer</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#91</div>
+                        <h3>Mario Föger</h3>
+                        <p>Kapitän</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#15</div>
+                        <h3>Andreas Auer</h3>
+                        <p>Stürmer</p>
+                    </div>
+                    <div class="player-card">
+                        <div class="photo">#42</div>
+                        <h3>David Dornauer</h3>
+                        <p>Verteidiger</p>
+                    </div>
+                </div>
+                <a href="#contact" class="cta-button">
+                    <i class="fas fa-plus"></i>
+                    Team beitreten
+                </a>
+            </div>
+        </section>
+
+        <!-- Magazine/Gallery Section -->
+        <section id="magazine" class="fullpage-section">
+            <div class="magazine-container">
+                <div class="magazine-header">
+                    <h2><i class="fas fa-camera"></i> Hockey Impressionen</h2>
+                    <p>Eine visuelle Reise durch die Welt des Eishockey</p>
+                </div>
+                
+                <div class="magazine-scroll-container">
+                    <div class="page-counter">
+                        <span id="currentPage">1</span> / <span id="totalPages">7</span>
+                    </div>
+                    <div class="auto-scroll-progress" id="autoProgress"></div>
+                    
+                    <div class="magazine-pages" id="magazinePages">
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Hockey Action" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Intensiver Kampf um den Puck</div>
+                                <div class="magazine-subtitle">Die Leidenschaft des Eishockey eingefangen in einem Moment</div>
+                            </div>
+                        </div>
+                        
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team Strategy" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Teamwork und Strategie</div>
+                                <div class="magazine-subtitle">Perfekte Koordination auf dem Eis</div>
+                            </div>
+                        </div>
+                        
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1544737151681-6e4b99de2430?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Goal Celebration" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Der Moment des Triumphs</div>
+                                <div class="magazine-subtitle">Wenn harte Arbeit belohnt wird</div>
+                            </div>
+                        </div>
+                        
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1515703407324-5f753afd8be8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Ice Rink" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Die Arena - Unser Zuhause</div>
+                                <div class="magazine-subtitle">Wo Träume auf Eis geboren werden</div>
+                            </div>
+                        </div>
+                        
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1578766545880-582640ddfea3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Hockey Equipment" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Die Werkzeuge des Spiels</div>
+                                <div class="magazine-subtitle">Präzision und Kontrolle in jeder Bewegung</div>
+                            </div>
+                        </div>
+                        
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Hockey Fans" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Unsere treuen Fans</div>
+                                <div class="magazine-subtitle">Die wahre Kraft hinter unserem Team</div>
+                            </div>
+                        </div>
+                        
+                        <div class="magazine-page">
+                            <img src="https://images.unsplash.com/photo-1607969748105-3b6d94618b00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2127&q=80" alt="Youth Hockey" loading="lazy">
+                            <div class="magazine-overlay">
+                                <div class="magazine-title">Die Zukunft des Hockey</div>
+                                <div class="magazine-subtitle">Junge Talente auf dem Weg zum Erfolg</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="magazine-nav">
+                    <button class="magazine-btn" id="prevBtn" aria-label="Previous image">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="magazine-indicators" id="magazineIndicators" role="tablist" aria-label="Image indicators">
+                        <!-- Dots will be generated by JavaScript -->
+                    </div>
+                    
+                    <button class="magazine-btn" id="nextBtn" aria-label="Next image">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="cta-button" id="autoPlayBtn">
+                        <i class="fas fa-play"></i>
+                        Auto-Scroll starten
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sponsors Section -->
+        <section id="sponsors" class="fullpage-section">
+            <div class="container">
+                <h2><i class="fas fa-handshake"></i> Unsere Partner</h2>
+                <div class="sponsors-container">
+                    <div class="sponsors-grid">
+                        <div class="sponsor-logo">
+                            <img src="https://via.placeholder.com/200x100/2b2d42/ffffff?text=Thaur+Gemeinde" alt="Gemeinde Thaur" loading="lazy">
+                        </div>
+                        <div class="sponsor-logo">
+                            <img src="https://via.placeholder.com/200x100/d90429/ffffff?text=Sport+Shop+Tirol" alt="Sport Shop Tirol" loading="lazy">
+                        </div>
+                        <div class="sponsor-logo">
+                            <img src="https://via.placeholder.com/200x100/219ebc/ffffff?text=Eishalle+Thaur" alt="Eishalle Thaur" loading="lazy">
+                        </div>
+                        <div class="sponsor-logo">
+                            <img src="https://via.placeholder.com/200x100/8ecae6/333333?text=Gasthaus+Alpenblick" alt="Gasthaus Alpenblick" loading="lazy">
+                        </div>
+                        <div class="sponsor-logo">
+                            <img src="https://via.placeholder.com/200x100/2b2d42/ffffff?text=Baumeister+GmbH" alt="Baumeister GmbH" loading="lazy">
+                        </div>
+                        <div class="sponsor-logo">
+                            <img src="https://via.placeholder.com/200x100/d90429/ffffff?text=Auto+Center+Hall" alt="Auto Center Hall" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <a href="#contact" class="cta-button">
+                    <i class="fas fa-briefcase"></i>
+                    Partner werden
+                </a>
+            </div>
+        </section>
+
+        <!-- Social Feed Section -->
+        <section id="social-feed" class="fullpage-section">
+            <div class="container">
+                <h2><i class="fab fa-facebook"></i> Aktuelles</h2>
+                <div class="social-container">
+                    <div class="fb-page" 
+                         data-href="https://www.facebook.com/HockeyClubThaur" 
+                         data-tabs="timeline" 
+                         data-width="500" 
+                         data-height="600" 
+                         data-small-header="false" 
+                         data-adapt-container-width="true" 
+                         data-hide-cover="false" 
+                         data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/HockeyClubThaur" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/HockeyClubThaur">Hockey Club Thaur auf Facebook</a>
+                        </blockquote>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <a href="https://www.facebook.com/HockeyClubThaur" target="_blank" class="cta-button" rel="noopener noreferrer">
+                        <i class="fab fa-facebook"></i>
+                        Auf Facebook folgen
+                    </a>
+                    <a href="https://www.instagram.com/hockeyclub_thaur" target="_blank" class="cta-button" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                        Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="fullpage-section">
+            <div class="container">
+                <h2><i class="fas fa-envelope"></i> Kontakt</h2>
+                <p>Haben Sie Fragen oder möchten Sie Mitglied werden? Wir freuen uns auf Ihre Nachricht!</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Vereinsleitung</h3>
+                            <p><strong>Obmann:</strong> Mario Föger</p>
+                            <p><strong>Telefon:</strong> <a href="tel:+436703543300">+43 670 3543300</a></p>
+                            <p><strong>E-Mail:</strong> <a href="mailto:hockey@hc-thaur.at">hockey@hc-thaur.at</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Vereinsadresse</h3>
+                            <p>Stieranger 2</p>
+                            <p>6065 Thaur</p>
+                            <p>Tirol, Österreich</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-skating"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Training & Spiele</h3>
+                            <p><strong>Heimhalle:</strong> Eisarena Thaur</p>
+                            <p><strong>Training:</strong> Dienstag & Donnerstag, 20:00</p>
+                            <p><strong>Nachwuchs:</strong> Mittwoch, 18:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Social Media</h3>
+                            <p><a href="https://www.facebook.com/HockeyClubThaur" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+                            <p><a href="https://www.instagram.com/hockeyclub_thaur" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+                            <p><a href="mailto:hockey@hc-thaur.at">Newsletter</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem;">
+                    <a href="mailto:hockey@hc-thaur.at?subject=Interesse am Hockey Club Thaur" class="cta-button">
+                        <i class="fas fa-envelope"></i>
+                        E-Mail schreiben
+                    </a>
+                    <a href="tel:+436703543300" class="cta-button">
+                        <i class="fas fa-phone"></i>
+                        Anrufen
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Hockey Club Thaur • Eishockey mit Herz • <a href="mailto:hockey@hc-thaur.at" style="color: var(--accent-color);">hockey@hc-thaur.at</a></p>
+    </footer>
+
+    <!-- Main JavaScript -->
+    <script src="./js/main.js"></script>
+</body>
+</html>
