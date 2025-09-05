@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HC Thaur "Die Ritter" - Offizielle Homepage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background for contrast */
+        }
+        /* Custom Club Colors */
+        .hc-red { color: #c8102e; }
+        .bg-hc-red { background-color: #c8102e; }
+        .border-hc-red { border-color: #c8102e; }
+        .hover\:bg-hc-red-dark:hover { background-color: #a20d25; }
+
+        /* Smooth scroll for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Sponsor scrollbar styling */
+        .sponsor-carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+        .sponsor-carousel::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        .sponsor-carousel::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .sponsor-carousel::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header & Navigation -->
+    <header class="bg-black text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                 <!-- The provided logo image is used here. Ensure IMG_8486.jpeg is in the same folder. -->
+                 <img src="IMG_8486.jpeg" alt="HC Thaur Logo" class="h-12 w-12 rounded-full">
+                <span class="text-xl font-bold tracking-wider">HC THAUR</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-6">
+                <div class="relative group">
+                    <button class="hover:text-hc-red transition duration-300">Teams</button>
+                    <div class="absolute left-0 mt-2 w-48 bg-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible">
+                        <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-800">Kampfmannschaft</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-800">Nachwuchs</a>
+                    </div>
+                </div>
+                <a href="#game-center" class="hover:text-hc-red transition duration-300">Spielplan</a>
+                <a href="#news" class="hover:text-hc-red transition duration-300">News</a>
+                <a href="#" class="hover:text-hc-red transition duration-300">Der Verein</a>
+                <a href="#sponsors" class="hover:text-hc-red transition duration-300">Sponsoren</a>
+                <a href="#contact" class="hover:text-hc-red transition duration-300">Kontakt</a>
+            </nav>
+
+             <!-- Social Media Icons (Desktop) -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://www.facebook.com/HCDieRitterThaur/" target="_blank" aria-label="Facebook" class="text-gray-400 hover:text-hc-red transition duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/hc_thaur_die_ritter/" target="_blank" aria-label="Instagram" class="text-gray-400 hover:text-hc-red transition duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95 absolute w-full">
+            <a href="#" class="block text-center py-3 text-white hover:bg-gray-800">Teams</a>
+            <a href="#game-center" class="block text-center py-3 text-white hover:bg-gray-800">Spielplan</a>
+            <a href="#news" class="block text-center py-3 text-white hover:bg-gray-800">News</a>
+            <a href="#" class="block text-center py-3 text-white hover:bg-gray-800">Der Verein</a>
+            <a href="#sponsors" class="block text-center py-3 text-white hover:bg-gray-800">Sponsoren</a>
+            <a href="#contact" class="block text-center py-3 text-white hover:bg-gray-800">Kontakt</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-[60vh] md:h-[80vh] bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/46797/ice-hockey-puck-players-play-46797.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+                <h1 class="text-4xl md:text-7xl font-black uppercase tracking-wider">Hockey aus <span class="hc-red">Leidenschaft</span></h1>
+                <p class="mt-4 text-lg md:text-2xl font-light max-w-3xl">Tiroler Landesliga Eishockey im Herzen von Tirol.</p>
+                <a href="#game-center" class="mt-8 px-8 py-4 bg-hc-red text-white font-bold uppercase rounded-lg shadow-lg hover:bg-hc-red-dark transition duration-300 transform hover:scale-105">
+                    Zum nächsten Heimspiel
+                </a>
+            </div>
+        </section>
+
+        <!-- Game Center Section -->
+        <section id="game-center" class="py-16 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="bg-gray-50 border-2 border-gray-200 rounded-lg shadow-xl overflow-hidden">
+                    <!-- Tabs -->
+                    <div class="flex border-b-2 border-gray-200">
+                        <button id="tab-next" class="flex-1 py-4 px-2 text-center font-semibold text-gray-800 bg-white border-b-4 border-hc-red">Nächstes Spiel</button>
+                        <button id="tab-last" class="flex-1 py-4 px-2 text-center font-semibold text-gray-500 bg-gray-50">Letztes Ergebnis</button>
+                    </div>
+
+                    <!-- Tab Content: Next Game -->
+                    <div id="content-next" class="p-6 md:p-10">
+                        <div class="flex flex-col md:flex-row justify-around items-center text-center">
+                            <!-- Home Team -->
+                            <div class="flex flex-col items-center mb-6 md:mb-0">
+                                <img src="https://placehold.co/120x120/000000/d4af37?text=HCT" alt="HC Thaur Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
+                                <h3 class="mt-4 text-2xl font-bold">HC Thaur</h3>
+                            </div>
+
+                            <!-- Game Info -->
+                            <div class="mx-8 order-first md:order-none mb-6 md:mb-0">
+                                <p class="text-sm uppercase text-gray-500">Tiroler Landesliga</p>
+                                <p class="text-5xl font-black my-2">VS</p>
+                                <p class="font-semibold text-lg">Samstag, 12. Okt 2025</p>
+                                <p class="text-hc-red text-2xl font-bold">19:30 Uhr</p>
+                                <p class="text-gray-600">Eisarena Wattens</p>
+                            </div>
+
+                            <!-- Away Team -->
+                            <div class="flex flex-col items-center">
+                                <img src="https://placehold.co/120x120/1a202c/ffffff?text=Gegner" alt="Opponent Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
+                                <h3 class="mt-4 text-2xl font-bold">EC Zirl</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content: Last Result -->
+                    <div id="content-last" class="p-6 md:p-10 hidden">
+                         <div class="flex flex-col md:flex-row justify-around items-center text-center">
+                            <!-- Home Team -->
+                            <div class="flex flex-col items-center mb-6 md:mb-0">
+                                <img src="https://placehold.co/120x120/000000/d4af37?text=HCT" alt="HC Thaur Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
+                                <h3 class="mt-4 text-2xl font-bold">HC Thaur</h3>
+                            </div>
+
+                            <!-- Score -->
+                            <div class="mx-8 order-first md:order-none mb-6 md:mb-0">
+                                <p class="text-sm uppercase text-gray-500">Endergebnis</p>
+                                <p class="text-6xl font-black my-2">6 : 2</p>
+                                <p class="font-semibold text-lg">Samstag, 05. Okt 2025</p>
+                                <a href="#" class="mt-4 inline-block px-4 py-2 bg-gray-800 text-white text-sm font-bold uppercase rounded-lg hover:bg-black transition duration-300">
+                                    Zum Spielbericht
+                                </a>
+                            </div>
+
+                            <!-- Away Team -->
+                            <div class="flex flex-col items-center">
+                                <img src="https://placehold.co/120x120/1a202c/ffffff?text=Gegner" alt="Opponent Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
+                                <h3 class="mt-4 text-2xl font-bold">EHC Weerberg</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Latest News Section -->
+        <section id="news" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Aktuelle <span class="hc-red">News</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- News Card 1 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.pexels.com/photos/163452/hockey-ice-hockey-puck-player-163452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Spielbericht" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Wichtiger Sieg im Derby</h3>
+                            <p class="text-gray-600 mb-4">Die Ritter konnten sich in einem spannenden Spiel gegen den Lokalrivalen durchsetzen.</p>
+                            <a href="#" class="font-semibold text-hc-red hover:text-hc-red-dark transition">Weiterlesen &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- News Card 2 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.pexels.com/photos/2744193/pexels-photo-2744193.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Spieler Interview" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Interview mit dem Kapitän</h3>
+                            <p class="text-gray-600 mb-4">Unser Kapitän spricht über die Ziele für die kommende Saison und den Teamgeist.</p>
+                            <a href="#" class="font-semibold text-hc-red hover:text-hc-red-dark transition">Weiterlesen &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- News Card 3 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.pexels.com/photos/8749339/pexels-photo-8749339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Nachwuchs" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Nachwuchsturnier in Thaur</h3>
+                            <p class="text-gray-600 mb-4">Erfolgreiches Wochenende für unsere jungen Ritter beim Heimturnier.</p>
+                            <a href="#" class="font-semibold text-hc-red hover:text-hc-red-dark transition">Weiterlesen &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                     <a href="#" class="px-8 py-3 bg-gray-800 text-white font-bold uppercase rounded-lg shadow-lg hover:bg-black transition duration-300">
+                        Alle News anzeigen
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Youth Spotlight Section -->
+        <section class="bg-white">
+            <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center">
+                <div class="order-2 md:order-1 p-8 md:p-16">
+                     <h2 class="text-3xl md:text-4xl font-bold mb-4">Die <span class="hc-red">Zukunft</span> des Vereins</h2>
+                     <p class="text-gray-700 leading-relaxed mb-6">
+                         Unser Nachwuchs ist das Herzstück des HC Thaur. Mit erfahrenen Trainern und einem starken Fokus auf Teamgeist und sportliche Fairness fördern wir die Talente von morgen. Wir bieten Kindern und Jugendlichen eine professionelle Umgebung, um ihre Leidenschaft für Eishockey zu entdecken und zu entwickeln.
+                     </p>
+                     <a href="#" class="px-8 py-3 bg-hc-red text-white font-bold uppercase rounded-lg shadow-lg hover:bg-hc-red-dark transition duration-300">
+                        Mehr zum Nachwuchs
+                    </a>
+                </div>
+                <div class="order-1 md:order-2 h-64 md:h-full min-h-[300px] bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/7167104/pexels-photo-7167104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sponsors Section -->
+        <section id="sponsors" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Unsere <span class="hc-red">Partner</span></h2>
+                <div class="sponsor-carousel flex items-center space-x-12 overflow-x-auto pb-4">
+                    <div class="flex-shrink-0">
+                        <img src="https://placehold.co/200x100/ffffff/000000?text=Gemeinde+Thaur" alt="Gemeinde Thaur" class="h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+                    </div>
+                    <div class="flex-shrink-0">
+                        <img src="https://placehold.co/200x100/ffffff/000000?text=Raiffeisen" alt="Raiffeisen Bank" class="h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+                    </div>
+                    <div class="flex-shrink-0">
+                         <img src="https://placehold.co/200x100/ffffff/000000?text=Tischlerei+Mayr" alt="Tischlerei Mayr" class="h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+                    </div>
+                    <div class="flex-shrink-0">
+                         <img src="https://placehold.co/200x100/ffffff/000000?text=Gasthof+Purner" alt="Gasthof Purner" class="h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+                    </div>
+                    <div class="flex-shrink-0">
+                         <img src="https://placehold.co/200x100/ffffff/000000?text=Sport+2000" alt="Sport 2000" class="h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+                    </div>
+                    <div class="flex-shrink-0">
+                         <img src="https://placehold.co/200x100/ffffff/000000?text=Bäckerei+Müssigang" alt="Bäckerei Müssigang" class="h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1: HC Thaur -->
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">HC Thaur "Die Ritter"</h4>
+                    <p class="text-sm">Eishockey aus Leidenschaft seit 1991. Wir stehen für Kampfgeist, Teamwork und die Förderung junger Talente in der Region.</p>
+                </div>
+                <!-- Column 2: Navigation -->
+                 <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-hc-red">Teams</a></li>
+                        <li><a href="#game-center" class="hover:text-hc-red">Spielplan</a></li>
+                        <li><a href="#news" class="hover:text-hc-red">News</a></li>
+                        <li><a href="#sponsors" class="hover:text-hc-red">Sponsoren</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3: Kontakt & Standort -->
+                 <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Kontakt & Standort</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="mailto:office@hc-thaur.at" class="hover:text-hc-red">office@hc-thaur.at</a></li>
+                        <li>Heimarena: Eisarena Wattens</li>
+                        <li>Egger-Lienz-Straße 130, 6112 Wattens</li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Eisarena+Wattens" target="_blank" class="hover:text-hc-red">Auf Google Maps anzeigen</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4: Social Media -->
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Folge uns</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/HCDieRitterThaur/" target="_blank" aria-label="Facebook" class="text-gray-400 hover:text-hc-red transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/hc_thaur_die_ritter/" target="_blank" aria-label="Instagram" class="text-gray-400 hover:text-hc-red transition duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Bar -->
+            <div class="mt-8 border-t border-gray-800">
+                <div class="container mx-auto px-6 py-4 text-sm text-center md:flex md:justify-between">
+                    <p>&copy; 2025 HC Thaur. Alle Rechte vorbehalten.</p>
+                    <div class="mt-4 md:mt-0">
+                        <a href="#" class="hover:text-hc-red mx-2">Impressum</a>
+                        <a href="#" class="hover:text-hc-red mx-2">Datenschutz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Game Center Tabs
+        const tabNext = document.getElementById('tab-next');
+        const tabLast = document.getElementById('tab-last');
+        const contentNext = document.getElementById('content-next');
+        const contentLast = document.getElementById('content-last');
+
+        tabNext.addEventListener('click', () => {
+            // Show next game content
+            contentNext.classList.remove('hidden');
+            contentLast.classList.add('hidden');
+            // Style active tab
+            tabNext.classList.add('bg-white', 'border-hc-gold', 'text-gray-800');
+            tabNext.classList.remove('bg-gray-50', 'text-gray-500');
+            // Style inactive tab
+            tabLast.classList.add('bg-gray-50', 'text-gray-500');
+            tabLast.classList.remove('bg-white', 'border-hc-gold', 'text-gray-800');
+            
+        });
+
+        tabLast.addEventListener('click', () => {
+            // Show last game content
+            contentLast.classList.remove('hidden');
+            contentNext.classList.add('hidden');
+            // Style active tab
+            contentNext.classList.remove('hidden');
+            contentLast.classList.add('hidden');
+            // Style active tab
+            tabNext.classList.add('bg-white', 'border-hc-red', 'text-gray-800');
+            tabNext.classList.remove('bg-gray-50', 'text-gray-500');
+            // Style inactive tab
+            tabLast.classList.add('bg-gray-50', 'text-gray-500');
+            tabLast.classList.remove('bg-white', 'border-hc-red', 'text-gray-800');
+            
+        });
+
+        tabLast.addEventListener('click', () => {
+            // Show last game content
+            contentLast.classList.remove('hidden');
+            contentNext.classList.add('hidden');
+            // Style active tab
+            tabLast.classList.add('bg-white', 'border-hc-red', 'text-gray-800');
+            tabLast.classList.remove('bg-gray-50', 'text-gray-500');
+            // Style inactive tab
+            tabNext.classList.add('bg-gray-50', 'text-gray-500');
+            tabNext.classList.remove('bg-white', 'border-hc-red', 'text-gray-800');
+        });
+
+    </script>
+</body>
+</html>
