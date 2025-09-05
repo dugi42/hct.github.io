@@ -1,52 +1,59 @@
-# Hockey Club Thaur Website
+# Hockey Club Thaur "Die Ritter" Website
 
-🏒 **Modern, responsive website for Hockey Club Thaur - Eishockey mit Herz**
+🏒 **Professional, modern website for Hockey Club Thaur - Die Ritter seit 1991**
 
 ## 🚀 Features
 
-- **Modern Design**: State-of-the-art CSS3 and ES6+ JavaScript
-- **Responsive**: Perfect on all devices (mobile, tablet, desktop)
-- **Interactive**: Full-page scrolling with smooth animations
-- **Magazine Section**: Beautiful image gallery with auto-scroll
-- **Performance Optimized**: Fast loading and smooth animations
-- **SEO Friendly**: Proper meta tags and semantic HTML
-- **Accessibility**: ARIA labels and keyboard navigation
+- **Professional Tailwind Design**: Modern utility-first CSS framework
+- **Fully Responsive**: Perfect experience on all devices (mobile, tablet, desktop)
+- **Interactive Game Center**: Three-tab system (Next Game, Last Result, Schedule)
+- **Dynamic Gallery**: Filterable image gallery with modal popup functionality
+- **German Language**: Authentic content for Austrian hockey club
+- **Social Media Integration**: Direct links to Facebook and Instagram
+- **Performance Optimized**: Fast loading with modern CSS and vanilla JavaScript
+- **SEO Friendly**: Proper meta tags and semantic HTML structure
 
 ## 📁 Project Structure
 
 ```
 hct.github.io/
-├── index.html              # Main HTML file (clean, semantic)
+├── index.html              # Main website (Tailwind CSS implementation)
+├── simple.html             # Original Tailwind design
+├── fused.html             # Combined version (archived)
+├── test.html              # Testing page
 ├── css/
-│   └── styles.css          # All CSS styles (organized, modern)
+│   └── styles.css          # Legacy styles (archived)
 ├── js/
-│   └── main.js             # All JavaScript (ES6+, modular)
+│   └── main.js             # Legacy JavaScript (archived)
 ├── images/
 │   ├── logo.png            # Club logo
 │   ├── favicon.ico         # Browser favicon
 │   └── README.md           # Image requirements
 ├── assets/                 # Additional assets
 ├── package.json            # Project configuration
+├── pyproject.toml         # Python dependencies
+├── uv.lock                # UV lock file
 └── README.md              # This file
 ```
 
 ## 🛠️ Technology Stack
 
-- **HTML5**: Semantic markup with accessibility features
-- **CSS3**: 
-  - CSS Custom Properties (variables)
-  - CSS Grid & Flexbox
-  - Advanced animations and transitions
-  - Responsive design with mobile-first approach
-- **JavaScript ES6+**:
-  - Classes and modules
-  - Modern event handling
-  - Performance optimizations
-  - Intersection Observer API
-- **External Libraries**:
-  - Font Awesome 6.4.0 (icons)
-  - Google Fonts (Poppins)
-  - Facebook SDK (social integration)
+- **HTML5**: Semantic markup with modern accessibility features
+- **Tailwind CSS 3.x**: 
+  - Utility-first CSS framework
+  - Responsive design system
+  - Custom color scheme (#c8102e - HC Thaur red)
+  - Modern component architecture
+- **Vanilla JavaScript**:
+  - Tab switching functionality
+  - Gallery filtering system
+  - Modal popup interactions
+  - Mobile menu toggle
+- **External Resources**:
+  - Google Fonts (Inter family)
+  - Pexels/Unsplash images
+  - Tailwind CSS CDN
+  - Social media integrations
 
 ## 🚀 Getting Started
 
@@ -81,105 +88,132 @@ hct.github.io/
    - `images/favicon.png` (32x32px)
    - `images/apple-touch-icon.png` (180x180px)
 
-## 📱 Sections
+## 📱 Website Sections
 
-1. **Home** - Hero section with logo and CTAs
-2. **About** - Club information and history
-3. **Schedule** - Game schedule table
-4. **Team** - Player cards with animations
-5. **Gallery** - Interactive magazine-style image gallery
-6. **Sponsors** - Partner logos and information
-7. **Social** - Facebook integration
-8. **Contact** - Contact information and forms
+1. **Hero** - Stunning background with HC Thaur branding and call-to-action
+2. **About** - Club history and values (German content)
+3. **Game Center** - Interactive three-tab system:
+   - Next Game display
+   - Last result with score
+   - Upcoming schedule table
+4. **Team** - Player cards with photos and positions
+5. **News** - Latest club news with professional card layout
+6. **Gallery & Magazine** - Filterable photo gallery with categories:
+   - All photos
+   - Game action
+   - Fans
+   - Training/backstage
+7. **Youth Spotlight** - Emphasis on youth development
+8. **Partners** - Sponsor carousel with local businesses
+9. **Social Media** - Facebook and Instagram integration
+10. **Contact** - Complete contact information and arena details
 
-## 🎮 Navigation
+## 🎮 Navigation & Interactions
 
-- **Mouse**: Scroll wheel to navigate between sections
-- **Keyboard**: 
-  - Arrow keys (↑↓) for navigation
-  - Space bar for next section
-  - Home/End keys for first/last section
-- **Touch**: Swipe gestures on mobile devices
-- **Navigation Dots**: Click dots on the right side
-- **CTA Buttons**: Click buttons to jump to sections
+- **Responsive Navigation**: Sticky header with mobile hamburger menu
+- **Smooth Scrolling**: Click navigation links for smooth section transitions
+- **Tab System**: Interactive game center with three content tabs
+- **Gallery Filtering**: Click filter buttons to show specific photo categories
+- **Modal Popups**: Click gallery images for enlarged view with details
+- **Mobile-First**: Touch-friendly design optimized for all screen sizes
+- **Social Links**: Direct links to official Facebook and Instagram pages
 
 ## 🎨 Customization
 
-### Colors
-Edit CSS custom properties in `css/styles.css`:
+### Colors & Branding
+
+The website uses a custom Tailwind configuration with HC Thaur brand colors:
+
 ```css
-:root {
-    --primary-color: #d90429;    /* Club red */
-    --secondary-color: #2b2d42;  /* Dark blue */
-    --accent-color: #8ecae6;     /* Light blue */
-    /* ... more colors */
-}
+/* Primary brand color: #c8102e (HC Thaur red) */
+/* Defined in Tailwind as hc-red class */
+.hc-red { color: #c8102e; }
+.bg-hc-red { background-color: #c8102e; }
 ```
 
-### Content
-- Edit text content directly in `index.html`
-- Update team members in the team section
-- Modify schedule in the schedule table
-- Update contact information
+To customize colors, update the CSS classes in `index.html` or modify the inline Tailwind configuration.
 
-### Images
-- Replace images in the `images/` folder
-- Update image paths in HTML if needed
-- Optimize images for web performance
+### Content Updates
+
+- **German Language**: All text content is in German and can be edited directly in `index.html`
+- **Game Schedule**: Update the game center tabs with current team information
+- **Team Members**: Replace player photos and information in the team section
+- **News Articles**: Update news cards with current club announcements
+- **Contact Information**: Modify footer and contact details as needed
+
+### Images & Media
+
+- **Logo**: Replace placeholder logos with official HC Thaur branding
+- **Player Photos**: Update team member images (recommend 150x150px, square format)
+- **Gallery Images**: Replace gallery photos with actual club photos
+- **Background Images**: Hero section uses Pexels hockey imagery
+- **Favicon**: Add proper favicon files for browser tabs
 
 ## 🔧 Development
 
-### File Organization
-- **HTML**: Clean, semantic markup separated from styling and behavior
-- **CSS**: Organized with comments, using modern features
-- **JavaScript**: Modular ES6+ classes for maintainability
+### Architecture
 
-### Performance Features
-- Lazy loading for images
-- Debounced scroll events
-- Optimized animations
-- Preloading for adjacent sections
-- Compressed external assets
+- **HTML**: Semantic markup with Tailwind CSS utility classes
+- **Tailwind CSS**: Modern utility-first framework with responsive design
+- **Vanilla JavaScript**: Lightweight interactions without external dependencies
+- **CDN-Based**: Uses Tailwind CSS CDN for easy deployment and updates
 
-### Browser Support
-- Chrome/Edge 88+
-- Firefox 85+
-- Safari 14+
-- Mobile browsers (iOS Safari, Chrome Mobile)
+### Key Features
 
-## 📊 Performance
+- **Responsive Design**: Mobile-first approach with Tailwind's responsive utilities
+- **Component-Based**: Reusable patterns using Tailwind component classes
+- **Performance**: Optimized CSS delivery through CDN and minimal JavaScript
+- **Maintainable**: Clean HTML structure with utility classes for styling
+- **Accessible**: ARIA labels and semantic HTML for screen readers
 
-- **Lighthouse Score**: 90+ (Performance, Accessibility, Best Practices, SEO)
-- **Loading Time**: < 3 seconds on 3G connection
-- **Bundle Size**: Optimized CSS and JS
-- **Image Optimization**: WebP support with fallbacks
+### Browser Compatibility
+
+- **Modern Browsers**: Chrome 88+, Firefox 85+, Safari 14+, Edge 88+
+- **Mobile**: iOS Safari 14+, Chrome Mobile 88+, Samsung Internet 13+
+- **Tailwind CSS**: Full support for modern CSS features and responsive design
+
+## 📊 Performance & Features
+
+- **Lighthouse Score**: Optimized for performance, accessibility, and SEO
+- **Loading Time**: Fast CDN delivery of Tailwind CSS and minimal JavaScript
+- **Mobile Optimized**: Touch-friendly interface with responsive breakpoints
+- **Interactive Elements**: 
+  - Tab switching in game center
+  - Gallery filtering system
+  - Modal popup functionality
+  - Mobile hamburger navigation
+- **SEO Ready**: Semantic HTML structure with proper meta tags
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Images not loading**:
-   - Check file paths in HTML
-   - Ensure images exist in `images/` folder
-   - Verify image file formats
+1. **Styling not working**:
+   - Check Tailwind CSS CDN connection
+   - Verify internet connection for external resources
+   - Clear browser cache and reload
 
-2. **JavaScript not working**:
-   - Check browser console for errors
-   - Ensure `js/main.js` is loaded correctly
-   - Verify all DOM elements exist
+2. **JavaScript features not working**:
+   - Check browser console for errors (F12)
+   - Ensure JavaScript is enabled in browser
+   - Verify all HTML elements have correct IDs
 
-3. **Styling issues**:
-   - Check CSS file path
-   - Verify CSS custom properties support
-   - Clear browser cache
+3. **Images not displaying**:
+   - Check image URLs for external sources
+   - Verify placeholder services (placehold.co) are accessible
+   - Replace with local images if needed
 
 ### Debug Mode
-Open browser developer tools (F12) and check console for debug information.
+
+Open browser developer tools (F12) to check console messages and network requests.
 
 ## 📞 Support
 
 For technical support or questions:
-- Email: [hockey@hc-thaur.at](mailto:hockey@hc-thaur.at)
+
+- Email: [office@hc-thaur.at](mailto:office@hc-thaur.at)
+- Facebook: [HC Die Ritter Thaur](https://www.facebook.com/HCDieRitterThaur/)
+- Instagram: [@hc_thaur_die_ritter](https://www.instagram.com/hc_thaur_die_ritter/)
 - GitHub Issues: [Create an issue](https://github.com/dugi42/hct.github.io/issues)
 
 ## 📄 License
@@ -188,11 +222,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- **Unsplash**: High-quality hockey images
-- **Font Awesome**: Beautiful icons
-- **Google Fonts**: Modern typography
-- **Hockey community**: Inspiration and feedback
+- **Tailwind CSS**: Modern utility-first CSS framework
+- **Pexels & Unsplash**: High-quality hockey and sports photography
+- **Google Fonts**: Inter font family for modern typography
+- **Hockey Club Thaur**: Authentic content and branding
+- **Tirol Hockey Community**: Support and inspiration
 
 ---
 
-**Made with ❤️ for Hockey Club Thaur** 🏒
+**Made with ❤️ for Hockey Club Thaur "Die Ritter"** 🏒⚔️
+
+*Eishockey aus Leidenschaft seit 1991*
