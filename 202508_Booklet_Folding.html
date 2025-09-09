@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hockey Club Thaur - Jahresrückblick 2024/25</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1500px;
+        }
+
+        .book {
+            width: 90vw;
+            height: 80vh;
+            max-width: 1000px;
+            max-height: 700px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s ease;
+        }
+
+        .book.open {
+            transform: rotateY(-180deg);
+        }
+
+        .page {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+            transform: rotateY(0deg);
+        }
+        
+        .page-content {
+            padding: 2rem;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .page-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .page-content::-webkit-scrollbar-thumb {
+            background-color: #e53e3e;
+            border-radius: 4px;
+        }
+
+        .page.left {
+            left: 0;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            transform-origin: right;
+        }
+
+        .page.right {
+            right: 0;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            transform-origin: left;
+        }
+
+        .page.back {
+            transform: rotateY(-180deg);
+            z-index: -1;
+        }
+
+        .page:first-child {
+            z-index: 10;
+        }
+        
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background-color: #e53e3e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: #c53030;
+        }
+
+        #prevBtn {
+            left: 1rem;
+        }
+
+        #nextBtn {
+            right: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 sm:p-8">
+
+    <div class="book" id="book">
+        <!-- Page 1: Front Cover -->
+        <div class="page right z-20">
+            <div class="page-content bg-red-600 text-white flex flex-col justify-center items-center text-center rounded-r-xl">
+                <img src="https://placehold.co/150x150/e0e0e0/ffffff?text=HCT+Logo" alt="HCT logo" class="w-32 h-32 rounded-full mb-4">
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">PLAY HOCKEY</h1>
+                <h2 class="text-2xl mt-2 font-light">2024/25</h2>
+                <h3 class="text-xl mt-4 font-semibold">HOCKEY CLUB THAUR</h3>
+                <p class="text-sm">JAHRESRÜCKBLICK - Ausgabe 08</p>
+            </div>
+        </div>
+
+        <!-- Page 2: Chairman's Message Left -->
+        <div class="page left z-10">
+            <div class="page-content">
+                <div class="flex flex-col sm:flex-row items-center sm:space-x-4 mb-4">
+                    <img src="https://placehold.co/100x100/e0e0e0/ffffff?text=Mario+Foger" alt="Mario Föger, Obmann" class="w-24 h-24 rounded-full object-cover shadow-md mb-2 sm:mb-0">
+                    <div>
+                        <h2 class="text-xl font-bold">Liebe Mitglieder, Sponsoren und Freunde!</h2>
+                        <p class="text-xs text-gray-600 italic">Mario Föger, Obmann</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-700 leading-relaxed">Mit großer Freude präsentiere ich euch unser Jahresvereinsheft für die Saison 2024/25. Dieses Heft ist nicht nur ein Rückblick auf die vergangenen Monate, sondern auch ein Ausdruck unserer gemeinsamen Leidenschaft für den Eishockeysport und die Gemeinschaft, die wir in unserem Verein aufgebaut haben. In diesem Jahr dürfen wir stolz auf 55 aktive erwachsene Spieler und 53 engagierte Nachwuchsspieler blicken. Diese Zahlen sind nicht nur beeindruckend, sie spiegeln auch die Begeisterung und die Vitalität unseres Vereins wider. Es ist inspirierend zu sehen, wie sich unsere Spieler, sowohl jung als auch alt, mit vollem Einsatz und Hingabe dem Eishockeysport und dem Verein widmen.</p>
+            </div>
+        </div>
+        
+        <!-- Page 3: New Logo Right -->
+        <div class="page right z-10">
+            <div class="page-content text-center">
+                <img src="https://placehold.co/200x200/e53e3e/ffffff?text=HCT+2024+Logo" alt="New HCT logo" class="mx-auto my-4 w-40 h-40 rounded-full object-cover shadow-lg">
+                <h3 class="text-xl font-bold">HCT-LOGO IM 2024 STYLE</h3>
+                <p class="mt-2 text-sm text-gray-700 leading-relaxed">
+                    Das HC Thaur Embleme samt Bär erhielt Mitte des Jahres ein neues Aussehen! Das Logo wurde modernisiert und wird ab sofort in roter als auch schwarzer Ausführung verwendet. Dennoch verschwindet das ursprüngliche Vereinszeichen nicht zur Gänze. Auf sämtlichen bestehenden Drucksorten, Textilien, etc. ist der Bär in alter Form zu finden. Auf den neu entworfenen Jerseys wurde das Logo 2024 erstmals gedruckt!
+                </p>
+            </div>
+        </div>
+        
+        <!-- Page 4: Event Highlights Left -->
+        <div class="page left z-0">
+            <div class="page-content">
+                <h3 class="text-xl font-bold text-center mb-4">JAHRES-HIGHLIGHTS</h3>
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold mb-1">GENERALVERSAMMLUNG</h4>
+                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Generalversammlung" alt="Generalversammlung" class="w-full rounded-lg shadow-md mb-2">
+                    <p class="text-sm text-gray-700">Am 22. Mai fand die fünfte Generalversammlung des Hockeyclubs statt. Im Beisein von 39 Mitgliedern fand ein Jahresrückblick, der Kassabericht sowie ein Ausblick auf die neue Saison statt. Bürgermeister Ing. Martin Plank richtete dankende Worte an den Vorstand für die geleistete Vereinsarbeit! Im Anschluss an die Generalversammlung wurden alle Mitglieder mit Schnitzel und Kartoffelsalat verköstigt.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-1">DART DORFTURNIER</h4>
+                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Dart+Team" alt="Dart team" class="w-full rounded-lg shadow-md mb-2">
+                    <p class="text-sm text-gray-700">Mitte März nahm der Hockey Club Thaur beim Dart-Dorfturnier des Dart Clubs Bulls Eye Thaur statt. Platz zwei am Vorrundentag brachte unser Team in das A-Finale am Samstag. Schlussendlich belegte der HC Thaur Platz 5 des Dorfturniers. Wir gratulieren dem Dartclub rund um Christian Nagl für die toll organisierte Veranstaltung!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: More Highlights Right -->
+        <div class="page right z-0">
+            <div class="page-content">
+                <h3 class="text-xl font-bold text-center mb-4">WEITERE HIGHLIGHTS</h3>
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold mb-1">BEACHVOLLEYBALL</h4>
+                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Beachvolleyball+Team" alt="Beachvolleyball team" class="w-full rounded-lg shadow-md mb-2">
+                    <p class="text-sm text-gray-700">Im August stand unser Beachvolleyballteam wieder am Sandplatz. Beim Turnier der Jugendgruppe Regenbogen war heuer im Halbfinale Endstation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-1">HERZLAUF</h4>
+                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Herzlauf" alt="Herzlauf team photo" class="w-full rounded-lg shadow-md mb-2">
+                    <p class="text-sm text-gray-700">Am 31. August lief auch der HC Thaur wieder für den guten Zweck. Mit 39 LäuferInnen stellten wir eines der größten Teams dieses Charity-Laufevents.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 6: New Outfit Project Left -->
+        <div class="page left z-[-1]">
+            <div class="page-content">
+                <h3 class="text-xl font-bold text-center mb-4">PROJEKT: NEUES OUTFIT</h3>
+                <img src="https://placehold.co/400x300/e0e0e0/ffffff?text=New+Outfit" alt="New outfit team photo" class="w-full rounded-lg shadow-md mb-2">
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    Das Projekt neue Trikots startete bereits im März. Nach der Fixierung des Designs kümmerten wir uns um die Finanzierung und konnten zahlreiche Sponsoren gewinnen. Im November fand die Vergabe der Trikots an die 55 aktiven Erwachsenen und 35 Kinder statt. Die Trikots bleiben im Besitz des Vereins und werden leihweise den Mitgliedern zur Verfügung gestellt.
+                </p>
+                <div class="mt-4 text-center">
+                    <h4 class="text-lg font-semibold mb-2">DANKE AN ALLE SPONSOREN</h4>
+                    <div class="flex flex-wrap justify-center items-center gap-2 mt-2">
+                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+1" alt="Sponsor Logo" class="rounded-md">
+                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+2" alt="Sponsor Logo" class="rounded-md">
+                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+3" alt="Sponsor Logo" class="rounded-md">
+                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+4" alt="Sponsor Logo" class="rounded-md">
+                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+5" alt="Sponsor Logo" class="rounded-md">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 7: Trainingslager Right -->
+        <div class="page right z-[-1]">
+            <div class="page-content">
+                <h3 class="text-xl font-bold text-center mb-4">TRAININGSLAGER</h3>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    Wie jedes Jahr im November schlugen wir auch heuer wieder unsere Zelte in Südtirol auf. Dieses Mal ging die Trainingslagerfahrt nach Sterzing. Im fußläufig erreichbaren Hotel Rosskopf nächtigten unsere 26 Mitglieder. Bereits am Freitag ging es erstmals aufs Eis in der Traglufthalle in Sterzing. Nach der ersten Einheit wurden wir im Hotel bestens verköstigt. Zwei weitere Einheiten folgten am Samstag, ehe man am Sonntag wieder retourreiste. Wie schon die Jahre zuvor kann man von einem sportlich wie auch gesellschaftlich grandiosen Trainingslager 2024 sprechen.
+                </p>
+                <img src="https://placehold.co/400x200/e0e0e0/ffffff?text=Trainingslager+Team" alt="Training camp group photo" class="w-full rounded-lg shadow-md mt-4">
+            </div>
+        </div>
+
+        <!-- Add more pages as needed for the rest of the content -->
+
+    </div>
+
+    <!-- Navigation Buttons -->
+    <button id="prevBtn" class="nav-button left-4">❮</button>
+    <button id="nextBtn" class="nav-button right-4">❯</button>
+
+    <script>
+        const book = document.getElementById('book');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+
+        // Hide prev button on first page load
+        prevBtn.style.display = 'none';
+
+        // Function to update button visibility
+        function updateButtons() {
+            prevBtn.style.display = currentPage === 0 ? 'none' : 'block';
+            nextBtn.style.display = currentPage >= pages.length - 2 ? 'none' : 'block';
+        }
+
+        function nextPage() {
+            if (currentPage < pages.length - 2) {
+                pages[currentPage].classList.remove('z-20', 'z-10', 'z-0');
+                pages[currentPage].classList.add('back');
+                
+                pages[currentPage + 1].classList.remove('z-20', 'z-10', 'z-0');
+                pages[currentPage + 1].classList.add('back');
+
+                pages[currentPage + 2].classList.add('z-10');
+                pages[currentPage + 3].classList.add('z-0');
+
+                currentPage += 2;
+                updateButtons();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                pages[currentPage].classList.remove('back');
+                pages[currentPage + 1].classList.remove('back');
+                
+                pages[currentPage - 2].classList.remove('back');
+                pages[currentPage - 1].classList.remove('back');
+
+                pages[currentPage - 2].classList.add('z-10');
+                pages[currentPage - 1].classList.add('z-0');
+
+                currentPage -= 2;
+                updateButtons();
+            }
+        }
+        
+        // Initial setup for the first page turn
+        window.addEventListener('load', () => {
+             pages[0].classList.add('z-20');
+             pages[1].classList.add('z-10');
+             updateButtons();
+        });
+
+        nextBtn.addEventListener('click', nextPage);
+        prevBtn.addEventListener('click', prevPage);
+    </script>
+</body>
+</html>
