@@ -29,7 +29,6 @@ hct.github.io/
 │   ├── logo.png            # Club logo
 │   ├── favicon.ico         # Browser favicon
 │   └── README.md           # Image requirements
-├── assets/                 # Additional assets
 ├── package.json            # Project configuration
 ├── pyproject.toml         # Python dependencies
 ├── uv.lock                # UV lock file
@@ -39,7 +38,7 @@ hct.github.io/
 ## 🛠️ Technology Stack
 
 - **HTML5**: Semantic markup with modern accessibility features
-- **Tailwind CSS 3.x**: 
+- **Tailwind CSS 3.x**:
   - Utility-first CSS framework
   - Responsive design system
   - Custom color scheme (#c8102e - HC Thaur red)

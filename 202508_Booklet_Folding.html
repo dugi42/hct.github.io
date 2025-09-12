@@ -5,105 +5,277 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hockey Club Thaur - Jahresrückblick 2024/25</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            perspective: 1500px;
+            perspective: 2000px;
+            overflow: hidden;
         }
 
         .book {
-            width: 90vw;
-            height: 80vh;
-            max-width: 1000px;
-            max-height: 700px;
+            width: 95vw;
+            height: 85vh;
+            max-width: 1200px;
+            max-height: 800px;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 1.5s ease;
-        }
-
-        .book.open {
-            transform: rotateY(-180deg);
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
         }
 
         .page {
             position: absolute;
             width: 50%;
             height: 100%;
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 0 12px 12px 0;
             transform-origin: left;
-            transition: transform 1s ease-in-out;
-            transform: rotateY(0deg);
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.320, 1);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
         }
         
         .page-content {
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             height: 100%;
             overflow-y: auto;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
         }
         
         .page-content::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
+        }
+        
+        .page-content::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
         }
         
         .page-content::-webkit-scrollbar-thumb {
-            background-color: #e53e3e;
-            border-radius: 4px;
+            background: linear-gradient(145deg, #e53e3e, #c53030);
+            border-radius: 3px;
         }
 
         .page.left {
             left: 0;
-            border-top-right-radius: 1rem;
-            border-bottom-right-radius: 1rem;
+            border-radius: 12px 0 0 12px;
             transform-origin: right;
         }
 
         .page.right {
             right: 0;
-            border-top-left-radius: 1rem;
-            border-bottom-left-radius: 1rem;
+            border-radius: 0 12px 12px 0;
             transform-origin: left;
         }
 
-        .page.back {
+        .page.flipped {
             transform: rotateY(-180deg);
-            z-index: -1;
         }
 
-        .page:first-child {
-            z-index: 10;
+        /* Cover page special styling */
+        .cover-page {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            border-radius: 0 12px 12px 0;
         }
-        
+
+        .cover-content {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Typography improvements */
+        .headline {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #dc2626, #7c2d12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subheadline {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+        }
+
+        .body-text {
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            line-height: 1.7;
+            color: #475569;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .quote-text {
+            font-style: italic;
+            font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+            color: #64748b;
+            border-left: 4px solid #dc2626;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Image styling */
+        .article-image {
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .article-image:hover {
+            transform: scale(1.02);
+        }
+
+        .profile-image {
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 4px solid #ffffff;
+        }
+
+        /* Layout improvements */
+        .two-column {
+            column-count: 2;
+            column-gap: 2rem;
+            column-rule: 1px solid #e2e8f0;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #dc2626;
+        }
+
+        /* Navigation styling */
         .nav-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 20;
-            background-color: #e53e3e;
+            z-index: 1000;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border: none;
         }
 
         .nav-button:hover {
-            background-color: #c53030;
+            background: linear-gradient(135deg, #991b1b, #7f1d1d);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.4);
+        }
+
+        .nav-button:active {
+            transform: translateY(-50%) scale(0.95);
         }
 
         #prevBtn {
-            left: 1rem;
+            left: -75px;
         }
 
         #nextBtn {
-            right: 1rem;
+            right: -75px;
+        }
+
+        /* Page number styling */
+        .page-number {
+            position: absolute;
+            bottom: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        .page-number.left {
+            left: 2rem;
+        }
+
+        .page-number.right {
+            right: 2rem;
+        }
+
+        /* Sponsor grid */
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .sponsor-logo {
+            background: white;
+            border-radius: 8px;
+            padding: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .sponsor-logo:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .book {
+                width: 98vw;
+                height: 90vh;
+            }
+            
+            .page-content {
+                padding: 1.5rem 1rem;
+            }
+            
+            .two-column {
+                column-count: 1;
+            }
+            
+            #prevBtn, #nextBtn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            #prevBtn {
+                left: -50px;
+            }
+            
+            #nextBtn {
+                right: -50px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -111,172 +283,451 @@
 
     <div class="book" id="book">
         <!-- Page 1: Front Cover -->
-        <div class="page right z-20">
-            <div class="page-content bg-red-600 text-white flex flex-col justify-center items-center text-center rounded-r-xl">
-                <img src="https://placehold.co/150x150/e0e0e0/ffffff?text=HCT+Logo" alt="HCT logo" class="w-32 h-32 rounded-full mb-4">
-                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">PLAY HOCKEY</h1>
-                <h2 class="text-2xl mt-2 font-light">2024/25</h2>
-                <h3 class="text-xl mt-4 font-semibold">HOCKEY CLUB THAUR</h3>
-                <p class="text-sm">JAHRESRÜCKBLICK - Ausgabe 08</p>
-            </div>
-        </div>
-
-        <!-- Page 2: Chairman's Message Left -->
-        <div class="page left z-10">
-            <div class="page-content">
-                <div class="flex flex-col sm:flex-row items-center sm:space-x-4 mb-4">
-                    <img src="https://placehold.co/100x100/e0e0e0/ffffff?text=Mario+Foger" alt="Mario Föger, Obmann" class="w-24 h-24 rounded-full object-cover shadow-md mb-2 sm:mb-0">
-                    <div>
-                        <h2 class="text-xl font-bold">Liebe Mitglieder, Sponsoren und Freunde!</h2>
-                        <p class="text-xs text-gray-600 italic">Mario Föger, Obmann</p>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-700 leading-relaxed">Mit großer Freude präsentiere ich euch unser Jahresvereinsheft für die Saison 2024/25. Dieses Heft ist nicht nur ein Rückblick auf die vergangenen Monate, sondern auch ein Ausdruck unserer gemeinsamen Leidenschaft für den Eishockeysport und die Gemeinschaft, die wir in unserem Verein aufgebaut haben. In diesem Jahr dürfen wir stolz auf 55 aktive erwachsene Spieler und 53 engagierte Nachwuchsspieler blicken. Diese Zahlen sind nicht nur beeindruckend, sie spiegeln auch die Begeisterung und die Vitalität unseres Vereins wider. Es ist inspirierend zu sehen, wie sich unsere Spieler, sowohl jung als auch alt, mit vollem Einsatz und Hingabe dem Eishockeysport und dem Verein widmen.</p>
-            </div>
-        </div>
-        
-        <!-- Page 3: New Logo Right -->
-        <div class="page right z-10">
-            <div class="page-content text-center">
-                <img src="https://placehold.co/200x200/e53e3e/ffffff?text=HCT+2024+Logo" alt="New HCT logo" class="mx-auto my-4 w-40 h-40 rounded-full object-cover shadow-lg">
-                <h3 class="text-xl font-bold">HCT-LOGO IM 2024 STYLE</h3>
-                <p class="mt-2 text-sm text-gray-700 leading-relaxed">
-                    Das HC Thaur Embleme samt Bär erhielt Mitte des Jahres ein neues Aussehen! Das Logo wurde modernisiert und wird ab sofort in roter als auch schwarzer Ausführung verwendet. Dennoch verschwindet das ursprüngliche Vereinszeichen nicht zur Gänze. Auf sämtlichen bestehenden Drucksorten, Textilien, etc. ist der Bär in alter Form zu finden. Auf den neu entworfenen Jerseys wurde das Logo 2024 erstmals gedruckt!
-                </p>
-            </div>
-        </div>
-        
-        <!-- Page 4: Event Highlights Left -->
-        <div class="page left z-0">
-            <div class="page-content">
-                <h3 class="text-xl font-bold text-center mb-4">JAHRES-HIGHLIGHTS</h3>
-                <div class="mb-6">
-                    <h4 class="text-lg font-semibold mb-1">GENERALVERSAMMLUNG</h4>
-                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Generalversammlung" alt="Generalversammlung" class="w-full rounded-lg shadow-md mb-2">
-                    <p class="text-sm text-gray-700">Am 22. Mai fand die fünfte Generalversammlung des Hockeyclubs statt. Im Beisein von 39 Mitgliedern fand ein Jahresrückblick, der Kassabericht sowie ein Ausblick auf die neue Saison statt. Bürgermeister Ing. Martin Plank richtete dankende Worte an den Vorstand für die geleistete Vereinsarbeit! Im Anschluss an die Generalversammlung wurden alle Mitglieder mit Schnitzel und Kartoffelsalat verköstigt.</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-1">DART DORFTURNIER</h4>
-                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Dart+Team" alt="Dart team" class="w-full rounded-lg shadow-md mb-2">
-                    <p class="text-sm text-gray-700">Mitte März nahm der Hockey Club Thaur beim Dart-Dorfturnier des Dart Clubs Bulls Eye Thaur statt. Platz zwei am Vorrundentag brachte unser Team in das A-Finale am Samstag. Schlussendlich belegte der HC Thaur Platz 5 des Dorfturniers. Wir gratulieren dem Dartclub rund um Christian Nagl für die toll organisierte Veranstaltung!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 5: More Highlights Right -->
-        <div class="page right z-0">
-            <div class="page-content">
-                <h3 class="text-xl font-bold text-center mb-4">WEITERE HIGHLIGHTS</h3>
-                <div class="mb-6">
-                    <h4 class="text-lg font-semibold mb-1">BEACHVOLLEYBALL</h4>
-                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Beachvolleyball+Team" alt="Beachvolleyball team" class="w-full rounded-lg shadow-md mb-2">
-                    <p class="text-sm text-gray-700">Im August stand unser Beachvolleyballteam wieder am Sandplatz. Beim Turnier der Jugendgruppe Regenbogen war heuer im Halbfinale Endstation.</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-1">HERZLAUF</h4>
-                    <img src="https://placehold.co/300x200/e0e0e0/ffffff?text=Herzlauf" alt="Herzlauf team photo" class="w-full rounded-lg shadow-md mb-2">
-                    <p class="text-sm text-gray-700">Am 31. August lief auch der HC Thaur wieder für den guten Zweck. Mit 39 LäuferInnen stellten wir eines der größten Teams dieses Charity-Laufevents.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 6: New Outfit Project Left -->
-        <div class="page left z-[-1]">
-            <div class="page-content">
-                <h3 class="text-xl font-bold text-center mb-4">PROJEKT: NEUES OUTFIT</h3>
-                <img src="https://placehold.co/400x300/e0e0e0/ffffff?text=New+Outfit" alt="New outfit team photo" class="w-full rounded-lg shadow-md mb-2">
-                <p class="text-sm text-gray-700 leading-relaxed">
-                    Das Projekt neue Trikots startete bereits im März. Nach der Fixierung des Designs kümmerten wir uns um die Finanzierung und konnten zahlreiche Sponsoren gewinnen. Im November fand die Vergabe der Trikots an die 55 aktiven Erwachsenen und 35 Kinder statt. Die Trikots bleiben im Besitz des Vereins und werden leihweise den Mitgliedern zur Verfügung gestellt.
-                </p>
-                <div class="mt-4 text-center">
-                    <h4 class="text-lg font-semibold mb-2">DANKE AN ALLE SPONSOREN</h4>
-                    <div class="flex flex-wrap justify-center items-center gap-2 mt-2">
-                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+1" alt="Sponsor Logo" class="rounded-md">
-                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+2" alt="Sponsor Logo" class="rounded-md">
-                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+3" alt="Sponsor Logo" class="rounded-md">
-                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+4" alt="Sponsor Logo" class="rounded-md">
-                        <img src="https://placehold.co/80x40/e0e0e0/ffffff?text=Sponsor+5" alt="Sponsor Logo" class="rounded-md">
+        <div class="page right cover-page">
+            <div class="page-content flex flex-col justify-center items-center">
+                <div class="cover-content w-full">
+                    <img src="https://placehold.co/180x180/ffffff/dc2626?text=HCT" alt="HCT Logo" class="mx-auto mb-6 rounded-full border-4 border-white shadow-2xl">
+                    <h1 class="text-5xl md:text-6xl font-black tracking-tight mb-2 text-white">PLAY HOCKEY</h1>
+                    <h2 class="text-3xl md:text-4xl font-light mb-6 text-red-100">2024/25</h2>
+                    <div class="border-t-2 border-white/30 pt-6">
+                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">HOCKEY CLUB THAUR</h3>
+                        <p class="text-red-100 text-sm uppercase tracking-wider">Jahresrückblick • Ausgabe 08</p>
                     </div>
                 </div>
             </div>
+            <div class="page-number right">1</div>
         </div>
 
-        <!-- Page 7: Trainingslager Right -->
-        <div class="page right z-[-1]">
-            <div class="page-content">
-                <h3 class="text-xl font-bold text-center mb-4">TRAININGSLAGER</h3>
-                <p class="text-sm text-gray-700 leading-relaxed">
-                    Wie jedes Jahr im November schlugen wir auch heuer wieder unsere Zelte in Südtirol auf. Dieses Mal ging die Trainingslagerfahrt nach Sterzing. Im fußläufig erreichbaren Hotel Rosskopf nächtigten unsere 26 Mitglieder. Bereits am Freitag ging es erstmals aufs Eis in der Traglufthalle in Sterzing. Nach der ersten Einheit wurden wir im Hotel bestens verköstigt. Zwei weitere Einheiten folgten am Samstag, ehe man am Sonntag wieder retourreiste. Wie schon die Jahre zuvor kann man von einem sportlich wie auch gesellschaftlich grandiosen Trainingslager 2024 sprechen.
-                </p>
-                <img src="https://placehold.co/400x200/e0e0e0/ffffff?text=Trainingslager+Team" alt="Training camp group photo" class="w-full rounded-lg shadow-md mt-4">
+        <!-- Page 2: Chairman's Message -->
+        <div class="page left">
+            <div class="page-content fade-in">
+                <div class="article-header">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <img src="https://placehold.co/80x80/e2e8f0/475569?text=MF" alt="Mario Föger" class="profile-image w-20 h-20">
+                        <div>
+                            <h1 class="headline">Liebe Mitglieder, Sponsoren und Freunde!</h1>
+                            <p class="quote-text text-sm">Mario Föger, Obmann HC Thaur</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <p class="body-text">
+                        <strong>Mit großer Freude</strong> präsentiere ich euch unser Jahresvereinsheft für die Saison 2024/25. Dieses Heft ist nicht nur ein Rückblick auf die vergangenen Monate, sondern auch ein Ausdruck unserer gemeinsamen Leidenschaft für den Eishockeysport und die Gemeinschaft, die wir in unserem Verein aufgebaut haben.
+                    </p>
+                    
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 my-6 rounded-r-lg">
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <div class="text-3xl font-bold text-red-600">55</div>
+                                <div class="text-sm text-gray-600">Aktive Erwachsene</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-red-600">53</div>
+                                <div class="text-sm text-gray-600">Nachwuchsspieler</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="body-text">
+                        Diese Zahlen sind nicht nur beeindruckend, sie spiegeln auch die Begeisterung und die Vitalität unseres Vereins wider. Es ist inspirierend zu sehen, wie sich unsere Spieler, sowohl jung als auch alt, mit vollem Einsatz und Hingabe dem Eishockeysport und dem Verein widmen.
+                    </p>
+                    
+                    <blockquote class="quote-text border-l-4 border-red-500 pl-4 italic">
+                        "Gemeinsam sind wir stark – auf dem Eis und darüber hinaus!"
+                    </blockquote>
+                </div>
             </div>
+            <div class="page-number left">2</div>
+        </div>
+        
+        <!-- Page 3: New Logo Feature -->
+        <div class="page right">
+            <div class="page-content fade-in">
+                <div class="text-center mb-6">
+                    <h1 class="headline">HCT-Logo im 2024 Style</h1>
+                    <img src="https://placehold.co/250x250/dc2626/ffffff?text=NEW+LOGO" alt="Neues HCT Logo" class="article-image mx-auto my-6">
+                </div>
+                
+                <div class="space-y-4">
+                    <p class="body-text">
+                        Das HC Thaur Emblem samt Bär erhielt <strong>Mitte des Jahres ein komplett neues Aussehen!</strong> Das Logo wurde modernisiert und wird ab sofort in roter als auch schwarzer Ausführung verwendet.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 my-6">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="w-16 h-16 bg-red-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">ALT</div>
+                            <p class="text-xs text-gray-600">Klassisches Design</p>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="w-16 h-16 bg-gradient-to-br from-red-600 to-red-800 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">NEU</div>
+                            <p class="text-xs text-gray-600">Moderner Look</p>
+                        </div>
+                    </div>
+                    
+                    <p class="body-text">
+                        Dennoch verschwindet das ursprüngliche Vereinszeichen nicht zur Gänze. Auf sämtlichen bestehenden Drucksorten, Textilien, etc. ist der Bär in alter Form zu finden.
+                    </p>
+                    
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <p class="text-sm text-red-800 font-medium">✨ Highlight:</p>
+                        <p class="text-sm text-red-700">Auf den neu entworfenen Jerseys wurde das Logo 2024 erstmals gedruckt!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number right">3</div>
+        </div>
+        
+        <!-- Page 4: Event Highlights -->
+        <div class="page left">
+            <div class="page-content fade-in">
+                <h1 class="headline text-center mb-6">Jahres-Highlights</h1>
+                
+                <article class="mb-8">
+                    <div class="article-header">
+                        <h2 class="subheadline">🏛️ Generalversammlung</h2>
+                        <p class="text-sm text-gray-500">22. Mai 2024</p>
+                    </div>
+                    <img src="https://placehold.co/400x200/e2e8f0/475569?text=Generalversammlung" alt="Generalversammlung" class="article-image w-full mb-4">
+                    <p class="body-text">
+                        Im Beisein von <strong>39 Mitgliedern</strong> fand die fünfte Generalversammlung des Hockeyclubs statt. Bürgermeister Ing. Martin Plank richtete dankende Worte an den Vorstand für die geleistete Vereinsarbeit!
+                    </p>
+                </article>
+                
+                <article>
+                    <div class="article-header">
+                        <h2 class="subheadline">🎯 Dart Dorfturnier</h2>
+                        <p class="text-sm text-gray-500">März 2024</p>
+                    </div>
+                    <img src="https://placehold.co/400x200/e2e8f0/475569?text=Dart+Team" alt="Dart Team" class="article-image w-full mb-4">
+                    <p class="body-text">
+                        <strong>Platz 5</strong> beim Dart-Dorfturnier des Dart Clubs Bulls Eye Thaur. Unser Team schaffte es durch Platz zwei am Vorrundentag ins A-Finale!
+                    </p>
+                </article>
+            </div>
+            <div class="page-number left">4</div>
         </div>
 
-        <!-- Add more pages as needed for the rest of the content -->
+        <!-- Page 5: More Activities -->
+        <div class="page right">
+            <div class="page-content fade-in">
+                <h1 class="headline text-center mb-6">Weitere Highlights</h1>
+                
+                <div class="space-y-6">
+                    <article>
+                        <div class="article-header">
+                            <h2 class="subheadline">🏐 Beachvolleyball</h2>
+                            <p class="text-sm text-gray-500">August 2024</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                            <img src="https://placehold.co/300x200/e2e8f0/475569?text=Beach+Team" alt="Beachvolleyball" class="article-image">
+                            <p class="body-text">
+                                Beim Turnier der Jugendgruppe Regenbogen war heuer im <strong>Halbfinale Endstation</strong> für unser Beachvolleyballteam.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article>
+                        <div class="article-header">
+                            <h2 class="subheadline">❤️ Herzlauf</h2>
+                            <p class="text-sm text-gray-500">31. August 2024</p>
+                        </div>
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-red-600 mb-2">39</div>
+                                <p class="text-red-700 font-medium">LäuferInnen für den guten Zweck</p>
+                                <p class="text-sm text-red-600">Eines der größten Teams!</p>
+                            </div>
+                        </div>
+                        <img src="https://placehold.co/400x200/e2e8f0/475569?text=Herzlauf+Team" alt="Herzlauf" class="article-image w-full">
+                    </article>
+                </div>
+            </div>
+            <div class="page-number right">5</div>
+        </div>
 
+        <!-- Page 6: New Outfit Project -->
+        <div class="page left">
+            <div class="page-content fade-in">
+                <h1 class="headline text-center mb-6">Projekt: Neues Outfit</h1>
+                
+                <img src="https://placehold.co/400x250/dc2626/ffffff?text=New+Jerseys" alt="Neue Trikots" class="article-image w-full mb-6">
+                
+                <div class="space-y-4">
+                    <p class="body-text">
+                        Das Projekt <strong>"Neue Trikots"</strong> startete bereits im März. Nach der Fixierung des Designs kümmerten wir uns um die Finanzierung und konnten zahlreiche Sponsoren gewinnen.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-4 my-6 text-center">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-2xl font-bold text-red-600">55</div>
+                            <div class="text-xs text-gray-600">Erwachsene</div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-2xl font-bold text-red-600">35</div>
+                            <div class="text-xs text-gray-600">Kinder</div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="text-2xl font-bold text-red-600">NOV</div>
+                            <div class="text-xs text-gray-600">Vergabe</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p class="text-sm text-yellow-800 font-medium mb-2">📝 Wichtiger Hinweis:</p>
+                        <p class="text-sm text-yellow-700">Die Trikots bleiben im Besitz des Vereins und werden leihweise den Mitgliedern zur Verfügung gestellt.</p>
+                    </div>
+                    
+                    <h3 class="subheadline text-center mt-6">Danke an alle Sponsoren!</h3>
+                    <div class="sponsor-grid">
+                        <div class="sponsor-logo"><img src="https://placehold.co/60x30/f8fafc/64748b?text=S1" alt="Sponsor 1" class="w-full"></div>
+                        <div class="sponsor-logo"><img src="https://placehold.co/60x30/f8fafc/64748b?text=S2" alt="Sponsor 2" class="w-full"></div>
+                        <div class="sponsor-logo"><img src="https://placehold.co/60x30/f8fafc/64748b?text=S3" alt="Sponsor 3" class="w-full"></div>
+                        <div class="sponsor-logo"><img src="https://placehold.co/60x30/f8fafc/64748b?text=S4" alt="Sponsor 4" class="w-full"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number left">6</div>
+        </div>
+
+        <!-- Page 7: Training Camp -->
+        <div class="page right">
+            <div class="page-content fade-in">
+                <h1 class="headline text-center mb-6">Trainingslager Sterzing</h1>
+                
+                <div class="article-header">
+                    <h2 class="subheadline">🏔️ Hotel Rosskopf, Südtirol</h2>
+                    <p class="text-sm text-gray-500">November 2024 • 26 Teilnehmer</p>
+                </div>
+                
+                <img src="https://placehold.co/400x250/e2e8f0/475569?text=Trainingslager+Sterzing" alt="Trainingslager" class="article-image w-full mb-6">
+                
+                <div class="two-column space-y-4">
+                    <p class="body-text">
+                        <strong>Wie jedes Jahr im November</strong> schlugen wir auch heuer wieder unsere Zelte in Südtirol auf. Dieses Mal ging die Trainingslagerfahrt nach Sterzing.
+                    </p>
+                    
+                    <p class="body-text">
+                        Im fußläufig erreichbaren <strong>Hotel Rosskopf</strong> nächtigten unsere 26 Mitglieder. Bereits am Freitag ging es erstmals aufs Eis in der Traglufthalle in Sterzing.
+                    </p>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
+                        <h4 class="font-semibold text-blue-800 mb-2">Programm im Überblick:</h4>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>🏒 Freitag: Erste Eiseinheit</li>
+                            <li>🍽️ Abendessen im Hotel</li>
+                            <li>🏒 Samstag: Zwei weitere Einheiten</li>
+                            <li>🚌 Sonntag: Heimreise</li>
+                        </ul>
+                    </div>
+                    
+                    <p class="body-text">
+                        Nach der ersten Einheit wurden wir im Hotel bestens verköstigt. Wie schon die Jahre zuvor kann man von einem <strong>sportlich wie auch gesellschaftlich grandiosen</strong> Trainingslager 2024 sprechen.
+                    </p>
+                </div>
+            </div>
+            <div class="page-number right">7</div>
+        </div>
+
+        <!-- Page 8: Back Cover -->
+        <div class="page left cover-page">
+            <div class="page-content flex flex-col justify-center items-center">
+                <div class="cover-content w-full text-center">
+                    <img src="https://placehold.co/120x120/ffffff/dc2626?text=HCT" alt="HCT Logo" class="mx-auto mb-6 rounded-full border-2 border-white">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Danke für ein großartiges Jahr!</h2>
+                    <p class="text-red-100 mb-6 leading-relaxed">
+                        Ein herzlicher Dank an alle Mitglieder, Sponsoren, Fans und Freunde des Hockey Club Thaur für die Unterstützung in der Saison 2024/25.
+                    </p>
+                    <div class="border-t border-white/30 pt-4">
+                        <p class="text-red-200 text-sm">www.hc-thaur.at</p>
+                        <p class="text-red-200 text-sm">hockey@hc-thaur.at</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number left">8</div>
+        </div>
     </div>
 
     <!-- Navigation Buttons -->
-    <button id="prevBtn" class="nav-button left-4">❮</button>
-    <button id="nextBtn" class="nav-button right-4">❯</button>
+    <button id="prevBtn" class="nav-button" style="display: none;">‹</button>
+    <button id="nextBtn" class="nav-button">›</button>
 
     <script>
-        const book = document.getElementById('book');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const pages = document.querySelectorAll('.page');
-        let currentPage = 0;
-
-        // Hide prev button on first page load
-        prevBtn.style.display = 'none';
-
-        // Function to update button visibility
-        function updateButtons() {
-            prevBtn.style.display = currentPage === 0 ? 'none' : 'block';
-            nextBtn.style.display = currentPage >= pages.length - 2 ? 'none' : 'block';
-        }
-
-        function nextPage() {
-            if (currentPage < pages.length - 2) {
-                pages[currentPage].classList.remove('z-20', 'z-10', 'z-0');
-                pages[currentPage].classList.add('back');
+        class BookletNavigation {
+            constructor() {
+                this.pages = document.querySelectorAll('.page');
+                this.currentSpread = 0;
+                this.totalSpreads = Math.floor(this.pages.length / 2);
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
                 
-                pages[currentPage + 1].classList.remove('z-20', 'z-10', 'z-0');
-                pages[currentPage + 1].classList.add('back');
-
-                pages[currentPage + 2].classList.add('z-10');
-                pages[currentPage + 3].classList.add('z-0');
-
-                currentPage += 2;
-                updateButtons();
+                this.init();
             }
-        }
-
-        function prevPage() {
-            if (currentPage > 0) {
-                pages[currentPage].classList.remove('back');
-                pages[currentPage + 1].classList.remove('back');
+            
+            init() {
+                this.setupInitialState();
+                this.updateNavigation();
+                this.bindEvents();
                 
-                pages[currentPage - 2].classList.remove('back');
-                pages[currentPage - 1].classList.remove('back');
-
-                pages[currentPage - 2].classList.add('z-10');
-                pages[currentPage - 1].classList.add('z-0');
-
-                currentPage -= 2;
-                updateButtons();
+                // Add fade-in animation to initial content
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-in').forEach(el => {
+                        el.style.animation = 'fadeIn 0.8s ease-out forwards';
+                    });
+                }, 100);
+            }
+            
+            setupInitialState() {
+                // Hide all pages initially
+                this.pages.forEach((page, index) => {
+                    page.style.display = 'none';
+                    page.style.zIndex = 1;
+                    page.classList.remove('flipped');
+                });
+                
+                // Show the current spread
+                this.showCurrentSpread();
+            }
+            
+            showCurrentSpread() {
+                // Hide all pages first
+                this.pages.forEach(page => {
+                    page.style.display = 'none';
+                });
+                
+                if (this.currentSpread === 0) {
+                    // First spread: only show the cover (right side)
+                    if (this.pages[0]) {
+                        this.pages[0].style.display = 'block';
+                        this.pages[0].style.zIndex = 10;
+                    }
+                } else {
+                    // Show left and right pages for the current spread
+                    const leftPageIndex = (this.currentSpread - 1) * 2 + 1; // Offset for cover
+                    const rightPageIndex = leftPageIndex + 1;
+                    
+                    // Show left page
+                    if (this.pages[leftPageIndex]) {
+                        this.pages[leftPageIndex].style.display = 'block';
+                        this.pages[leftPageIndex].style.zIndex = 10;
+                    }
+                    
+                    // Show right page
+                    if (this.pages[rightPageIndex]) {
+                        this.pages[rightPageIndex].style.display = 'block';
+                        this.pages[rightPageIndex].style.zIndex = 10;
+                    }
+                }
+            }
+            
+            updateNavigation() {
+                this.prevBtn.style.display = this.currentSpread === 0 ? 'none' : 'flex';
+                this.nextBtn.style.display = this.currentSpread >= this.totalSpreads ? 'none' : 'flex';
+            }
+            
+            nextSpread() {
+                if (this.currentSpread < this.totalSpreads) {
+                    this.currentSpread++;
+                    this.animatePageTurn('forward');
+                }
+            }
+            
+            prevSpread() {
+                if (this.currentSpread > 0) {
+                    this.currentSpread--;
+                    this.animatePageTurn('backward');
+                }
+            }
+            
+            animatePageTurn(direction) {
+                // Add page turn animation
+                const book = document.querySelector('.book');
+                book.style.transform = direction === 'forward' ? 'rotateY(-2deg)' : 'rotateY(2deg)';
+                
+                setTimeout(() => {
+                    this.showCurrentSpread();
+                    this.updateNavigation();
+                    book.style.transform = 'rotateY(0deg)';
+                    
+                    // Trigger fade-in for new content
+                    setTimeout(() => {
+                        const visiblePages = [];
+                        
+                        if (this.currentSpread === 0) {
+                            if (this.pages[0]) visiblePages.push(this.pages[0]);
+                        } else {
+                            const leftPageIndex = (this.currentSpread - 1) * 2 + 1;
+                            const rightPageIndex = leftPageIndex + 1;
+                            
+                            if (this.pages[leftPageIndex]) visiblePages.push(this.pages[leftPageIndex]);
+                            if (this.pages[rightPageIndex]) visiblePages.push(this.pages[rightPageIndex]);
+                        }
+                        
+                        visiblePages.forEach(page => {
+                            const fadeElements = page.querySelectorAll('.fade-in');
+                            fadeElements.forEach(el => {
+                                el.style.animation = 'none';
+                                setTimeout(() => {
+                                    el.style.animation = 'fadeIn 0.6s ease-out forwards';
+                                }, 50);
+                            });
+                        });
+                    }, 100);
+                }, 300);
+            }
+            
+            bindEvents() {
+                this.nextBtn.addEventListener('click', () => this.nextSpread());
+                this.prevBtn.addEventListener('click', () => this.prevSpread());
+                
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowRight' || e.key === ' ') {
+                        e.preventDefault();
+                        this.nextSpread();
+                    } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        this.prevSpread();
+                    }
+                });
+                
+                // Touch/swipe support for mobile
+                let startX = 0;
+                let startY = 0;
+                
+                document.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                });
+                
+                document.addEventListener('touchend', (e) => {
+                    const endX = e.changedTouches[0].clientX;
+                    const endY = e.changedTouches[0].clientY;
+                    
+                    const deltaX = endX - startX;
+                    const deltaY = endY - startY;
+                    
+                    // Only trigger if horizontal swipe is longer than vertical
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                        if (deltaX > 0) {
+                            this.prevSpread();
+                        } else {
+                            this.nextSpread();
+                        }
+                    }
+                });
             }
         }
         
-        // Initial setup for the first page turn
-        window.addEventListener('load', () => {
-             pages[0].classList.add('z-20');
-             pages[1].classList.add('z-10');
-             updateButtons();
+        // Initialize the booklet when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new BookletNavigation();
         });
-
-        nextBtn.addEventListener('click', nextPage);
-        prevBtn.addEventListener('click', prevPage);
+        
+        // Add smooth scrolling for better UX
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+        }, { passive: false });
     </script>
 </body>
 </html>
