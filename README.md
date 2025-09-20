@@ -57,6 +57,7 @@ hct.github.io/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Python 3 (for local development server)
 - Modern web browser
 - Internet connection (for external assets)
@@ -64,17 +65,20 @@ hct.github.io/
 ### Installation & Setup
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/dugi42/hct.github.io.git
    cd hct.github.io
    ```
 
 2. **Start local development server**:
+
    ```bash
    python3 -m http.server 8080
    ```
 
 3. **Open in browser**:
+
    ```
    http://localhost:8080
    ```
@@ -176,7 +180,7 @@ To customize colors, update the CSS classes in `index.html` or modify the inline
 - **Lighthouse Score**: Optimized for performance, accessibility, and SEO
 - **Loading Time**: Fast CDN delivery of Tailwind CSS and minimal JavaScript
 - **Mobile Optimized**: Touch-friendly interface with responsive breakpoints
-- **Interactive Elements**: 
+- **Interactive Elements**:
   - Tab switching in game center
   - Gallery filtering system
   - Modal popup functionality

@@ -1,0 +1,13 @@
+<!-- in index.html where you want the post -->
+<div id="insta-embed"></div>
+<script>
+  (async () => {
+    try {
+      const r = await fetch('/public/ig-latest.html', { cache: 'no-store' });
+      if (!r.ok) throw 0;
+      document.getElementById('insta-embed').innerHTML = await r.text();
+    } catch {
+      document.getElementById('insta-embed').textContent = 'Instagram unavailable.';
+    }
+  })();
+</script>

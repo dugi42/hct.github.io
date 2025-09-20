@@ -243,7 +243,21 @@
                         </div>
                     </div>
                 </div>
-                
+                <!-- instagram embed -->
+                <div id="insta-embed"></div>
+                    <script>
+                    (async () => {
+                        try {
+                        const r = await fetch('/public/ig-latest.html', { cache: 'no-store' });
+                        if (!r.ok) throw 0;
+                        document.getElementById('insta-embed').innerHTML = await r.text();
+                        } catch {
+                        document.getElementById('insta-embed').textContent = 'Instagram unavailable.';
+                        }
+                    })();
+                    </script>
+
+            
                 <!-- Nachwuchs Section -->
                 <div id="youth" class="bg-gray-100 rounded-lg p-8 mt-16">
                     <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
@@ -487,11 +501,11 @@
                     <div id="sponsor-grid" class="carousel-container flex overflow-x-scroll snap-x snap-mandatory gap-6 p-4">
                         <!-- Sponsorenkarten -->
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/drucken-tirol.jpg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Autohandel Plank Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/drucken-tirol.jpg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Drucken Tirol" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Autohandel Plank</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/eine_grafikerin.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Binder's Hotel Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/eine_grafikerin.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Eine Grafikerin" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Binder's Hotel</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
@@ -499,15 +513,15 @@
                             <p class="text-sm font-semibold text-gray-300">Cafe Konditorei Schreiner</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/jaeger.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="DB Performance Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/jaeger.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Gärtnerei Jäger" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">DB Performance</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/kanal_service_plank.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Drucken.Tirol Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/kanal_service_plank.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Kanal Service Plank" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Drucken.Tirol</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/binder.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="EAH Hupfauf Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/binder.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Binder" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">EAH Hupfauf</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
@@ -515,19 +529,19 @@
                             <p class="text-sm font-semibold text-gray-300">Erdbau Höpperger</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/hp_dental.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Fahrschule Easy Drivers Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/hp_dental.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="HP Dental" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Fahrschule Easy Drivers</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/zimmerei_plattner.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Gärtnerei Angelika Jäger Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/zimmerei_plattner.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Zimmerei Plattner" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Gärtnerei Angelika Jäger</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/fotobox_tirol.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Generali Romed Unsinn Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/fotobox_tirol.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Fotobox Tirol" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Generali Romed Unsinn</p>
                         </div>
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/cafe_schreiner.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Gummi Winkler Logo" class="rounded-lg mb-2">
+                            <img src="images/sponsors/cafe_schreiner.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Cafe Konditorei Schreiner" class="rounded-lg mb-2">
                             <p class="text-sm font-semibold text-gray-300">Gummi Winkler</p>
                         </div>
                 </div>
