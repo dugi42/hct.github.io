@@ -116,6 +116,31 @@
         .animate-fade-in-up {
             animation: fadeInUp 0.8s ease-out;
         }
+
+        /* Stats component (scoped, no global overrides) */
+        .fade-in { animation: fadeIn 1s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Bars and tooltips */
+        .bar-container .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            transform: translate(-50%, -120%);
+            left: 50%;
+            top: 0;
+        }
+        .bar-container:hover .tooltip { opacity: 1; }
+        .bar-goals { background-color: #3b82f6; }     /* blue-500 */
+        .bar-assists { background-color: #22c55e; }   /* green-500 */
+        .bar-trainings { background-color: #f59e0b; } /* amber-500 */
     </style>
 </head>
 <body class="bg-gray-100">
@@ -341,106 +366,164 @@
                     </div>
                 </div>
 
-                <!-- Spielplan -->
-                <div class="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto mb-12">
+                <!-- REPLACED: Spielplan block -->
+                <div class="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto mb-12 fade-in">
                     <div class="p-6">
-                        <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center">Spielplan <span class="hc-red">2024/25</span></h3>
-                        
-                        <!-- Tabs -->
-                        <div class="flex border-b-2 border-gray-200 mb-6">
-                            <button id="tab-next" class="flex-1 py-4 px-2 text-center font-semibold text-gray-800 bg-white border-b-4 border-hc-red">Nächstes Spiel</button>
-                            <button id="tab-last" class="flex-1 py-4 px-2 text-center font-semibold text-gray-500 bg-gray-50">Letztes Ergebnis</button>
-                            <button id="tab-schedule" class="flex-1 py-4 px-2 text-center font-semibold text-gray-500 bg-gray-50">Kommende Spiele</button>
-                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center">Saison 2024/25 <span class="hc-red">in Zahlen</span></h3>
 
-                        <!-- Tab Content: Next Game -->
-                        <div id="content-next" class="p-6">
-                            <div class="flex flex-col md:flex-row justify-around items-center text-center">
-                                <div class="flex flex-col items-center mb-6 md:mb-0">
-                                    <img src="https://placehold.co/120x120/000000/d4af37?text=HCT" alt="HC Thaur Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
-                                    <h3 class="mt-4 text-2xl font-bold">HC Thaur</h3>
-                                </div>
-                                <div class="mx-8 order-first md:order-none mb-6 md:mb-0">
-                                    <p class="text-sm uppercase text-gray-500">2. Division - Tiroler Hockey Cup</p>
-                                    <p class="text-5xl font-black my-2">VS</p>
-                                    <p class="font-semibold text-lg">Samstag, 18. Januar 2025</p>
-                                    <p class="text-hc-red text-2xl font-bold">19:30 Uhr</p>
-                                    <p class="text-gray-600">Eisarena Wattens</p>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <img src="https://placehold.co/120x120/1a202c/ffffff?text=ECT" alt="Opponent Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
-                                    <h3 class="mt-4 text-2xl font-bold">EC Telfs</h3>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="p-6 space-y-12">
+                            <!-- Bar Chart for different member groups -->
 
-                        <!-- Tab Content: Last Result -->
-                        <div id="content-last" class="p-6 hidden">
-                            <div class="flex flex-col md:flex-row justify-around items-center text-center">
-                                <div class="flex flex-col items-center mb-6 md:mb-0">
-                                    <img src="https://placehold.co/120x120/000000/d4af37?text=HCT" alt="HC Thaur Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
-                                    <h3 class="mt-4 text-2xl font-bold">HC Thaur</h3>
-                                </div>
-                                <div class="mx-8 order-first md:order-none mb-6 md:mb-0">
-                                    <p class="text-sm uppercase text-gray-500">Endergebnis - 2. Division</p>
-                                    <p class="text-6xl font-black my-2">4 : 3</p>
-                                    <p class="font-semibold text-lg">Samstag, 11. Januar 2025</p>
-                                    <a href="#" class="mt-4 inline-block px-4 py-2 bg-gray-800 text-white text-sm font-bold uppercase rounded-lg hover:bg-black transition duration-300">
-                                        Zum Spielbericht
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <img src="https://placehold.co/120x120/1a202c/ffffff?text=ECI" alt="Opponent Logo" class="h-24 w-24 md:h-32 md:w-32 object-contain rounded-full border-4 border-gray-200">
-                                    <h3 class="mt-4 text-2xl font-bold">EC Imst</h3>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Saison Statistik -->
+                            <div class="p-6">
+                                <h4 class="text-xl md:text-2xl font-bold mb-6 text-center">Saison 2024/25 Statistik</h4>
 
-                        <!-- Tab Content: Schedule -->
-                        <div id="content-schedule" class="p-6 hidden">
-                            <div class="overflow-x-auto">
-                                <table class="w-full">
-                                    <thead>
-                                        <tr class="border-b">
-                                            <th class="text-left py-3 px-4 font-semibold">Datum</th>
-                                            <th class="text-left py-3 px-4 font-semibold">Gegner</th>
-                                            <th class="text-left py-3 px-4 font-semibold">Ort</th>
-                                            <th class="text-left py-3 px-4 font-semibold">Zeit</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="py-3 px-4">18. Jan 2025</td>
-                                            <td class="py-3 px-4">EC Telfs</td>
-                                            <td class="py-3 px-4">Eisarena Wattens</td>
-                                            <td class="py-3 px-4">19:30</td>
-                                        </tr>
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="py-3 px-4">25. Jan 2025</td>
-                                            <td class="py-3 px-4">HC Schwaz II</td>
-                                            <td class="py-3 px-4">Auswärts</td>
-                                            <td class="py-3 px-4">19:45</td>
-                                        </tr>
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="py-3 px-4">01. Feb 2025</td>
-                                            <td class="py-3 px-4">EV Landeck II</td>
-                                            <td class="py-3 px-4">Eisarena Wattens</td>
-                                            <td class="py-3 px-4">17:30</td>
-                                        </tr>
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="py-3 px-4">08. Feb 2025</td>
-                                            <td class="py-3 px-4">HCK Kufstein</td>
-                                            <td class="py-3 px-4">Auswärts</td>
-                                            <td class="py-3 px-4">20:00</td>
-                                        </tr>
-                                        <tr class="border-b hover:bg-gray-50">
-                                            <td class="py-3 px-4">15. Feb 2025</td>
-                                            <td class="py-3 px-4">EC Zirl</td>
-                                            <td class="py-3 px-4">Eisarena Wattens</td>
-                                            <td class="py-3 px-4">19:30</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <!-- Top Scorer Chart -->
+                                <div class="bg-gray-100 p-6 rounded-lg shadow-inner mb-8">
+                                    <h5 class="text-lg md:text-xl font-semibold mb-4 text-gray-800 text-center">Topscorer Division 2</h5>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Lukas Christler</span>
+                                            <div class="flex-grow grid grid-cols-100 gap-1 rounded-full overflow-hidden">
+                                                <div class="bar-goals h-4 rounded-full" style="grid-column: span 17 / span 17;"></div>
+                                                <div class="bar-assists h-4 rounded-full" style="grid-column: span 18 / span 18;"></div>
+                                            </div>
+                                            <span class="w-10 text-right text-sm font-semibold text-gray-800">35</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Angerer</span>
+                                            <div class="flex-grow grid grid-cols-100 gap-1 rounded-full overflow-hidden">
+                                                <div class="bar-goals h-4 rounded-full" style="grid-column: span 11 / span 11;"></div>
+                                                <div class="bar-assists h-4 rounded-full" style="grid-column: span 13 / span 13;"></div>
+                                            </div>
+                                            <span class="w-10 text-right text-sm font-semibold text-gray-800">24</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Markus Kopp</span>
+                                            <div class="flex-grow grid grid-cols-100 gap-1 rounded-full overflow-hidden">
+                                                <div class="bar-goals h-4 rounded-full" style="grid-column: span 13 / span 13;"></div>
+                                                <div class="bar-assists h-4 rounded-full" style="grid-column: span 9 / span 9;"></div>
+                                            </div>
+                                            <span class="w-10 text-right text-sm font-semibold text-gray-800">22</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">A. Trockenbacher</span>
+                                            <div class="flex-grow grid grid-cols-100 gap-1 rounded-full overflow-hidden">
+                                                <div class="bar-goals h-4 rounded-full" style="grid-column: span 11 / span 11;"></div>
+                                                <div class="bar-assists h-4 rounded-full" style="grid-column: span 10 / span 10;"></div>
+                                            </div>
+                                            <span class="w-10 text-right text-sm font-semibold text-gray-800">21</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">C. Stables</span>
+                                            <div class="flex-grow grid grid-cols-100 gap-1 rounded-full overflow-hidden">
+                                                <div class="bar-goals h-4 rounded-full" style="grid-column: span 7 / span 7;"></div>
+                                                <div class="bar-assists h-4 rounded-full" style="grid-column: span 13 / span 13;"></div>
+                                            </div>
+                                            <span class="w-10 text-right text-sm font-semibold text-gray-800">20</span>
+                                        </div>
+                                        <div class="flex justify-end mt-4">
+                                            <div class="flex items-center mr-4"><div class="w-4 h-4 rounded-full bg-blue-500 mr-2"></div><span class="text-xs">Tore</span></div>
+                                            <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div><span class="text-xs">Assists</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Trainingsmeister Chart -->
+                                <div class="bg-gray-100 p-6 rounded-lg shadow-inner mb-8">
+                                    <h5 class="text-lg md:text-xl font-semibold mb-4 text-gray-800 text-center">Fleißigste Spieler (Trainingseinheiten)</h5>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Wolfgang Winkler</span>
+                                            <div class="flex-grow h-6 bg-gray-200 rounded-full overflow-hidden shadow-sm">
+                                                <div class="bar-trainings h-full rounded-full transition-all duration-1000 ease-out" style="width: 100%;"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-800 w-8 text-right">26</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Toni Plank</span>
+                                            <div class="flex-grow h-6 bg-gray-200 rounded-full overflow-hidden shadow-sm">
+                                                <div class="bar-trainings h-full rounded-full transition-all duration-1000 ease-out" style="width: 100%;"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-800 w-8 text-right">26</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Gabriel Thaler</span>
+                                            <div class="flex-grow h-6 bg-gray-200 rounded-full overflow-hidden shadow-sm">
+                                                <div class="bar-trainings h-full rounded-full transition-all duration-1000 ease-out" style="width: 96%;"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-800 w-8 text-right">25</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Niki Christler</span>
+                                            <div class="flex-grow h-6 bg-gray-200 rounded-full overflow-hidden shadow-sm">
+                                                <div class="bar-trainings h-full rounded-full transition-all duration-1000 ease-out" style="width: 92.3%;"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-800 w-8 text-right">24</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="w-1/4 md:w-1/5 text-sm font-medium text-gray-700 truncate">Mario Föger</span>
+                                            <div class="flex-grow h-6 bg-gray-200 rounded-full overflow-hidden shadow-sm">
+                                                <div class="bar-trainings h-full rounded-full transition-all duration-1000 ease-out" style="width: 88.4%;"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-800 w-8 text-right">23</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Hockey Cup Tirol Table -->
+                                <div class="overflow-x-auto bg-gray-100 p-6 rounded-lg shadow-inner">
+                                    <h5 class="text-lg md:text-xl font-semibold mb-4 text-gray-800 text-center">Hockey Cup Tirol Tabelle</h5>
+                                    <table class="w-full text-left">
+                                        <thead>
+                                            <tr class="bg-gray-200 uppercase text-xs text-gray-600 font-semibold tracking-wider">
+                                                <th class="py-3 px-4 rounded-tl-lg">Platz</th>
+                                                <th class="py-3 px-4">Team</th>
+                                                <th class="py-3 px-4 text-center">Spiele</th>
+                                                <th class="py-3 px-4 text-right rounded-tr-lg">Punkte</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-200 last:border-b-0 hover:bg-white">
+                                                <td class="py-3 px-4 text-sm font-medium text-gray-800">1</td>
+                                                <td class="py-3 px-4 text-sm text-gray-700">EHC VOLDERS WHITE HAWKS</td>
+                                                <td class="py-3 px-4 text-sm text-center text-gray-700">10</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-right text-gray-800">18</td>
+                                            </tr>
+                                            <tr class="bg-hc-red bg-opacity-10 border-b-2 border-hc-red last:border-b-0 hover:bg-opacity-20">
+                                                <td class="py-3 px-4 text-sm font-bold text-gray-800">2</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-gray-800">HOCKEY CLUB THAUR</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-center text-gray-800">10</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-right text-gray-800">18</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-200 last:border-b-0 hover:bg-white">
+                                                <td class="py-3 px-4 text-sm font-medium text-gray-800">3</td>
+                                                <td class="py-3 px-4 text-sm text-gray-700">EC SELLRAINTAL WOLVES</td>
+                                                <td class="py-3 px-4 text-sm text-center text-gray-700">10</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-right text-gray-800">17</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-200 last:border-b-0 hover:bg-white">
+                                                <td class="py-3 px-4 text-sm font-medium text-gray-800">4</td>
+                                                <td class="py-3 px-4 text-sm text-gray-700">TYROLEAN ICE KINGS</td>
+                                                <td class="py-3 px-4 text-sm text-center text-gray-700">10</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-right text-gray-800">15</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-200 last:border-b-0 hover:bg-white">
+                                                <td class="py-3 px-4 text-sm font-medium text-gray-800">5</td>
+                                                <td class="py-3 px-4 text-sm text-gray-700">EHC BLACK SCORPIONS STRASS</td>
+                                                <td class="py-3 px-4 text-sm text-center text-gray-700">10</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-right text-gray-800">13</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-200 last:border-b-0 hover:bg-white">
+                                                <td class="py-3 px-4 text-sm font-medium text-gray-800">6</td>
+                                                <td class="py-3 px-4 text-sm text-gray-700">EC ASCHAUER EISBÄREN</td>
+                                                <td class="py-3 px-4 text-sm text-center text-gray-700">10</td>
+                                                <td class="py-3 px-4 text-sm font-bold text-right text-gray-800">9</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -453,7 +536,7 @@
                         <div class="bg-gradient-to-br from-purple-600 via-pink-600 to-yellow-500 rounded-xl p-1 inline-block mb-4">
                             <div class="bg-white rounded-lg p-6">
                                 <svg class="w-12 h-12 mx-auto text-pink-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.79 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                                 </svg>
                                 <p class="text-gray-600 mb-4">@hockeyclubthaur</p>
                                 <a href="https://instagram.com/hockeyclubthaur" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-pink-700 transition duration-300">
@@ -499,50 +582,54 @@
 
                     <!-- Sponsorenraster im Karussell -->
                     <div id="sponsor-grid" class="carousel-container flex overflow-x-scroll snap-x snap-mandatory gap-6 p-4">
-                        <!-- Sponsorenkarten -->
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                        <!-- changed: bg-white + text-gray-900 + border-gray-200 -->
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
                             <img src="images/sponsors/drucken-tirol.jpg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Drucken Tirol" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Autohandel Plank</p>
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
                             <img src="images/sponsors/eine_grafikerin.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Eine Grafikerin" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Binder's Hotel</p>
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/gummi_winkler.jpeg" alt="Cafe Konditorei Schreiner Logo" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Cafe Konditorei Schreiner</p>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/gummi_winkler.jpeg" alt="Gummi Winkler" class="rounded-lg mb-2">
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/jaeger.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Gärtnerei Jäger" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">DB Performance</p>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/generali.JPG" alt="Gummi Winkler" class="rounded-lg mb-2">
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/kanal_service_plank.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Kanal Service Plank" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Drucken.Tirol</p>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/jaeger.pdf" onerror="this.onerror=null; this.src='https://www.gaertnerei-jaeger.at'" alt="Gärtnerei Jäger" class="rounded-lg mb-2">
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/plank_autohandel.pdf" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Kanal Service Plank" class="rounded-lg mb-2">
+                        </div>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/plank_kanalservice.pdf" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Kanal Service Plank" class="rounded-lg mb-2">
+                        </div>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
                             <img src="images/sponsors/binder.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Binder" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">EAH Hupfauf</p>
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/katzenberger.png" alt="Erdbau Höpperger Logo" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Erdbau Höpperger</p>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/katzenberger.png" alt="Katzenberger" class="rounded-lg mb-2">
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/hp_dental.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="HP Dental" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Fahrschule Easy Drivers</p>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/hoepperger.jpg" alt="Erdbau Hoepperger" class="rounded-lg mb-2">
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/zimmerei_plattner.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Zimmerei Plattner" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Gärtnerei Angelika Jäger</p>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/hp_dental.jpg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="HP Dental" class="rounded-lg mb-2">
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/plattner.pdf" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Zimmerei Plattner" class="rounded-lg mb-2">
+                        </div>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/spirit_of_hockey.svg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Zimmerei Plattner" class="rounded-lg mb-2">
+                        </div>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
                             <img src="images/sponsors/fotobox_tirol.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Fotobox Tirol" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Generali Romed Unsinn</p>
                         </div>
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-gray-800 border border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
                             <img src="images/sponsors/cafe_schreiner.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Cafe Konditorei Schreiner" class="rounded-lg mb-2">
-                            <p class="text-sm font-semibold text-gray-300">Gummi Winkler</p>
+                        </div>
+                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
+                            <img src="images/sponsors/thermo_fertig.jpg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Thermo Fertig" class="rounded-lg mb-2">
                         </div>
                 </div>
             </div>
@@ -649,9 +736,12 @@
             activeTab.classList.remove('bg-gray-50', 'text-gray-500');
         }
 
-        tabNext.addEventListener('click', () => switchTab(tabNext, contentNext));
-        tabLast.addEventListener('click', () => switchTab(tabLast, contentLast));
-        tabSchedule.addEventListener('click', () => switchTab(tabSchedule, contentSchedule));
+        // ADD GUARD: only wire if elements exist
+        if (tabNext && tabLast && tabSchedule && contentNext && contentLast && contentSchedule) {
+            tabNext.addEventListener('click', () => switchTab(tabNext, contentNext));
+            tabLast.addEventListener('click', () => switchTab(tabLast, contentLast));
+            tabSchedule.addEventListener('click', () => switchTab(tabSchedule, contentSchedule));
+        }
 
         // Gallery Filter
         const galleryFilters = document.querySelectorAll('.gallery-filter');
