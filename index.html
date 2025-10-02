@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YWXF7HR51T"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YWXF7HR51T');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HC Thaur - Offizielle Homepage</title>
@@ -9,6 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -53,12 +66,15 @@
         .sponsor-card {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
             scroll-snap-align: center;
         }
         .sponsor-card.is-visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        .sponsor-card:hover {
+            box-shadow: 0 0 30px rgba(211, 5, 16, 0.45);
         }
 
         /* Gallery Modal Styles */
@@ -754,7 +770,7 @@
                             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                         </a>
                         <a href="https://www.instagram.com/hockeyclub_thaur/" target="_blank" aria-label="Instagram" class="text-gray-400 hover:text-hc-red transition duration-300">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -936,64 +952,86 @@
         const nextBtn = document.getElementById('next-btn');
 
         if (carousel && prevBtn && nextBtn) {
-            let scrollInterval;
             let currentCardIndex = 0;
-            const cardWidth = 276; // Breite der Karte + gap (256px + 24px)
-            const sponsors = document.querySelectorAll('.sponsor-card');
+            const sponsors = Array.from(document.querySelectorAll('.sponsor-card'));
 
-            // Funktion zum Scrollen zum nächsten Element
-            const scrollToNext = () => {
-                const totalCards = sponsors.length;
-                currentCardIndex = (currentCardIndex + 1) % totalCards;
+            const getCardWidth = () => {
+                if (!sponsors.length) return 0;
+                const styles = getComputedStyle(carousel);
+                const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+                return sponsors[0].offsetWidth + gap;
+            };
+
+            const scrollToIndex = (index) => {
+                const width = getCardWidth();
                 carousel.scroll({
-                    left: currentCardIndex * cardWidth,
+                    left: index * width,
                     behavior: 'smooth'
                 });
             };
 
-            // Automatisches Scrollen starten
-            const startAutoScroll = () => {
-                stopAutoScroll(); // Vorherigen Interval löschen
-                scrollInterval = setInterval(scrollToNext, 3000); // Alle 3 Sekunden scrollen
-            };
-
-            // Automatisches Scrollen stoppen
-            const stopAutoScroll = () => {
-                if (scrollInterval) {
-                    clearInterval(scrollInterval);
+            const updateIndex = () => {
+                const width = getCardWidth();
+                if (width > 0) {
+                    currentCardIndex = Math.round(carousel.scrollLeft / width);
                 }
             };
-            
-            // Event-Listener für Navigation
-           
+
             nextBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                stopAutoScroll();
-                scrollToNext();
+                const totalCards = sponsors.length;
+                currentCardIndex = (currentCardIndex + 1) % totalCards;
+                scrollToIndex(currentCardIndex);
             });
 
             prevBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                stopAutoScroll();
                 const totalCards = sponsors.length;
                 currentCardIndex = (currentCardIndex - 1 + totalCards) % totalCards;
-                carousel.scroll({
-                    left: currentCardIndex * cardWidth,
-                    behavior: 'smooth'
-                });
+                scrollToIndex(currentCardIndex);
             });
 
-            // Event-Listener für Interaktion (stoppt Auto-Scroll)
-            carousel.addEventListener('mouseenter', stopAutoScroll);
-            carousel.addEventListener('mouseleave', startAutoScroll);
+            let isDragging = false;
+            let startX = 0;
+            let startScrollLeft = 0;
+            let activePointerId = null;
 
-            // IntersectionObserver für Fade-In-Effekt
+            carousel.addEventListener('pointerdown', (event) => {
+                if (event.pointerType === 'mouse' && event.button !== 0) return;
+                isDragging = true;
+                activePointerId = event.pointerId;
+                startX = event.clientX;
+                startScrollLeft = carousel.scrollLeft;
+                carousel.setPointerCapture(activePointerId);
+            });
+
+            carousel.addEventListener('pointermove', (event) => {
+                if (!isDragging) return;
+                const delta = event.clientX - startX;
+                carousel.scrollLeft = startScrollLeft - delta;
+            });
+
+            const endDrag = (event) => {
+                if (!isDragging) return;
+                isDragging = false;
+                if (activePointerId !== null) {
+                    carousel.releasePointerCapture(activePointerId);
+                    activePointerId = null;
+                }
+                updateIndex();
+            };
+
+            carousel.addEventListener('pointerup', endDrag);
+            carousel.addEventListener('pointercancel', endDrag);
+            carousel.addEventListener('pointerleave', endDrag);
+            carousel.addEventListener('scroll', updateIndex);
+
             const sponsorObserverOptions = {
                 root: carousel,
                 rootMargin: '0px',
                 threshold: 0.5
             };
-            const sponsorObserver = new IntersectionObserver((entries, observer) => {
+            const sponsorObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
@@ -1004,9 +1042,6 @@
             sponsors.forEach(card => {
                 sponsorObserver.observe(card);
             });
-
-            // Starten des automatischen Scrolls, wenn die Seite geladen ist
-            startAutoScroll();
         }
 
         // Booklet Popup Funktionalität
