@@ -68,15 +68,25 @@
         .sponsor-card {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
             scroll-snap-align: center;
         }
         .sponsor-card.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        @keyframes sponsorGlowPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(252, 6, 18, 0.4), 0 0 30px rgba(252, 6, 18, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(252, 6, 18, 0.6), 0 0 45px rgba(252, 6, 18, 0.3);
+            }
+        }
+
         .sponsor-card:hover {
-            box-shadow: 0 0 30px rgba(211, 5, 16, 0.45);
+            animation: sponsorGlowPulse 2s ease-in-out infinite;
         }
 
         /* Gallery Modal Styles */
@@ -160,6 +170,34 @@
         .bar-assists { background-color: #000000; }   /* green-500 */
         .bar-trainings { background-color: #fc0612; } /* amber-500 */
         .bar-trainingsall { background-color: #fc0612; } /* amber-500 */
+
+        /* Featured Sponsor Glow Effect */
+        .featured-sponsor-card:hover {
+            box-shadow: 0 0 50px rgba(252, 6, 18, 0.6), 0 0 30px rgba(252, 6, 18, 0.4);
+        }
+
+        /* Head Sponsor Logo Glow Effect with Pulsing Animation */
+        .head-sponsor-logo {
+            cursor: pointer;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(252, 6, 18, 0.9)) 
+                        drop-shadow(0 0 16px rgba(252, 6, 18, 0.7)) 
+                        drop-shadow(0 0 24px rgba(252, 6, 18, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 12px rgba(252, 6, 18, 1)) 
+                        drop-shadow(0 0 20px rgba(252, 6, 18, 0.8)) 
+                        drop-shadow(0 0 28px rgba(252, 6, 18, 0.6));
+            }
+        }
+
+        .head-sponsor-logo:hover {
+            animation: glowPulse 2s ease-in-out infinite;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -215,7 +253,9 @@
             <div class="relative z-10 flex flex-col items-center h-full text-center text-white px-4 pt-8 md:pt-16">
                 <!-- Head Sponsor Logo -->
                 <div class="mb-8">
-                    <img src="images/head_sponsor.png" alt="Head Sponsor" class="h-7 md:h-12 w-auto object-contain">
+                    <a href="https://www.drucken.tirol" target="_blank" class="inline-block">
+                        <img src="images/head_sponsor.png" alt="Head Sponsor" class="head-sponsor-logo h-7 md:h-12 w-auto object-contain">
+                    </a>
                 </div>
                 <div class="flex-grow"></div>
                 <h1 class="text-4xl md:text-7xl font-black uppercase tracking-wider mb-8">Willkommen beim Hockey Club <span class="hc-red">Thaur</span></h1>
@@ -877,6 +917,15 @@
                     </p>
                 </div>
 
+                <!-- Featured Head Sponsor -->
+                <div class="mt-8 mb-16 flex justify-center">
+                    <div class="featured-sponsor-card bg-white text-gray-900 border border-gray-200 rounded-xl p-6 w-full md:w-96 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105">
+                        <a href="https://www.drucken.tirol" target="_blank" class="w-full">
+                            <img src="images/sponsors/drucken-tirol.jpg" onerror="this.onerror=null; this.src='https://placehold.co/300x150/1f2937/d4d4d4?text=LOGO'" alt="Drucken Tirol" class="rounded-lg mb-4 w-full h-auto">
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Karussell-Container -->
                 <div class="relative group">
                     <!-- Navigationstasten -->
@@ -893,11 +942,6 @@
 
                     <!-- Sponsorenraster im Karussell -->
                     <div id="sponsor-grid" class="carousel-container flex overflow-x-scroll snap-x snap-mandatory gap-6 p-4">
-                        <!-- changed: bg-white + text-gray-900 + border-gray-200 -->
-                        <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
-                            <img src="images/sponsors/drucken-tirol.jpg" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="Drucken Tirol" class="rounded-lg mb-2">
-                        </div>
-
                         <div class="sponsor-card flex-none w-64 md:w-80 bg-white text-gray-900 border border-gray-200 rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/10">
                             <img src="images/sponsors/db_performance.png" onerror="this.onerror=null; this.src='https://placehold.co/200x100/1f2937/d4d4d4?text=LOGO'" alt="DB Performance" class="rounded-lg mb-2">
                         </div>
