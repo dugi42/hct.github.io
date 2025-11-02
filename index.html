@@ -198,6 +198,23 @@
             animation: glowPulse 2s ease-in-out infinite;
             transform: scale(1.05);
         }
+
+        /* Dynamic event cards */
+        .event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-4px);
+        }
+        .event-card.past-event {
+            background-color: #f3f4f6;
+            box-shadow: none;
+        }
+        .event-card.past-event .event-title,
+        .event-card.past-event .event-time,
+        .event-card.past-event .event-location {
+            color: #9ca3af;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -270,154 +287,6 @@
             </div>
         </section>
 
-    <section id="about" class="py-20 bg-white scroll-mt-24">
-            <div class="container mx-auto px-6">
-                
-                <!-- Club Logo -->
-                <div class="text-center mb-12">
-                    <div class="logo-container">
-                        <img src="images/logo.png" alt="HCT Logo" class="h-32 w-32 md:h-48 md:w-48 mx-auto rounded-full shadow-lg">
-                    </div>
-                </div>
-
-                <!-- Animated Statistics -->
-                <div class="stats-container max-w-6xl mx-auto mb-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
-                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
-                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
-                                <span class="counter" data-target="233">0</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-800 mb-1">Mitglieder Gesamt</h3>
-                            <p class="text-green-600 font-semibold text-sm">(+12)</p>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
-                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
-                                <span class="counter" data-target="57">0</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-800 mb-1">Kids</h3>
-                            <p class="text-green-600 font-semibold text-sm">(+4)</p>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
-                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
-                                <span class="counter" data-target="58">0</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-800 mb-1">Aktive Spieler</h3>
-                            <p class="text-green-600 font-semibold text-sm">(+3)</p>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
-                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
-                                <span class="counter" data-target="28">0</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-800 mb-1">Radlfahrer</h3>
-                            <p class="text-green-600 font-semibold text-sm">(+3)</p>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
-                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
-                                <span class="counter" data-target="118">0</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-800 mb-1">Fördermitglieder</h3>
-                            <p class="text-green-600 font-semibold text-sm">(+5)</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Club Information -->
-                <div class="max-w-4xl mx-auto">
-                    <div class="text-center animate-fade-in-up">
-                        <div class="prose prose-lg mx-auto text-gray-700">
-                            <p class="mb-6">Seit unserer Gründung im Jahr 2017 steht beim Hockey Club Thaur die Freude am Sport und das gemeinsame Vereinsleben im Mittelpunkt. Was als kleine Hobbyrunde begann, ist heute ein lebendiger Verein mit knapp 60 aktiven Erwachsenen und zwei Nachwuchsteams mit 55 begeisterten Spielerinnen und Spielern.</p>
-                            <p class="mb-6">Im Winter dreht sich bei uns alles um Eishockey – mit Leidenschaft, Teamgeist und jeder Menge Spaß auf dem Eis. Doch auch abseits der kalten Jahreszeit sind wir sportlich aktiv: gemeinsame Rennrad- und Mountainbiketouren, die Teilnahme an Laufveranstaltungen und vieles mehr sorgen für Abwechslung und Bewegung rund ums Jahr.</p>
-                            <p>Neben dem Sport ist uns die Gemeinschaft besonders wichtig. Wir sind ein Verein, in dem Geselligkeit, Zusammenhalt und Freundschaft großgeschrieben werden – sei es bei Spielen, Ausflügen oder geselligen Abenden.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- instagram embed
-                <div id="insta-embed"></div>
-                    <script>
-                    (async () => {
-                        try {
-                        const r = await fetch('/public/ig-latest.html', { cache: 'no-store' });
-                        if (!r.ok) throw 0;
-                        document.getElementById('insta-embed').innerHTML = await r.text();
-                        } catch {
-                        document.getElementById('insta-embed').textContent = 'Instagram unavailable.';
-                        }
-                    })();
-                    </script> -->
-
-            
-                <!-- Nachwuchs Section -->
-                <div id="youth" class="bg-gray-100 rounded-lg p-8 mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4">Nachwuchs - Die <span class="hc-red">Zukunft</span> des Vereins</h3>
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                Die Zukunft gehört unserem Nachwuchs!
-                            </p>
-                            <p class="text-gray-700 leading-relaxed">
-                                Im Hockey Club Thaur sind wir unglaublich stolz auf unsere Nachwuchsarbeit. Unsere zwei Nachwuchsteams mit 55 jungen, begeisterten Spielerinnen und Spielern sind das Herzstück des Vereins. Ihre Leidenschaft und ihr Teamgeist sind ansteckend und zeigen, dass die Zukunft des HCT in den besten Händen liegt. Ein großes Dankeschön an unseren Nachwuchs – ihr seid unsere Inspiration!
-                            </p>
-                        </div>
-                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_minis.jpg')">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hockey Club Thaur Section -->
-                <div id="hockey-club-thaur" class="bg-gray-100 rounded-lg p-8 mt-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_all.jpg')">
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4">Unser <span class="hc-red">HCT</span> spielt auf!</h3>
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                Die Mannschaft des Hockey Club Thaur blickt auf eine spannende und sportlich intensive Saison 2024/25 zurück. Neben den 34 Trainings fanden in der heurigen Saison noch 16 Spiele statt! Somit hatten alle aktiven Spieler die Chance auf insgesamt 50 Eiszeiten.
-                                48 Spieler begaben sich unterschiedlich oft auf das Eis und sorgten für viele unvergessliche Stunden voller Teamgeist, Einsatzbereitschaft und Freude am Spiel. Ein herzliches Dankeschön an alle, die diese Saison zu etwas Besonderem gemacht haben – wir freuen uns bereits auf die kommende Saison 2025/26!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kampfmannschaft Section -->
-                <div id="kampfmannschaft" class="bg-gray-100 rounded-lg p-8 mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-                        
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4">Unsere <span class="hc-red">Kampfmannschaft</span> glänzt!</h3>
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                Ein riesiger Applaus für unsere Kampfmannschaft! Sie hat in der Saison 2024/25 eine wirklich sensationelle Leistung gezeigt und sich den vierten Tabellenplatz in der 2. Division des Tiroler Hockey Cups gesichert. Dieses herausragende Ergebnis ist das Resultat von harter Arbeit, großem Einsatz und echtem Teamgeist.
-                            </p>
-                            <p class="text-gray-700 leading-relaxed">
-                                Mit diesem Erfolg im Rücken blicken wir voller Spannung auf die kommende Saison 2025/26. Die Mannschaft ist bereit, das Eis wieder zum Beben zu bringen. Es wird heiß hergehen und wir können es kaum erwarten!
-                            </p>
-                        </div>
-                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_kampf.jpg')">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mtb Section -->
-                <div id="mtb" class="bg-gray-100 rounded-lg p-8 mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_radteam.JPEG')">
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4">Unsere <span class="hc-red">Radler</span> unterwegs!</h3>
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                Die Radrunde des Hockey Club Thaur blickt auf eine abwechslungsreiche und sportliche Saison 2024/25 zurück. Von April bis Ende Oktober radelte der HCT wieder regelmäßig mit dem Rennrad oder (E)MTB auf die Almen der Umgebung. Insgesamt gab es 21 HCT-Ausfahrten bzw. Wanderungen! Krönender Abschluss der Saison war das „Okasn“ auf der Thaurer Alm.
-                            </p>
-                            <p class="text-gray-700 leading-relaxed">
-                                 Ein herzliches Dankeschön an alle, die dabei waren und viele schöne Stunden in Bewegung, Natur und Gemeinschaft ermöglicht haben!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-
         <section id="news" class="py-20 bg-gray-100 scroll-mt-24">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Aktuelle <span class="hc-red">News</span></h2>
@@ -444,14 +313,258 @@
                 </div>
 
 
-                <!-- NEW: Tiroler Hockey Cup 2025/26 Section -->
+                <!-- NEW: Hockey Saison 2025/26 Section -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-6xl mx-auto">
                     <div class="p-8">
-                        <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center text-black">Tiroler Hockey Cup <span class="hc-red">2025/26</span></h3>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center text-black">Hockey Saison <span class="hc-red">2025/26</span></h3>
                         
+                        <!-- Trainings und Freundschaftsspiele -->
+                        <div class="mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-200 shadow-inner">
+                            <h4 class="text-xl font-bold text-gray-800 mb-4">Trainings und Freundschaftsspiele</h4>
+                            <p id="trainings-status" class="text-sm text-gray-500 text-center">Termine werden geladen...</p>
+                            <div id="trainings-cards" class="flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory"></div>
+                        </div>
+
+                        <script>
+                            (function() {
+                                const FEED_URL_BASE = 'https://api.vereinsplaner.at/v1/public/ical/eac54836-9dc4-4c99-9f12-b0f16985ea4d.ics';
+                                const cardsEl = document.getElementById('trainings-cards');
+                                const statusEl = document.getElementById('trainings-status');
+                                if (!cardsEl || !statusEl) {
+                                    return;
+                                }
+
+                                const dayNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+                                const pad = (value) => String(value).padStart(2, '0');
+
+                                const parseTimestamp = (raw) => {
+                                    if (!raw) return null;
+                                    const match = raw.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?)?/);
+                                    if (!match) return null;
+                                    const year = Number(match[1]);
+                                    const month = Number(match[2]) - 1;
+                                    const day = Number(match[3]);
+                                    const hasTime = Boolean(match[4]);
+                                    const hour = hasTime ? Number(match[4]) : 0;
+                                    const minute = hasTime ? Number(match[5]) : 0;
+                                    const second = hasTime ? Number(match[6] || '0') : 0;
+                                    return { date: new Date(year, month, day, hour, minute, second), hasTime };
+                                };
+
+                                const formatDate = (date) => `${dayNames[date.getDay()]}, ${pad(date.getDate())}.${pad(date.getMonth() + 1)}.${date.getFullYear()}`;
+
+                                const formatTimeRange = (start, end) => {
+                                    if (!start) return '';
+                                    if (!start.hasTime) {
+                                        return 'Ganztägig';
+                                    }
+                                    const startStr = `${pad(start.date.getHours())}:${pad(start.date.getMinutes())}`;
+                                    if (end && end.hasTime && start.date.toDateString() === end.date.toDateString()) {
+                                        const endStr = `${pad(end.date.getHours())}:${pad(end.date.getMinutes())}`;
+                                        return `${startStr} - ${endStr} Uhr`;
+                                    }
+                                    return `${startStr} Uhr`;
+                                };
+
+                                const unfoldLines = (text) => {
+                                    const rawLines = text.replace(/\r\n/g, '\n').split('\n');
+                                    const lines = [];
+                                    for (const line of rawLines) {
+                                        if (/^[ \t]/.test(line) && lines.length) {
+                                            lines[lines.length - 1] += line.slice(1);
+                                        } else {
+                                            lines.push(line);
+                                        }
+                                    }
+                                    return lines;
+                                };
+
+                                const parseICS = (text) => {
+                                    const lines = unfoldLines(text);
+                                    const events = [];
+                                    let current = null;
+
+                                    for (const line of lines) {
+                                        if (line === 'BEGIN:VEVENT') {
+                                            current = {};
+                                            continue;
+                                        }
+                                        if (line === 'END:VEVENT') {
+                                            if (current) {
+                                                events.push(current);
+                                            }
+                                            current = null;
+                                            continue;
+                                        }
+                                        if (!current) continue;
+                                        const separatorIndex = line.indexOf(':');
+                                        if (separatorIndex === -1) continue;
+                                        const rawKey = line.slice(0, separatorIndex);
+                                        const value = line.slice(separatorIndex + 1);
+                                        const [key, ...paramParts] = rawKey.split(';');
+                                        const params = {};
+                                        for (const part of paramParts) {
+                                            const [paramKey, paramValue] = part.split('=');
+                                            if (paramKey) {
+                                                params[paramKey] = paramValue;
+                                            }
+                                        }
+                                        current[key] = { value, params };
+                                    }
+
+                                    return events.map((event) => {
+                                        const start = parseTimestamp(event.DTSTART && event.DTSTART.value);
+                                        const end = parseTimestamp(event.DTEND && event.DTEND.value);
+                                        return {
+                                            summary: event.SUMMARY ? event.SUMMARY.value : '',
+                                            description: event.DESCRIPTION ? event.DESCRIPTION.value : '',
+                                            location: event.LOCATION ? event.LOCATION.value : '',
+                                            url: event.URL ? event.URL.value : '',
+                                            start,
+                                            end
+                                        };
+                                    }).filter((event) => event.start);
+                                };
+
+                                const normaliseText = (input) => {
+                                    const value = input || '';
+                                    return value
+                                        .replace(/\\n/g, ' ')
+                                        .replace(/\\\\,/g, ',')
+                                        .replace(/\\,/g, ',')
+                                        .replace(/\\\\/g, '\\')
+                                        .trim();
+                                };
+
+                                const inferGroup = (event) => {
+                                    const text = `${event.summary} ${event.description}`.toLowerCase();
+                                    if (/(nachwuchs|junior|kids|minis|u\\d{1,2}|schüler|youth)/.test(text)) {
+                                        return 'kids';
+                                    }
+                                    if (event.start && event.start.hasTime) {
+                                        const hour = event.start.date.getHours();
+                                        if (hour < 10) {
+                                            return 'kids';
+                                        }
+                                    }
+                                    return 'adults';
+                                };
+
+                                const classifyEvent = (event) => {
+                                    const text = `${event.summary} ${event.description}`.toLowerCase();
+                                    const group = inferGroup(event);
+                                    if (text.includes('freund')) {
+                                        return { label: 'Freundschaft', labelClass: 'text-black', borderClass: 'border-gray-800', group: null };
+                                    }
+                                    if (text.includes('spiel') && !text.includes('training')) {
+                                        return { label: 'Freundschaft', labelClass: 'text-black', borderClass: 'border-gray-800', group: null };
+                                    }
+                                    const label = group === 'kids' ? 'Training Nachwuchs' : 'Training Erwachsene';
+                                    const labelClass = group === 'kids' ? 'text-blue-600' : 'text-hc-red';
+                                    const borderClass = group === 'kids' ? 'border-blue-500' : 'border-hc-red';
+                                    return { label, labelClass, borderClass, group };
+                                };
+
+                                const buildCard = (event, now) => {
+                                    const { label, labelClass, borderClass, group } = classifyEvent(event);
+                                    const card = document.createElement('div');
+                                    card.className = `event-card flex-none w-64 p-4 rounded-xl shadow border-t-4 snap-center bg-white ${borderClass}`;
+
+                                    const header = document.createElement('div');
+                                    header.className = 'flex justify-between items-center text-sm font-semibold mb-2';
+
+                                    const labelEl = document.createElement('span');
+                                    labelEl.className = `${labelClass} uppercase`;
+                                    labelEl.textContent = label;
+
+                                    const dateEl = document.createElement('span');
+                                    dateEl.className = 'text-gray-500';
+                                    dateEl.textContent = formatDate(event.start.date);
+
+                                    header.appendChild(labelEl);
+                                    header.appendChild(dateEl);
+                                    card.appendChild(header);
+
+                                    const titleEl = document.createElement('p');
+                                    titleEl.className = 'event-title text-lg font-bold text-gray-900 mb-2 text-center';
+                                    titleEl.textContent = event.summary || 'Ohne Titel';
+                                    card.appendChild(titleEl);
+
+                                    const timeEl = document.createElement('p');
+                                    timeEl.className = 'event-time text-sm text-gray-600 text-center mb-2';
+                                    const timeText = formatTimeRange(event.start, event.end);
+                                    timeEl.textContent = timeText || 'Zeit folgt';
+                                    card.appendChild(timeEl);
+
+                                    if (group) {
+                                        const groupEl = document.createElement('p');
+                                        groupEl.className = `event-group text-xs font-semibold text-center mb-2 uppercase ${group === 'kids' ? 'text-blue-600' : 'text-hc-red'}`;
+                                        groupEl.textContent = group === 'kids' ? 'Nachwuchs' : 'Erwachsene';
+                                        card.appendChild(groupEl);
+                                    }
+
+                                    const locationEl = document.createElement('p');
+                                    locationEl.className = 'event-location text-sm text-gray-600 text-center';
+                                    locationEl.textContent = normaliseText(event.location) || 'Ort folgt';
+                                    card.appendChild(locationEl);
+
+                                    const eventEnd = event.end ? event.end.date : event.start.date;
+                                    if (eventEnd < now) {
+                                        card.classList.remove('bg-white');
+                                        card.classList.add('bg-gray-100', 'past-event');
+                                    }
+
+                                    return card;
+                                };
+
+                                const now = new Date();
+
+                                const feedUrl = `${FEED_URL_BASE}?_=${Date.now()}`;
+
+                                fetch(feedUrl, { cache: 'no-store' })
+                                    .then((response) => {
+                                        if (!response.ok) {
+                                            throw new Error(`HTTP ${response.status}`);
+                                        }
+                                        return response.text();
+                                    })
+                                    .then((text) => {
+                                        const events = parseICS(text)
+                                            .map((event) => ({
+                                                ...event,
+                                                summary: normaliseText(event.summary),
+                                                description: normaliseText(event.description),
+                                                location: normaliseText(event.location)
+                                            }))
+                                            .filter((event) => /training|freund|spiel/i.test(`${event.summary} ${event.description}`))
+                                            .sort((a, b) => a.start.date - b.start.date);
+
+                                        const upcoming = events.filter((event) => {
+                                            const endDate = event.end ? event.end.date : event.start.date;
+                                            return endDate >= now;
+                                        });
+
+                                        if (!upcoming.length) {
+                                            statusEl.textContent = 'Derzeit sind keine Einträge verfügbar.';
+                                            return;
+                                        }
+
+                                        statusEl.remove();
+                                        cardsEl.innerHTML = '';
+                                        upcoming.forEach((event) => {
+                                            cardsEl.appendChild(buildCard(event, now));
+                                        });
+                                    })
+                                    .catch((error) => {
+                                        statusEl.textContent = 'Termine konnten nicht geladen werden.';
+                                        console.error('[Trainings Feed]', error);
+                                    });
+                            })();
+                        </script>
+
                         <!-- Game Schedule Section -->
                         <div class="mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-200 shadow-inner">
-                            <h4 class="text-xl font-bold text-gray-800 mb-4">Spielplan 2025/26</h4>
+                            <h4 class="text-xl font-bold text-gray-800 mb-4">Spielplan Hockey Cup <span class="hc-red">2025/26</span></h4>
 
                             <!-- Horizontal Scroll Container -->
                             <div class="flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory">
@@ -914,9 +1027,155 @@
             </div>
         </section>
 
+    <section id="about" class="py-20 bg-white scroll-mt-24">
+            <div class="container mx-auto px-6">
+                
+                <!-- Club Logo -->
+                <div class="text-center mb-12">
+                    <div class="logo-container">
+                        <img src="images/logo.png" alt="HCT Logo" class="h-32 w-32 md:h-48 md:w-48 mx-auto rounded-full shadow-lg">
+                    </div>
+                </div>
+
+                <!-- Animated Statistics -->
+                <div class="stats-container max-w-6xl mx-auto mb-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
+                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
+                                <span class="counter" data-target="233">0</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Mitglieder Gesamt</h3>
+                            <p class="text-green-600 font-semibold text-sm">(+12)</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
+                                <span class="counter" data-target="57">0</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Kids</h3>
+                            <p class="text-green-600 font-semibold text-sm">(+4)</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
+                                <span class="counter" data-target="58">0</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Aktive Spieler</h3>
+                            <p class="text-green-600 font-semibold text-sm">(+3)</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
+                                <span class="counter" data-target="28">0</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Radlfahrer</h3>
+                            <p class="text-green-600 font-semibold text-sm">(+3)</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition duration-300">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-2">
+                                <span class="counter" data-target="118">0</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Fördermitglieder</h3>
+                            <p class="text-green-600 font-semibold text-sm">(+5)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Club Information -->
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center animate-fade-in-up">
+                        <div class="prose prose-lg mx-auto text-gray-700">
+                            <p class="mb-6">Seit unserer Gründung im Jahr 2017 steht beim Hockey Club Thaur die Freude am Sport und das gemeinsame Vereinsleben im Mittelpunkt. Was als kleine Hobbyrunde begann, ist heute ein lebendiger Verein mit knapp 60 aktiven Erwachsenen und zwei Nachwuchsteams mit 55 begeisterten Spielerinnen und Spielern.</p>
+                            <p class="mb-6">Im Winter dreht sich bei uns alles um Eishockey – mit Leidenschaft, Teamgeist und jeder Menge Spaß auf dem Eis. Doch auch abseits der kalten Jahreszeit sind wir sportlich aktiv: gemeinsame Rennrad- und Mountainbiketouren, die Teilnahme an Laufveranstaltungen und vieles mehr sorgen für Abwechslung und Bewegung rund ums Jahr.</p>
+                            <p>Neben dem Sport ist uns die Gemeinschaft besonders wichtig. Wir sind ein Verein, in dem Geselligkeit, Zusammenhalt und Freundschaft großgeschrieben werden – sei es bei Spielen, Ausflügen oder geselligen Abenden.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- instagram embed
+                <div id="insta-embed"></div>
+                    <script>
+                    (async () => {
+                        try {
+                        const r = await fetch('/public/ig-latest.html', { cache: 'no-store' });
+                        if (!r.ok) throw 0;
+                        document.getElementById('insta-embed').innerHTML = await r.text();
+                        } catch {
+                        document.getElementById('insta-embed').textContent = 'Instagram unavailable.';
+                        }
+                    })();
+                    </script> -->
+
+            
+                <!-- Nachwuchs Section -->
+                <div id="youth" class="bg-gray-100 rounded-lg p-8 mt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Nachwuchs - Die <span class="hc-red">Zukunft</span> des Vereins</h3>
+                            <p class="text-gray-700 leading-relaxed mb-6">
+                                Die Zukunft gehört unserem Nachwuchs!
+                            </p>
+                            <p class="text-gray-700 leading-relaxed">
+                                Im Hockey Club Thaur sind wir unglaublich stolz auf unsere Nachwuchsarbeit. Unsere zwei Nachwuchsteams mit 55 jungen, begeisterten Spielerinnen und Spielern sind das Herzstück des Vereins. Ihre Leidenschaft und ihr Teamgeist sind ansteckend und zeigen, dass die Zukunft des HCT in den besten Händen liegt. Ein großes Dankeschön an unseren Nachwuchs – ihr seid unsere Inspiration!
+                            </p>
+                        </div>
+                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_minis.jpg')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hockey Club Thaur Section -->
+                <div id="hockey-club-thaur" class="bg-gray-100 rounded-lg p-8 mt-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_all.jpg')">
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Unser <span class="hc-red">HCT</span> spielt auf!</h3>
+                            <p class="text-gray-700 leading-relaxed mb-6">
+                                Die Mannschaft des Hockey Club Thaur blickt auf eine spannende und sportlich intensive Saison 2024/25 zurück. Neben den 34 Trainings fanden in der heurigen Saison noch 16 Spiele statt! Somit hatten alle aktiven Spieler die Chance auf insgesamt 50 Eiszeiten.
+                                48 Spieler begaben sich unterschiedlich oft auf das Eis und sorgten für viele unvergessliche Stunden voller Teamgeist, Einsatzbereitschaft und Freude am Spiel. Ein herzliches Dankeschön an alle, die diese Saison zu etwas Besonderem gemacht haben – wir freuen uns bereits auf die kommende Saison 2025/26!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kampfmannschaft Section -->
+                <div id="kampfmannschaft" class="bg-gray-100 rounded-lg p-8 mt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+                        
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Unsere <span class="hc-red">Kampfmannschaft</span> glänzt!</h3>
+                            <p class="text-gray-700 leading-relaxed mb-6">
+                                Ein riesiger Applaus für unsere Kampfmannschaft! Sie hat in der Saison 2024/25 eine wirklich sensationelle Leistung gezeigt und sich den vierten Tabellenplatz in der 2. Division des Tiroler Hockey Cups gesichert. Dieses herausragende Ergebnis ist das Resultat von harter Arbeit, großem Einsatz und echtem Teamgeist.
+                            </p>
+                            <p class="text-gray-700 leading-relaxed">
+                                Mit diesem Erfolg im Rücken blicken wir voller Spannung auf die kommende Saison 2025/26. Die Mannschaft ist bereit, das Eis wieder zum Beben zu bringen. Es wird heiß hergehen und wir können es kaum erwarten!
+                            </p>
+                        </div>
+                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_kampf.jpg')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mtb Section -->
+                <div id="mtb" class="bg-gray-100 rounded-lg p-8 mt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+                        <div class="h-64 bg-cover bg-center rounded-lg" style="background-image: url('images/teams/hct_radteam.JPEG')">
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Unsere <span class="hc-red">Radler</span> unterwegs!</h3>
+                            <p class="text-gray-700 leading-relaxed mb-6">
+                                Die Radrunde des Hockey Club Thaur blickt auf eine abwechslungsreiche und sportliche Saison 2024/25 zurück. Von April bis Ende Oktober radelte der HCT wieder regelmäßig mit dem Rennrad oder (E)MTB auf die Almen der Umgebung. Insgesamt gab es 21 HCT-Ausfahrten bzw. Wanderungen! Krönender Abschluss der Saison war das „Okasn“ auf der Thaurer Alm.
+                            </p>
+                            <p class="text-gray-700 leading-relaxed">
+                                 Ein herzliches Dankeschön an alle, die dabei waren und viele schöne Stunden in Bewegung, Natur und Gemeinschaft ermöglicht haben!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
 
-<section id="sponsors" class="py-20 bg-gray-900 text-white scroll-mt-24">
+
+        <section id="sponsors" class="py-20 bg-gray-900 text-white scroll-mt-24">
             <div class="container mx-auto px-6 max-w-7xl">
                 <!-- Kopfbereich -->
                 <div class="text-center">
