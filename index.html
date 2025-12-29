@@ -334,34 +334,119 @@
                                     return;
                                 }
 
+                                const DEFAULT_TIME_ZONE = 'Europe/Vienna';
                                 const dayNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
                                 const pad = (value) => String(value).padStart(2, '0');
 
-                                const parseTimestamp = (raw) => {
-                                    if (!raw) return null;
-                                    const match = raw.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?)?/);
+                                const getTimeZoneOffset = (date, timeZone) => {
+                                    const formatter = new Intl.DateTimeFormat('en-US', {
+                                        timeZone,
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                        hour12: false
+                                    });
+                                    const parts = formatter.formatToParts(date);
+                                    const values = {};
+                                    for (const part of parts) {
+                                        if (part.type !== 'literal') {
+                                            values[part.type] = part.value;
+                                        }
+                                    }
+                                    const utcTime = Date.UTC(
+                                        Number(values.year),
+                                        Number(values.month) - 1,
+                                        Number(values.day),
+                                        Number(values.hour),
+                                        Number(values.minute),
+                                        Number(values.second)
+                                    );
+                                    return utcTime - date.getTime();
+                                };
+
+                                const toTimeZoneDate = (components, timeZone) => {
+                                    if (!timeZone) {
+                                        return new Date(
+                                            components.year,
+                                            components.month,
+                                            components.day,
+                                            components.hour,
+                                            components.minute,
+                                            components.second
+                                        );
+                                    }
+                                    const utcDate = new Date(Date.UTC(
+                                        components.year,
+                                        components.month,
+                                        components.day,
+                                        components.hour,
+                                        components.minute,
+                                        components.second
+                                    ));
+                                    const offset = getTimeZoneOffset(utcDate, timeZone);
+                                    let adjusted = new Date(utcDate.getTime() - offset);
+                                    const adjustedOffset = getTimeZoneOffset(adjusted, timeZone);
+                                    if (adjustedOffset !== offset) {
+                                        adjusted = new Date(utcDate.getTime() - adjustedOffset);
+                                    }
+                                    return adjusted;
+                                };
+
+                                const parseTimestamp = (field) => {
+                                    if (!field || !field.value) return null;
+
+                                    const raw = field.value;
+                                    const params = field.params || {};
+                                    const isUtc = raw.slice(-1).toUpperCase() === 'Z';
+                                    const cleanRaw = isUtc ? raw.slice(0, -1) : raw;
+                                    const match = cleanRaw.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?)?/);
                                     if (!match) return null;
+
                                     const year = Number(match[1]);
                                     const month = Number(match[2]) - 1;
                                     const day = Number(match[3]);
-                                    const hasTime = Boolean(match[4]);
+                                    const hasTime = Boolean(match[4]) && params.VALUE !== 'DATE';
                                     const hour = hasTime ? Number(match[4]) : 0;
                                     const minute = hasTime ? Number(match[5]) : 0;
                                     const second = hasTime ? Number(match[6] || '0') : 0;
-                                    return { date: new Date(year, month, day, hour, minute, second), hasTime };
+                                    const timeZone = params.TZID || DEFAULT_TIME_ZONE;
+                                    const local = { year, month, day, hour, minute, second };
+
+                                    let date;
+                                    if (isUtc) {
+                                        date = new Date(Date.UTC(year, month, day, hour, minute, second));
+                                    } else {
+                                        date = toTimeZoneDate({ year, month, day, hour, minute, second }, timeZone);
+                                    }
+                                    return { date, hasTime, timeZone, local };
                                 };
 
-                                const formatDate = (date) => `${dayNames[date.getDay()]}, ${pad(date.getDate())}.${pad(date.getMonth() + 1)}.${date.getFullYear()}`;
+                                const formatDate = (timestamp) => {
+                                    if (!timestamp || !timestamp.local) return '';
+                                    const { year, month, day } = timestamp.local;
+                                    const weekday = dayNames[new Date(Date.UTC(year, month, day)).getUTCDay()];
+                                    return `${weekday}, ${pad(day)}.${pad(month + 1)}.${year}`;
+                                };
 
                                 const formatTimeRange = (start, end) => {
                                     if (!start) return '';
                                     if (!start.hasTime) {
                                         return 'Ganztägig';
                                     }
-                                    const startStr = `${pad(start.date.getHours())}:${pad(start.date.getMinutes())}`;
-                                    if (end && end.hasTime && start.date.toDateString() === end.date.toDateString()) {
-                                        const endStr = `${pad(end.date.getHours())}:${pad(end.date.getMinutes())}`;
-                                        return `${startStr} - ${endStr} Uhr`;
+                                    const startLocal = start.local;
+                                    const startStr = `${pad(startLocal.hour)}:${pad(startLocal.minute)}`;
+                                    if (end && end.hasTime) {
+                                        const endLocal = end.local;
+                                        const sameDay = startLocal.year === endLocal.year
+                                            && startLocal.month === endLocal.month
+                                            && startLocal.day === endLocal.day;
+                                        if (sameDay) {
+                                            const endStr = `${pad(endLocal.hour)}:${pad(endLocal.minute)}`;
+                                            return `${startStr} - ${endStr} Uhr`;
+                                        }
                                     }
                                     return `${startStr} Uhr`;
                                 };
@@ -413,15 +498,17 @@
                                     }
 
                                     return events.map((event) => {
-                                        const start = parseTimestamp(event.DTSTART && event.DTSTART.value);
-                                        const end = parseTimestamp(event.DTEND && event.DTEND.value);
+                                        const start = parseTimestamp(event.DTSTART);
+                                        const end = parseTimestamp(event.DTEND);
+                                        const categories = event.CATEGORIES ? event.CATEGORIES.value.split(',').map(c => c.trim()) : [];
                                         return {
                                             summary: event.SUMMARY ? event.SUMMARY.value : '',
                                             description: event.DESCRIPTION ? event.DESCRIPTION.value : '',
                                             location: event.LOCATION ? event.LOCATION.value : '',
                                             url: event.URL ? event.URL.value : '',
                                             start,
-                                            end
+                                            end,
+                                            categories
                                         };
                                     }).filter((event) => event.start);
                                 };
@@ -432,41 +519,110 @@
                                         .replace(/\\n/g, ' ')
                                         .replace(/\\\\,/g, ',')
                                         .replace(/\\,/g, ',')
+                                        .replace(/\\;/g, ';')
+                                        .replace(/\\:/g, ':')
                                         .replace(/\\\\/g, '\\')
                                         .trim();
                                 };
 
-                                const inferGroup = (event) => {
-                                    const text = `${event.summary} ${event.description}`.toLowerCase();
-                                    if (/(nachwuchs|junior|kids|minis|u\\d{1,2}|schüler|youth)/.test(text)) {
-                                        return 'kids';
+                                const buildSearchText = (event) => `${event.summary} ${event.description} ${event.categories.join(' ')} ${event.location}`.toLowerCase();
+
+                                const trainingGroups = {
+                                    minis: {
+                                        label: 'Training Minis',
+                                        shortLabel: 'Minis',
+                                        labelClass: 'text-blue-600',
+                                        borderClass: 'border-blue-500',
+                                        groupClass: 'text-blue-600'
+                                    },
+                                    teenies: {
+                                        label: 'Training Teenies',
+                                        shortLabel: 'Teenies',
+                                        labelClass: 'text-green-600',
+                                        borderClass: 'border-green-500',
+                                        groupClass: 'text-green-600'
+                                    },
+                                    adults: {
+                                        label: 'Training Erwachsene',
+                                        shortLabel: 'Erwachsene',
+                                        labelClass: 'text-hc-red',
+                                        borderClass: 'border-hc-red',
+                                        groupClass: 'text-hc-red'
                                     }
-                                    if (event.start && event.start.hasTime) {
-                                        const hour = event.start.date.getHours();
-                                        if (hour < 10) {
-                                            return 'kids';
+                                };
+
+                                const getLocalMinutes = (timestamp) => {
+                                    if (!timestamp || !timestamp.hasTime || !timestamp.local) return null;
+                                    return (timestamp.local.hour * 60) + timestamp.local.minute;
+                                };
+
+                                const inferGroup = (event) => {
+                                    const text = buildSearchText(event);
+                                    if (/\btraining\s*minis\b|\bminis?\b/.test(text)) {
+                                        return 'minis';
+                                    }
+                                    if (/\btraining\s*teenies\b|\bteenies?\b/.test(text)) {
+                                        return 'teenies';
+                                    }
+                                    if (/\btraining\s*erwachsene\b|\berwachsene\b/.test(text)) {
+                                        return 'adults';
+                                    }
+
+                                    const adultKeywords = ['erwachsene', 'kampfmannschaft', 'senior', 'herren', 'damen'];
+                                    if (adultKeywords.some((keyword) => text.includes(keyword))) {
+                                        return 'adults';
+                                    }
+                                    const location = (event.location || '').toLowerCase();
+                                    const isThaur = /thaur|sportplatzweg/.test(location);
+                                    const isTelfs = /telfs|franz-?rimm/.test(location);
+                                    const localMinutes = getLocalMinutes(event.start);
+
+                                    if (isTelfs) {
+                                        return 'adults';
+                                    }
+                                    if (isThaur && localMinutes !== null) {
+                                        if (localMinutes < 18 * 60) {
+                                            return 'minis';
+                                        }
+                                        if (localMinutes < 19 * 60) {
+                                            return 'teenies';
+                                        }
+                                        return 'adults';
+                                    }
+                                    if (localMinutes !== null) {
+                                        if (localMinutes < 18 * 60) {
+                                            return 'minis';
+                                        }
+                                        if (localMinutes < 19 * 60) {
+                                            return 'teenies';
                                         }
                                     }
                                     return 'adults';
                                 };
 
                                 const classifyEvent = (event) => {
-                                    const text = `${event.summary} ${event.description}`.toLowerCase();
-                                    const group = inferGroup(event);
+                                    const text = buildSearchText(event);
+                                    const groupKey = inferGroup(event);
+                                    const group = trainingGroups[groupKey] || trainingGroups.adults;
+
                                     if (text.includes('freund')) {
                                         return { label: 'Freundschaft', labelClass: 'text-black', borderClass: 'border-gray-800', group: null };
                                     }
-                                    if (text.includes('spiel') && !text.includes('training')) {
-                                        return { label: 'Freundschaft', labelClass: 'text-black', borderClass: 'border-gray-800', group: null };
+                                    if ((text.includes('spiel') && !text.includes('training')) || text.includes('meisterschaft')) {
+                                        return { label: 'Meisterschaft', labelClass: 'text-black', borderClass: 'border-gray-800', group: null };
                                     }
-                                    const label = group === 'kids' ? 'Training Nachwuchs' : 'Training Erwachsene';
-                                    const labelClass = group === 'kids' ? 'text-blue-600' : 'text-hc-red';
-                                    const borderClass = group === 'kids' ? 'border-blue-500' : 'border-hc-red';
-                                    return { label, labelClass, borderClass, group };
+                                    return {
+                                        label: group.label,
+                                        labelClass: group.labelClass,
+                                        borderClass: group.borderClass,
+                                        group: groupKey,
+                                        groupLabel: group.shortLabel,
+                                        groupClass: group.groupClass
+                                    };
                                 };
 
                                 const buildCard = (event, now) => {
-                                    const { label, labelClass, borderClass, group } = classifyEvent(event);
+                                    const { label, labelClass, borderClass, group, groupLabel, groupClass } = classifyEvent(event);
                                     const card = document.createElement('div');
                                     card.className = `event-card flex-none w-64 p-4 rounded-xl shadow border-t-4 snap-center bg-white ${borderClass}`;
 
@@ -479,7 +635,7 @@
 
                                     const dateEl = document.createElement('span');
                                     dateEl.className = 'text-gray-500';
-                                    dateEl.textContent = formatDate(event.start.date);
+                                    dateEl.textContent = formatDate(event.start);
 
                                     header.appendChild(labelEl);
                                     header.appendChild(dateEl);
@@ -498,8 +654,8 @@
 
                                     if (group) {
                                         const groupEl = document.createElement('p');
-                                        groupEl.className = `event-group text-xs font-semibold text-center mb-2 uppercase ${group === 'kids' ? 'text-blue-600' : 'text-hc-red'}`;
-                                        groupEl.textContent = group === 'kids' ? 'Nachwuchs' : 'Erwachsene';
+                                        groupEl.className = `event-group text-xs font-semibold text-center mb-2 uppercase ${groupClass}`;
+                                        groupEl.textContent = groupLabel;
                                         card.appendChild(groupEl);
                                     }
 
@@ -534,9 +690,10 @@
                                                 ...event,
                                                 summary: normaliseText(event.summary),
                                                 description: normaliseText(event.description),
-                                                location: normaliseText(event.location)
+                                                location: normaliseText(event.location),
+                                                categories: event.categories.map(normaliseText).filter(Boolean)
                                             }))
-                                            .filter((event) => /training|freund|spiel/i.test(`${event.summary} ${event.description}`))
+                                            .filter((event) => /(training|freund|spiel|\btr\b)/i.test(buildSearchText(event)))
                                             .sort((a, b) => a.start.date - b.start.date);
 
                                         const upcoming = events.filter((event) => {
