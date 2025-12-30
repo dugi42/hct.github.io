@@ -1,0 +1,38 @@
+name: Update HC Stats
+
+on:
+  schedule:
+    - cron: "15 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-hcstats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch stats
+        env:
+          HC_REPORT_TOKEN: ${{ secrets.HC_REPORT_TOKEN }}
+          HC_REPORT_TEAM_ID: ${{ secrets.HC_REPORT_TEAM_ID }}
+          HC_REPORT_SEASON_ID: ${{ secrets.HC_REPORT_SEASON_ID }}
+          HC_REPORT_PHASE_ID: ${{ secrets.HC_REPORT_PHASE_ID }}
+        run: node scripts/fetch-hcstats.mjs
+
+      - name: Commit updates
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/hcstats.json
+          git commit -m "Update hcstats.json"
+          git push

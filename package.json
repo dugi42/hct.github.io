@@ -7,7 +7,8 @@
     "dev": "python3 -m http.server 8080",
     "build": "echo 'Build process for production'",
     "lint": "echo 'Linting CSS and JS files'",
-    "optimize": "echo 'Optimize images and assets'"
+    "optimize": "echo 'Optimize images and assets'",
+    "fetch:hcstats": "node scripts/fetch-hcstats.mjs"
   },
   "repository": {
     "type": "git",

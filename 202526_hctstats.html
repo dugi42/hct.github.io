@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hockey Report | Team-Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --hc-red: #fc0612;
+            --hc-red-dark: #d30510;
+            --hc-black: #000000;
+            --hc-body: #f0f2f5;
+            --hc-card: #ffffff;
+            --hc-border: #e0e0e0;
+            --hc-muted: #888888;
+            --hc-muted-strong: #555555;
+            --hc-muted-light: #9ca3af;
+            --hc-soft: #f1f1f1;
+            --hc-soft-alt: #f3f4f6;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--hc-body); color: var(--hc-black); }
+        .glass { background: var(--hc-card); border: 1px solid var(--hc-border); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08); }
+        .gradient-text { background: linear-gradient(90deg, var(--hc-red), var(--hc-red-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-muted { color: var(--hc-muted); }
+        .text-muted-strong { color: var(--hc-muted-strong); }
+        .text-muted-light { color: var(--hc-muted-light); }
+        .bg-soft { background-color: var(--hc-soft); }
+        .bg-soft-alt { background-color: var(--hc-soft-alt); }
+        .border-muted { border-color: var(--hc-border); }
+        .badge { background-color: var(--hc-soft); border: 1px solid var(--hc-border); color: var(--hc-red); }
+        .status-pill { background-color: var(--hc-soft-alt); color: var(--hc-muted-strong); }
+        .table-head { background-color: var(--hc-soft); color: var(--hc-muted-strong); }
+        .divide-muted > * + * { border-top: 1px solid var(--hc-border); }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="max-w-7xl mx-auto mb-12 flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-extrabold gradient-text leading-tight">Team-Statistiken</h1>
+            <p class="text-muted">Live-Statistiken von Hockey-Report.eu</p>
+        </div>
+        <div id="season-badge" class="badge px-4 py-1 rounded-full text-sm font-semibold">
+            Saison wird geladen...
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-2 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Top-10-Spielerleistung</h2>
+            <div class="h-[400px]">
+                <canvas id="playersChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Tabellenstand</h2>
+            <div class="h-[400px]">
+                <canvas id="standingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Spielübersicht</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="games-container"></div>
+        </div>
+
+        <div id="meta-panel" class="lg:col-span-3 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Datenüberblick</h2>
+            <div id="meta-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-muted-light"></div>
+        </div>
+
+        <div class="lg:col-span-3 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Tabelle (vollständig)</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left text-sm">
+                    <thead class="table-head text-xs uppercase">
+                        <tr>
+                            <th class="px-3 py-2">Rang</th>
+                            <th class="px-3 py-2">Team</th>
+                            <th class="px-3 py-2">Team-ID</th>
+                            <th class="px-3 py-2">Sp</th>
+                            <th class="px-3 py-2">S</th>
+                            <th class="px-3 py-2">N</th>
+                            <th class="px-3 py-2">OT-S</th>
+                            <th class="px-3 py-2">OT-N</th>
+                            <th class="px-3 py-2">Tore</th>
+                            <th class="px-3 py-2">Gegentore</th>
+                            <th class="px-3 py-2">Diff</th>
+                            <th class="px-3 py-2">Punkte</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-table-body" class="divide-muted"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Spiele (vollständig)</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left text-sm">
+                    <thead class="table-head text-xs uppercase">
+                        <tr>
+                            <th class="px-3 py-2">Spiel-ID</th>
+                            <th class="px-3 py-2">Datum</th>
+                            <th class="px-3 py-2">Uhrzeit</th>
+                            <th class="px-3 py-2">Status</th>
+                            <th class="px-3 py-2">Heim-ID</th>
+                            <th class="px-3 py-2">Heimteam</th>
+                            <th class="px-3 py-2">Auswärts-ID</th>
+                            <th class="px-3 py-2">Auswärtsteam</th>
+                            <th class="px-3 py-2">Arena</th>
+                            <th class="px-3 py-2">Tore Heim</th>
+                            <th class="px-3 py-2">Tore Auswärts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="games-table-body" class="divide-muted"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Spieler (vollständig)</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left text-sm">
+                    <thead class="table-head text-xs uppercase">
+                        <tr>
+                            <th class="px-3 py-2">Spieler-ID</th>
+                            <th class="px-3 py-2">Vorname</th>
+                            <th class="px-3 py-2">Nachname</th>
+                            <th class="px-3 py-2">Team</th>
+                            <th class="px-3 py-2">Tore</th>
+                            <th class="px-3 py-2">Assists</th>
+                            <th class="px-3 py-2">Gesamt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="players-table-body" class="divide-muted"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const STATS_URL = '/public/hcstats.json';
+
+        async function fetchStats() {
+            const response = await fetch(STATS_URL, { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error(`Statistiken konnten nicht geladen werden (${response.status})`);
+            }
+            return response.json();
+        }
+
+        async function initDashboard() {
+            try {
+                const data = await fetchStats();
+                const standings = data.standings || [];
+                const games = data.games || [];
+                const players = data.players || [];
+                const seasonId = data.context && data.context.season_id ? data.context.season_id : null;
+
+                document.getElementById('season-badge').innerText = seasonId ? `Saison ${seasonId}` : 'Saison';
+
+                renderMeta(data);
+                renderPlayersChart(players);
+                renderStandingsChart(standings);
+                renderGames(games);
+                renderStandingsTable(standings);
+                renderGamesTable(games);
+                renderPlayersTable(players);
+            } catch (error) {
+                console.error("Fehler beim Laden der Statistiken:", error);
+                const badge = document.getElementById('season-badge');
+                if (badge) {
+                    badge.innerText = 'Daten nicht verfügbar';
+                }
+            }
+        }
+
+        function getCssVar(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        function formatDate(value) {
+            if (!value) return '--';
+            const parts = value.split('-');
+            if (parts.length !== 3) return value;
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        }
+
+        function formatTime(value) {
+            if (!value) return '';
+            return value.slice(0, 5);
+        }
+
+        function statusLabel(status) {
+            const labels = {
+                live: 'Live',
+                active: 'Geplant',
+                upcoming: 'Geplant',
+                completed: 'Abgeschlossen',
+                scorekeeper_signed: 'Schreiber signiert',
+                referee_signed: 'Schiedsrichter signiert',
+                closed: 'Abgeschlossen'
+            };
+            return labels[status] || 'Unbekannt';
+        }
+
+        function statusBorderColor(status) {
+            const colors = {
+                closed: '--hc-red',
+                referee_signed: '--hc-red-dark',
+                scorekeeper_signed: '--hc-red-dark',
+                completed: '--hc-muted-strong',
+                active: '--hc-black',
+                live: '--hc-black',
+                upcoming: '--hc-muted'
+            };
+            return getCssVar(colors[status] || '--hc-muted');
+        }
+
+        function renderPlayersChart(players) {
+            const canvas = document.getElementById('playersChart');
+            if (!players.length) {
+                canvas.parentElement.innerHTML = '<p class="text-muted-light">Keine Spielerdaten verfügbar.</p>';
+                return;
+            }
+            const ctx = canvas.getContext('2d');
+            const goalsColor = getCssVar('--hc-red');
+            const assistsColor = getCssVar('--hc-black');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: players.map(p => `${p.player_surname}`),
+                    datasets: [
+                        { label: 'Tore', data: players.map(p => p.goals), backgroundColor: goalsColor, borderRadius: 5 },
+                        { label: 'Assists', data: players.map(p => p.assists), backgroundColor: assistsColor, borderRadius: 5 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true, grid: { color: getCssVar('--hc-border') }, border: { display: false } },
+                        y: { stacked: true, grid: { display: false } }
+                    },
+                    plugins: { legend: { position: 'bottom', labels: { color: getCssVar('--hc-muted-strong') } } }
+                }
+            });
+        }
+
+        function renderStandingsChart(standings) {
+            const canvas = document.getElementById('standingsChart');
+            if (!standings.length) {
+                canvas.parentElement.innerHTML = '<p class="text-muted-light">Keine Tabellendaten verfügbar.</p>';
+                return;
+            }
+            const ctx = canvas.getContext('2d');
+            const palette = [
+                getCssVar('--hc-red'),
+                getCssVar('--hc-red-dark'),
+                getCssVar('--hc-black'),
+                getCssVar('--hc-muted-strong'),
+                getCssVar('--hc-muted'),
+                getCssVar('--hc-muted-light'),
+                getCssVar('--hc-border')
+            ];
+            const colors = standings.map((_, index) => palette[index % palette.length]);
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: standings.map(s => s.team_name),
+                    datasets: [{
+                        data: standings.map(s => s.points),
+                        backgroundColor: colors,
+                        borderWidth: 0,
+                        hoverOffset: 20
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (item) => `${item.label}: ${item.raw} Punkte` } }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        function renderGames(games) {
+            const container = document.getElementById('games-container');
+            if (!games || !games.length) {
+                container.innerHTML = `
+                    <div class="glass p-6 rounded-3xl text-muted-light lg:col-span-3">
+                        Keine Spiele verfügbar.
+                    </div>
+                `;
+                return;
+            }
+            container.innerHTML = '';
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = "glass p-6 rounded-3xl flex flex-col justify-between border-l-4";
+                card.style.borderLeftColor = statusBorderColor(game.status);
+                const dateLabel = formatDate(game.date);
+                const timeLabel = formatTime(game.time);
+                const scoreHome = game.score_home === null || game.score_home === undefined ? '-' : game.score_home;
+                const scoreAway = game.score_away === null || game.score_away === undefined ? '-' : game.score_away;
+                card.innerHTML = `
+                    <div class="flex justify-between text-xs text-muted mb-4 font-semibold uppercase tracking-widest">
+                        <span>${dateLabel}${timeLabel ? ` ${timeLabel} Uhr` : ''}</span>
+                        <span class="px-2 py-0.5 rounded status-pill">${statusLabel(game.status)}</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-lg">${game.home_team_name}</span>
+                        <span class="text-2xl font-black">${scoreHome}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-lg">${game.away_team_name}</span>
+                        <span class="text-2xl font-black">${scoreAway}</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-muted text-xs text-muted-strong">
+                        Arena: ${game.arena_name || '-'}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderMeta(data) {
+            const grid = document.getElementById('meta-grid');
+            grid.innerHTML = '';
+            const updatedAt = data.updated_at ? new Date(data.updated_at).toLocaleString('de-AT') : '--';
+            const items = [
+                { label: 'Aktualisiert', value: updatedAt },
+                { label: 'Team-ID', value: data.team_id },
+                { label: 'Liga-ID', value: data.context && data.context.league_id },
+                { label: 'Division-ID', value: data.context && data.context.division_id },
+                { label: 'Phase-ID', value: data.context && data.context.phase_id },
+                { label: 'Saison-ID', value: data.context && data.context.season_id },
+                { label: 'Teams', value: (data.standings || []).length },
+                { label: 'Spiele', value: (data.games || []).length },
+                { label: 'Spieler', value: (data.players || []).length }
+            ];
+            items.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'bg-soft-alt rounded-2xl p-4 border border-muted';
+                const label = document.createElement('div');
+                label.className = 'text-xs uppercase text-muted mb-1';
+                label.textContent = item.label;
+                const value = document.createElement('div');
+                value.className = 'text-lg font-semibold text-muted-strong';
+                value.textContent = valueOrDash(item.value);
+                card.appendChild(label);
+                card.appendChild(value);
+                grid.appendChild(card);
+            });
+        }
+
+        function valueOrDash(value) {
+            if (value === null || value === undefined || value === '') {
+                return '--';
+            }
+            return value;
+        }
+
+        function createEmptyRow(colSpan, message) {
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.colSpan = colSpan;
+            cell.className = 'px-3 py-4 text-muted-light';
+            cell.textContent = message;
+            row.appendChild(cell);
+            return row;
+        }
+
+        function appendCell(row, value) {
+            const cell = document.createElement('td');
+            cell.className = 'px-3 py-2';
+            cell.textContent = valueOrDash(value);
+            row.appendChild(cell);
+        }
+
+        function renderStandingsTable(standings) {
+            const body = document.getElementById('standings-table-body');
+            body.innerHTML = '';
+            if (!standings.length) {
+                body.appendChild(createEmptyRow(12, 'Keine Tabellendaten verfügbar.'));
+                return;
+            }
+            standings.forEach((team, index) => {
+                const row = document.createElement('tr');
+                if (index % 2 === 1) {
+                    row.className = 'bg-soft-alt';
+                }
+                appendCell(row, team.rank);
+                appendCell(row, team.team_name);
+                appendCell(row, team.team_id);
+                appendCell(row, team.games_played);
+                appendCell(row, team.wins);
+                appendCell(row, team.losses);
+                appendCell(row, team.overtime_wins);
+                appendCell(row, team.overtime_losses);
+                appendCell(row, team.goals_for);
+                appendCell(row, team.goals_against);
+                appendCell(row, team.goal_diff);
+                appendCell(row, team.points);
+                body.appendChild(row);
+            });
+        }
+
+        function renderGamesTable(games) {
+            const body = document.getElementById('games-table-body');
+            body.innerHTML = '';
+            if (!games.length) {
+                body.appendChild(createEmptyRow(11, 'Keine Spieldaten verfügbar.'));
+                return;
+            }
+            games.forEach((game, index) => {
+                const row = document.createElement('tr');
+                if (index % 2 === 1) {
+                    row.className = 'bg-soft-alt';
+                }
+                const timeLabel = formatTime(game.time);
+                appendCell(row, game.game_id);
+                appendCell(row, formatDate(game.date));
+                appendCell(row, timeLabel ? `${timeLabel} Uhr` : '--');
+                appendCell(row, statusLabel(game.status));
+                appendCell(row, game.home_team_id);
+                appendCell(row, game.home_team_name);
+                appendCell(row, game.away_team_id);
+                appendCell(row, game.away_team_name);
+                appendCell(row, game.arena_name);
+                appendCell(row, game.score_home);
+                appendCell(row, game.score_away);
+                body.appendChild(row);
+            });
+        }
+
+        function renderPlayersTable(players) {
+            const body = document.getElementById('players-table-body');
+            body.innerHTML = '';
+            if (!players.length) {
+                body.appendChild(createEmptyRow(7, 'Keine Spielerdaten verfügbar.'));
+                return;
+            }
+            players.forEach((player, index) => {
+                const row = document.createElement('tr');
+                if (index % 2 === 1) {
+                    row.className = 'bg-soft-alt';
+                }
+                appendCell(row, player.player_id);
+                appendCell(row, player.player_name);
+                appendCell(row, player.player_surname);
+                appendCell(row, player.team_name);
+                appendCell(row, player.goals);
+                appendCell(row, player.assists);
+                appendCell(row, player.total_points);
+                body.appendChild(row);
+            });
+        }
+
+        initDashboard();
+    </script>
+</body>
+</html>
