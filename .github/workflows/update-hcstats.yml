@@ -5,6 +5,9 @@ on:
     - cron: "15 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update-hcstats:
     runs-on: ubuntu-latest
