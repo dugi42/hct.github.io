@@ -264,6 +264,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const standingsBody = document.getElementById('standings-table-body');
+    if (standingsBody) {
+        const statsUrl = 'public/hcstats.json';
+
+        const formatValue = value => (value ?? '--');
+
+        const appendCell = (row, value, isRank = false) => {
+            const cell = document.createElement('td');
+            cell.className = `px-4 py-3${isRank ? ' font-semibold' : ''}`;
+            cell.textContent = formatValue(value);
+            row.appendChild(cell);
+        };
+
+        const setEmptyState = message => {
+            standingsBody.innerHTML = '';
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.colSpan = 12;
+            cell.className = 'px-4 py-4 text-gray-500';
+            cell.textContent = message;
+            row.appendChild(cell);
+            standingsBody.appendChild(row);
+        };
+
+        const renderStandings = (standings, highlightTeamId) => {
+            standingsBody.innerHTML = '';
+            if (!standings.length) {
+                setEmptyState('Keine Tabellendaten verfügbar.');
+                return;
+            }
+
+            standings.forEach((team, index) => {
+                const row = document.createElement('tr');
+                const isHighlighted = highlightTeamId !== null && highlightTeamId !== undefined
+                    && team.team_id === highlightTeamId;
+
+                if (isHighlighted) {
+                    row.className = 'bg-hc-red text-white font-semibold';
+                } else {
+                    row.className = index % 2 === 1 ? 'bg-gray-50' : 'bg-white';
+                }
+
+                appendCell(row, team.rank, true);
+                appendCell(row, team.team_name);
+                appendCell(row, team.team_id);
+                appendCell(row, team.games_played);
+                appendCell(row, team.wins);
+                appendCell(row, team.losses);
+                appendCell(row, team.overtime_wins);
+                appendCell(row, team.overtime_losses);
+                appendCell(row, team.goals_for);
+                appendCell(row, team.goals_against);
+                appendCell(row, team.goal_diff);
+                appendCell(row, team.points);
+                standingsBody.appendChild(row);
+            });
+        };
+
+        fetch(statsUrl, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderStandings(data.standings || [], data.team_id);
+            })
+            .catch(error => {
+                console.error('[Standings Table]', error);
+                setEmptyState('Tabellendaten konnten nicht geladen werden.');
+            });
+    }
+
     const bookletPopup = document.getElementById('bookletPopup');
     if (bookletPopup) {
         const closePopup = () => {
@@ -287,6 +361,33 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', event => {
             if (event.key === 'Escape') {
                 closePopup();
+            }
+        });
+    }
+
+    const teamStatsPopup = document.getElementById('teamStatsPopup');
+    if (teamStatsPopup) {
+        const closeTeamStatsPopup = () => {
+            teamStatsPopup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        window.openTeamStatsPopup = () => {
+            teamStatsPopup.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeTeamStatsPopup = closeTeamStatsPopup;
+
+        teamStatsPopup.addEventListener('click', event => {
+            if (event.target === teamStatsPopup) {
+                closeTeamStatsPopup();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeTeamStatsPopup();
             }
         });
     }
