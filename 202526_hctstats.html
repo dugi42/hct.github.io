@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hockey Report | Team-Dashboard</title>
+    <title>Hockey Report | Statistik Kampfmannschaft</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -40,8 +40,11 @@
 
     <header class="max-w-7xl mx-auto mb-12 flex justify-between items-end">
         <div>
-            <h1 class="text-4xl font-extrabold gradient-text leading-tight">Team-Statistiken</h1>
-            <p class="text-muted">Live-Statistiken von Hockey-Report.eu</p>
+            <h1 class="text-4xl font-extrabold gradient-text leading-tight">Statistik Kampfmannschaft</h1>
+            <p class="text-muted">
+                Statistik powered by Hockey-Report.eu
+                <span id="updated-at" class="block text-sm text-muted-light mt-1">aktualisiert am --</span>
+            </p>
         </div>
         <div id="season-badge" class="badge px-4 py-1 rounded-full text-sm font-semibold">
             Saison wird geladen...
@@ -50,17 +53,17 @@
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <div class="lg:col-span-2 glass p-6 rounded-3xl">
+        <div class="lg:col-span-3 glass p-6 rounded-3xl">
             <h2 class="text-xl font-bold mb-6">Top-10-Spielerleistung</h2>
             <div class="h-[400px]">
                 <canvas id="playersChart"></canvas>
             </div>
         </div>
 
-        <div class="glass p-6 rounded-3xl">
-            <h2 class="text-xl font-bold mb-6">Tabellenstand</h2>
-            <div class="h-[400px]">
-                <canvas id="standingsChart"></canvas>
+        <div class="lg:col-span-3 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Tor-Entwicklung</h2>
+            <div class="h-[360px]">
+                <canvas id="goalsTrendChart"></canvas>
             </div>
         </div>
 
@@ -69,13 +72,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="games-container"></div>
         </div>
 
-        <div id="meta-panel" class="lg:col-span-3 glass p-6 rounded-3xl">
-            <h2 class="text-xl font-bold mb-6">Datenüberblick</h2>
-            <div id="meta-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-muted-light"></div>
-        </div>
-
         <div class="lg:col-span-3 glass p-6 rounded-3xl">
-            <h2 class="text-xl font-bold mb-6">Tabelle (vollständig)</h2>
+            <h2 class="text-xl font-bold mb-6">Hockey Cup 2025/26 2. Division</h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full text-left text-sm">
                     <thead class="table-head text-xs uppercase">
@@ -166,9 +164,9 @@
 
                 document.getElementById('season-badge').innerText = seasonId ? `Saison ${seasonId}` : 'Saison';
 
-                renderMeta(data);
+                updateHeader(data);
                 renderPlayersChart(players);
-                renderStandingsChart(standings);
+                renderGoalsTrend(games, data.team_id);
                 renderGames(games);
                 renderStandingsTable(standings);
                 renderGamesTable(games);
@@ -196,6 +194,17 @@
         function formatTime(value) {
             if (!value) return '';
             return value.slice(0, 5);
+        }
+
+        function updateHeader(data) {
+            const updatedAt = data.updated_at ? new Date(data.updated_at) : null;
+            const updatedLabel = updatedAt && !Number.isNaN(updatedAt.getTime())
+                ? updatedAt.toLocaleDateString('de-AT')
+                : '--';
+            const updatedNode = document.getElementById('updated-at');
+            if (updatedNode) {
+                updatedNode.textContent = `aktualisiert am ${updatedLabel}`;
+            }
         }
 
         function statusLabel(status) {
@@ -255,46 +264,6 @@
             });
         }
 
-        function renderStandingsChart(standings) {
-            const canvas = document.getElementById('standingsChart');
-            if (!standings.length) {
-                canvas.parentElement.innerHTML = '<p class="text-muted-light">Keine Tabellendaten verfügbar.</p>';
-                return;
-            }
-            const ctx = canvas.getContext('2d');
-            const palette = [
-                getCssVar('--hc-red'),
-                getCssVar('--hc-red-dark'),
-                getCssVar('--hc-black'),
-                getCssVar('--hc-muted-strong'),
-                getCssVar('--hc-muted'),
-                getCssVar('--hc-muted-light'),
-                getCssVar('--hc-border')
-            ];
-            const colors = standings.map((_, index) => palette[index % palette.length]);
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: standings.map(s => s.team_name),
-                    datasets: [{
-                        data: standings.map(s => s.points),
-                        backgroundColor: colors,
-                        borderWidth: 0,
-                        hoverOffset: 20
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: { callbacks: { label: (item) => `${item.label}: ${item.raw} Punkte` } }
-                    },
-                    cutout: '70%'
-                }
-            });
-        }
-
         function renderGames(games) {
             const container = document.getElementById('games-container');
             if (!games || !games.length) {
@@ -335,33 +304,75 @@
             });
         }
 
-        function renderMeta(data) {
-            const grid = document.getElementById('meta-grid');
-            grid.innerHTML = '';
-            const updatedAt = data.updated_at ? new Date(data.updated_at).toLocaleString('de-AT') : '--';
-            const items = [
-                { label: 'Aktualisiert', value: updatedAt },
-                { label: 'Team-ID', value: data.team_id },
-                { label: 'Liga-ID', value: data.context && data.context.league_id },
-                { label: 'Division-ID', value: data.context && data.context.division_id },
-                { label: 'Phase-ID', value: data.context && data.context.phase_id },
-                { label: 'Saison-ID', value: data.context && data.context.season_id },
-                { label: 'Teams', value: (data.standings || []).length },
-                { label: 'Spiele', value: (data.games || []).length },
-                { label: 'Spieler', value: (data.players || []).length }
-            ];
-            items.forEach((item) => {
-                const card = document.createElement('div');
-                card.className = 'bg-soft-alt rounded-2xl p-4 border border-muted';
-                const label = document.createElement('div');
-                label.className = 'text-xs uppercase text-muted mb-1';
-                label.textContent = item.label;
-                const value = document.createElement('div');
-                value.className = 'text-lg font-semibold text-muted-strong';
-                value.textContent = valueOrDash(item.value);
-                card.appendChild(label);
-                card.appendChild(value);
-                grid.appendChild(card);
+        function renderGoalsTrend(games, teamId) {
+            const canvas = document.getElementById('goalsTrendChart');
+            if (!canvas) {
+                return;
+            }
+            if (!games || !games.length) {
+                canvas.parentElement.innerHTML = '<p class="text-muted-light">Keine Spieldaten verfügbar.</p>';
+                return;
+            }
+            const finalGames = games
+                .filter((game) => isFinalGame(game))
+                .sort((a, b) => {
+                    const aTime = a.time ? a.time : '00:00:00';
+                    const bTime = b.time ? b.time : '00:00:00';
+                    return new Date(`${a.date}T${aTime}`) - new Date(`${b.date}T${bTime}`);
+                });
+            if (!finalGames.length) {
+                canvas.parentElement.innerHTML = '<p class="text-muted-light">Keine abgeschlossenen Spiele verfügbar.</p>';
+                return;
+            }
+            const labels = [];
+            const goalsForSeries = [];
+            const goalsAgainstSeries = [];
+            let cumulativeFor = 0;
+            let cumulativeAgainst = 0;
+            finalGames.forEach((game) => {
+                const { goalsFor, goalsAgainst } = getGoalsForAgainst(game, teamId);
+                cumulativeFor += goalsFor;
+                cumulativeAgainst += goalsAgainst;
+                labels.push(formatDate(game.date));
+                goalsForSeries.push(cumulativeFor);
+                goalsAgainstSeries.push(cumulativeAgainst);
+            });
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'HC Thaur Tore',
+                            data: goalsForSeries,
+                            borderColor: getCssVar('--hc-red'),
+                            backgroundColor: 'rgba(252, 6, 18, 0.18)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Gegentore',
+                            data: goalsAgainstSeries,
+                            borderColor: getCssVar('--hc-black'),
+                            backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: getCssVar('--hc-border') }, border: { display: false } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: getCssVar('--hc-muted-strong') } },
+                        tooltip: { callbacks: { label: (item) => `${item.dataset.label}: ${item.raw}` } }
+                    }
+                }
             });
         }
 
@@ -370,6 +381,26 @@
                 return '--';
             }
             return value;
+        }
+
+        function isFinalGame(game) {
+            const finalStatuses = new Set([
+                'closed',
+                'completed',
+                'scorekeeper_signed',
+                'referee_signed'
+            ]);
+            return finalStatuses.has(game.status);
+        }
+
+        function getGoalsForAgainst(game, teamId) {
+            const isHome = Number(game.home_team_id) === Number(teamId);
+            const goalsFor = isHome ? game.score_home : game.score_away;
+            const goalsAgainst = isHome ? game.score_away : game.score_home;
+            return {
+                goalsFor: Number.isFinite(goalsFor) ? goalsFor : Number(goalsFor) || 0,
+                goalsAgainst: Number.isFinite(goalsAgainst) ? goalsAgainst : Number(goalsAgainst) || 0
+            };
         }
 
         function createEmptyRow(colSpan, message) {
