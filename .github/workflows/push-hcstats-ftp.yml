@@ -35,8 +35,7 @@ jobs:
           lftp -e "
             set ftp:ssl-allow no;
             open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
-            mkdir -p ${FTP_REMOTE_DIR};
             cd ${FTP_REMOTE_DIR};
-            put public/hcstats.json -o hcstats.json;
+            mirror -R --delete --verbose --exclude-glob .git/ --exclude-glob .git/** ./ .;
             bye
           "
