@@ -1,0 +1,42 @@
+name: Publish HC Stats via FTP
+
+on:
+  schedule:
+    - cron: "20 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ftp-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Upload hcstats.json
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          set -euo pipefail
+          if [ -z "${FTP_HOST:-}" ] || [ -z "${FTP_USER:-}" ] || [ -z "${FTP_PASSWORD:-}" ] || [ -z "${FTP_REMOTE_DIR:-}" ]; then
+            echo "Missing FTP secrets. Required: FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_REMOTE_DIR."
+            exit 1
+          fi
+          FTP_PORT="${FTP_PORT:-21}"
+          lftp -e "
+            set ftp:ssl-allow no;
+            open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
+            mkdir -p ${FTP_REMOTE_DIR};
+            cd ${FTP_REMOTE_DIR};
+            put public/hcstats.json -o hcstats.json;
+            bye
+          "
