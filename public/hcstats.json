@@ -1,5 +1,5 @@
 {
-  "updated_at": "2025-12-31T02:54:49.664Z",
+  "updated_at": "2026-01-01T02:59:48.727Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -11,16 +11,30 @@
     {
       "team_id": 8,
       "team_name": "EHC Black Scorpions Strass",
-      "points": 15,
-      "games_played": 6,
-      "goals_for": 25,
-      "goals_against": 15,
-      "wins": 5,
+      "points": 18,
+      "games_played": 7,
+      "goals_for": 29,
+      "goals_against": 16,
+      "wins": 6,
       "losses": 1,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 1,
-      "goal_diff": 10
+      "goal_diff": 13
+    },
+    {
+      "team_id": 15,
+      "team_name": "Tyrolean Ice Kings",
+      "points": 14,
+      "games_played": 6,
+      "goals_for": 37,
+      "goals_against": 16,
+      "wins": 4,
+      "losses": 1,
+      "overtime_wins": 1,
+      "overtime_losses": 0,
+      "rank": 2,
+      "goal_diff": 21
     },
     {
       "team_id": 6,
@@ -33,78 +47,64 @@
       "losses": 1,
       "overtime_wins": 0,
       "overtime_losses": 0,
-      "rank": 2,
+      "rank": 3,
       "goal_diff": 22
     },
     {
-      "team_id": 15,
-      "team_name": "Tyrolean Ice Kings",
-      "points": 11,
-      "games_played": 5,
-      "goals_for": 25,
-      "goals_against": 16,
-      "wins": 3,
-      "losses": 1,
-      "overtime_wins": 1,
-      "overtime_losses": 0,
-      "rank": 3,
-      "goal_diff": 9
+      "team_id": 10,
+      "team_name": "EHC White Hawks Volders",
+      "points": 7,
+      "games_played": 6,
+      "goals_for": 27,
+      "goals_against": 35,
+      "wins": 2,
+      "losses": 3,
+      "overtime_wins": 0,
+      "overtime_losses": 1,
+      "rank": 4,
+      "goal_diff": -8
     },
     {
       "team_id": 11,
       "team_name": "HC Thaur",
       "points": 6,
-      "games_played": 4,
-      "goals_for": 12,
-      "goals_against": 10,
-      "wins": 2,
-      "losses": 2,
-      "overtime_wins": 0,
-      "overtime_losses": 0,
-      "rank": 4,
-      "goal_diff": 2
-    },
-    {
-      "team_id": 3,
-      "team_name": "EC Aschauer Eisbären",
-      "points": 6,
       "games_played": 6,
-      "goals_for": 22,
-      "goals_against": 26,
+      "goals_for": 20,
+      "goals_against": 23,
       "wins": 2,
       "losses": 4,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 5,
-      "goal_diff": -4
+      "goal_diff": -3
+    },
+    {
+      "team_id": 3,
+      "team_name": "EC Aschauer Eisbären",
+      "points": 6,
+      "games_played": 7,
+      "goals_for": 30,
+      "goals_against": 35,
+      "wins": 2,
+      "losses": 5,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
+      "rank": 6,
+      "goal_diff": -5
     },
     {
       "team_id": 29,
       "team_name": "EC Newcomers II",
       "points": 3,
-      "games_played": 6,
+      "games_played": 7,
       "goals_for": 9,
-      "goals_against": 37,
+      "goals_against": 49,
       "wins": 1,
-      "losses": 5,
+      "losses": 6,
       "overtime_wins": 0,
       "overtime_losses": 0,
-      "rank": 6,
-      "goal_diff": -28
-    },
-    {
-      "team_id": 10,
-      "team_name": "EHC White Hawks Volders",
-      "points": 1,
-      "games_played": 4,
-      "goals_for": 9,
-      "goals_against": 20,
-      "wins": 0,
-      "losses": 3,
-      "overtime_wins": 0,
-      "overtime_losses": 1,
       "rank": 7,
-      "goal_diff": -11
+      "goal_diff": -40
     }
   ],
   "games": [
@@ -164,7 +164,7 @@
       "game_id": 194,
       "date": "2025-12-29",
       "time": "18:30:00",
-      "status": "referee_signed",
+      "status": "closed",
       "home_team_id": 11,
       "away_team_id": 8,
       "home_team_name": "HC Thaur",
@@ -177,7 +177,7 @@
       "game_id": 202,
       "date": "2025-12-30",
       "time": "19:45:00",
-      "status": "scorekeeper_signed",
+      "status": "closed",
       "home_team_id": 11,
       "away_team_id": 10,
       "home_team_name": "HC Thaur",
@@ -271,36 +271,45 @@
       "player_name": "Raphael ",
       "player_surname": "Gasser",
       "team_name": "HC Thaur",
-      "goals": 4,
-      "assists": 3,
-      "total_points": 7
+      "goals": 5,
+      "assists": 4,
+      "total_points": 9
     },
     {
       "player_id": 372,
       "player_name": "Lukas",
       "player_surname": "Christler",
       "team_name": "HC Thaur",
-      "goals": 4,
-      "assists": 1,
-      "total_points": 5
+      "goals": 6,
+      "assists": 2,
+      "total_points": 8
     },
     {
       "player_id": 404,
       "player_name": "Fabian",
       "player_surname": "Wessiak",
       "team_name": "HC Thaur",
+      "goals": 4,
+      "assists": 2,
+      "total_points": 6
+    },
+    {
+      "player_id": 562,
+      "player_name": "Thomas",
+      "player_surname": "Pipal",
+      "team_name": "HC Thaur",
       "goals": 2,
       "assists": 1,
       "total_points": 3
     },
     {
-      "player_id": 565,
-      "player_name": "Moritz",
+      "player_id": 567,
+      "player_name": "Felix",
       "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
       "goals": 1,
-      "assists": 1,
-      "total_points": 2
+      "assists": 2,
+      "total_points": 3
     },
     {
       "player_id": 564,
@@ -312,18 +321,27 @@
       "total_points": 2
     },
     {
-      "player_id": 567,
-      "player_name": "Felix",
+      "player_id": 565,
+      "player_name": "Moritz",
       "player_surname": "Praxmarer",
+      "team_name": "HC Thaur",
+      "goals": 1,
+      "assists": 1,
+      "total_points": 2
+    },
+    {
+      "player_id": 406,
+      "player_name": "Matteo",
+      "player_surname": "Wöber",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
       "total_points": 2
     },
     {
-      "player_id": 562,
-      "player_name": "Thomas",
-      "player_surname": "Pipal",
+      "player_id": 386,
+      "player_name": "Peter",
+      "player_surname": "Krippels",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 1,
