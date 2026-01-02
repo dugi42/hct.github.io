@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             standingsBody.innerHTML = '';
             const row = document.createElement('tr');
             const cell = document.createElement('td');
-            cell.colSpan = 12;
+            cell.colSpan = 11;
             cell.className = 'px-4 py-4 text-gray-500';
             cell.textContent = message;
             row.appendChild(cell);
@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 appendCell(row, team.rank, true);
                 appendCell(row, team.team_name);
-                appendCell(row, team.team_id);
+                appendCell(row, team.points);
                 appendCell(row, team.games_played);
                 appendCell(row, team.wins);
                 appendCell(row, team.losses);
@@ -317,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 appendCell(row, team.goals_for);
                 appendCell(row, team.goals_against);
                 appendCell(row, team.goal_diff);
-                appendCell(row, team.points);
                 standingsBody.appendChild(row);
             });
         };
