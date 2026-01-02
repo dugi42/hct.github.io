@@ -191,6 +191,13 @@
             return `${parts[2]}.${parts[1]}.${parts[0]}`;
         }
 
+        function formatDateFromTimestamp(value) {
+            if (!Number.isFinite(value)) return '';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleDateString('de-AT');
+        }
+
         function formatTime(value) {
             if (!value) return '';
             return value.slice(0, 5);
@@ -324,24 +331,25 @@
                 canvas.parentElement.innerHTML = '<p class="text-muted-light">Keine abgeschlossenen Spiele verfügbar.</p>';
                 return;
             }
-            const labels = [];
             const goalsForSeries = [];
             const goalsAgainstSeries = [];
             let cumulativeFor = 0;
             let cumulativeAgainst = 0;
             finalGames.forEach((game) => {
+                const timestamp = getGameTimestamp(game);
+                if (timestamp === null) {
+                    return;
+                }
                 const { goalsFor, goalsAgainst } = getGoalsForAgainst(game, teamId);
                 cumulativeFor += goalsFor;
                 cumulativeAgainst += goalsAgainst;
-                labels.push(formatDate(game.date));
-                goalsForSeries.push(cumulativeFor);
-                goalsAgainstSeries.push(cumulativeAgainst);
+                goalsForSeries.push({ x: timestamp, y: cumulativeFor });
+                goalsAgainstSeries.push({ x: timestamp, y: cumulativeAgainst });
             });
             const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels,
                     datasets: [
                         {
                             label: 'HC Thaur Tore',
@@ -365,12 +373,23 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: { grid: { display: false } },
+                        x: {
+                            type: 'linear',
+                            grid: { display: false },
+                            ticks: {
+                                callback: (value) => formatDateFromTimestamp(value)
+                            }
+                        },
                         y: { grid: { color: getCssVar('--hc-border') }, border: { display: false } }
                     },
                     plugins: {
                         legend: { position: 'bottom', labels: { color: getCssVar('--hc-muted-strong') } },
-                        tooltip: { callbacks: { label: (item) => `${item.dataset.label}: ${item.raw}` } }
+                        tooltip: {
+                            callbacks: {
+                                title: (items) => formatDateFromTimestamp(items[0].parsed.x),
+                                label: (item) => `${item.dataset.label}: ${item.raw.y}`
+                            }
+                        }
                     }
                 }
             });
@@ -391,6 +410,17 @@
                 'referee_signed'
             ]);
             return finalStatuses.has(game.status);
+        }
+
+        function getGameTimestamp(game) {
+            if (!game.date) return null;
+            const timeValue = game.time ? game.time : '00:00:00';
+            const timestamp = new Date(`${game.date}T${timeValue}`).getTime();
+            if (!Number.isNaN(timestamp)) {
+                return timestamp;
+            }
+            const fallback = new Date(game.date).getTime();
+            return Number.isNaN(fallback) ? null : fallback;
         }
 
         function getGoalsForAgainst(game, teamId) {
