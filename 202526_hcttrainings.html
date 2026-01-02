@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HC Thaur | Trainingseinheiten</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #1f2937;
+        }
+        .bar-trainings { background-color: #fc0612; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <main class="max-w-5xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">Trainingseinheiten</h1>
+            <p class="text-gray-600 mt-2">Teilnahmeübersicht</p>
+        </header>
+
+        <section class="bg-gray-100 p-6 rounded-lg shadow-inner">
+            <h5 class="text-lg md:text-xl font-semibold mb-4 text-gray-800 text-center">Fleißigsten Top 5 Spieler Trainingseinheiten</h5>
+            <div id="attendance-rows" class="space-y-6">
+                <div class="text-sm text-gray-500 text-center">Daten werden geladen...</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const CSV_URL = 'public/attendance_report.csv';
+
+        function parseCsv(text) {
+            const rows = [];
+            let current = '';
+            let inQuotes = false;
+            const lines = [];
+            for (let i = 0; i < text.length; i += 1) {
+                const char = text[i];
+                const next = text[i + 1];
+                if (char === '"' && inQuotes && next === '"') {
+                    current += '"';
+                    i += 1;
+                    continue;
+                }
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                    continue;
+                }
+                if (char === '\n' && !inQuotes) {
+                    lines.push(current);
+                    current = '';
+                    continue;
+                }
+                current += char;
+            }
+            if (current.trim().length) {
+                lines.push(current);
+            }
+            if (!lines.length) {
+                return rows;
+            }
+            const headers = lines[0].split(',').map((header) => header.trim());
+            for (let lineIndex = 1; lineIndex < lines.length; lineIndex += 1) {
+                const line = lines[lineIndex];
+                if (!line.trim()) {
+                    continue;
+                }
+                const values = [];
+                let value = '';
+                let quoted = false;
+                for (let i = 0; i < line.length; i += 1) {
+                    const char = line[i];
+                    const next = line[i + 1];
+                    if (char === '"' && quoted && next === '"') {
+                        value += '"';
+                        i += 1;
+                        continue;
+                    }
+                    if (char === '"') {
+                        quoted = !quoted;
+                        continue;
+                    }
+                    if (char === ',' && !quoted) {
+                        values.push(value);
+                        value = '';
+                        continue;
+                    }
+                    value += char;
+                }
+                values.push(value);
+                const entry = {};
+                headers.forEach((header, index) => {
+                    entry[header] = values[index] ? values[index].trim() : '';
+                });
+                rows.push(entry);
+            }
+            return rows;
+        }
+
+        function inferTotalSessions(rows) {
+            const totals = new Map();
+            rows.forEach((row) => {
+                const count = Number(row.attendance_count);
+                const percent = Number(row.attendance_in_percent);
+                if (!Number.isFinite(count) || !Number.isFinite(percent) || percent <= 0) {
+                    return;
+                }
+                const total = Math.round((count * 100) / percent);
+                if (!Number.isFinite(total) || total <= 0) {
+                    return;
+                }
+                totals.set(total, (totals.get(total) || 0) + 1);
+            });
+            let bestTotal = null;
+            let bestCount = -1;
+            totals.forEach((count, total) => {
+                if (count > bestCount || (count === bestCount && total > bestTotal)) {
+                    bestTotal = total;
+                    bestCount = count;
+                }
+            });
+            return bestTotal;
+        }
+
+        function renderRows(rows) {
+            const container = document.getElementById('attendance-rows');
+            if (!rows.length) {
+                container.innerHTML = '<div class="text-sm text-gray-500 text-center">Keine Daten verfügbar.</div>';
+                return;
+            }
+            const totalSessions = inferTotalSessions(rows);
+            container.innerHTML = '';
+            rows.forEach((row) => {
+                const count = Number(row.attendance_count);
+                const percent = Number(row.attendance_in_percent);
+                const safePercent = Number.isFinite(percent) ? Math.max(0, Math.min(100, percent)) : 0;
+                const countLabel = totalSessions ? `${count}/${totalSessions}` : `${count}/--`;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4';
+
+                const name = document.createElement('span');
+                name.className = 'sm:w-1/4 md:w-1/5 text-sm font-semibold text-gray-700 text-center sm:text-left';
+                name.textContent = row.name || '-';
+
+                const barWrap = document.createElement('div');
+                barWrap.className = 'flex-1';
+                barWrap.innerHTML = `
+                    <div class="w-full h-4 bg-white border border-gray-200 rounded-full overflow-hidden shadow-sm">
+                        <div class="bar-trainings h-full" style="width:${safePercent}%"></div>
+                    </div>
+                `;
+
+                const countNode = document.createElement('span');
+                countNode.className = 'sm:w-10 text-sm font-bold text-gray-800 text-center sm:text-right';
+                countNode.textContent = Number.isFinite(count) ? countLabel : '--';
+
+                wrapper.appendChild(name);
+                wrapper.appendChild(barWrap);
+                wrapper.appendChild(countNode);
+                container.appendChild(wrapper);
+            });
+        }
+
+        async function initAttendance() {
+            try {
+                const response = await fetch(CSV_URL, { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`Attendance CSV konnte nicht geladen werden (${response.status})`);
+                }
+                const text = await response.text();
+                const rows = parseCsv(text);
+                const sorted = rows
+                    .filter((row) => row.name && row.attendance_in_percent !== undefined)
+                    .sort((a, b) => {
+                        const percentDiff = Number(b.attendance_in_percent) - Number(a.attendance_in_percent);
+                        if (percentDiff !== 0) return percentDiff;
+                        const countDiff = Number(b.attendance_count) - Number(a.attendance_count);
+                        if (countDiff !== 0) return countDiff;
+                        return String(a.name).localeCompare(String(b.name));
+                    })
+                    .slice(0, 5);
+                renderRows(sorted);
+            } catch (error) {
+                console.error('Fehler beim Laden der Trainingsdaten:', error);
+                const container = document.getElementById('attendance-rows');
+                container.innerHTML = '<div class="text-sm text-gray-500 text-center">Daten konnten nicht geladen werden.</div>';
+            }
+        }
+
+        initAttendance();
+    </script>
+</body>
+</html>
