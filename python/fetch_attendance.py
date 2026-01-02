@@ -1,4 +1,5 @@
 import os
+import datetime
 import requests
 import pandas as pd
 
@@ -7,14 +8,15 @@ API_TOKEN = os.environ.get("VEREINSPLANER_API_TOKEN")
 if not API_TOKEN:
     raise RuntimeError("Missing VEREINSPLANER_API_TOKEN environment variable.")
 
-# The URL and date parameters (Sept 1, 2025 to Jan 2, 2026)
+# The URL and date parameters (Sept 1, 2025 to today)
 url = os.environ.get("VEREINSPLANER_API_URL")
 if not url:
     raise RuntimeError("Missing VEREINSPLANER_API_URL environment variable.")
+today = datetime.date.today().strftime("%Y-%m-%d")
 params = {
     "start": "2025-09-01",
-    "end": "2026-01-02",
-    "category_ids": 24507
+    "end": today,
+    #"category_ids": 24507 # category for training sessions
 }
 
 headers = {
