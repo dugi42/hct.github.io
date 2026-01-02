@@ -25,7 +25,7 @@
         </header>
 
         <section class="bg-gray-100 p-6 rounded-lg shadow-inner">
-            <h5 class="text-lg md:text-xl font-semibold mb-4 text-gray-800 text-center">Fleißigsten Top 5 Spieler Trainingseinheiten</h5>
+            <h5 class="text-lg md:text-xl font-semibold mb-4 text-gray-800 text-center">Spieler Trainingseinheiten</h5>
             <div id="attendance-rows" class="space-y-6">
                 <div class="text-sm text-gray-500 text-center">Daten werden geladen...</div>
             </div>
@@ -184,8 +184,7 @@
                         const countDiff = Number(b.attendance_count) - Number(a.attendance_count);
                         if (countDiff !== 0) return countDiff;
                         return String(a.name).localeCompare(String(b.name));
-                    })
-                    .slice(0, 5);
+                    });
                 renderRows(sorted);
             } catch (error) {
                 console.error('Fehler beim Laden der Trainingsdaten:', error);
