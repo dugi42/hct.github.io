@@ -265,7 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const standingsBody = document.getElementById('standings-table-body');
-    if (standingsBody) {
+    const gamesCarousel = document.getElementById('hc-games-carousel');
+    const gamesStatus = document.getElementById('hc-games-status');
+
+    if (standingsBody || gamesCarousel) {
         const statsUrl = 'public/hcstats.json';
 
         const formatValue = value => (value ?? '--');
@@ -277,7 +280,10 @@ document.addEventListener('DOMContentLoaded', () => {
             row.appendChild(cell);
         };
 
-        const setEmptyState = message => {
+        const setStandingsEmpty = message => {
+            if (!standingsBody) {
+                return;
+            }
             standingsBody.innerHTML = '';
             const row = document.createElement('tr');
             const cell = document.createElement('td');
@@ -289,9 +295,12 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const renderStandings = (standings, highlightTeamId) => {
+            if (!standingsBody) {
+                return;
+            }
             standingsBody.innerHTML = '';
             if (!standings.length) {
-                setEmptyState('Keine Tabellendaten verfügbar.');
+                setStandingsEmpty('Keine Tabellendaten verfügbar.');
                 return;
             }
 
@@ -321,6 +330,193 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
+        const formatDate = value => {
+            if (!value) {
+                return '--';
+            }
+            const parts = value.split('-');
+            if (parts.length !== 3) {
+                return value;
+            }
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        };
+
+        const formatTime = value => {
+            if (!value) {
+                return '';
+            }
+            return value.slice(0, 5);
+        };
+
+        const statusLabel = status => {
+            const labels = {
+                live: 'Live',
+                active: 'Geplant',
+                upcoming: 'Geplant',
+                completed: 'Abgeschlossen',
+                scorekeeper_signed: 'Schreiber signiert',
+                referee_signed: 'Schiedsrichter signiert',
+                closed: 'Abgeschlossen'
+            };
+            return labels[status] || 'Unbekannt';
+        };
+
+        const getGameTimestamp = game => {
+            if (!game?.date) {
+                return Number.POSITIVE_INFINITY;
+            }
+            const timeValue = game.time ? game.time : '00:00:00';
+            const timestamp = new Date(`${game.date}T${timeValue}`).getTime();
+            if (!Number.isNaN(timestamp)) {
+                return timestamp;
+            }
+            const fallback = new Date(game.date).getTime();
+            return Number.isNaN(fallback) ? Number.POSITIVE_INFINITY : fallback;
+        };
+
+        const formatScore = value => {
+            if (value === null || value === undefined) {
+                return '-';
+            }
+            return value;
+        };
+
+        const logoMap = new Map([
+            [3, 'images/cup_logos/ec_aschauer_eisbaeren.jpg'],
+            [6, 'images/cup_logos/ec_sellraintal_wolves.jpg'],
+            [8, 'images/cup_logos/ehc_black_scorpions.jpg'],
+            [10, 'images/cup_logos/ehc_white_hawks_volders.jpg'],
+            [11, 'images/cup_logos/hockey_club_thaur.png'],
+            [15, 'images/cup_logos/tyrolean_ice_kings.jpg'],
+            [29, 'images/cup_logos/ec_newcomer_2.jpg']
+        ]);
+
+        const createLogoNode = (teamId, teamName) => {
+            const logoSrc = logoMap.get(Number(teamId));
+            if (!logoSrc) {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'w-16 h-16';
+                return placeholder;
+            }
+            const img = document.createElement('img');
+            img.src = logoSrc;
+            img.alt = teamName ? `${teamName} Logo` : 'Team Logo';
+            img.className = 'w-16 h-16 object-contain';
+            return img;
+        };
+
+        const setGamesStatus = message => {
+            if (!gamesStatus) {
+                return;
+            }
+            gamesStatus.textContent = message;
+            gamesStatus.classList.remove('hidden');
+        };
+
+        const clearGamesStatus = () => {
+            if (!gamesStatus) {
+                return;
+            }
+            gamesStatus.textContent = '';
+            gamesStatus.classList.add('hidden');
+        };
+
+        const createGameCard = (game, teamId) => {
+            const card = document.createElement('div');
+            const isHomeGame = Number(game.home_team_id) === Number(teamId);
+            const borderClass = isHomeGame ? 'border-hc-red' : 'border-gray-500';
+            card.className = `flex-none w-64 p-4 rounded-xl shadow bg-white border-t-4 snap-center ${borderClass}`;
+
+            const header = document.createElement('div');
+            header.className = 'flex justify-between items-center text-sm font-semibold mb-2';
+
+            const location = document.createElement('span');
+            location.className = `${isHomeGame ? 'text-hc-red' : 'text-gray-600'} uppercase`;
+            location.textContent = isHomeGame ? 'HEIM' : 'AUSWÄRTS';
+
+            const date = document.createElement('span');
+            date.className = 'text-gray-500';
+            date.textContent = formatDate(game.date);
+
+            header.appendChild(location);
+            header.appendChild(date);
+            card.appendChild(header);
+
+            const status = document.createElement('div');
+            status.className = 'text-xs text-gray-500 font-semibold uppercase text-center mb-2';
+            status.textContent = statusLabel(game.status);
+            card.appendChild(status);
+
+            const homeName = document.createElement('p');
+            homeName.className = 'text-lg font-bold text-gray-900 mb-1 text-center';
+            homeName.textContent = game.home_team_name || '';
+            card.appendChild(homeName);
+
+            const logos = document.createElement('div');
+            logos.className = 'flex items-center justify-between mb-2';
+
+            const homeLogo = createLogoNode(game.home_team_id, game.home_team_name);
+            const awayLogo = createLogoNode(game.away_team_id, game.away_team_name);
+
+            const vsWrap = document.createElement('div');
+            vsWrap.className = 'flex flex-col items-center';
+
+            const vs = document.createElement('span');
+            vs.className = 'text-lg text-gray-500 leading-none';
+            vs.textContent = 'vs';
+
+            const score = document.createElement('span');
+            score.className = 'text-sm font-semibold text-gray-700';
+            const hideScoreStatuses = new Set(['upcoming', 'active']);
+            const shouldHideScore = hideScoreStatuses.has(game.status)
+                && Number(game.score_home) === 0
+                && Number(game.score_away) === 0;
+            if (shouldHideScore) {
+                score.classList.add('hidden');
+            } else {
+                score.textContent = `${formatScore(game.score_home)} : ${formatScore(game.score_away)}`;
+            }
+
+            vsWrap.appendChild(vs);
+            vsWrap.appendChild(score);
+
+            logos.appendChild(homeLogo);
+            logos.appendChild(vsWrap);
+            logos.appendChild(awayLogo);
+            card.appendChild(logos);
+
+            const awayName = document.createElement('p');
+            awayName.className = 'text-lg font-bold text-gray-900 mb-1 text-center';
+            awayName.textContent = game.away_team_name || '';
+            card.appendChild(awayName);
+
+            const details = document.createElement('p');
+            details.className = 'text-sm text-gray-600 text-center';
+            const timeLabel = formatTime(game.time);
+            const arenaLabel = (game.arena_name || '').trim();
+            const timeText = timeLabel ? `${timeLabel} Uhr` : '--';
+            details.textContent = arenaLabel ? `${timeText}, ${arenaLabel}` : timeText;
+            card.appendChild(details);
+
+            return card;
+        };
+
+        const renderGames = (games, teamId) => {
+            if (!gamesCarousel) {
+                return;
+            }
+            gamesCarousel.innerHTML = '';
+            if (!games.length) {
+                setGamesStatus('Keine Spiele verfügbar.');
+                return;
+            }
+            clearGamesStatus();
+            const sortedGames = [...games].sort((a, b) => getGameTimestamp(a) - getGameTimestamp(b));
+            sortedGames.forEach(game => {
+                gamesCarousel.appendChild(createGameCard(game, teamId));
+            });
+        };
+
         fetch(statsUrl, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
@@ -330,10 +526,12 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 renderStandings(data.standings || [], data.team_id);
+                renderGames(data.games || [], data.team_id);
             })
             .catch(error => {
                 console.error('[Standings Table]', error);
-                setEmptyState('Tabellendaten konnten nicht geladen werden.');
+                setStandingsEmpty('Tabellendaten konnten nicht geladen werden.');
+                setGamesStatus('Spiele konnten nicht geladen werden.');
             });
     }
 
