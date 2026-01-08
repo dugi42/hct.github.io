@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-07T02:55:33.164Z",
+  "updated_at": "2026-01-08T02:55:23.821Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -11,30 +11,30 @@
     {
       "team_id": 8,
       "team_name": "EHC Black Scorpions Strass",
-      "points": 18,
-      "games_played": 7,
-      "goals_for": 29,
-      "goals_against": 16,
-      "wins": 6,
+      "points": 21,
+      "games_played": 8,
+      "goals_for": 33,
+      "goals_against": 19,
+      "wins": 7,
       "losses": 1,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 1,
-      "goal_diff": 13
+      "goal_diff": 14
     },
     {
       "team_id": 15,
       "team_name": "Tyrolean Ice Kings",
-      "points": 14,
-      "games_played": 6,
-      "goals_for": 37,
-      "goals_against": 16,
-      "wins": 4,
+      "points": 17,
+      "games_played": 7,
+      "goals_for": 45,
+      "goals_against": 17,
+      "wins": 5,
       "losses": 1,
       "overtime_wins": 1,
       "overtime_losses": 0,
       "rank": 2,
-      "goal_diff": 21
+      "goal_diff": 28
     },
     {
       "team_id": 6,
@@ -54,15 +54,15 @@
       "team_id": 10,
       "team_name": "EHC White Hawks Volders",
       "points": 7,
-      "games_played": 6,
-      "goals_for": 27,
-      "goals_against": 35,
+      "games_played": 7,
+      "goals_for": 30,
+      "goals_against": 39,
       "wins": 2,
-      "losses": 3,
+      "losses": 4,
       "overtime_wins": 0,
       "overtime_losses": 1,
       "rank": 4,
-      "goal_diff": -8
+      "goal_diff": -9
     },
     {
       "team_id": 11,
@@ -82,15 +82,15 @@
       "team_id": 3,
       "team_name": "EC Aschauer Eisbären",
       "points": 6,
-      "games_played": 7,
-      "goals_for": 30,
-      "goals_against": 35,
+      "games_played": 8,
+      "goals_for": 31,
+      "goals_against": 43,
       "wins": 2,
-      "losses": 5,
+      "losses": 6,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 6,
-      "goal_diff": -5
+      "goal_diff": -12
     },
     {
       "team_id": 29,
