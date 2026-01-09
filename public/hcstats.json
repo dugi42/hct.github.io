@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-08T02:55:23.821Z",
+  "updated_at": "2026-01-09T02:55:45.493Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -190,14 +190,14 @@
       "game_id": 183,
       "date": "2026-01-08",
       "time": "21:00:00",
-      "status": "upcoming",
+      "status": "referee_signed",
       "home_team_id": 29,
       "away_team_id": 11,
       "home_team_name": "EC Newcomers II",
       "away_team_name": "HC Thaur",
       "arena_name": "TIWAG Arena ",
-      "score_home": 0,
-      "score_away": 0
+      "score_home": 1,
+      "score_away": 9
     },
     {
       "game_id": 165,
