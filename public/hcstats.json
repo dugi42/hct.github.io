@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-10T02:53:57.299Z",
+  "updated_at": "2026-01-11T03:00:04.145Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -312,18 +312,18 @@
       "total_points": 3
     },
     {
-      "player_id": 564,
-      "player_name": "Marlon",
-      "player_surname": "Mariacher",
+      "player_id": 565,
+      "player_name": "Moritz",
+      "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
       "goals": 1,
       "assists": 1,
       "total_points": 2
     },
     {
-      "player_id": 565,
-      "player_name": "Moritz",
-      "player_surname": "Praxmarer",
+      "player_id": 564,
+      "player_name": "Marlon",
+      "player_surname": "Mariacher",
       "team_name": "HC Thaur",
       "goals": 1,
       "assists": 1,
