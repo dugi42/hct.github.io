@@ -350,6 +350,39 @@ document.addEventListener('DOMContentLoaded', () => {
             item.appendChild(date);
             banner.appendChild(item);
         });
+        startGameResultBannerAnimation(banner);
+    };
+
+    let bannerAnimationId = null;
+
+    const startGameResultBannerAnimation = (banner) => {
+        if (bannerAnimationId) {
+            cancelAnimationFrame(bannerAnimationId);
+        }
+
+        let startTime = null;
+        const scrollSpeed = 0.05; // pixels per millisecond
+        
+        // Use a slight delay to ensure the browser has calculated the width
+        setTimeout(() => {
+            const bannerWidth = banner.scrollWidth / 2; // Since we doubled the content
+            if (bannerWidth === 0) return;
+
+            const animate = (timestamp) => {
+                if (!startTime) {
+                    startTime = timestamp;
+                }
+
+                const elapsedTime = timestamp - startTime;
+                let scrollPosition = (elapsedTime * scrollSpeed) % bannerWidth;
+
+                banner.style.transform = `translateX(-${scrollPosition}px)`;
+
+                bannerAnimationId = requestAnimationFrame(animate);
+            };
+
+            bannerAnimationId = requestAnimationFrame(animate);
+        }, 100);
     };
 
     const updateBanner = () => {
