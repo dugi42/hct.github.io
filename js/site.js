@@ -264,12 +264,118 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const statsUrl = 'public/hcstats.json';
+    const logoMap = new Map([
+        [3, 'images/cup_logos/ec_aschauer_eisbaeren.jpg'],
+        [6, 'images/cup_logos/ec_sellraintal_wolves.jpg'],
+        [8, 'images/cup_logos/ehc_black_scorpions.jpg'],
+        [10, 'images/cup_logos/ehc_white_hawks_volders.jpg'],
+        [11, 'images/cup_logos/hockey_club_thaur.png'],
+        [15, 'images/cup_logos/tyrolean_ice_kings.jpg'],
+        [29, 'images/cup_logos/ec_newcomer_2.jpg']
+    ]);
+
+    const formatDate = value => {
+        if (!value) {
+            return '--';
+        }
+        const parts = value.split('-');
+        if (parts.length !== 3) {
+            return value;
+        }
+        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    };
+
+    const formatScore = value => {
+        if (value === null || value === undefined) {
+            return '-';
+        }
+        return value;
+    };
+
+    const createLogoNode = (teamId, teamName) => {
+        const logoSrc = logoMap.get(Number(teamId));
+        if (!logoSrc) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'w-12 h-12';
+            return placeholder;
+        }
+        const img = document.createElement('img');
+        img.src = logoSrc;
+        img.alt = teamName ? `${teamName} Logo` : 'Team Logo';
+        img.className = 'w-12 h-12 object-contain';
+        return img;
+    };
+
+    const renderGameResultBanner = (games) => {
+        const banner = document.getElementById('game-result-banner');
+        if (!banner) {
+            return;
+        }
+        banner.innerHTML = '';
+        const completedGames = games.filter(game => {
+            return new Set(['completed', 'closed', 'scorekeeper_signed', 'referee_signed']).has(game.status);
+        });
+
+        if (completedGames.length === 0) {
+            return;
+        }
+
+        // Duplicate games to ensure smooth scrolling
+        const bannerContent = [...completedGames, ...completedGames];
+
+        bannerContent.forEach(game => {
+            const item = document.createElement('div');
+            item.className = 'game-result-item';
+            
+            const scoreAndLogos = document.createElement('div');
+            scoreAndLogos.className = 'flex items-center gap-4';
+
+            const homeLogo = createLogoNode(game.home_team_id, game.home_team_name);
+            const awayLogo = createLogoNode(game.away_team_id, game.away_team_name);
+            
+            const score = document.createElement('span');
+            score.className = 'text-xl font-bold';
+            score.textContent = `${formatScore(game.score_home)} : ${formatScore(game.score_away)}`;
+
+            scoreAndLogos.appendChild(homeLogo);
+            scoreAndLogos.appendChild(score);
+            scoreAndLogos.appendChild(awayLogo);
+
+            const date = document.createElement('div');
+            date.className = 'text-sm text-gray-400';
+            date.textContent = formatDate(game.date);
+
+            item.appendChild(scoreAndLogos);
+            item.appendChild(date);
+            banner.appendChild(item);
+        });
+    };
+
+    const updateBanner = () => {
+        fetch(statsUrl, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderGameResultBanner(data.games || []);
+            })
+            .catch(error => {
+                console.error('[Game Result Banner]', error);
+            });
+    };
+
+    updateBanner();
+    setInterval(updateBanner, 300000);
+
     const standingsBody = document.getElementById('standings-table-body');
     const gamesCarousel = document.getElementById('hc-games-carousel');
     const gamesStatus = document.getElementById('hc-games-status');
 
     if (standingsBody || gamesCarousel) {
-        const statsUrl = 'public/hcstats.json';
 
         const formatValue = value => (value ?? '--');
 
@@ -330,17 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        const formatDate = value => {
-            if (!value) {
-                return '--';
-            }
-            const parts = value.split('-');
-            if (parts.length !== 3) {
-                return value;
-            }
-            return `${parts[2]}.${parts[1]}.${parts[0]}`;
-        };
-
         const formatTime = value => {
             if (!value) {
                 return '';
@@ -372,37 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const fallback = new Date(game.date).getTime();
             return Number.isNaN(fallback) ? Number.POSITIVE_INFINITY : fallback;
-        };
-
-        const formatScore = value => {
-            if (value === null || value === undefined) {
-                return '-';
-            }
-            return value;
-        };
-
-        const logoMap = new Map([
-            [3, 'images/cup_logos/ec_aschauer_eisbaeren.jpg'],
-            [6, 'images/cup_logos/ec_sellraintal_wolves.jpg'],
-            [8, 'images/cup_logos/ehc_black_scorpions.jpg'],
-            [10, 'images/cup_logos/ehc_white_hawks_volders.jpg'],
-            [11, 'images/cup_logos/hockey_club_thaur.png'],
-            [15, 'images/cup_logos/tyrolean_ice_kings.jpg'],
-            [29, 'images/cup_logos/ec_newcomer_2.jpg']
-        ]);
-
-        const createLogoNode = (teamId, teamName) => {
-            const logoSrc = logoMap.get(Number(teamId));
-            if (!logoSrc) {
-                const placeholder = document.createElement('div');
-                placeholder.className = 'w-16 h-16';
-                return placeholder;
-            }
-            const img = document.createElement('img');
-            img.src = logoSrc;
-            img.alt = teamName ? `${teamName} Logo` : 'Team Logo';
-            img.className = 'w-16 h-16 object-contain';
-            return img;
         };
 
         const setGamesStatus = message => {
