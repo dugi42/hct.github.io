@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-14T02:57:10.563Z",
+  "updated_at": "2026-01-15T02:55:47.628Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -12,15 +12,15 @@
       "team_id": 8,
       "team_name": "EHC Black Scorpions Strass",
       "points": 21,
-      "games_played": 8,
-      "goals_for": 33,
-      "goals_against": 19,
+      "games_played": 9,
+      "goals_for": 34,
+      "goals_against": 24,
       "wins": 7,
-      "losses": 1,
+      "losses": 2,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 1,
-      "goal_diff": 14
+      "goal_diff": 10
     },
     {
       "team_id": 15,
@@ -39,16 +39,16 @@
     {
       "team_id": 6,
       "team_name": "EC Sellraintal Wolves",
-      "points": 12,
-      "games_played": 5,
-      "goals_for": 31,
-      "goals_against": 9,
-      "wins": 4,
+      "points": 15,
+      "games_played": 6,
+      "goals_for": 36,
+      "goals_against": 10,
+      "wins": 5,
       "losses": 1,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 3,
-      "goal_diff": 22
+      "goal_diff": 26
     },
     {
       "team_id": 11,
