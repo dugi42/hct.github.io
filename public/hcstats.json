@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-18T02:58:45.215Z",
+  "updated_at": "2026-01-19T02:58:35.572Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -294,18 +294,18 @@
       "total_points": 6
     },
     {
-      "player_id": 564,
-      "player_name": "Marlon",
-      "player_surname": "Mariacher",
+      "player_id": 386,
+      "player_name": "Peter",
+      "player_surname": "Krippels",
       "team_name": "HC Thaur",
       "goals": 4,
       "assists": 1,
       "total_points": 5
     },
     {
-      "player_id": 386,
-      "player_name": "Peter",
-      "player_surname": "Krippels",
+      "player_id": 564,
+      "player_name": "Marlon",
+      "player_surname": "Mariacher",
       "team_name": "HC Thaur",
       "goals": 4,
       "assists": 1,
