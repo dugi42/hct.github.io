@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-19T02:58:35.572Z",
+  "updated_at": "2026-01-20T02:56:32.776Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -339,18 +339,18 @@
       "total_points": 3
     },
     {
-      "player_id": 406,
-      "player_name": "Matteo",
-      "player_surname": "Wöber",
+      "player_id": 971,
+      "player_name": "Julian",
+      "player_surname": "Zehenter",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
       "total_points": 2
     },
     {
-      "player_id": 971,
-      "player_name": "Julian",
-      "player_surname": "Zehenter",
+      "player_id": 406,
+      "player_name": "Matteo",
+      "player_surname": "Wöber",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
