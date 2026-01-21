@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-20T02:56:32.776Z",
+  "updated_at": "2026-01-21T02:56:20.559Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -9,32 +9,32 @@
   },
   "standings": [
     {
-      "team_id": 8,
-      "team_name": "EHC Black Scorpions Strass",
-      "points": 21,
-      "games_played": 9,
-      "goals_for": 34,
-      "goals_against": 24,
-      "wins": 7,
-      "losses": 2,
-      "overtime_wins": 0,
-      "overtime_losses": 0,
-      "rank": 1,
-      "goal_diff": 10
-    },
-    {
       "team_id": 15,
       "team_name": "Tyrolean Ice Kings",
-      "points": 17,
-      "games_played": 7,
-      "goals_for": 45,
-      "goals_against": 17,
-      "wins": 5,
+      "points": 23,
+      "games_played": 9,
+      "goals_for": 57,
+      "goals_against": 19,
+      "wins": 7,
       "losses": 1,
       "overtime_wins": 1,
       "overtime_losses": 0,
+      "rank": 1,
+      "goal_diff": 38
+    },
+    {
+      "team_id": 8,
+      "team_name": "EHC Black Scorpions Strass",
+      "points": 21,
+      "games_played": 10,
+      "goals_for": 36,
+      "goals_against": 27,
+      "wins": 7,
+      "losses": 3,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
       "rank": 2,
-      "goal_diff": 28
+      "goal_diff": 9
     },
     {
       "team_id": 6,
@@ -51,6 +51,20 @@
       "goal_diff": 26
     },
     {
+      "team_id": 10,
+      "team_name": "EHC White Hawks Volders",
+      "points": 10,
+      "games_played": 8,
+      "goals_for": 39,
+      "goals_against": 40,
+      "wins": 3,
+      "losses": 4,
+      "overtime_wins": 0,
+      "overtime_losses": 1,
+      "rank": 4,
+      "goal_diff": -1
+    },
+    {
       "team_id": 11,
       "team_name": "HC Thaur",
       "points": 9,
@@ -61,50 +75,36 @@
       "losses": 4,
       "overtime_wins": 0,
       "overtime_losses": 0,
-      "rank": 4,
+      "rank": 5,
       "goal_diff": 5
     },
     {
       "team_id": 3,
       "team_name": "EC Aschauer Eisbären",
       "points": 9,
-      "games_played": 9,
-      "goals_for": 36,
-      "goals_against": 44,
+      "games_played": 10,
+      "goals_for": 37,
+      "goals_against": 53,
       "wins": 3,
-      "losses": 6,
+      "losses": 7,
       "overtime_wins": 0,
       "overtime_losses": 0,
-      "rank": 5,
-      "goal_diff": -8
-    },
-    {
-      "team_id": 10,
-      "team_name": "EHC White Hawks Volders",
-      "points": 7,
-      "games_played": 7,
-      "goals_for": 30,
-      "goals_against": 39,
-      "wins": 2,
-      "losses": 4,
-      "overtime_wins": 0,
-      "overtime_losses": 1,
       "rank": 6,
-      "goal_diff": -9
+      "goal_diff": -16
     },
     {
       "team_id": 29,
       "team_name": "EC Newcomers II",
       "points": 3,
-      "games_played": 9,
+      "games_played": 10,
       "goals_for": 11,
-      "goals_against": 63,
+      "goals_against": 72,
       "wins": 1,
-      "losses": 8,
+      "losses": 9,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 7,
-      "goal_diff": -52
+      "goal_diff": -61
     }
   ],
   "games": [
@@ -203,14 +203,14 @@
       "game_id": 165,
       "date": "2026-01-20",
       "time": "19:45:00",
-      "status": "upcoming",
+      "status": "referee_signed",
       "home_team_id": 11,
       "away_team_id": 6,
       "home_team_name": "HC Thaur",
       "away_team_name": "EC Sellraintal Wolves",
       "arena_name": "Eislaufplatz Mils",
-      "score_home": 0,
-      "score_away": 0
+      "score_home": 3,
+      "score_away": 4
     },
     {
       "game_id": 190,
@@ -339,18 +339,18 @@
       "total_points": 3
     },
     {
-      "player_id": 971,
-      "player_name": "Julian",
-      "player_surname": "Zehenter",
+      "player_id": 406,
+      "player_name": "Matteo",
+      "player_surname": "Wöber",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
       "total_points": 2
     },
     {
-      "player_id": 406,
-      "player_name": "Matteo",
-      "player_surname": "Wöber",
+      "player_id": 971,
+      "player_name": "Julian",
+      "player_surname": "Zehenter",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
