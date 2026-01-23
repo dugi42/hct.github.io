@@ -260,7 +260,7 @@
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: players.map(p => `${p.player_surname}`),
+                    labels: players.map(p => `${p.player_surname} ${p.player_name}`),
                     datasets: [
                         { label: 'Tore', data: players.map(p => p.goals), backgroundColor: goalsColor, borderRadius: 5 },
                         { label: 'Assists', data: players.map(p => p.assists), backgroundColor: assistsColor, borderRadius: 5 }
