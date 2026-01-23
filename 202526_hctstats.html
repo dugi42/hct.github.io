@@ -89,7 +89,7 @@
                         <tr>
                             <th class="px-3 py-2">Rang</th>
                             <th class="px-3 py-2">Team</th>
-                            <th class="px-3 py-2">Team-ID</th>
+                            <th class="px-3 py-2">Punkte</th>
                             <th class="px-3 py-2">Sp</th>
                             <th class="px-3 py-2">S</th>
                             <th class="px-3 py-2">N</th>
@@ -98,7 +98,6 @@
                             <th class="px-3 py-2">Tore</th>
                             <th class="px-3 py-2">Gegentore</th>
                             <th class="px-3 py-2">Diff</th>
-                            <th class="px-3 py-2">Punkte</th>
                         </tr>
                     </thead>
                     <tbody id="standings-table-body" class="divide-muted"></tbody>
@@ -463,7 +462,7 @@
             const body = document.getElementById('standings-table-body');
             body.innerHTML = '';
             if (!standings.length) {
-                body.appendChild(createEmptyRow(12, 'Keine Tabellendaten verfügbar.'));
+                body.appendChild(createEmptyRow(11, 'Keine Tabellendaten verfügbar.'));
                 return;
             }
             standings.forEach((team, index) => {
@@ -473,7 +472,7 @@
                 }
                 appendCell(row, team.rank);
                 appendCell(row, team.team_name);
-                appendCell(row, team.team_id);
+                appendCell(row, team.points);
                 appendCell(row, team.games_played);
                 appendCell(row, team.wins);
                 appendCell(row, team.losses);
@@ -482,7 +481,6 @@
                 appendCell(row, team.goals_for);
                 appendCell(row, team.goals_against);
                 appendCell(row, team.goal_diff);
-                appendCell(row, team.points);
                 body.appendChild(row);
             });
         }
