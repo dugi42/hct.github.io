@@ -798,9 +798,9 @@
                                         borderClass: 'border-blue-500',
                                         groupClass: 'text-blue-600'
                                     },
-                                    teenies: {
-                                        label: 'Training Teenies',
-                                        shortLabel: 'Teenies',
+                                    juniors: {
+                                        label: 'Training Juniors',
+                                        shortLabel: 'Juniors',
                                         labelClass: 'text-green-600',
                                         borderClass: 'border-green-500',
                                         groupClass: 'text-green-600'
@@ -824,8 +824,8 @@
                                     if (/\btraining\s*minis\b|\bminis?\b/.test(text)) {
                                         return 'minis';
                                     }
-                                    if (/\btraining\s*teenies\b|\bteenies?\b/.test(text)) {
-                                        return 'teenies';
+                                    if (/\btraining\s*juniors\b|\bjuniors?\b|\btraining\s*teenies\b|\bteenies?\b/.test(text)) {
+                                        return 'juniors';
                                     }
                                     if (/\btraining\s*erwachsene\b|\berwachsene\b/.test(text)) {
                                         return 'adults';
@@ -848,7 +848,7 @@
                                             return 'minis';
                                         }
                                         if (localMinutes < 19 * 60) {
-                                            return 'teenies';
+                                            return 'juniors';
                                         }
                                         return 'adults';
                                     }
@@ -857,7 +857,7 @@
                                             return 'minis';
                                         }
                                         if (localMinutes < 19 * 60) {
-                                            return 'teenies';
+                                            return 'juniors';
                                         }
                                     }
                                     return 'adults';
