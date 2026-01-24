@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-23T02:56:17.537Z",
+  "updated_at": "2026-01-24T02:54:34.836Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -39,44 +39,44 @@
     {
       "team_id": 6,
       "team_name": "EC Sellraintal Wolves",
-      "points": 15,
-      "games_played": 6,
-      "goals_for": 36,
-      "goals_against": 10,
-      "wins": 5,
-      "losses": 1,
+      "points": 18,
+      "games_played": 8,
+      "goals_for": 43,
+      "goals_against": 18,
+      "wins": 6,
+      "losses": 2,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 3,
-      "goal_diff": 26
+      "goal_diff": 25
     },
     {
       "team_id": 10,
       "team_name": "EHC White Hawks Volders",
-      "points": 10,
-      "games_played": 8,
-      "goals_for": 39,
-      "goals_against": 40,
-      "wins": 3,
+      "points": 13,
+      "games_played": 9,
+      "goals_for": 44,
+      "goals_against": 43,
+      "wins": 4,
       "losses": 4,
       "overtime_wins": 0,
       "overtime_losses": 1,
       "rank": 4,
-      "goal_diff": -1
+      "goal_diff": 1
     },
     {
       "team_id": 11,
       "team_name": "HC Thaur",
       "points": 9,
-      "games_played": 7,
-      "goals_for": 29,
-      "goals_against": 24,
+      "games_played": 8,
+      "goals_for": 32,
+      "goals_against": 28,
       "wins": 3,
-      "losses": 4,
+      "losses": 5,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 5,
-      "goal_diff": 5
+      "goal_diff": 4
     },
     {
       "team_id": 3,
@@ -203,7 +203,7 @@
       "game_id": 165,
       "date": "2026-01-20",
       "time": "19:45:00",
-      "status": "referee_signed",
+      "status": "closed",
       "home_team_id": 11,
       "away_team_id": 6,
       "home_team_name": "HC Thaur",
@@ -271,9 +271,9 @@
       "player_name": "Raphael ",
       "player_surname": "Gasser",
       "team_name": "HC Thaur",
-      "goals": 5,
+      "goals": 6,
       "assists": 7,
-      "total_points": 12
+      "total_points": 13
     },
     {
       "player_id": 372,
@@ -283,6 +283,15 @@
       "goals": 6,
       "assists": 3,
       "total_points": 9
+    },
+    {
+      "player_id": 562,
+      "player_name": "Thomas",
+      "player_surname": "Pipal",
+      "team_name": "HC Thaur",
+      "goals": 5,
+      "assists": 2,
+      "total_points": 7
     },
     {
       "player_id": 404,
@@ -299,8 +308,8 @@
       "player_surname": "Krippels",
       "team_name": "HC Thaur",
       "goals": 4,
-      "assists": 1,
-      "total_points": 5
+      "assists": 2,
+      "total_points": 6
     },
     {
       "player_id": 564,
@@ -312,13 +321,13 @@
       "total_points": 5
     },
     {
-      "player_id": 562,
-      "player_name": "Thomas",
-      "player_surname": "Pipal",
+      "player_id": 565,
+      "player_name": "Moritz",
+      "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
-      "goals": 3,
+      "goals": 2,
       "assists": 2,
-      "total_points": 5
+      "total_points": 4
     },
     {
       "player_id": 567,
@@ -328,15 +337,6 @@
       "goals": 1,
       "assists": 3,
       "total_points": 4
-    },
-    {
-      "player_id": 565,
-      "player_name": "Moritz",
-      "player_surname": "Praxmarer",
-      "team_name": "HC Thaur",
-      "goals": 2,
-      "assists": 1,
-      "total_points": 3
     },
     {
       "player_id": 406,
