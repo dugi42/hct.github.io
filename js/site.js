@@ -685,4 +685,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    const review202601Popup = document.getElementById('review202601Popup');
+    if (review202601Popup) {
+        const closeReview202601Popup = () => {
+            review202601Popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        window.openReview202601Popup = () => {
+            review202601Popup.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeReview202601Popup = closeReview202601Popup;
+
+        review202601Popup.addEventListener('click', event => {
+            if (event.target === review202601Popup) {
+                closeReview202601Popup();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeReview202601Popup();
+            }
+        });
+    }
 });
