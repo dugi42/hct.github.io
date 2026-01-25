@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-25T03:02:48.930Z",
+  "updated_at": "2026-01-25T21:02:13.956Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -54,29 +54,29 @@
       "team_id": 10,
       "team_name": "EHC White Hawks Volders",
       "points": 13,
-      "games_played": 9,
-      "goals_for": 44,
-      "goals_against": 43,
+      "games_played": 10,
+      "goals_for": 46,
+      "goals_against": 49,
       "wins": 4,
-      "losses": 4,
+      "losses": 5,
       "overtime_wins": 0,
       "overtime_losses": 1,
       "rank": 4,
-      "goal_diff": 1
+      "goal_diff": -3
     },
     {
       "team_id": 11,
       "team_name": "HC Thaur",
-      "points": 9,
-      "games_played": 8,
-      "goals_for": 32,
-      "goals_against": 28,
-      "wins": 3,
+      "points": 12,
+      "games_played": 9,
+      "goals_for": 38,
+      "goals_against": 30,
+      "wins": 4,
       "losses": 5,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 5,
-      "goal_diff": 4
+      "goal_diff": 8
     },
     {
       "team_id": 3,
@@ -216,14 +216,14 @@
       "game_id": 190,
       "date": "2026-01-25",
       "time": "18:00:00",
-      "status": "upcoming",
+      "status": "closed",
       "home_team_id": 10,
       "away_team_id": 11,
       "home_team_name": "EHC White Hawks Volders",
       "away_team_name": "HC Thaur",
       "arena_name": "Eishalle Götzens",
-      "score_home": 0,
-      "score_away": 0
+      "score_home": 2,
+      "score_away": 6
     },
     {
       "game_id": 188,
@@ -280,36 +280,36 @@
       "player_name": "Lukas",
       "player_surname": "Christler",
       "team_name": "HC Thaur",
-      "goals": 6,
-      "assists": 3,
-      "total_points": 9
-    },
-    {
-      "player_id": 562,
-      "player_name": "Thomas",
-      "player_surname": "Pipal",
-      "team_name": "HC Thaur",
-      "goals": 5,
-      "assists": 2,
-      "total_points": 7
-    },
-    {
-      "player_id": 404,
-      "player_name": "Fabian",
-      "player_surname": "Wessiak",
-      "team_name": "HC Thaur",
-      "goals": 4,
-      "assists": 2,
-      "total_points": 6
+      "goals": 7,
+      "assists": 5,
+      "total_points": 12
     },
     {
       "player_id": 386,
       "player_name": "Peter",
       "player_surname": "Krippels",
       "team_name": "HC Thaur",
-      "goals": 4,
+      "goals": 6,
       "assists": 2,
-      "total_points": 6
+      "total_points": 8
+    },
+    {
+      "player_id": 562,
+      "player_name": "Thomas",
+      "player_surname": "Pipal",
+      "team_name": "HC Thaur",
+      "goals": 6,
+      "assists": 2,
+      "total_points": 8
+    },
+    {
+      "player_id": 404,
+      "player_name": "Fabian",
+      "player_surname": "Wessiak",
+      "team_name": "HC Thaur",
+      "goals": 5,
+      "assists": 3,
+      "total_points": 8
     },
     {
       "player_id": 564,
@@ -325,9 +325,9 @@
       "player_name": "Moritz",
       "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
-      "goals": 2,
+      "goals": 3,
       "assists": 2,
-      "total_points": 4
+      "total_points": 5
     },
     {
       "player_id": 567,
@@ -339,18 +339,18 @@
       "total_points": 4
     },
     {
-      "player_id": 971,
-      "player_name": "Julian",
-      "player_surname": "Zehenter",
+      "player_id": 406,
+      "player_name": "Matteo",
+      "player_surname": "Wöber",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
       "total_points": 2
     },
     {
-      "player_id": 406,
-      "player_name": "Matteo",
-      "player_surname": "Wöber",
+      "player_id": 971,
+      "player_name": "Julian",
+      "player_surname": "Zehenter",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 2,
