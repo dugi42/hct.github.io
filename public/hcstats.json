@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-27T20:09:01.249Z",
+  "updated_at": "2026-01-27T20:21:32.334Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -118,7 +118,7 @@
       "home_team_name": "HC Thaur",
       "away_team_name": "EC Newcomers II",
       "arena_name": "Eislaufplatz Mils",
-      "score_home": 6,
+      "score_home": 8,
       "score_away": 3
     },
     {
