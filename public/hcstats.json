@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-27T20:30:24.963Z",
+  "updated_at": "2026-01-27T20:33:27.825Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -108,19 +108,6 @@
     }
   ],
   "games": [
-    {
-      "game_id": 188,
-      "date": "2026-01-27",
-      "time": "19:45:00",
-      "status": "live",
-      "home_team_id": 11,
-      "away_team_id": 29,
-      "home_team_name": "HC Thaur",
-      "away_team_name": "EC Newcomers II",
-      "arena_name": "Eislaufplatz Mils",
-      "score_home": 8,
-      "score_away": 3
-    },
     {
       "game_id": 179,
       "date": "2025-11-15",
@@ -237,6 +224,19 @@
       "arena_name": "Eishalle Götzens",
       "score_home": 2,
       "score_away": 6
+    },
+    {
+      "game_id": 188,
+      "date": "2026-01-27",
+      "time": "19:45:00",
+      "status": "referee_signed",
+      "home_team_id": 11,
+      "away_team_id": 29,
+      "home_team_name": "HC Thaur",
+      "away_team_name": "EC Newcomers II",
+      "arena_name": "Eislaufplatz Mils",
+      "score_home": 8,
+      "score_away": 3
     },
     {
       "game_id": 177,
