@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-01-30T03:10:43.324Z",
+  "updated_at": "2026-01-31T03:07:45.787Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -11,16 +11,16 @@
     {
       "team_id": 15,
       "team_name": "Tyrolean Ice Kings",
-      "points": 26,
-      "games_played": 10,
-      "goals_for": 61,
-      "goals_against": 20,
+      "points": 27,
+      "games_played": 11,
+      "goals_for": 66,
+      "goals_against": 26,
       "wins": 8,
       "losses": 1,
       "overtime_wins": 1,
-      "overtime_losses": 0,
+      "overtime_losses": 1,
       "rank": 1,
-      "goal_diff": 41
+      "goal_diff": 40
     },
     {
       "team_id": 8,
@@ -39,16 +39,16 @@
     {
       "team_id": 6,
       "team_name": "EC Sellraintal Wolves",
-      "points": 18,
-      "games_played": 9,
-      "goals_for": 44,
-      "goals_against": 22,
+      "points": 20,
+      "games_played": 10,
+      "goals_for": 50,
+      "goals_against": 27,
       "wins": 6,
       "losses": 3,
-      "overtime_wins": 0,
+      "overtime_wins": 1,
       "overtime_losses": 0,
       "rank": 3,
-      "goal_diff": 22
+      "goal_diff": 23
     },
     {
       "team_id": 11,
