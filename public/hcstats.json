@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-05T03:13:33.483Z",
+  "updated_at": "2026-02-05T20:15:34.950Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -108,6 +108,19 @@
     }
   ],
   "games": [
+    {
+      "game_id": 213,
+      "date": "2026-02-05",
+      "time": "19:45:00",
+      "status": "live",
+      "home_team_id": 11,
+      "away_team_id": 15,
+      "home_team_name": "HC Thaur",
+      "away_team_name": "Tyrolean Ice Kings",
+      "arena_name": "Eislaufplatz Mils",
+      "score_home": 3,
+      "score_away": 0
+    },
     {
       "game_id": 179,
       "date": "2025-11-15",
@@ -237,19 +250,6 @@
       "arena_name": "Eislaufplatz Mils",
       "score_home": 8,
       "score_away": 3
-    },
-    {
-      "game_id": 213,
-      "date": "2026-02-05",
-      "time": "19:45:00",
-      "status": "upcoming",
-      "home_team_id": 11,
-      "away_team_id": 15,
-      "home_team_name": "HC Thaur",
-      "away_team_name": "Tyrolean Ice Kings",
-      "arena_name": "Eislaufplatz Mils",
-      "score_home": 0,
-      "score_away": 0
     },
     {
       "game_id": 163,
