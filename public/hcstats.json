@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-04T03:12:12.441Z",
+  "updated_at": "2026-02-05T03:13:33.483Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -39,16 +39,16 @@
     {
       "team_id": 6,
       "team_name": "EC Sellraintal Wolves",
-      "points": 20,
-      "games_played": 10,
-      "goals_for": 50,
-      "goals_against": 27,
-      "wins": 6,
+      "points": 23,
+      "games_played": 11,
+      "goals_for": 59,
+      "goals_against": 28,
+      "wins": 7,
       "losses": 3,
       "overtime_wins": 1,
       "overtime_losses": 0,
       "rank": 3,
-      "goal_diff": 23
+      "goal_diff": 31
     },
     {
       "team_id": 10,
@@ -82,15 +82,15 @@
       "team_id": 3,
       "team_name": "EC Aschauer Eisbären",
       "points": 9,
-      "games_played": 11,
-      "goals_for": 42,
-      "goals_against": 61,
+      "games_played": 12,
+      "goals_for": 43,
+      "goals_against": 70,
       "wins": 3,
-      "losses": 8,
+      "losses": 9,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 6,
-      "goal_diff": -19
+      "goal_diff": -27
     },
     {
       "team_id": 29,
@@ -108,19 +108,6 @@
     }
   ],
   "games": [
-    {
-      "game_id": 177,
-      "date": "2026-02-03",
-      "time": "19:45:00",
-      "status": "live",
-      "home_team_id": 11,
-      "away_team_id": 15,
-      "home_team_name": "HC Thaur",
-      "away_team_name": "Tyrolean Ice Kings",
-      "arena_name": "Eislaufplatz Mils",
-      "score_home": 1,
-      "score_away": 0
-    },
     {
       "game_id": 179,
       "date": "2025-11-15",
@@ -250,6 +237,19 @@
       "arena_name": "Eislaufplatz Mils",
       "score_home": 8,
       "score_away": 3
+    },
+    {
+      "game_id": 213,
+      "date": "2026-02-05",
+      "time": "19:45:00",
+      "status": "upcoming",
+      "home_team_id": 11,
+      "away_team_id": 15,
+      "home_team_name": "HC Thaur",
+      "away_team_name": "Tyrolean Ice Kings",
+      "arena_name": "Eislaufplatz Mils",
+      "score_home": 0,
+      "score_away": 0
     },
     {
       "game_id": 163,
