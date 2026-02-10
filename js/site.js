@@ -265,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const statsUrl = 'public/hcstats.json';
+    const liveTickerContent = document.getElementById('live-ticker-content');
+    const liveTickerUpdated = document.getElementById('live-ticker-updated');
     const logoMap = new Map([
         [3, 'images/cup_logos/ec_aschauer_eisbaeren.jpg'],
         [6, 'images/cup_logos/ec_sellraintal_wolves.jpg'],
@@ -293,18 +295,85 @@ document.addEventListener('DOMContentLoaded', () => {
         return value;
     };
 
-    const createLogoNode = (teamId, teamName) => {
+    const normalizeStatus = status => (status ? status.toLowerCase() : '');
+
+    const createLogoNode = (teamId, teamName, sizeClass = 'w-12 h-12') => {
         const logoSrc = logoMap.get(Number(teamId));
         if (!logoSrc) {
             const placeholder = document.createElement('div');
-            placeholder.className = 'w-12 h-12';
+            placeholder.className = sizeClass;
             return placeholder;
         }
         const img = document.createElement('img');
         img.src = logoSrc;
         img.alt = teamName ? `${teamName} Logo` : 'Team Logo';
-        img.className = 'w-12 h-12 object-contain';
+        img.className = `${sizeClass} object-contain`;
         return img;
+    };
+
+    const formatUpdateTime = value => {
+        if (!value) {
+            return null;
+        }
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+            return null;
+        }
+        return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    };
+
+    const renderLiveTicker = (data) => {
+        if (!liveTickerContent) {
+            return;
+        }
+
+        const games = data?.games || [];
+        const liveStatuses = new Set(['live', 'active']);
+        const liveGames = games.filter(game => {
+            const status = normalizeStatus(game.status);
+            return liveStatuses.has(status) || status.includes('live');
+        });
+
+        liveTickerContent.innerHTML = '';
+
+        if (liveGames.length === 0) {
+            const empty = document.createElement('span');
+            empty.className = 'text-white/90';
+            empty.textContent = 'Derzeit keine Live-Spiele.';
+            liveTickerContent.appendChild(empty);
+        } else {
+            liveGames.forEach(game => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10';
+
+                const homeLogo = createLogoNode(game.home_team_id, game.home_team_name, 'w-6 h-6');
+                const awayLogo = createLogoNode(game.away_team_id, game.away_team_name, 'w-6 h-6');
+
+                const homeName = document.createElement('span');
+                homeName.className = 'font-semibold';
+                homeName.textContent = game.home_team_name || '';
+
+                const awayName = document.createElement('span');
+                awayName.className = 'font-semibold';
+                awayName.textContent = game.away_team_name || '';
+
+                const score = document.createElement('span');
+                score.className = 'text-sm font-bold';
+                score.textContent = `${formatScore(game.score_home)} : ${formatScore(game.score_away)}`;
+
+                item.appendChild(homeLogo);
+                item.appendChild(homeName);
+                item.appendChild(score);
+                item.appendChild(awayName);
+                item.appendChild(awayLogo);
+                liveTickerContent.appendChild(item);
+            });
+        }
+
+        if (liveTickerUpdated) {
+            const formatted = formatUpdateTime(data?.updated_at);
+            liveTickerUpdated.textContent = formatted ? `Stand: ${formatted} Uhr` : 'Stand: --:--';
+        }
     };
 
     const renderGameResultBanner = (games) => {
@@ -386,7 +455,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateBanner = () => {
-        fetch(statsUrl, { cache: 'no-store' })
+        const cacheBustedUrl = `${statsUrl}?_=${Date.now()}`;
+        fetch(cacheBustedUrl, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -395,14 +465,21 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 renderGameResultBanner(data.games || []);
+                renderLiveTicker(data);
             })
             .catch(error => {
                 console.error('[Game Result Banner]', error);
+                if (liveTickerContent) {
+                    liveTickerContent.innerHTML = '<span class="text-white/90">Live-Ergebnisse nicht verfügbar.</span>';
+                }
+                if (liveTickerUpdated) {
+                    liveTickerUpdated.textContent = 'Stand: --:--';
+                }
             });
     };
 
     updateBanner();
-    setInterval(updateBanner, 300000);
+    setInterval(updateBanner, 60000);
 
     const standingsBody = document.getElementById('standings-table-body');
     const gamesCarousel = document.getElementById('hc-games-carousel');

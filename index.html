@@ -241,6 +241,18 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    <!-- Live Ticker -->
+    <div id="live-ticker" class="bg-hc-red text-white">
+        <div class="container mx-auto px-6 py-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="text-xs font-bold uppercase tracking-wider bg-white/10 px-2 py-1 rounded">Live</span>
+                <div id="live-ticker-content" class="flex items-center gap-4 flex-wrap text-sm" role="status" aria-live="polite">
+                    <span class="text-white/90">Lade Live-Ergebnisse...</span>
+                </div>
+            </div>
+            <div id="live-ticker-updated" class="text-xs text-white/80">Stand: --:--</div>
+        </div>
+    </div>
 
     <!-- Header & Navigation -->
     <header class="bg-black text-white shadow-lg sticky top-0 z-50">
@@ -1663,6 +1675,6 @@
         </div>
     </div>
 
-    <script src="js/site.js?v=20260126"></script>
+    <script src="js/site.js?v=20260210"></script>
 </body>
 </html>
