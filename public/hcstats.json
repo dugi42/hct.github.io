@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-10T20:30:25.474Z",
+  "updated_at": "2026-02-10T20:51:45.665Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -118,7 +118,7 @@
       "home_team_name": "EC Sellraintal Wolves",
       "away_team_name": "HC Thaur",
       "arena_name": "ICEART Arena Telfs",
-      "score_home": 0,
+      "score_home": 1,
       "score_away": 3
     },
     {
