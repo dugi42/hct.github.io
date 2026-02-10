@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-09T03:19:23.073Z",
+  "updated_at": "2026-02-10T03:22:45.958Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -53,16 +53,16 @@
     {
       "team_id": 10,
       "team_name": "EHC White Hawks Volders",
-      "points": 16,
-      "games_played": 11,
-      "goals_for": 50,
-      "goals_against": 52,
-      "wins": 5,
+      "points": 19,
+      "games_played": 12,
+      "goals_for": 59,
+      "goals_against": 53,
+      "wins": 6,
       "losses": 5,
       "overtime_wins": 0,
       "overtime_losses": 1,
       "rank": 4,
-      "goal_diff": -2
+      "goal_diff": 6
     },
     {
       "team_id": 11,
@@ -96,15 +96,15 @@
       "team_id": 29,
       "team_name": "EC Newcomers II",
       "points": 3,
-      "games_played": 11,
-      "goals_for": 14,
-      "goals_against": 80,
+      "games_played": 12,
+      "goals_for": 15,
+      "goals_against": 89,
       "wins": 1,
-      "losses": 10,
+      "losses": 11,
       "overtime_wins": 0,
       "overtime_losses": 0,
       "rank": 7,
-      "goal_diff": -66
+      "goal_diff": -74
     }
   ],
   "games": [
