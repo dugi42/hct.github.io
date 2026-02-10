@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-10T21:27:31.643Z",
+  "updated_at": "2026-02-10T21:36:23.270Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -108,19 +108,6 @@
     }
   ],
   "games": [
-    {
-      "game_id": 163,
-      "date": "2026-02-10",
-      "time": "20:00:00",
-      "status": "live",
-      "home_team_id": 6,
-      "away_team_id": 11,
-      "home_team_name": "EC Sellraintal Wolves",
-      "away_team_name": "HC Thaur",
-      "arena_name": "ICEART Arena Telfs",
-      "score_home": 2,
-      "score_away": 3
-    },
     {
       "game_id": 179,
       "date": "2025-11-15",
@@ -263,6 +250,19 @@
       "arena_name": "Eislaufplatz Mils",
       "score_home": 3,
       "score_away": 1
+    },
+    {
+      "game_id": 163,
+      "date": "2026-02-10",
+      "time": "20:00:00",
+      "status": "completed",
+      "home_team_id": 6,
+      "away_team_id": 11,
+      "home_team_name": "EC Sellraintal Wolves",
+      "away_team_name": "HC Thaur",
+      "arena_name": "ICEART Arena Telfs",
+      "score_home": 2,
+      "score_away": 3
     }
   ],
   "players": [
