@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-10T20:15:58.203Z",
+  "updated_at": "2026-02-10T20:24:38.458Z",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -119,7 +119,7 @@
       "away_team_name": "HC Thaur",
       "arena_name": "ICEART Arena Telfs",
       "score_home": 0,
-      "score_away": 2
+      "score_away": 3
     },
     {
       "game_id": 179,
