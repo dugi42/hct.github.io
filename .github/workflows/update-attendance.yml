@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install uv
-          uv pip sync
+          uv pip sync pyproject.toml
 
       - name: Fetch attendance report
         env:
