@@ -21,7 +21,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install -e .
+        run: |
+          pip install uv
+          uv pip sync
 
       - name: Fetch stats
         env:
