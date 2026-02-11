@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install uv
-          uv pip sync pyproject.toml
+          uv pip sync --system pyproject.toml
 
       - name: Fetch stats
         env:
