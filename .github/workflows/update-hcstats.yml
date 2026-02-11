@@ -15,10 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: "20"
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -e .
 
       - name: Fetch stats
         env:
@@ -26,7 +29,7 @@ jobs:
           HC_REPORT_TEAM_ID: ${{ secrets.HC_REPORT_TEAM_ID }}
           HC_REPORT_SEASON_ID: ${{ secrets.HC_REPORT_SEASON_ID }}
           HC_REPORT_PHASE_ID: ${{ secrets.HC_REPORT_PHASE_ID }}
-        run: node scripts/fetch-hcstats.mjs
+        run: python python/fetch_hcstats.py
 
       - name: Commit updates
         run: |
