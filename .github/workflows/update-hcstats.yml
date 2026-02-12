@@ -26,6 +26,7 @@ jobs:
 
       - name: Fetch stats
         env:
+          HC_REPORT_API_URL: ${{ secrets.HC_REPORT_API_URL }}
           HC_REPORT_TOKEN: ${{ secrets.HC_REPORT_TOKEN }}
           HC_REPORT_TEAM_ID: ${{ secrets.HC_REPORT_TEAM_ID }}
           HC_REPORT_SEASON_ID: ${{ secrets.HC_REPORT_SEASON_ID }}

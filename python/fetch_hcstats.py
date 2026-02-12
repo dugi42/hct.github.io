@@ -5,13 +5,14 @@ import os
 from datetime import datetime
 import httpx
 
+API_BASE_URL = os.environ.get("HC_REPORT_API_URL")
 TOKEN = os.environ.get("HC_REPORT_TOKEN")
 TEAM_ID_RAW = os.environ.get("HC_REPORT_TEAM_ID")
 SEASON_ID_RAW = os.environ.get("HC_REPORT_SEASON_ID")
 PHASE_ID_RAW = os.environ.get("HC_REPORT_PHASE_ID")
 
-if not TOKEN or not TEAM_ID_RAW:
-    print("Missing required envs: HC_REPORT_TOKEN, HC_REPORT_TEAM_ID.")
+if not API_BASE_URL or not TOKEN or not TEAM_ID_RAW:
+    print("Missing required envs: HC_REPORT_API_URL, HC_REPORT_TOKEN, HC_REPORT_TEAM_ID.")
     exit(1)
 
 try:
@@ -36,7 +37,6 @@ if PHASE_ID_RAW:
         print("HC_REPORT_PHASE_ID must be a valid number.")
         exit(1)
 
-API = "https://hockey-report.eu/api"
 payload = {"token": TOKEN, "team_id": TEAM_ID}
 
 if SEASON_ID is not None:
@@ -47,7 +47,7 @@ if PHASE_ID is not None:
 
 async def post_json(client, endpoint):
     res = await client.post(
-        f"{API}/{endpoint}",
+        f"{API_BASE_URL}/{endpoint}",
         json=payload,
         headers={"Content-Type": "application/json"},
     )
