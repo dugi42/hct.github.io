@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Number.isNaN(date.getTime())) {
             return null;
         }
-        return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+        return date.toLocaleString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     };
 
     const renderLiveTicker = (data) => {
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (liveTickerUpdated) {
             const formatted = formatUpdateTime(data?.updated_at);
-            liveTickerUpdated.textContent = formatted ? `Stand: ${formatted} Uhr` : 'Stand: --:--';
+            liveTickerUpdated.textContent = formatted ? `Stand: ${formatted}` : 'Stand: --:--';
         }
     };
 
