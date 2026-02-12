@@ -15,15 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.12"
+          enable-cache: true
 
       - name: Install dependencies
-        run: |
-          pip install uv
-          uv pip sync --system pyproject.toml
+        # uv reads 'requires-python' and dependencies from pyproject.toml
+        run: uv sync
 
       - name: Fetch stats
         env:
@@ -31,7 +30,8 @@ jobs:
           HC_REPORT_TEAM_ID: ${{ secrets.HC_REPORT_TEAM_ID }}
           HC_REPORT_SEASON_ID: ${{ secrets.HC_REPORT_SEASON_ID }}
           HC_REPORT_PHASE_ID: ${{ secrets.HC_REPORT_PHASE_ID }}
-        run: python python/fetch_hcstats.py
+        # 'uv run' ensures the script uses the environment we just synced
+        run: uv run python/fetch_hcstats.py
 
       - name: Commit updates
         run: |
