@@ -15,6 +15,7 @@
     <title>Hockey Report | Statistik Kampfmannschaft Saison 2025/26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -73,6 +74,20 @@
             <h2 class="text-xl font-bold mb-6">Tor-Entwicklung</h2>
             <div class="h-[360px]">
                 <canvas id="goalsTrendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Strafenverteilung nach Spielern</h2>
+            <div class="h-[400px]">
+                <canvas id="penaltyPlayerChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass p-6 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6">Strafenverteilung nach Typ</h2>
+            <div class="h-[400px]">
+                <canvas id="penaltyTypeChart"></canvas>
             </div>
         </div>
 
@@ -162,6 +177,85 @@
             return response.json();
         }
 
+        const FOULS_URL = "public/202526_preseason_fouls_static.csv";
+
+        async function fetchFouls() {
+            const response = await fetch(FOULS_URL, { cache: "no-store" });
+            if (!response.ok) {
+                throw new Error(`Fouls konnten nicht geladen werden (${response.status})`);
+            }
+            const csvText = await response.text();
+            return Papa.parse(csvText, { header: true, dynamicTyping: true }).data;
+        }
+
+        function renderPenaltyCharts(fouls) {
+            const penaltyTypes = ["Beinstellen", "Haken", "Haerte", "Crosscheck", "Sonstige"];
+            const colors = {
+                "Beinstellen": getCssVar("--hc-red"),
+                "Haken": "#475569",
+                "Haerte": "#94a3b8",
+                "Crosscheck": getCssVar("--hc-black"),
+                "Sonstige": "#cbd5e1"
+            };
+
+            // Penalty Player Chart
+            const playerLabels = fouls.map(f => f.Spieler);
+            const playerDatasets = penaltyTypes.map(type => ({
+                label: type,
+                data: fouls.map(f => f[type] || 0),
+                backgroundColor: colors[type]
+            }));
+
+            new Chart(document.getElementById("penaltyPlayerChart"), {
+                type: "bar",
+                data: {
+                    labels: playerLabels,
+                    datasets: playerDatasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: "y",
+                    scales: {
+                        x: { stacked: true, grid: { color: getCssVar("--hc-border") }, border: { display: false } },
+                        y: { stacked: true, grid: { display: false } }
+                    },
+                    plugins: { legend: { position: "bottom", labels: { color: getCssVar("--hc-muted-strong") } } }
+                }
+            });
+
+            // Penalty Type Chart
+            const typeTotals = penaltyTypes.map(type => 
+                fouls.reduce((sum, player) => sum + (player[type] || 0), 0)
+            );
+
+            new Chart(document.getElementById("penaltyTypeChart"), {
+                type: "doughnut",
+                data: {
+                    labels: penaltyTypes,
+                    datasets: [{
+                        data: typeTotals,
+                        backgroundColor: penaltyTypes.map(type => colors[type]),
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "75%",
+                    plugins: { 
+                        legend: { 
+                            position: "right", 
+                            labels: { 
+                                color: getCssVar("--hc-muted-strong"),
+                                boxWidth: 10
+                            } 
+                        } 
+                    }
+                }
+            });
+        }
+
         async function initDashboard() {
             try {
                 const data = await fetchStats();
@@ -169,12 +263,14 @@
                 const games = data.games || [];
                 const players = data.players || [];
                 const seasonId = data.context && data.context.season_id ? data.context.season_id : null;
+                const fouls = await fetchFouls();
 
                 document.getElementById('season-badge').innerText = seasonId ? `Saison ${seasonId}` : 'Saison';
 
                 updateHeader(data);
                 renderPlayersChart(players);
                 renderGoalsTrend(games, data.team_id);
+                renderPenaltyCharts(fouls);
                 renderGames(games);
                 renderStandingsTable(standings);
                 renderGamesTable(games);
