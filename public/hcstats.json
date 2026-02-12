@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-11T03:21:28.809Z",
+  "updated_at": "2026-02-12T08:31:25.045687",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -12,15 +12,15 @@
       "team_id": 15,
       "team_name": "Tyrolean Ice Kings",
       "points": 27,
-      "games_played": 11,
-      "goals_for": 66,
-      "goals_against": 26,
+      "games_played": 12,
+      "goals_for": 67,
+      "goals_against": 29,
       "wins": 8,
-      "losses": 1,
+      "losses": 2,
       "overtime_wins": 1,
       "overtime_losses": 1,
       "rank": 1,
-      "goal_diff": 40
+      "goal_diff": 38
     },
     {
       "team_id": 8,
@@ -40,15 +40,29 @@
       "team_id": 6,
       "team_name": "EC Sellraintal Wolves",
       "points": 23,
-      "games_played": 11,
-      "goals_for": 59,
-      "goals_against": 28,
+      "games_played": 12,
+      "goals_for": 61,
+      "goals_against": 31,
       "wins": 7,
-      "losses": 3,
+      "losses": 4,
       "overtime_wins": 1,
       "overtime_losses": 0,
       "rank": 3,
-      "goal_diff": 31
+      "goal_diff": 30
+    },
+    {
+      "team_id": 11,
+      "team_name": "HC Thaur",
+      "points": 21,
+      "games_played": 12,
+      "goals_for": 52,
+      "goals_against": 36,
+      "wins": 7,
+      "losses": 5,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
+      "rank": 4,
+      "goal_diff": 16
     },
     {
       "team_id": 10,
@@ -61,26 +75,12 @@
       "losses": 5,
       "overtime_wins": 0,
       "overtime_losses": 1,
-      "rank": 4,
+      "rank": 5,
       "goal_diff": 6
     },
     {
-      "team_id": 11,
-      "team_name": "HC Thaur",
-      "points": 15,
-      "games_played": 10,
-      "goals_for": 46,
-      "goals_against": 33,
-      "wins": 5,
-      "losses": 5,
-      "overtime_wins": 0,
-      "overtime_losses": 0,
-      "rank": 5,
-      "goal_diff": 13
-    },
-    {
       "team_id": 3,
-      "team_name": "EC Aschauer Eisbären",
+      "team_name": "EC Aschauer Eisb\u00e4ren",
       "points": 9,
       "games_played": 12,
       "goals_for": 43,
@@ -130,7 +130,7 @@
       "away_team_id": 11,
       "home_team_name": "Tyrolean Ice Kings",
       "away_team_name": "HC Thaur",
-      "arena_name": "Eishalle Götzens",
+      "arena_name": "Eishalle G\u00f6tzens",
       "score_home": 2,
       "score_away": 5
     },
@@ -141,7 +141,7 @@
       "status": "closed",
       "home_team_id": 3,
       "away_team_id": 11,
-      "home_team_name": "EC Aschauer Eisbären",
+      "home_team_name": "EC Aschauer Eisb\u00e4ren",
       "away_team_name": "HC Thaur",
       "arena_name": "Eisplatz Zell",
       "score_home": 4,
@@ -155,7 +155,7 @@
       "home_team_id": 11,
       "away_team_id": 3,
       "home_team_name": "HC Thaur",
-      "away_team_name": "EC Aschauer Eisbären",
+      "away_team_name": "EC Aschauer Eisb\u00e4ren",
       "arena_name": "Eislaufplatz Mils",
       "score_home": 3,
       "score_away": 2
@@ -221,7 +221,7 @@
       "away_team_id": 11,
       "home_team_name": "EHC White Hawks Volders",
       "away_team_name": "HC Thaur",
-      "arena_name": "Eishalle Götzens",
+      "arena_name": "Eishalle G\u00f6tzens",
       "score_home": 2,
       "score_away": 6
     },
@@ -242,7 +242,7 @@
       "game_id": 213,
       "date": "2026-02-05",
       "time": "19:45:00",
-      "status": "referee_signed",
+      "status": "closed",
       "home_team_id": 11,
       "away_team_id": 15,
       "home_team_name": "HC Thaur",
@@ -255,7 +255,7 @@
       "game_id": 163,
       "date": "2026-02-10",
       "time": "20:00:00",
-      "status": "referee_signed",
+      "status": "closed",
       "home_team_id": 6,
       "away_team_id": 11,
       "home_team_name": "EC Sellraintal Wolves",
@@ -267,22 +267,22 @@
   ],
   "players": [
     {
-      "player_id": 337,
-      "player_name": "Raphael ",
-      "player_surname": "Gasser",
-      "team_name": "HC Thaur",
-      "goals": 7,
-      "assists": 9,
-      "total_points": 16
-    },
-    {
       "player_id": 372,
       "player_name": "Lukas",
       "player_surname": "Christler",
       "team_name": "HC Thaur",
-      "goals": 9,
+      "goals": 12,
       "assists": 6,
-      "total_points": 15
+      "total_points": 18
+    },
+    {
+      "player_id": 337,
+      "player_name": "Raphael ",
+      "player_surname": "Gasser",
+      "team_name": "HC Thaur",
+      "goals": 8,
+      "assists": 9,
+      "total_points": 17
     },
     {
       "player_id": 386,
@@ -290,17 +290,17 @@
       "player_surname": "Krippels",
       "team_name": "HC Thaur",
       "goals": 7,
-      "assists": 3,
-      "total_points": 10
+      "assists": 5,
+      "total_points": 12
     },
     {
       "player_id": 562,
       "player_name": "Thomas",
       "player_surname": "Pipal",
       "team_name": "HC Thaur",
-      "goals": 6,
+      "goals": 7,
       "assists": 3,
-      "total_points": 9
+      "total_points": 10
     },
     {
       "player_id": 404,
@@ -317,8 +317,8 @@
       "player_surname": "Mariacher",
       "team_name": "HC Thaur",
       "goals": 5,
-      "assists": 1,
-      "total_points": 6
+      "assists": 2,
+      "total_points": 7
     },
     {
       "player_id": 565,
@@ -350,7 +350,7 @@
     {
       "player_id": 379,
       "player_name": "Mario",
-      "player_surname": "Föger",
+      "player_surname": "F\u00f6ger",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 3,
