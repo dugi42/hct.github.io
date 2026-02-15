@@ -14,28 +14,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
-
-      - name: Upload hcstats.json
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_PORT: ${{ secrets.FTP_PORT }}
-          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
-        run: |
-          set -euo pipefail
-          if [ -z "${FTP_HOST:-}" ] || [ -z "${FTP_USER:-}" ] || [ -z "${FTP_PASSWORD:-}" ] || [ -z "${FTP_REMOTE_DIR:-}" ]; then
-            echo "Missing FTP secrets. Required: FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_REMOTE_DIR."
-            exit 1
-          fi
-          FTP_PORT="${FTP_PORT:-21}"
-          lftp -e "
-            set ftp:ssl-allow no;
-            open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
-            cd ${FTP_REMOTE_DIR};
-            mirror -R --delete --verbose --exclude-glob .git/ --exclude-glob .git/** ./ .;
-            bye
-          "
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          server-dir: ${{ secrets.FTP_REMOTE_DIR }}/
+          dangerous-clean-slate: false 
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.venv/**
+            .venv/
+            .gitignore
+            pyproject.toml
+            .python-version
+            package.json
+            README.md
+            **/.DS_Store
+            uv.lock
