@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-15T03:19:57.091408",
+  "updated_at": "2026-02-15T21:38:08.082066",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -255,7 +255,7 @@
       "game_id": 163,
       "date": "2026-02-10",
       "time": "20:00:00",
-      "status": "live",
+      "status": "closed",
       "home_team_id": 6,
       "away_team_id": 11,
       "home_team_name": "EC Sellraintal Wolves",
