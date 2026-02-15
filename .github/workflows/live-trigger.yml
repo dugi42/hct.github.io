@@ -2,7 +2,7 @@ name: Live Ticker HC Stats
 
 on:
   schedule:
-    - cron: "*/10 * * * *" # Runs roughly every 10 mins (GitHub's reliable minimum)
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1 # Faster checkout as we only need the latest state
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -37,9 +37,9 @@ jobs:
       - name: Commit and Push (If changed)
         id: commit_step
         run: |
-          if git diff --quiet; then
+          if git diff --quiet public/hcstats.json; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No changes to commit."
+            echo "No changes to hcstats.json."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -50,11 +50,10 @@ jobs:
           fi
 
       - name: Install lftp
-        # We only need to install and run this if something actually changed
         if: steps.commit_step.outputs.changed == 'true'
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      - name: Upload via LFTP (Diff Only)
+      - name: Upload Single File via LFTP
         if: steps.commit_step.outputs.changed == 'true'
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
@@ -63,19 +62,13 @@ jobs:
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
         run: |
+          # Use 'put' to upload only the specific file. 
+          # -O specifies the remote directory to put the file into.
           lftp -e "
             set ftp:ssl-allow no;
             set net:timeout 30;
             set net:max-retries 10;
             open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
-            cd ${FTP_REMOTE_DIR};
-            mirror -R \
-              --only-newer \
-              --ignore-time \
-              --verbose \
-              --exclude .git/ \
-              --exclude .github/ \
-              --exclude .venv/ \
-              ./ .;
+            put -O ${FTP_REMOTE_DIR}/public/ public/hcstats.json;
             bye
           "
