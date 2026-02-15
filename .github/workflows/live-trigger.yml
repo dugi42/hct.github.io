@@ -1,0 +1,81 @@
+name: Live Ticker HC Stats
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # Runs roughly every 10 mins (GitHub's reliable minimum)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Fetch stats
+        env:
+          HC_REPORT_API_URL: ${{ secrets.HC_REPORT_API_URL }}
+          HC_REPORT_TOKEN: ${{ secrets.HC_REPORT_TOKEN }}
+          HC_REPORT_TEAM_ID: ${{ secrets.HC_REPORT_TEAM_ID }}
+          HC_REPORT_SEASON_ID: ${{ secrets.HC_REPORT_SEASON_ID }}
+          HC_REPORT_PHASE_ID: ${{ secrets.HC_REPORT_PHASE_ID }}
+        run: uv run python/fetch_hcstats.py
+
+      - name: Commit and Push (If changed)
+        id: commit_step
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes to commit."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/hcstats.json
+            git commit -m "Update hcstats.json"
+            git push
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install lftp
+        # We only need to install and run this if something actually changed
+        if: steps.commit_step.outputs.changed == 'true'
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Upload via LFTP (Diff Only)
+        if: steps.commit_step.outputs.changed == 'true'
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          lftp -e "
+            set ftp:ssl-allow no;
+            set net:timeout 30;
+            set net:max-retries 10;
+            open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
+            cd ${FTP_REMOTE_DIR};
+            mirror -R \
+              --only-newer \
+              --ignore-time \
+              --verbose \
+              --exclude .git/ \
+              --exclude .github/ \
+              --exclude .venv/ \
+              ./ .;
+            bye
+          "

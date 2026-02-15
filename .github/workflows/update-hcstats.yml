@@ -2,9 +2,7 @@ name: Update HC Stats
 
 on:
   schedule:
-    # This is the cron syntax for "every minute"
-    - cron: "* * * * *"
-    # - cron: "15 2 * * *" # Uncomment this line to run the workflow daily at 2:15 AM
+    - cron: "15 2 * * *" # Uncomment this line to run the workflow daily at 2:15 AM
   workflow_dispatch:
 
 permissions:
