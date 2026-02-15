@@ -27,7 +27,6 @@ jobs:
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}/
           dangerous-clean-slate: false
           # --- Stability Settings ---
-          parallel: 1          # Upload files one-by-one to avoid ECONNRESET
           timeout: 90000       # 90 second timeout for large media files
           # --------------------------
           exclude: |
