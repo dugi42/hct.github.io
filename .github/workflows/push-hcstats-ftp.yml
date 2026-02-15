@@ -2,8 +2,7 @@ name: Publish HC Stats via FTP
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   schedule:
     - cron: "25 2 * * *"
   workflow_dispatch:
@@ -17,29 +16,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 
 
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT || 21 }}
-          server-dir: ${{ secrets.FTP_REMOTE_DIR }}/
-          protocol: ftp
-          timeout: 120000
-          dangerous-clean-slate: false 
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.venv/**
-            .venv/
-            .gitignore
-            pyproject.toml
-            .python-version
-            package.json
-            README.md
-            **/.DS_Store
-            uv.lock
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Upload via LFTP
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          # Settings to handle unstable connections:
+          # net:timeout 30 - wait 30s before giving up
+          # net:max-retries 10 - try again if the server drops the connection
+          lftp -e "
+            set ftp:ssl-allow no;
+            set net:timeout 30;
+            set net:max-retries 10;
+            open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
+            cd ${FTP_REMOTE_DIR};
+            mirror -R \
+              --only-newer \
+              --ignore-time \
+              --delete \
+              --verbose \
+              --exclude .git/ \
+              --exclude .github/ \
+              --exclude .venv/ \
+              --exclude .gitignore \
+              --exclude pyproject.toml \
+              --exclude .python-version \
+              --exclude package.json \
+              --exclude README.md \
+              --exclude .DS_Store \
+              --exclude uv.lock \
+              ./ .;
+            bye
+          "
