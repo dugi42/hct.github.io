@@ -25,7 +25,11 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}/
-          dangerous-clean-slate: false 
+          dangerous-clean-slate: false
+          # --- Stability Settings ---
+          parallel: 1          # Upload files one-by-one to avoid ECONNRESET
+          timeout: 90000       # 90 second timeout for large media files
+          # --------------------------
           exclude: |
             **/.git*
             **/.git*/**
