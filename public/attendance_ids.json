@@ -1,0 +1,54 @@
+{
+    "data": [
+        {
+            "id": 28419,
+            "name": "Aktion",
+            "is_editable": false
+        },
+        {
+            "id": 26382,
+            "name": "Anprobe",
+            "is_editable": true
+        },
+        {
+            "id": 28338,
+            "name": "Ausw\u00e4rtsspiel",
+            "is_editable": true
+        },
+        {
+            "id": 29446,
+            "name": "Bestellung",
+            "is_editable": true
+        },
+        {
+            "id": 28339,
+            "name": "Heimspiel",
+            "is_editable": true
+        },
+        {
+            "id": 28311,
+            "name": "Neu",
+            "is_editable": false
+        },
+        {
+            "id": 24508,
+            "name": "Spiel",
+            "is_editable": true
+        },
+        {
+            "id": 24507,
+            "name": "Training",
+            "is_editable": true
+        },
+        {
+            "id": 28365,
+            "name": "Trainingslager",
+            "is_editable": true
+        },
+        {
+            "id": 27596,
+            "name": "Veranstaltung",
+            "is_editable": true
+        }
+    ]
+}
