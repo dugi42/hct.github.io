@@ -1,6 +1,9 @@
 name: Publish HC Stats via FTP
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: "25 2 * * *"
   workflow_dispatch:
@@ -25,10 +28,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}/
-          dangerous-clean-slate: false
-          # --- Stability Settings ---
-          timeout: 90000       # 90 second timeout for large media files
-          # --------------------------
+          protocol: ftp
+          timeout: 120000
+          dangerous-clean-slate: false 
           exclude: |
             **/.git*
             **/.git*/**
