@@ -485,7 +485,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gamesCarousel = document.getElementById('hc-games-carousel');
     const gamesStatus = document.getElementById('hc-games-status');
 
-    if (standingsBody || gamesCarousel) {
+    const playoffGamesCarousel = document.getElementById('playoff-games-carousel');
+    const playoffGamesStatus = document.getElementById('playoff-games-status');
+
+    if (standingsBody || gamesCarousel || playoffGamesCarousel) {
 
         const formatValue = value => (value ?? '--');
 
@@ -690,6 +693,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 gamesCarousel.appendChild(createGameCard(game, teamId));
             });
         };
+
+        const renderPlayoffGames = (games, teamId) => {
+            if (!playoffGamesCarousel) {
+                return;
+            }
+            playoffGamesCarousel.innerHTML = '';
+            if (!games.length) {
+                if (playoffGamesStatus) {
+                    playoffGamesStatus.textContent = 'Keine Playoff-Spiele verfügbar.';
+                }
+                return;
+            }
+            if (playoffGamesStatus) {
+                playoffGamesStatus.textContent = '';
+                playoffGamesStatus.classList.add('hidden');
+            }
+
+            const sortedGames = [...games].sort((a, b) => getGameTimestamp(a) - getGameTimestamp(b));
+            sortedGames.forEach(game => {
+                playoffGamesCarousel.appendChild(createGameCard(game, teamId));
+            });
+        };
+
+        fetch('public/hcstats.json', { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderPlayoffGames(data.games || [], data.team_id);
+            })
+            .catch(error => {
+                console.error('[Playoff Games]', error);
+                if(playoffGamesStatus) playoffGamesStatus.textContent = 'Playoff-Spiele konnten nicht geladen werden.';
+            });
 
         fetch(statsUrl, { cache: 'no-store' })
             .then(response => {

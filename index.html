@@ -413,7 +413,6 @@
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Aktuelle <span class="hc-red">News</span>
                 </h2>
-
                 <!-- PLAYOFFS 2025/26 ERREICHT!!! -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-4xl mx-auto">
                     <div class="md:flex">
@@ -1209,6 +1208,16 @@
                         </script>
                         <!-- Table Section -->
                         <div class="mb-8 overflow-x-auto rounded-2xl shadow-inner border border-gray-200 bg-gray-50">
+                            <!-- Playoff Game Schedule Section -->
+                            <div class="mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-200 shadow-inner">
+                                <h4 class="text-xl font-bold text-gray-800 mb-4">Spielübersicht Playoffs 2025/26</h4>
+                                <p id="playoff-games-status" class="text-sm text-gray-500 mb-4">Spiele werden geladen...</p>
+
+                                <!-- Horizontal Scroll Container -->
+                                <div id="playoff-games-carousel"
+                                    class="flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory"></div>
+                            </div>
+
                             <h4 class="text-xl font-bold text-gray-800 mb-4 pl-6 pt-6">Ergebnis Grunddurchgang 2025/26</h4>
                             <div class="px-6 pb-6">
                                 <table
@@ -1243,6 +1252,7 @@
                                 </button>
                             </div>
                         </div>
+
                         <!-- Game Schedule Section -->
                         <div class="mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-200 shadow-inner">
                             <h4 class="text-xl font-bold text-gray-800 mb-4">Spielübersicht Grunddurchgang 2025/26</h4>
