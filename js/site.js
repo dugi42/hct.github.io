@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const statsUrl = 'public/hcstats.json';
+    const statsUrl = 'public/202526_preseason_hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
     const logoMap = new Map([
