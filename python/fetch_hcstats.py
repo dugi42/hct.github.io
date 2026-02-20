@@ -82,11 +82,11 @@ async def main():
 
     out_dir = os.path.join(os.getcwd(), "public")
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "202526_playoffs_hcstats.json"), "w", encoding="utf8") as f:
+    with open(os.path.join(out_dir, "hcstats.json"), "w", encoding="utf8") as f:
         json.dump(output, f, indent=2)
         f.write("\n")
 
-    print("Wrote public/202526_playoffs_hcstats.json")
+    print("Wrote public/hcstats.json")
 
 
 if __name__ == "__main__":
