@@ -264,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const statsUrl = 'public/202526_preseason_hcstats.json';
+    const statsUrlPreSeason = 'public/202526_preseason_hcstats.json';
+    const statsUrlPlayoffs = 'public/hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
     const logoMap = new Map([
@@ -455,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateBanner = () => {
-        const cacheBustedUrl = `${statsUrl}?_=${Date.now()}`;
+        const cacheBustedUrl = `${statsUrlPlayoffs}?_=${Date.now()}`;
         fetch(cacheBustedUrl, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
@@ -716,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        fetch('public/hcstats.json', { cache: 'no-store' })
+        fetch(statsUrlPlayoffs, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -731,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(playoffGamesStatus) playoffGamesStatus.textContent = 'Playoff-Spiele konnten nicht geladen werden.';
             });
 
-        fetch(statsUrl, { cache: 'no-store' })
+        fetch(statsUrlPreSeason, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
