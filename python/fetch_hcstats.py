@@ -4,6 +4,9 @@ import json
 import os
 from datetime import datetime
 import httpx
+from dotenv import load_dotenv
+
+load_dotenv()
 
 API_BASE_URL = os.environ.get("HC_REPORT_API_URL")
 TOKEN = os.environ.get("HC_REPORT_TOKEN")
