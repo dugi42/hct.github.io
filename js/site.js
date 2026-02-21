@@ -297,6 +297,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const normalizeStatus = status => (status ? status.toLowerCase() : '');
+    const scoreSignatureKey = 'hct-score-signature';
+    const hctTeamId = 11;
+    let previousGameScores = new Map();
+    const liveGameDefaultLogoSize = 'w-20 h-20 md:w-28 md:h-28';
+    const liveGameHctLogoSize = 'w-28 h-28 md:w-40 md:h-40';
+
+    const getGameId = game => String(game?.game_id ?? game?.id ?? `${game?.date || ''}-${game?.home_team_id || ''}-${game?.away_team_id || ''}`);
+    const parseScore = value => {
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : 0;
+    };
+    const getLiveGameLogoSize = teamId => (Number(teamId) === hctTeamId ? liveGameHctLogoSize : liveGameDefaultLogoSize);
 
     const createLogoNode = (teamId, teamName, sizeClass = 'w-12 h-12') => {
         const logoSrc = logoMap.get(Number(teamId));
@@ -374,6 +386,183 @@ document.addEventListener('DOMContentLoaded', () => {
         if (liveTickerUpdated) {
             const formatted = formatUpdateTime(data?.updated_at);
             liveTickerUpdated.textContent = formatted ? `Stand: ${formatted}` : 'Stand: --:--';
+        }
+    };
+
+    const renderLiveGamesBig = (data, goalEvents = new Map()) => {
+        const wrapper = document.getElementById('live-games-big-wrapper');
+        const container = document.getElementById('live-games-big-container');
+        if (!container) {
+            return;
+        }
+
+        const games = data?.games || [];
+        const liveStatuses = new Set(['live', 'active']);
+        const liveGames = games.filter(game => {
+            const status = normalizeStatus(game.status);
+            return liveStatuses.has(status) || status.includes('live');
+        });
+
+        container.innerHTML = '';
+        if (wrapper) {
+            wrapper.classList.add('hidden');
+        }
+
+        if (liveGames.length === 0) {
+            return;
+        }
+
+        if (wrapper) {
+            wrapper.classList.remove('hidden');
+        }
+
+        liveGames.forEach(game => {
+            const gameId = getGameId(game);
+            const goalEvent = goalEvents.get(gameId);
+
+            const gameDiv = document.createElement('article');
+            gameDiv.className = 'rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 md:p-6 shadow-sm';
+            if (goalEvent) {
+                gameDiv.classList.add('goal-game-highlight');
+            }
+
+            const meta = document.createElement('div');
+            meta.className = 'mb-4 flex flex-wrap items-center justify-between gap-2';
+
+            if (goalEvent) {
+                const goalBadge = document.createElement('span');
+                goalBadge.className = 'goal-burst-badge';
+                goalBadge.textContent = goalEvent.goalsAdded > 1 ? `TOOOOR HCT x${goalEvent.goalsAdded}` : 'TOOOOR HCT!';
+                meta.appendChild(goalBadge);
+            }
+
+            const liveBadge = document.createElement('span');
+            liveBadge.className = 'inline-flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-hc-red';
+
+            const badgeDot = document.createElement('span');
+            badgeDot.className = 'h-2 w-2 rounded-full bg-hc-red animate-pulse';
+            liveBadge.appendChild(badgeDot);
+            liveBadge.appendChild(document.createTextNode('Live'));
+
+            const details = document.createElement('span');
+            details.className = 'text-sm font-medium text-gray-600';
+            const timeLabel = game.time ? game.time.slice(0, 5) : '--:--';
+            const arenaLabel = (game.arena_name || '').trim();
+            details.textContent = arenaLabel ? `${timeLabel} Uhr, ${arenaLabel}` : `${timeLabel} Uhr`;
+
+            meta.appendChild(liveBadge);
+            meta.appendChild(details);
+
+            const teamsRow = document.createElement('div');
+            teamsRow.className = 'grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6';
+
+            const homeTeamDiv = document.createElement('div');
+            homeTeamDiv.className = 'flex min-w-0 flex-col items-center gap-3 text-center';
+            const homeLogo = createLogoNode(game.home_team_id, game.home_team_name, getLiveGameLogoSize(game.home_team_id));
+            const homeName = document.createElement('div');
+            homeName.className = 'text-base md:text-xl font-semibold text-gray-900 leading-tight';
+            homeName.textContent = game.home_team_name || '';
+            if (goalEvent && goalEvent.teamSide === 'home') {
+                homeLogo.classList.add('goal-logo-pop');
+            }
+            homeTeamDiv.appendChild(homeLogo);
+            homeTeamDiv.appendChild(homeName);
+
+            const scoreDiv = document.createElement('div');
+            scoreDiv.className = 'whitespace-nowrap rounded-xl bg-hc-red px-4 py-2 text-2xl md:text-4xl font-black text-white shadow-lg';
+            scoreDiv.textContent = `${formatScore(game.score_home)} : ${formatScore(game.score_away)}`;
+            if (goalEvent) {
+                scoreDiv.classList.add('goal-score-pop');
+            }
+
+            const awayTeamDiv = document.createElement('div');
+            awayTeamDiv.className = 'flex min-w-0 flex-col items-center gap-3 text-center';
+            const awayLogo = createLogoNode(game.away_team_id, game.away_team_name, getLiveGameLogoSize(game.away_team_id));
+            const awayName = document.createElement('div');
+            awayName.className = 'text-base md:text-xl font-semibold text-gray-900 leading-tight';
+            awayName.textContent = game.away_team_name || '';
+            if (goalEvent && goalEvent.teamSide === 'away') {
+                awayLogo.classList.add('goal-logo-pop');
+            }
+            awayTeamDiv.appendChild(awayLogo);
+            awayTeamDiv.appendChild(awayName);
+
+            teamsRow.appendChild(homeTeamDiv);
+            teamsRow.appendChild(scoreDiv);
+            teamsRow.appendChild(awayTeamDiv);
+
+            gameDiv.appendChild(meta);
+            gameDiv.appendChild(teamsRow);
+            container.appendChild(gameDiv);
+        });
+    };
+
+    const detectHctGoalEvents = data => {
+        const games = Array.isArray(data?.games) ? data.games : [];
+        const liveStatuses = new Set(['live', 'active']);
+        const nextScores = new Map();
+        const goalEvents = new Map();
+
+        games.forEach(game => {
+            const gameId = getGameId(game);
+            const homeScore = parseScore(game.score_home);
+            const awayScore = parseScore(game.score_away);
+            nextScores.set(gameId, { home: homeScore, away: awayScore });
+
+            const previous = previousGameScores.get(gameId);
+            if (!previous) {
+                return;
+            }
+
+            const status = normalizeStatus(game.status);
+            const isLive = liveStatuses.has(status) || status.includes('live');
+            if (!isLive) {
+                return;
+            }
+
+            if (Number(game.home_team_id) === hctTeamId && homeScore > previous.home) {
+                goalEvents.set(gameId, { teamSide: 'home', goalsAdded: homeScore - previous.home });
+            } else if (Number(game.away_team_id) === hctTeamId && awayScore > previous.away) {
+                goalEvents.set(gameId, { teamSide: 'away', goalsAdded: awayScore - previous.away });
+            }
+        });
+
+        previousGameScores = nextScores;
+        return goalEvents;
+    };
+
+    const buildScoreSignature = data => {
+        const games = Array.isArray(data?.games) ? data.games : [];
+        return games
+            .map(game => {
+                const gameId = game.id ?? game.game_id ?? `${game.date || ''}-${game.home_team_id || ''}-${game.away_team_id || ''}`;
+                return `${gameId}:${formatScore(game.score_home)}-${formatScore(game.score_away)}`;
+            })
+            .sort()
+            .join('|');
+    };
+
+    const maybeReloadOnScoreChange = (data, suppressReload = false) => {
+        const signature = buildScoreSignature(data);
+        if (!signature) {
+            return;
+        }
+
+        try {
+            const previousSignature = sessionStorage.getItem(scoreSignatureKey);
+            if (!previousSignature) {
+                sessionStorage.setItem(scoreSignatureKey, signature);
+                return;
+            }
+
+            if (previousSignature !== signature) {
+                sessionStorage.setItem(scoreSignatureKey, signature);
+                if (!suppressReload) {
+                    window.location.reload();
+                }
+            }
+        } catch (error) {
+            console.warn('[Score Reload]', error);
         }
     };
 
@@ -465,8 +654,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
+                const hctGoalEvents = detectHctGoalEvents(data);
+                maybeReloadOnScoreChange(data, hctGoalEvents.size > 0);
                 renderGameResultBanner(data.games || []);
                 renderLiveTicker(data);
+                renderLiveGamesBig(data, hctGoalEvents);
             })
             .catch(error => {
                 console.error('[Game Result Banner]', error);
@@ -475,6 +667,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (liveTickerUpdated) {
                     liveTickerUpdated.textContent = 'Stand: --:--';
+                }
+                const liveGamesWrapper = document.getElementById('live-games-big-wrapper');
+                const liveGamesContainer = document.getElementById('live-games-big-container');
+                if (liveGamesContainer) {
+                    liveGamesContainer.innerHTML = '';
+                }
+                if (liveGamesWrapper) {
+                    liveGamesWrapper.classList.add('hidden');
                 }
             });
     };

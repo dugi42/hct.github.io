@@ -898,6 +898,42 @@ footer {
     margin-top: 0.5rem;
 }
 
+.live-game-big {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.live-game-big .team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.live-game-big .team-logo {
+    width: 8rem;
+    height: 8rem;
+    object-fit: contain;
+}
+
+.live-game-big .team-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.live-game-big .score {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fc0612;
+}
+
 /* Loading Animation */
 .loading-overlay {
     position: fixed;

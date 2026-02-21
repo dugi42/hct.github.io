@@ -306,6 +306,104 @@
             flex-direction: column;
             gap: 0.5rem;
         }
+
+        /* HCT goal celebration (Live Games Big) */
+        .goal-game-highlight {
+            border-color: rgba(252, 6, 18, 0.7);
+            animation: goalCardGlow 1.6s ease-out 2;
+        }
+
+        .goal-score-pop {
+            animation: goalScorePop 1.2s ease-out 2;
+        }
+
+        .goal-logo-pop {
+            animation: goalLogoPop 1.2s ease-out 2;
+            transform-origin: center center;
+        }
+
+        .goal-burst-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #fc0612 0%, #ff4f58 100%);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(252, 6, 18, 0.35);
+            animation: goalBadgePop 1.4s ease-out 1;
+        }
+
+        @keyframes goalCardGlow {
+            0% {
+                box-shadow: 0 0 0 rgba(252, 6, 18, 0);
+            }
+
+            35% {
+                box-shadow: 0 0 0 8px rgba(252, 6, 18, 0.18), 0 0 32px rgba(252, 6, 18, 0.35);
+            }
+
+            100% {
+                box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.12), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+            }
+        }
+
+        @keyframes goalScorePop {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.25);
+            }
+
+            50% {
+                transform: scale(0.96);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes goalLogoPop {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.17) rotate(-4deg);
+            }
+
+            60% {
+                transform: scale(0.97) rotate(2deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes goalBadgePop {
+            0% {
+                opacity: 0;
+                transform: translateY(8px) scale(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(0) scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
     </style>
 </head>
 
@@ -413,6 +511,23 @@
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Aktuelle <span class="hc-red">News</span>
                 </h2>
+                
+                <!-- Live Games Big -->
+                <div id="live-games-big-wrapper"
+                    class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-4xl mx-auto hidden">
+                    <div
+                        class="px-6 py-4 md:px-8 md:py-5 bg-black text-white flex items-center justify-between border-b border-white/10">
+                        <h3 class="text-xl md:text-2xl font-bold tracking-wide">LIVE <span
+                                class="text-hc-red">SPIELE</span></h3>
+                        <span
+                            class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white/10 px-3 py-1 rounded-full">
+                            <span class="w-2 h-2 rounded-full bg-hc-red animate-pulse"></span>
+                            Jetzt
+                        </span>
+                    </div>
+                    <div id="live-games-big-container" class="p-6 md:p-8 space-y-5 bg-white"></div>
+                </div>
+
                 <!-- PLAYOFFS 2025/26 ERREICHT!!! -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-4xl mx-auto">
                     <div class="md:flex">
