@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-21T03:08:43.356771",
+  "updated_at": "2026-02-21T09:44:54.548610",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -112,7 +112,7 @@
       "game_id": 217,
       "date": "2026-02-21",
       "time": "10:30:00",
-      "status": "live",
+      "status": "upcoming",
       "home_team_id": 8,
       "away_team_id": 11,
       "home_team_name": "EHC Black Scorpions Strass",
