@@ -28,30 +28,24 @@ jobs:
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
         run: |
-          # Settings to handle unstable connections:
-          # net:timeout 30 - wait 30s before giving up
-          # net:max-retries 10 - try again if the server drops the connection
+          test -n "${FTP_HOST}"
+          test -n "${FTP_USER}"
+          test -n "${FTP_PASSWORD}"
+          test -n "${FTP_REMOTE_DIR}"
+          test -f public/hcstats.json
+
+          # Upload only the required JSON file via FTPS and overwrite target.
+          # This avoids mirror heuristics that can skip updates when size/timestamps match.
           lftp -e "
-            set ftp:ssl-allow no;
+            set ssl:verify-certificate no;
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
             set net:timeout 30;
             set net:max-retries 10;
+            set xfer:clobber on;
             open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
-            cd ${FTP_REMOTE_DIR};
-            mirror -R \
-              --only-newer \
-              --ignore-time \
-              --delete \
-              --verbose \
-              --exclude .git/ \
-              --exclude .github/ \
-              --exclude .venv/ \
-              --exclude .gitignore \
-              --exclude pyproject.toml \
-              --exclude .python-version \
-              --exclude package.json \
-              --exclude README.md \
-              --exclude .DS_Store \
-              --exclude uv.lock \
-              ./ .;
+            mkdir -p ${FTP_REMOTE_DIR}/public;
+            put -O ${FTP_REMOTE_DIR}/public/ public/hcstats.json;
             bye
           "
