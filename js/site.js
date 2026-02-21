@@ -268,6 +268,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsUrlPlayoffs = 'public/hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
+    const liveGamesBigUpdated = document.getElementById('live-games-big-updated');
+    const pageLoadTimeLabel = new Date().toLocaleString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    if (liveGamesBigUpdated) {
+        liveGamesBigUpdated.textContent = `Stand: ${pageLoadTimeLabel}`;
+    }
     const logoMap = new Map([
         [3, 'images/cup_logos/ec_aschauer_eisbaeren.jpg'],
         [6, 'images/cup_logos/ec_sellraintal_wolves.jpg'],
@@ -394,6 +405,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('live-games-big-container');
         if (!container) {
             return;
+        }
+
+        if (liveGamesBigUpdated) {
+            liveGamesBigUpdated.textContent = `Stand: ${pageLoadTimeLabel}`;
         }
 
         const games = data?.games || [];
@@ -644,29 +659,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     };
 
-    const updateBanner = () => {
-        const cacheBustedUrl = `${statsUrlPlayoffs}?_=${Date.now()}`;
-        fetch(cacheBustedUrl, { cache: 'no-store' })
+    const fetchNoStoreJson = url => {
+        const cacheBustedUrl = `${url}?_=${Date.now()}`;
+        return fetch(cacheBustedUrl, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
                 return response.json();
+            });
+    };
+
+    const updateTopGameResults = () => {
+        fetchNoStoreJson(statsUrlPreSeason)
+            .then(data => {
+                renderGameResultBanner(data.games || []);
             })
+            .catch(error => {
+                console.error('[Top Game Result Banner]', error);
+            });
+    };
+
+    const updateLiveGamesSection = () => {
+        fetchNoStoreJson(statsUrlPlayoffs)
             .then(data => {
                 const hctGoalEvents = detectHctGoalEvents(data);
                 maybeReloadOnScoreChange(data, hctGoalEvents.size > 0);
-                renderGameResultBanner(data.games || []);
                 renderLiveTicker(data);
                 renderLiveGamesBig(data, hctGoalEvents);
             })
             .catch(error => {
-                console.error('[Game Result Banner]', error);
+                console.error('[Live Games Big]', error);
                 if (liveTickerContent) {
                     liveTickerContent.innerHTML = '<span class="text-white/90">Live-Ergebnisse nicht verfügbar.</span>';
                 }
                 if (liveTickerUpdated) {
                     liveTickerUpdated.textContent = 'Stand: --:--';
+                }
+                if (liveGamesBigUpdated) {
+                    liveGamesBigUpdated.textContent = `Stand: ${pageLoadTimeLabel}`;
                 }
                 const liveGamesWrapper = document.getElementById('live-games-big-wrapper');
                 const liveGamesContainer = document.getElementById('live-games-big-container');
@@ -677,6 +708,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     liveGamesWrapper.classList.add('hidden');
                 }
             });
+    };
+
+    const updateBanner = () => {
+        updateTopGameResults();
+        updateLiveGamesSection();
     };
 
     updateBanner();
@@ -917,7 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        fetch(statsUrlPlayoffs, { cache: 'no-store' })
+        fetch(statsUrlPreSeason, { cache: 'no-store' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
