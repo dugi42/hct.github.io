@@ -16,11 +16,64 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute changed files
+        id: changed
+        run: |
+          set -euo pipefail
+
+          BEFORE_SHA="${{ github.event.before }}"
+          CURRENT_SHA="${GITHUB_SHA}"
+          CHANGED_LIST="$(mktemp)"
+          STATUS_LIST="$(mktemp)"
+
+          if [[ -n "${BEFORE_SHA}" && "${BEFORE_SHA}" != "0000000000000000000000000000000000000000" ]]; then
+            git fetch --no-tags --depth=1 origin "${BEFORE_SHA}" || true
+            if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+              git diff --name-status --find-renames --diff-filter=ACMR "${BEFORE_SHA}" "${CURRENT_SHA}" > "${STATUS_LIST}"
+            else
+              git ls-files > "${CHANGED_LIST}"
+            fi
+          elif git rev-parse HEAD~1 >/dev/null 2>&1; then
+            git diff --name-status --find-renames --diff-filter=ACMR HEAD~1 HEAD > "${STATUS_LIST}"
+          else
+            git ls-files > "${CHANGED_LIST}"
+          fi
+
+          if [[ -s "${STATUS_LIST}" ]]; then
+            while IFS=$'\t' read -r status path_a path_b; do
+              [[ -z "${status}" ]] && continue
+              if [[ "${status}" == R* ]]; then
+                file_path="${path_b}"
+              else
+                file_path="${path_a}"
+              fi
+              [[ -n "${file_path}" ]] || continue
+              [[ -f "${file_path}" ]] || continue
+              printf '%s\n' "${file_path}" >> "${CHANGED_LIST}"
+            done < "${STATUS_LIST}"
+          fi
+
+          sort -u -o "${CHANGED_LIST}" "${CHANGED_LIST}"
+          CHANGED_COUNT="$(wc -l < "${CHANGED_LIST}" | tr -d ' ')"
+          echo "changed_count=${CHANGED_COUNT}" >> "${GITHUB_OUTPUT}"
+          echo "changed_list=${CHANGED_LIST}" >> "${GITHUB_OUTPUT}"
+
+          echo "Changed tracked files:"
+          cat "${CHANGED_LIST}" || true
+
+      - name: No changed files
+        if: steps.changed.outputs.changed_count == '0'
+        run: echo "No changed tracked files to upload."
 
       - name: Install lftp
+        if: steps.changed.outputs.changed_count != '0'
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      - name: Upload via LFTP
+      - name: Upload changed files via LFTP
+        if: steps.changed.outputs.changed_count != '0'
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
@@ -28,24 +81,49 @@ jobs:
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
         run: |
+          set -euo pipefail
           test -n "${FTP_HOST}"
           test -n "${FTP_USER}"
           test -n "${FTP_PASSWORD}"
           test -n "${FTP_REMOTE_DIR}"
-          test -f public/hcstats.json
+          CHANGED_LIST="${{ steps.changed.outputs.changed_list }}"
+          test -n "${CHANGED_LIST}"
+          test -f "${CHANGED_LIST}"
+          REMOTE_BASE="${FTP_REMOTE_DIR%/}"
+          LFTP_SCRIPT="$(mktemp)"
 
-          # Upload only the required JSON file via FTPS and overwrite target.
-          # This avoids mirror heuristics that can skip updates when size/timestamps match.
-          lftp -e "
-            set ssl:verify-certificate no;
-            set ftp:ssl-allow yes;
-            set ftp:ssl-force true;
-            set ftp:ssl-protect-data true;
-            set net:timeout 30;
-            set net:max-retries 10;
-            set xfer:clobber on;
-            open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
-            mkdir -p ${FTP_REMOTE_DIR}/public;
-            put -O ${FTP_REMOTE_DIR}/public/ public/hcstats.json;
-            bye
-          "
+          {
+            echo "set cmd:fail-exit yes;"
+            echo "set ssl:verify-certificate no;"
+            echo "set ftp:ssl-allow yes;"
+            echo "set ftp:ssl-force true;"
+            echo "set ftp:ssl-protect-data true;"
+            echo "set net:timeout 30;"
+            echo "set net:max-retries 10;"
+            echo "set xfer:clobber on;"
+            printf 'open -p %s -u %s,%s %s;\n' "${FTP_PORT}" "${FTP_USER}" "${FTP_PASSWORD}" "${FTP_HOST}"
+            echo "set cmd:fail-exit no;"
+            while IFS= read -r file_path; do
+              [[ -z "${file_path}" ]] && continue
+              dir_path="$(dirname "${file_path}")"
+              if [[ "${dir_path}" == "." ]]; then
+                continue
+              fi
+              remote_dir="${REMOTE_BASE}/${dir_path}"
+              printf 'mkdir -p "%s";\n' "${remote_dir}"
+            done < "${CHANGED_LIST}"
+            echo "set cmd:fail-exit yes;"
+            while IFS= read -r file_path; do
+              [[ -z "${file_path}" ]] && continue
+              dir_path="$(dirname "${file_path}")"
+              if [[ "${dir_path}" == "." ]]; then
+                remote_dir="${REMOTE_BASE}"
+              else
+                remote_dir="${REMOTE_BASE}/${dir_path}"
+              fi
+              printf 'put -O "%s/" "%s";\n' "${remote_dir}" "${file_path}"
+            done < "${CHANGED_LIST}"
+            echo "bye"
+          } > "${LFTP_SCRIPT}"
+
+          lftp -f "${LFTP_SCRIPT}"
