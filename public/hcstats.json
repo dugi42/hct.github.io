@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-21T09:55:44.732858",
+  "updated_at": "2026-02-22T03:16:39.997651",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -112,14 +112,14 @@
       "game_id": 217,
       "date": "2026-02-21",
       "time": "10:30:00",
-      "status": "upcoming",
+      "status": "referee_signed",
       "home_team_id": 8,
       "away_team_id": 11,
       "home_team_name": "EHC Black Scorpions Strass",
       "away_team_name": "HC Thaur",
       "arena_name": "Eishalle Kundl",
       "score_home": 1,
-      "score_away": 0
+      "score_away": 2
     },
     {
       "game_id": 221,
