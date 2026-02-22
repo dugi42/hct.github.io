@@ -16,88 +16,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-      - name: Upload changed files via LFTP
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Upload changed files via FTP
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
-        run: |
-          set -euo pipefail
-
-          test -n "${FTP_HOST}"
-          test -n "${FTP_USER}"
-          test -n "${FTP_PASSWORD}"
-          test -n "${FTP_REMOTE_DIR}"
-          BEFORE_SHA="${{ github.event.before }}"
-          CURRENT_SHA="${GITHUB_SHA}"
-          CHANGED_LIST="$(mktemp)"
-          REMOTE_BASE="${FTP_REMOTE_DIR%/}"
-          LFTP_SCRIPT="$(mktemp)"
-
-          if [[ -n "${BEFORE_SHA}" && "${BEFORE_SHA}" != "0000000000000000000000000000000000000000" ]]; then
-            git diff --name-only -z --diff-filter=ACMR "${BEFORE_SHA}" "${CURRENT_SHA}" > "${CHANGED_LIST}"
-          else
-            git diff-tree --no-commit-id --name-only -r -z "${CURRENT_SHA}" > "${CHANGED_LIST}"
-          fi
-
-          if [[ ! -s "${CHANGED_LIST}" ]]; then
-            echo "No changed tracked files to upload."
-            exit 0
-          fi
-
-          esc_lftp() {
-            printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
-          }
-
-          echo "Changed tracked files to upload:"
-          while IFS= read -r -d '' file_path; do
-            [[ -f "${file_path}" ]] || continue
-            echo "${file_path}"
-          done < "${CHANGED_LIST}"
-
-          {
-            echo "set cmd:fail-exit yes;"
-            echo "set ssl:verify-certificate no;"
-            echo "set ftp:ssl-allow yes;"
-            echo "set ftp:ssl-force true;"
-            echo "set ftp:ssl-protect-data true;"
-            echo "set net:timeout 30;"
-            echo "set net:max-retries 10;"
-            echo "set xfer:clobber on;"
-            printf 'open -p "%s" -u "%s","%s" "%s";\n' \
-              "$(esc_lftp "${FTP_PORT}")" \
-              "$(esc_lftp "${FTP_USER}")" \
-              "$(esc_lftp "${FTP_PASSWORD}")" \
-              "$(esc_lftp "${FTP_HOST}")"
-
-            echo "set cmd:fail-exit no;"
-            while IFS= read -r -d '' file_path; do
-              [[ -f "${file_path}" ]] || continue
-              dir_path="$(dirname "${file_path}")"
-              [[ "${dir_path}" == "." ]] && continue
-              remote_dir="${REMOTE_BASE}/${dir_path}"
-              printf 'mkdir -p "%s";\n' "$(esc_lftp "${remote_dir}")"
-            done < "${CHANGED_LIST}"
-
-            echo "set cmd:fail-exit yes;"
-            while IFS= read -r -d '' file_path; do
-              [[ -f "${file_path}" ]] || continue
-              dir_path="$(dirname "${file_path}")"
-              if [[ "${dir_path}" == "." ]]; then
-                remote_dir="${REMOTE_BASE}"
-              else
-                remote_dir="${REMOTE_BASE}/${dir_path}"
-              fi
-              printf 'put -O "%s/" "%s";\n' \
-                "$(esc_lftp "${remote_dir}")" \
-                "$(esc_lftp "${file_path}")"
-            done < "${CHANGED_LIST}"
-            echo "bye"
-          } > "${LFTP_SCRIPT}"
-
-          lftp -f "${LFTP_SCRIPT}"
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: uv run python/ftp_upload.py
