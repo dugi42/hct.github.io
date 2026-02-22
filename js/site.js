@@ -722,10 +722,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const gamesCarousel = document.getElementById('hc-games-carousel');
     const gamesStatus = document.getElementById('hc-games-status');
 
-    const playoffGamesCarousel = document.getElementById('playoff-games-carousel');
-    const playoffGamesStatus = document.getElementById('playoff-games-status');
+    const playoffSectionUpdated = document.getElementById('news-playoff-updated');
+    const playoffGamesCarousel = document.getElementById('news-playoff-games-carousel');
+    const playoffGamesStatus = document.getElementById('news-playoff-games-status');
+    const playoffSeriesStats = document.getElementById('news-playoff-series-stats');
+    const playoffTopScorer = document.getElementById('news-playoff-topscorer');
+    const playoffStandingsBody = document.getElementById('news-playoff-standings-body');
 
-    if (standingsBody || gamesCarousel || playoffGamesCarousel) {
+    if (standingsBody || gamesCarousel || playoffGamesCarousel || playoffSeriesStats || playoffTopScorer || playoffStandingsBody) {
 
         const formatValue = value => (value ?? '--');
 
@@ -806,6 +810,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return labels[status] || 'Unbekannt';
         };
 
+        const getGamePhaseId = game => {
+            if (!game || typeof game !== 'object') {
+                return null;
+            }
+            const candidates = [
+                game.phase_id,
+                game.phaseId,
+                game.phase?.id,
+                game.phase?.phase_id,
+                game.phase?.phaseId
+            ];
+            for (const candidate of candidates) {
+                const parsed = Number(candidate);
+                if (Number.isFinite(parsed)) {
+                    return parsed;
+                }
+            }
+            return null;
+        };
+
+        const getPlayoffGames = games => {
+            const safeGames = Array.isArray(games) ? games : [];
+            const hasPhaseMetadata = safeGames.some(game => getGamePhaseId(game) !== null);
+            if (!hasPhaseMetadata) {
+                return safeGames;
+            }
+            return safeGames.filter(game => getGamePhaseId(game) === 2);
+        };
+
         const getGameTimestamp = game => {
             if (!game?.date) {
                 return Number.POSITIVE_INFINITY;
@@ -858,7 +891,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const status = document.createElement('div');
             status.className = 'text-xs text-gray-500 font-semibold uppercase text-center mb-2';
-            status.textContent = statusLabel(game.status);
+            const normalizedStatus = normalizeStatus(game.status);
+            status.textContent = statusLabel(normalizedStatus);
             card.appendChild(status);
 
             const homeName = document.createElement('p');
@@ -882,7 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const score = document.createElement('span');
             score.className = 'text-sm font-semibold text-gray-700';
             const hideScoreStatuses = new Set(['upcoming', 'active']);
-            const shouldHideScore = hideScoreStatuses.has(game.status)
+            const shouldHideScore = hideScoreStatuses.has(normalizedStatus)
                 && Number(game.score_home) === 0
                 && Number(game.score_away) === 0;
             if (shouldHideScore) {
@@ -915,6 +949,167 @@ document.addEventListener('DOMContentLoaded', () => {
             return card;
         };
 
+        const setPlayoffGamesStatus = message => {
+            if (!playoffGamesStatus) {
+                return;
+            }
+            playoffGamesStatus.textContent = message;
+            playoffGamesStatus.classList.remove('hidden');
+        };
+
+        const clearPlayoffGamesStatus = () => {
+            if (!playoffGamesStatus) {
+                return;
+            }
+            playoffGamesStatus.textContent = '';
+            playoffGamesStatus.classList.add('hidden');
+        };
+
+        const setPlayoffStandingsEmpty = message => {
+            if (!playoffStandingsBody) {
+                return;
+            }
+            playoffStandingsBody.innerHTML = '';
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.colSpan = 5;
+            cell.className = 'px-4 py-4 text-gray-500';
+            cell.textContent = message;
+            row.appendChild(cell);
+            playoffStandingsBody.appendChild(row);
+        };
+
+        const renderPlayoffStandings = (standings, highlightTeamId) => {
+            if (!playoffStandingsBody) {
+                return;
+            }
+            playoffStandingsBody.innerHTML = '';
+            if (!standings.length) {
+                setPlayoffStandingsEmpty('Keine Tabellendaten verfügbar.');
+                return;
+            }
+
+            const sortedStandings = [...standings].sort((a, b) => {
+                const aRank = Number(a.rank);
+                const bRank = Number(b.rank);
+                if (Number.isFinite(aRank) && Number.isFinite(bRank) && aRank !== bRank) {
+                    return aRank - bRank;
+                }
+                return Number(b.points || 0) - Number(a.points || 0);
+            });
+
+            sortedStandings.forEach((team, index) => {
+                const row = document.createElement('tr');
+                const isHighlighted = highlightTeamId !== null && highlightTeamId !== undefined
+                    && Number(team.team_id) === Number(highlightTeamId);
+                if (isHighlighted) {
+                    row.className = 'bg-hc-red text-white font-semibold';
+                } else {
+                    row.className = index % 2 === 1 ? 'bg-gray-50' : 'bg-white';
+                }
+
+                appendCell(row, team.rank, true);
+                appendCell(row, team.team_name);
+                appendCell(row, team.points);
+                appendCell(row, team.games_played);
+                appendCell(row, team.goal_diff);
+                playoffStandingsBody.appendChild(row);
+            });
+        };
+
+        const renderPlayoffSeriesStats = (games, teamId) => {
+            if (!playoffSeriesStats) {
+                return;
+            }
+            const completedStatuses = new Set(['completed', 'closed', 'scorekeeper_signed', 'referee_signed']);
+            const completedGames = games.filter(game => completedStatuses.has(normalizeStatus(game.status)));
+            const openGames = games.length - completedGames.length;
+
+            let wins = 0;
+            let losses = 0;
+            let goalsFor = 0;
+            let goalsAgainst = 0;
+
+            completedGames.forEach(game => {
+                const isHome = Number(game.home_team_id) === Number(teamId);
+                const ownGoals = parseScore(isHome ? game.score_home : game.score_away);
+                const oppGoals = parseScore(isHome ? game.score_away : game.score_home);
+                goalsFor += ownGoals;
+                goalsAgainst += oppGoals;
+                if (ownGoals > oppGoals) {
+                    wins += 1;
+                } else if (ownGoals < oppGoals) {
+                    losses += 1;
+                }
+            });
+
+            const statCards = [
+                { label: 'Spiele', value: games.length },
+                { label: 'Siege', value: wins },
+                { label: 'Niederlagen', value: losses },
+                { label: 'Offen', value: openGames },
+                { label: 'Tore', value: goalsFor },
+                { label: 'Gegentore', value: goalsAgainst }
+            ];
+
+            playoffSeriesStats.innerHTML = '';
+            statCards.forEach(card => {
+                const node = document.createElement('div');
+                node.className = 'rounded-lg bg-white border border-gray-200 px-3 py-2';
+                const label = document.createElement('p');
+                label.className = 'text-xs uppercase tracking-wide text-gray-500';
+                label.textContent = card.label;
+                const value = document.createElement('p');
+                value.className = 'text-xl font-black text-gray-900';
+                value.textContent = String(card.value);
+                node.appendChild(label);
+                node.appendChild(value);
+                playoffSeriesStats.appendChild(node);
+            });
+        };
+
+        const renderPlayoffTopScorer = players => {
+            if (!playoffTopScorer) {
+                return;
+            }
+            playoffTopScorer.innerHTML = '';
+            if (!players.length) {
+                const empty = document.createElement('p');
+                empty.className = 'text-sm text-gray-500';
+                empty.textContent = 'Keine Spielerstatistik verfügbar.';
+                playoffTopScorer.appendChild(empty);
+                return;
+            }
+
+            const sortedPlayers = [...players]
+                .sort((a, b) => Number(b.total_points || 0) - Number(a.total_points || 0))
+                .slice(0, 8);
+
+            sortedPlayers.forEach((player, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3';
+
+                const left = document.createElement('div');
+                left.className = 'flex items-center gap-3';
+                const rank = document.createElement('span');
+                rank.className = 'text-sm font-bold text-hc-red w-6 text-right';
+                rank.textContent = `${index + 1}.`;
+                const name = document.createElement('span');
+                name.className = 'font-semibold text-gray-800';
+                name.textContent = `${player.player_name || ''} ${player.player_surname || ''}`.trim();
+                left.appendChild(rank);
+                left.appendChild(name);
+
+                const right = document.createElement('span');
+                right.className = 'text-sm font-bold text-gray-700';
+                right.textContent = `${formatValue(player.total_points)} P (${formatValue(player.goals)}+${formatValue(player.assists)})`;
+
+                row.appendChild(left);
+                row.appendChild(right);
+                playoffTopScorer.appendChild(row);
+            });
+        };
+
         const renderGames = (games, teamId) => {
             if (!gamesCarousel) {
                 return;
@@ -937,15 +1132,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             playoffGamesCarousel.innerHTML = '';
             if (!games.length) {
-                if (playoffGamesStatus) {
-                    playoffGamesStatus.textContent = 'Keine Playoff-Spiele verfügbar.';
-                }
+                setPlayoffGamesStatus('Keine Playoff-Spiele (phase_id = 2) verfügbar.');
                 return;
             }
-            if (playoffGamesStatus) {
-                playoffGamesStatus.textContent = '';
-                playoffGamesStatus.classList.add('hidden');
-            }
+            clearPlayoffGamesStatus();
 
             const sortedGames = [...games].sort((a, b) => getGameTimestamp(a) - getGameTimestamp(b));
             sortedGames.forEach(game => {
@@ -953,20 +1143,39 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        fetch(statsUrlPreSeason, { cache: 'no-store' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                renderPlayoffGames(data.games || [], data.team_id);
-            })
-            .catch(error => {
-                console.error('[Playoff Games]', error);
-                if(playoffGamesStatus) playoffGamesStatus.textContent = 'Playoff-Spiele konnten nicht geladen werden.';
-            });
+        const loadPlayoffSection = () => {
+            fetchNoStoreJson(statsUrlPlayoffs)
+                .then(data => {
+                    const playoffGames = getPlayoffGames(data.games || []);
+                    renderPlayoffGames(playoffGames, data.team_id);
+                    renderPlayoffSeriesStats(playoffGames, data.team_id);
+                    renderPlayoffTopScorer(data.players || []);
+                    renderPlayoffStandings(data.standings || [], data.team_id);
+                    if (playoffSectionUpdated) {
+                        const formatted = formatUpdateTime(data?.updated_at);
+                        playoffSectionUpdated.textContent = formatted ? `Stand: ${formatted}` : `Stand: ${pageLoadTimeLabel}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('[Playoff Section]', error);
+                    setPlayoffGamesStatus('Playoff-Daten konnten nicht geladen werden.');
+                    if (playoffStandingsBody) {
+                        setPlayoffStandingsEmpty('Tabellendaten konnten nicht geladen werden.');
+                    }
+                    if (playoffSeriesStats) {
+                        playoffSeriesStats.innerHTML = '<div class="rounded-lg bg-white border border-gray-200 px-3 py-2 text-sm text-gray-500">Statistik konnte nicht geladen werden.</div>';
+                    }
+                    if (playoffTopScorer) {
+                        playoffTopScorer.innerHTML = '<p class="text-sm text-gray-500">Spielerstatistik konnte nicht geladen werden.</p>';
+                    }
+                    if (playoffSectionUpdated) {
+                        playoffSectionUpdated.textContent = `Stand: ${pageLoadTimeLabel}`;
+                    }
+                });
+        };
+
+        loadPlayoffSection();
+        setInterval(loadPlayoffSection, 60000);
 
         fetch(statsUrlPreSeason, { cache: 'no-store' })
             .then(response => {

@@ -436,6 +436,7 @@
             <nav class="hidden md:flex items-center space-x-6">
                 <a href="#about" class="hover:text-hc-red transition duration-300">Unser Verein</a>
                 <a href="#news" class="hover:text-hc-red transition duration-300">News</a>
+                <a href="#news-playoff-section" class="hover:text-hc-red transition duration-300">Playoffs</a>
                 <a href="#sponsors" class="hover:text-hc-red transition duration-300">Sponsoren</a>
                 <a href="#contact" class="hover:text-hc-red transition duration-300">Kontakt</a>
             </nav>
@@ -474,6 +475,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-hc-red absolute w-full">
             <a href="#about" class="block text-center py-3 text-white hover:bg-hc-red-dark">Unser Verein</a>
             <a href="#news" class="block text-center py-3 text-white hover:bg-hc-red-dark">News</a>
+            <a href="#news-playoff-section" class="block text-center py-3 text-white hover:bg-hc-red-dark">Playoffs</a>
             <a href="#sponsors" class="block text-center py-3 text-white hover:bg-hc-red-dark">Sponsoren</a>
             <a href="#contact" class="block text-center py-3 text-white hover:bg-hc-red-dark">Kontakt</a>
         </div>
@@ -513,6 +515,63 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Aktuelle <span class="hc-red">News</span>
                 </h2>
                 
+
+                <!-- Playoff Hub -->
+                <div id="news-playoff-section" class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-6xl mx-auto">
+                    <div
+                        class="px-6 py-4 md:px-8 md:py-5 bg-black text-white flex flex-col gap-2 md:flex-row md:items-center md:justify-between border-b border-white/10">
+                        <h3 class="text-xl md:text-2xl font-bold tracking-wide">PLAYOFFS <span
+                                class="text-hc-red">AKTUELL</span></h3>
+                        <span id="news-playoff-updated" class="text-[11px] font-medium text-white/80">Stand: --:--</span>
+                    </div>
+                    <div class="p-6 md:p-8 space-y-8 bg-white">
+                        <div>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3">Aktuelle Spiele</h4>
+                            <p id="news-playoff-games-status" class="text-sm text-gray-500 mb-4">Spiele werden geladen...</p>
+                            <div id="news-playoff-games-carousel"
+                                class="flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="p-5 rounded-2xl border border-gray-200 bg-gray-50 shadow-inner">
+                                <h5 class="text-lg font-bold text-gray-800 mb-4">Serien-Statistik HC Thaur</h5>
+                                <div id="news-playoff-series-stats" class="grid grid-cols-2 gap-3">
+                                    <div class="rounded-lg bg-white border border-gray-200 px-3 py-2 text-sm text-gray-500">Daten
+                                        werden geladen...</div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2 p-5 rounded-2xl border border-gray-200 bg-gray-50 shadow-inner">
+                                <h5 class="text-lg font-bold text-gray-800 mb-4">Topscorer Playoffs</h5>
+                                <div id="news-playoff-topscorer" class="space-y-3 text-sm text-gray-500">Daten werden
+                                    geladen...</div>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-2xl border border-gray-200 bg-gray-50 shadow-inner">
+                            <h5 class="text-lg font-bold text-gray-800 mb-4">Playoff Tabelle</h5>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-300 bg-white rounded-xl overflow-hidden shadow-sm">
+                                    <thead
+                                        class="bg-hc-red text-white text-left text-sm uppercase tracking-wider font-semibold">
+                                        <tr>
+                                            <th class="px-4 py-3 rounded-tl-xl">Rang</th>
+                                            <th class="px-4 py-3">Team</th>
+                                            <th class="px-4 py-3">Punkte</th>
+                                            <th class="px-4 py-3">Sp</th>
+                                            <th class="px-4 py-3 rounded-tr-xl">Diff</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="news-playoff-standings-body" class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td colspan="5" class="px-4 py-4 text-gray-500">Tabellendaten werden geladen...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Live Games Big -->
                 <div id="live-games-big-wrapper"
                     class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-4xl mx-auto hidden">
@@ -1327,16 +1386,6 @@
                         </script>
                         <!-- Table Section -->
                         <div class="mb-8 overflow-x-auto rounded-2xl shadow-inner border border-gray-200 bg-gray-50">
-                            <!-- Playoff Game Schedule Section -->
-                            <div class="mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-200 shadow-inner">
-                                <h4 class="text-xl font-bold text-gray-800 mb-4">Spielübersicht Playoffs 2025/26</h4>
-                                <p id="playoff-games-status" class="text-sm text-gray-500 mb-4">Spiele werden geladen...</p>
-
-                                <!-- Horizontal Scroll Container -->
-                                <div id="playoff-games-carousel"
-                                    class="flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory"></div>
-                            </div>
-
                             <h4 class="text-xl font-bold text-gray-800 mb-4 pl-6 pt-6">Ergebnis Grunddurchgang 2025/26</h4>
                             <div class="px-6 pb-6">
                                 <table
