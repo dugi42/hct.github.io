@@ -264,7 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    
     const statsUrlPreSeason = 'public/202526_preseason_hcstats.json';
     const statsUrlPlayoffs = 'public/hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
