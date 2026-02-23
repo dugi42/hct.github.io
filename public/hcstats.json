@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-22T03:16:39.997651",
+  "updated_at": "2026-02-23T03:18:13.482127",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -112,7 +112,7 @@
       "game_id": 217,
       "date": "2026-02-21",
       "time": "10:30:00",
-      "status": "referee_signed",
+      "status": "closed",
       "home_team_id": 8,
       "away_team_id": 11,
       "home_team_name": "EHC Black Scorpions Strass",
@@ -164,8 +164,8 @@
       "player_surname": "Gasser",
       "team_name": "HC Thaur",
       "goals": 8,
-      "assists": 9,
-      "total_points": 17
+      "assists": 10,
+      "total_points": 18
     },
     {
       "player_id": 386,
@@ -173,8 +173,8 @@
       "player_surname": "Krippels",
       "team_name": "HC Thaur",
       "goals": 7,
-      "assists": 5,
-      "total_points": 12
+      "assists": 6,
+      "total_points": 13
     },
     {
       "player_id": 562,
@@ -186,6 +186,15 @@
       "total_points": 10
     },
     {
+      "player_id": 564,
+      "player_name": "Marlon",
+      "player_surname": "Mariacher",
+      "team_name": "HC Thaur",
+      "goals": 6,
+      "assists": 2,
+      "total_points": 8
+    },
+    {
       "player_id": 404,
       "player_name": "Fabian",
       "player_surname": "Wessiak",
@@ -193,15 +202,6 @@
       "goals": 5,
       "assists": 3,
       "total_points": 8
-    },
-    {
-      "player_id": 564,
-      "player_name": "Marlon",
-      "player_surname": "Mariacher",
-      "team_name": "HC Thaur",
-      "goals": 5,
-      "assists": 2,
-      "total_points": 7
     },
     {
       "player_id": 565,
@@ -217,9 +217,9 @@
       "player_name": "Felix",
       "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
-      "goals": 1,
+      "goals": 2,
       "assists": 3,
-      "total_points": 4
+      "total_points": 5
     },
     {
       "player_id": 971,
