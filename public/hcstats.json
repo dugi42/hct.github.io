@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-25T19:55:38.528028",
+  "updated_at": "2026-02-25T18:59:39.950176",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -125,7 +125,7 @@
       "game_id": 221,
       "date": "2026-02-25",
       "time": "21:30:00",
-      "status": "live",
+      "status": "upcoming",
       "home_team_id": 11,
       "away_team_id": 8,
       "home_team_name": "HC Thaur",
