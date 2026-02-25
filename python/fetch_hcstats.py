@@ -1,8 +1,11 @@
-# Python 3.12+ — Fetch Hockey Report stats and write /public/hcstats.json
+# Python 3.12+ - Fetch Hockey Report stats and write /public/hcstats.json
+import argparse
 import asyncio
 import json
 import os
 from datetime import datetime
+from pathlib import Path
+
 import httpx
 from dotenv import load_dotenv
 
@@ -10,47 +13,48 @@ load_dotenv()
 
 API_BASE_URL = os.environ.get("HC_REPORT_API_URL")
 TOKEN = os.environ.get("HC_REPORT_TOKEN")
-TEAM_ID_RAW = os.environ.get("HC_REPORT_TEAM_ID")
-SEASON_ID_RAW = os.environ.get("HC_REPORT_SEASON_ID")
-PHASE_ID_RAW = os.environ.get("HC_REPORT_PHASE_ID")
+DEFAULT_CONFIG_PATH = Path(__file__).resolve().parent / "config_season.json"
+REQUIRED_QUERY_FIELDS = ("team_id", "league_id", "division_id", "season_id", "phase_id")
 
-if not API_BASE_URL or not TOKEN or not TEAM_ID_RAW:
-    print("Missing required envs: HC_REPORT_API_URL, HC_REPORT_TOKEN, HC_REPORT_TEAM_ID.")
-    exit(1)
 
-try:
-    TEAM_ID = int(TEAM_ID_RAW)
-except (ValueError, TypeError):
-    print("HC_REPORT_TEAM_ID must be a valid number.")
-    exit(1)
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Fetch Hockey Report stats and write public/hcstats.json."
+    )
+    parser.add_argument(
+        "--config",
+        default=str(DEFAULT_CONFIG_PATH),
+        help=(
+            "Path to query config JSON with fields: team_id, league_id, "
+            "division_id, season_id, phase_id."
+        ),
+    )
+    return parser.parse_args()
 
-SEASON_ID = None
-if SEASON_ID_RAW:
+
+def load_query_config(config_path):
     try:
-        SEASON_ID = int(SEASON_ID_RAW)
-    except (ValueError, TypeError):
-        print("HC_REPORT_SEASON_ID must be a valid number.")
-        exit(1)
+        with open(config_path, "r", encoding="utf8") as config_file:
+            raw_config = json.load(config_file)
+    except FileNotFoundError as err:
+        raise ValueError(f"Config file not found: {config_path}") from err
+    except json.JSONDecodeError as err:
+        raise ValueError(f"Invalid JSON in config file {config_path}: {err}") from err
 
-PHASE_ID = None
-if PHASE_ID_RAW:
-    try:
-        PHASE_ID = int(PHASE_ID_RAW)
-    except (ValueError, TypeError):
-        print("HC_REPORT_PHASE_ID must be a valid number.")
-        exit(1)
-
-payload = {"token": TOKEN, "team_id": TEAM_ID}
-
-if SEASON_ID is not None:
-    payload["season_id"] = SEASON_ID
-if PHASE_ID is not None:
-    payload["phase_id"] = PHASE_ID
+    config = {}
+    for field in REQUIRED_QUERY_FIELDS:
+        if field not in raw_config:
+            raise ValueError(f"Missing required config field: {field}")
+        try:
+            config[field] = int(raw_config[field])
+        except (ValueError, TypeError) as err:
+            raise ValueError(f"Config field {field} must be a valid number.") from err
+    return config
 
 
-async def post_json(client, endpoint):
+async def post_json(client, endpoint, api_base_url, payload):
     res = await client.post(
-        f"{API_BASE_URL}/{endpoint}",
+        f"{api_base_url}/{endpoint}",
         json=payload,
         headers={"Content-Type": "application/json"},
     )
@@ -64,16 +68,30 @@ async def post_json(client, endpoint):
 
 
 async def main():
+    args = parse_args()
+
+    if not API_BASE_URL or not TOKEN:
+        print("Missing required envs: HC_REPORT_API_URL, HC_REPORT_TOKEN.")
+        return 1
+
+    try:
+        query_config = load_query_config(args.config)
+    except ValueError as err:
+        print(err)
+        return 1
+
+    payload = {"token": TOKEN, **query_config}
+
     async with httpx.AsyncClient() as client:
         table, games, players = await asyncio.gather(
-            post_json(client, "api_json_table.php"),
-            post_json(client, "api_json_games.php"),
-            post_json(client, "api_json_top_players.php"),
+            post_json(client, "api_json_table.php", API_BASE_URL, payload),
+            post_json(client, "api_json_games.php", API_BASE_URL, payload),
+            post_json(client, "api_json_top_players.php", API_BASE_URL, payload),
         )
 
     output = {
         "updated_at": datetime.now().isoformat(),
-        "team_id": TEAM_ID,
+        "team_id": query_config["team_id"],
         "context": table.get("context")
         or games.get("context")
         or players.get("context")
@@ -90,11 +108,12 @@ async def main():
         f.write("\n")
 
     print("Wrote public/hcstats.json")
+    return 0
 
 
 if __name__ == "__main__":
     try:
-        asyncio.run(main())
+        raise SystemExit(asyncio.run(main()))
     except Exception as e:
         print(e)
         exit(1)

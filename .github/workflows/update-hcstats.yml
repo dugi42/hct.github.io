@@ -28,11 +28,8 @@ jobs:
         env:
           HC_REPORT_API_URL: ${{ secrets.HC_REPORT_API_URL }}
           HC_REPORT_TOKEN: ${{ secrets.HC_REPORT_TOKEN }}
-          HC_REPORT_TEAM_ID: ${{ secrets.HC_REPORT_TEAM_ID }}
-          HC_REPORT_SEASON_ID: ${{ secrets.HC_REPORT_SEASON_ID }}
-          HC_REPORT_PHASE_ID: ${{ secrets.HC_REPORT_PHASE_ID }}
         # 'uv run' ensures the script uses the environment we just synced
-        run: uv run python/fetch_hcstats.py
+        run: uv run python/fetch_hcstats.py --config python/config_season.json
 
       - name: Commit updates
         run: |

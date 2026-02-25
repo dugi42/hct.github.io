@@ -1087,27 +1087,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sortedPlayers.forEach((player, index) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3';
+                row.className = 'flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3';
 
-                const left = document.createElement('div');
-                left.className = 'flex items-center gap-3';
-                const rank = document.createElement('span');
-                rank.className = 'text-sm font-bold text-hc-red w-6 text-right';
-                rank.textContent = `${index + 1}.`;
+                const goals = parseScore(player.goals);
+                const assists = parseScore(player.assists);
+                const totalPoints = parseScore(player.total_points) || (goals + assists);
+                const barTotal = goals + assists;
+                const goalsPct = barTotal > 0 ? (goals / barTotal) * 100 : 0;
+                const assistsPct = barTotal > 0 ? 100 - goalsPct : 0;
+
                 const name = document.createElement('span');
-                name.className = 'font-semibold text-gray-800';
-                name.textContent = `${player.player_name || ''} ${player.player_surname || ''}`.trim();
-                left.appendChild(rank);
-                left.appendChild(name);
+                name.className = 'sm:w-1/3 text-sm font-semibold text-gray-700 text-center sm:text-left';
+                name.textContent = `${index + 1}. ${`${player.player_name || ''} ${player.player_surname || ''}`.trim()}`;
 
-                const right = document.createElement('span');
-                right.className = 'text-sm font-bold text-gray-700';
-                right.textContent = `${formatValue(player.total_points)} P (${formatValue(player.goals)}+${formatValue(player.assists)})`;
+                const barsWrap = document.createElement('div');
+                barsWrap.className = 'flex-1 flex flex-col gap-2';
 
-                row.appendChild(left);
-                row.appendChild(right);
+                const barTrack = document.createElement('div');
+                barTrack.className = 'w-full h-4 bg-gray-100 border border-gray-200 rounded-full overflow-hidden shadow-sm flex';
+
+                const goalsBar = document.createElement('div');
+                goalsBar.className = 'bar-goals h-full';
+                goalsBar.style.width = `${goalsPct}%`;
+
+                const assistsBar = document.createElement('div');
+                assistsBar.className = 'bar-assists h-full';
+                assistsBar.style.width = `${assistsPct}%`;
+
+                barTrack.appendChild(goalsBar);
+                barTrack.appendChild(assistsBar);
+
+                const counts = document.createElement('div');
+                counts.className = 'flex justify-between text-xs text-gray-600';
+
+                const goalsLabel = document.createElement('span');
+                goalsLabel.className = 'font-medium text-gray-700';
+                goalsLabel.textContent = `${goals} Tore`;
+
+                const assistsLabel = document.createElement('span');
+                assistsLabel.className = 'font-medium text-gray-700';
+                assistsLabel.textContent = `${assists} Assists`;
+
+                counts.appendChild(goalsLabel);
+                counts.appendChild(assistsLabel);
+
+                barsWrap.appendChild(barTrack);
+                barsWrap.appendChild(counts);
+
+                const points = document.createElement('span');
+                points.className = 'sm:w-14 text-sm font-bold text-gray-800 text-center sm:text-right';
+                points.textContent = `${totalPoints} Pkt`;
+
+                row.appendChild(name);
+                row.appendChild(barsWrap);
+                row.appendChild(points);
                 playoffTopScorer.appendChild(row);
             });
+
+            const legend = document.createElement('div');
+            legend.className = 'flex flex-col items-center justify-center gap-3 pt-2 text-xs text-gray-600 sm:flex-row sm:justify-end sm:gap-6';
+
+            const goalsLegend = document.createElement('div');
+            goalsLegend.className = 'flex items-center gap-2';
+            goalsLegend.innerHTML = '<div class="w-4 h-4 rounded-full bar-goals border"></div><span>Tore</span>';
+
+            const assistsLegend = document.createElement('div');
+            assistsLegend.className = 'flex items-center gap-2';
+            assistsLegend.innerHTML = '<div class="w-4 h-4 rounded-full bar-assists border"></div><span>Assists</span>';
+
+            legend.appendChild(goalsLegend);
+            legend.appendChild(assistsLegend);
+            playoffTopScorer.appendChild(legend);
         };
 
         const renderGames = (games, teamId) => {

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-25T12:38:59.968066",
+  "updated_at": "2026-02-25T19:23:30.079165",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -113,6 +113,7 @@
       "date": "2026-02-21",
       "time": "10:30:00",
       "status": "closed",
+      "status": "closed",
       "home_team_id": 8,
       "away_team_id": 11,
       "home_team_name": "EHC Black Scorpions Strass",
@@ -125,7 +126,7 @@
       "game_id": 221,
       "date": "2026-02-25",
       "time": "21:30:00",
-      "status": "upcoming",
+      "status": "live",
       "home_team_id": 11,
       "away_team_id": 8,
       "home_team_name": "HC Thaur",
@@ -150,94 +151,40 @@
   ],
   "players": [
     {
-      "player_id": 372,
-      "player_name": "Lukas",
-      "player_surname": "Christler",
-      "team_name": "HC Thaur",
-      "goals": 12,
-      "assists": 6,
-      "total_points": 18
-    },
-    {
-      "player_id": 337,
-      "player_name": "Raphael ",
-      "player_surname": "Gasser",
-      "team_name": "HC Thaur",
-      "goals": 8,
-      "assists": 10,
-      "total_points": 18
-    },
-    {
-      "player_id": 386,
-      "player_name": "Peter",
-      "player_surname": "Krippels",
-      "team_name": "HC Thaur",
-      "goals": 7,
-      "assists": 6,
-      "total_points": 13
-    },
-    {
-      "player_id": 562,
-      "player_name": "Thomas",
-      "player_surname": "Pipal",
-      "team_name": "HC Thaur",
-      "goals": 7,
-      "assists": 3,
-      "total_points": 10
-    },
-    {
       "player_id": 564,
       "player_name": "Marlon",
       "player_surname": "Mariacher",
       "team_name": "HC Thaur",
-      "goals": 6,
-      "assists": 2,
-      "total_points": 8
-    },
-    {
-      "player_id": 404,
-      "player_name": "Fabian",
-      "player_surname": "Wessiak",
-      "team_name": "HC Thaur",
-      "goals": 5,
-      "assists": 3,
-      "total_points": 8
-    },
-    {
-      "player_id": 565,
-      "player_name": "Moritz",
-      "player_surname": "Praxmarer",
-      "team_name": "HC Thaur",
-      "goals": 4,
-      "assists": 2,
-      "total_points": 6
+      "goals": 1,
+      "assists": 0,
+      "total_points": 1
     },
     {
       "player_id": 567,
       "player_name": "Felix",
       "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
-      "goals": 2,
-      "assists": 3,
-      "total_points": 5
-    },
-    {
-      "player_id": 971,
-      "player_name": "Julian",
-      "player_surname": "Zehenter",
-      "team_name": "HC Thaur",
       "goals": 1,
-      "assists": 2,
-      "total_points": 3
+      "assists": 3,
+      "total_points": 4
     },
     {
-      "player_id": 379,
-      "player_name": "Mario",
-      "player_surname": "F\u00f6ger",
+      "player_id": 337,
+      "player_name": "Raphael ",
+      "player_surname": "Gasser",
       "team_name": "HC Thaur",
       "goals": 0,
-      "assists": 3,
-      "total_points": 3
+      "assists": 1,
+      "total_points": 1
+    },
+    {
+      "player_id": 386,
+      "player_name": "Peter",
+      "player_surname": "Krippels",
+      "team_name": "HC Thaur",
+      "goals": 0,
+      "assists": 1,
+      "total_points": 1
     }
   ]
 }
