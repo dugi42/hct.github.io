@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-02-25T21:28:52.127135",
+  "updated_at": "2026-02-25T22:23:26.032936",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -109,19 +109,6 @@
   ],
   "games": [
     {
-      "game_id": 221,
-      "date": "2026-02-25",
-      "time": "21:30:00",
-      "status": "live",
-      "home_team_id": 11,
-      "away_team_id": 8,
-      "home_team_name": "HC Thaur",
-      "away_team_name": "EHC Black Scorpions Strass",
-      "arena_name": "TIWAG Arena ",
-      "score_home": 6,
-      "score_away": 0
-    },
-    {
       "game_id": 217,
       "date": "2026-02-21",
       "time": "10:30:00",
@@ -133,6 +120,19 @@
       "arena_name": "Eishalle Kundl",
       "score_home": 1,
       "score_away": 2
+    },
+    {
+      "game_id": 221,
+      "date": "2026-02-25",
+      "time": "21:30:00",
+      "status": "referee_signed",
+      "home_team_id": 11,
+      "away_team_id": 8,
+      "home_team_name": "HC Thaur",
+      "away_team_name": "EHC Black Scorpions Strass",
+      "arena_name": "TIWAG Arena ",
+      "score_home": 6,
+      "score_away": 0
     },
     {
       "game_id": 218,
@@ -150,18 +150,18 @@
   ],
   "players": [
     {
-      "player_id": 564,
-      "player_name": "Marlon",
-      "player_surname": "Mariacher",
+      "player_id": 567,
+      "player_name": "Felix",
+      "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
       "goals": 1,
       "assists": 0,
       "total_points": 1
     },
     {
-      "player_id": 567,
-      "player_name": "Felix",
-      "player_surname": "Praxmarer",
+      "player_id": 564,
+      "player_name": "Marlon",
+      "player_surname": "Mariacher",
       "team_name": "HC Thaur",
       "goals": 1,
       "assists": 0,
