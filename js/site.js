@@ -1307,7 +1307,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const buildTeam = (teamId, teamName) => {
                 const team = document.createElement('div');
                 team.className = 'flex flex-col items-center gap-3 text-center min-w-0';
-                const logo = createLogoNode(teamId, teamName, 'playoff-final-logo w-20 h-20 md:w-28 md:h-28');
+                const isHct = Number(teamId) === Number(hctTeamId);
+                const logoSizeClass = isHct
+                    ? 'playoff-final-logo w-28 h-28 md:w-44 md:h-44'
+                    : 'playoff-final-logo w-20 h-20 md:w-28 md:h-28';
+                const logo = createLogoNode(teamId, teamName, logoSizeClass);
                 const name = document.createElement('p');
                 name.className = 'text-sm md:text-xl font-black leading-tight text-white';
                 name.textContent = teamName || 'Team';
