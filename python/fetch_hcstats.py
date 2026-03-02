@@ -3,6 +3,7 @@ import argparse
 import asyncio
 import json
 import os
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -13,8 +14,12 @@ load_dotenv()
 
 API_BASE_URL = os.environ.get("HC_REPORT_API_URL")
 TOKEN = os.environ.get("HC_REPORT_TOKEN")
-DEFAULT_CONFIG_PATH = Path(__file__).resolve().parent / "config_season.json"
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent
+DEFAULT_CONFIG_PATH = SCRIPT_DIR / "config_season.json"
+OUTPUT_FILE_PATH = REPO_ROOT / "public" / "hcstats.json"
 REQUIRED_QUERY_FIELDS = ("team_id", "league_id", "division_id", "season_id", "phase_id")
+CONTEXT_FIELDS = ("league_id", "division_id", "season_id", "phase_id")
 
 
 def parse_args():
@@ -27,6 +32,14 @@ def parse_args():
         help=(
             "Path to query config JSON with fields: team_id, league_id, "
             "division_id, season_id, phase_id."
+        ),
+    )
+    parser.add_argument(
+        "--strict-context",
+        action="store_true",
+        help=(
+            "Fail if API response context (season/phase/league/division) "
+            "does not match config values."
         ),
     )
     return parser.parse_args()
@@ -52,11 +65,55 @@ def load_query_config(config_path):
     return config
 
 
+def parse_int(value):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return None
+
+
+def extract_context(payload):
+    if not isinstance(payload, dict):
+        return {}
+    raw_context = payload.get("context")
+    if not isinstance(raw_context, dict):
+        return {}
+    context = {}
+    for field in CONTEXT_FIELDS:
+        parsed = parse_int(raw_context.get(field))
+        if parsed is not None:
+            context[field] = parsed
+    return context
+
+
+def find_context_mismatches(endpoint_contexts, query_config):
+    mismatches = {}
+    for endpoint, context in endpoint_contexts.items():
+        if not context:
+            continue
+        endpoint_mismatches = {}
+        for field in CONTEXT_FIELDS:
+            actual = context.get(field)
+            expected = query_config.get(field)
+            if actual is None or expected is None:
+                continue
+            if actual != expected:
+                endpoint_mismatches[field] = {"expected": expected, "actual": actual}
+        if endpoint_mismatches:
+            mismatches[endpoint] = endpoint_mismatches
+    return mismatches
+
+
 async def post_json(client, endpoint, api_base_url, payload):
     res = await client.post(
         f"{api_base_url}/{endpoint}",
+        params={"_": int(time.time() * 1000)},
         json=payload,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+        },
     )
     text = res.text
     if not res.is_success:
@@ -89,25 +146,33 @@ async def main():
             post_json(client, "api_json_top_players.php", API_BASE_URL, payload),
         )
 
+    endpoint_contexts = {
+        "table": extract_context(table),
+        "games": extract_context(games),
+        "players": extract_context(players),
+    }
+    context_mismatches = find_context_mismatches(endpoint_contexts, query_config)
+    if context_mismatches:
+        print(f"Warning: API context differs from config: {json.dumps(context_mismatches)}")
+        if args.strict_context:
+            return 1
+
     output = {
         "updated_at": datetime.now().isoformat(),
         "team_id": query_config["team_id"],
-        "context": table.get("context")
-        or games.get("context")
-        or players.get("context")
-        or {},
+        "context": {field: query_config[field] for field in CONTEXT_FIELDS},
+        "response_contexts": endpoint_contexts,
         "standings": table.get("standings") or [],
         "games": games.get("games") or [],
         "players": players.get("players") or [],
     }
 
-    out_dir = os.path.join(os.getcwd(), "public")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "hcstats.json"), "w", encoding="utf8") as f:
+    OUTPUT_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with OUTPUT_FILE_PATH.open("w", encoding="utf8") as f:
         json.dump(output, f, indent=2)
         f.write("\n")
 
-    print("Wrote public/hcstats.json")
+    print(f"Wrote {OUTPUT_FILE_PATH}")
     return 0
 
 
