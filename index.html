@@ -404,6 +404,69 @@
                 transform: translateY(0) scale(1);
             }
         }
+
+        /* Playoff Finale spotlight */
+        .playoff-final-shell {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(252, 6, 18, 0.25);
+            background: radial-gradient(120% 160% at 10% 10%, #1f2937 0%, #0f1115 45%, #000000 100%);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .playoff-final-shell::before {
+            content: '';
+            position: absolute;
+            inset: -60% -20%;
+            background: linear-gradient(120deg, transparent 35%, rgba(252, 6, 18, 0.18) 50%, transparent 65%);
+            transform: rotate(8deg);
+            animation: playoffFinalSweep 8s linear infinite;
+            pointer-events: none;
+        }
+
+        .playoff-final-logo {
+            filter: drop-shadow(0 0 16px rgba(252, 6, 18, 0.25));
+            animation: playoffFinalFloat 3.2s ease-in-out infinite;
+        }
+
+        .playoff-final-vs {
+            animation: playoffFinalPulse 1.8s ease-in-out infinite;
+            text-shadow: 0 0 18px rgba(252, 6, 18, 0.4);
+        }
+
+        @keyframes playoffFinalSweep {
+            0% {
+                transform: translateX(-80%) rotate(8deg);
+            }
+
+            100% {
+                transform: translateX(80%) rotate(8deg);
+            }
+        }
+
+        @keyframes playoffFinalFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes playoffFinalPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                color: #ffffff;
+            }
+
+            50% {
+                transform: scale(1.08);
+                color: #fc0612;
+            }
+        }
     </style>
 </head>
 
@@ -540,6 +603,28 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Playoff Finale -->
+                <div id="news-playoff-final-section" class="playoff-final-shell rounded-2xl mb-12 max-w-6xl mx-auto text-white">
+                    <div
+                        class="relative px-6 py-4 md:px-8 md:py-5 border-b border-white/10">
+                        <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                            <h3 class="text-xl md:text-2xl font-black tracking-wide uppercase">Playoff <span class="text-hc-red">Finale</span></h3>
+                            <span id="news-playoff-final-updated" class="text-[11px] font-medium text-white/80">Stand: --:--</span>
+                        </div>
+                        <p id="news-playoff-final-countdown" class="mt-2 text-center text-2xl md:text-4xl font-black tracking-wide">
+                            <span class="text-white">Faceoff in </span><span class="text-hc-red">--T --h --m --s</span>
+                        </p>
+                    </div>
+                    <div class="relative p-6 md:p-8">
+                        <p id="news-playoff-final-status" class="text-sm text-white/75 mb-4">Finalspiel wird geladen...</p>
+                        <div id="news-playoff-final-card"
+                            class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 md:p-7">
+                            <p class="text-sm text-white/75">Noch keine Finaldaten verfügbar.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Playoff Hub -->
                 <div id="news-playoff-section" class="bg-white rounded-xl shadow-lg overflow-hidden mb-12 max-w-6xl mx-auto">
                     <div
@@ -548,6 +633,7 @@
                                 class="text-hc-red">AKTUELL</span></h3>
                         <span id="news-playoff-updated" class="text-[11px] font-medium text-white/80">Stand: --:--</span>
                     </div>
+                    
                     <div class="p-6 md:p-8 space-y-8 bg-white">
                         <article class="bg-white rounded-xl shadow-lg overflow-hidden">
                             <div class="md:flex">
@@ -564,14 +650,14 @@
                                     <p class="text-gray-700 leading-relaxed whitespace-pre-line">
                                         Nach einem überragenden Auftritt gegen die EHC Black Scorpions Strass fixiert der HC Thaur vorzeitig den Finaleinzug in den Playoffs.
 
-                                        Der Dummy-Spielstand lautet: <strong class="text-hc-red font-bold">HC Thaur 6:0 EHC Black Scorpions Strass</strong>.
+                                        Der finale Spielstand lautet: <strong class="text-hc-red font-bold">HC Thaur 6:0 EHC Black Scorpions Strass</strong>.
                                     </p>
                                 </div>
                             </div>
                         </article>
 
                         <div>
-                            <h4 class="text-xl font-bold text-gray-800 mb-3">Aktuelle Spiele</h4>
+                            <h4 class="text-xl font-bold text-gray-800 mb-3">Spiele Playoffs Halbfinale</h4>
                             <p id="news-playoff-games-status" class="text-sm text-gray-500 mb-4">Spiele werden geladen...</p>
                             <div id="news-playoff-games-carousel"
                                 class="flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory"></div>

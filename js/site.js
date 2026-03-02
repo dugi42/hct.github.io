@@ -265,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const statsUrlPreSeason = 'public/202526_preseason_hcstats.json';
+    const statsUrlPlayoffsHalfFinals = 'public/202526_playoffs_hcstats.json';
     const statsUrlPlayoffs = 'public/hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
@@ -728,8 +729,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const playoffSeriesStats = document.getElementById('news-playoff-series-stats');
     const playoffTopScorer = document.getElementById('news-playoff-topscorer');
     const playoffStandingsBody = document.getElementById('news-playoff-standings-body');
+    const playoffFinalUpdated = document.getElementById('news-playoff-final-updated');
+    const playoffFinalStatus = document.getElementById('news-playoff-final-status');
+    const playoffFinalCountdown = document.getElementById('news-playoff-final-countdown');
+    const playoffFinalCard = document.getElementById('news-playoff-final-card');
+    let playoffFinalCountdownIntervalId = null;
 
-    if (standingsBody || gamesCarousel || playoffGamesCarousel || playoffSeriesStats || playoffTopScorer || playoffStandingsBody) {
+    if (standingsBody || gamesCarousel || playoffGamesCarousel || playoffSeriesStats || playoffTopScorer || playoffStandingsBody || playoffFinalCard) {
 
         const formatValue = value => (value ?? '--');
 
@@ -850,6 +856,74 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const fallback = new Date(game.date).getTime();
             return Number.isNaN(fallback) ? Number.POSITIVE_INFINITY : fallback;
+        };
+
+        const clearPlayoffFinalCountdown = () => {
+            if (playoffFinalCountdownIntervalId) {
+                clearInterval(playoffFinalCountdownIntervalId);
+                playoffFinalCountdownIntervalId = null;
+            }
+        };
+
+        const setPlayoffFinalStatus = message => {
+            if (!playoffFinalStatus) {
+                return;
+            }
+            playoffFinalStatus.textContent = message;
+        };
+
+        const setPlayoffFinalCountdown = message => {
+            if (!playoffFinalCountdown) {
+                return;
+            }
+            const match = /^Faceoff in\s+(.+)$/.exec(message);
+            if (match) {
+                playoffFinalCountdown.innerHTML = `<span class="text-white">Faceoff in </span><span class="text-hc-red">${match[1]}</span>`;
+                return;
+            }
+            playoffFinalCountdown.textContent = message;
+        };
+
+        const toGameDate = game => {
+            if (!game?.date) {
+                return null;
+            }
+            const timeValue = game.time ? game.time : '00:00:00';
+            const parsed = new Date(`${game.date}T${timeValue}`);
+            if (!Number.isNaN(parsed.getTime())) {
+                return parsed;
+            }
+            const fallback = new Date(game.date);
+            return Number.isNaN(fallback.getTime()) ? null : fallback;
+        };
+
+        const formatCountdown = targetDate => {
+            const diffMs = targetDate.getTime() - Date.now();
+            if (diffMs <= 0) {
+                return 'Spiel läuft oder hat bereits begonnen.';
+            }
+            const totalSeconds = Math.floor(diffMs / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            return `Faceoff in ${days}T ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+        };
+
+        const getLastUpcomingGame = games => {
+            const upcomingStatuses = new Set(['upcoming', 'active', 'live']);
+            const now = Date.now();
+            const safeGames = Array.isArray(games) ? games : [];
+            const candidates = safeGames.filter(game => {
+                const status = normalizeStatus(game.status);
+                const timestamp = getGameTimestamp(game);
+                return upcomingStatuses.has(status) || timestamp >= now;
+            });
+            const source = candidates.length ? candidates : safeGames;
+            if (!source.length) {
+                return null;
+            }
+            return [...source].sort((a, b) => getGameTimestamp(b) - getGameTimestamp(a))[0];
         };
 
         const setGamesStatus = message => {
@@ -1193,8 +1267,82 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
+        const renderPlayoffFinale = data => {
+            if (!playoffFinalCard) {
+                return;
+            }
+
+            clearPlayoffFinalCountdown();
+            playoffFinalCard.innerHTML = '';
+
+            const game = getLastUpcomingGame(data?.games || []);
+            if (!game) {
+                setPlayoffFinalStatus('Kein kommendes Finalspiel gefunden.');
+                setPlayoffFinalCountdown('Faceoff in --T --h --m --s');
+                playoffFinalCard.innerHTML = '<p class="text-sm text-white/75">Bitte public/hcstats.json prüfen.</p>';
+                return;
+            }
+
+            setPlayoffFinalStatus('Das Finalspiel der Playoffs');
+
+            const gameDate = toGameDate(game);
+            const arena = (game.arena_name || '').trim() || 'Arena wird noch bekanntgegeben';
+            const timeLabel = formatTime(game.time) || '--:--';
+
+            const content = document.createElement('div');
+            content.className = 'relative z-10 grid grid-cols-1 gap-6 md:gap-8';
+
+            const topRow = document.createElement('div');
+            topRow.className = 'flex flex-col gap-3';
+
+            const meta = document.createElement('div');
+            meta.className = 'text-xs md:text-sm text-white/80 uppercase tracking-wider';
+            meta.textContent = `${formatDate(game.date)} | ${timeLabel} Uhr | ${arena}`;
+
+            topRow.appendChild(meta);
+
+            const matchup = document.createElement('div');
+            matchup.className = 'grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6';
+
+            const buildTeam = (teamId, teamName) => {
+                const team = document.createElement('div');
+                team.className = 'flex flex-col items-center gap-3 text-center min-w-0';
+                const logo = createLogoNode(teamId, teamName, 'playoff-final-logo w-20 h-20 md:w-28 md:h-28');
+                const name = document.createElement('p');
+                name.className = 'text-sm md:text-xl font-black leading-tight text-white';
+                name.textContent = teamName || 'Team';
+                team.appendChild(logo);
+                team.appendChild(name);
+                return team;
+            };
+
+            const home = buildTeam(game.home_team_id, game.home_team_name);
+            const away = buildTeam(game.away_team_id, game.away_team_name);
+            const versus = document.createElement('div');
+            versus.className = 'playoff-final-vs text-3xl md:text-5xl font-black tracking-widest';
+            versus.textContent = 'VS';
+
+            matchup.appendChild(home);
+            matchup.appendChild(versus);
+            matchup.appendChild(away);
+
+            content.appendChild(topRow);
+            content.appendChild(matchup);
+            playoffFinalCard.appendChild(content);
+
+            if (gameDate) {
+                const updateCountdown = () => {
+                    setPlayoffFinalCountdown(formatCountdown(gameDate));
+                };
+                updateCountdown();
+                playoffFinalCountdownIntervalId = setInterval(updateCountdown, 1000);
+            } else {
+                setPlayoffFinalCountdown('Startzeit folgt');
+            }
+        };
+
         const loadPlayoffSection = () => {
-            fetchNoStoreJson(statsUrlPlayoffs)
+            fetchNoStoreJson(statsUrlPlayoffsHalfFinals)
                 .then(data => {
                     const playoffGames = getPlayoffGames(data.games || []);
                     renderPlayoffGames(playoffGames, data.team_id);
@@ -1207,8 +1355,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 })
                 .catch(error => {
-                    console.error('[Playoff Section]', error);
-                    setPlayoffGamesStatus('Playoff-Daten konnten nicht geladen werden.');
+                    console.error('[Playoff Hub]', error);
                     if (playoffStandingsBody) {
                         setPlayoffStandingsEmpty('Tabellendaten konnten nicht geladen werden.');
                     }
@@ -1220,6 +1367,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     if (playoffSectionUpdated) {
                         playoffSectionUpdated.textContent = `Stand: ${pageLoadTimeLabel}`;
+                    }
+                });
+
+            fetchNoStoreJson(statsUrlPlayoffs)
+                .then(data => {
+                    renderPlayoffFinale(data);
+                    if (playoffFinalUpdated) {
+                        const formatted = formatUpdateTime(data?.updated_at);
+                        playoffFinalUpdated.textContent = formatted ? `Stand: ${formatted}` : `Stand: ${pageLoadTimeLabel}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('[Playoff Finale]', error);
+                    clearPlayoffFinalCountdown();
+                    setPlayoffFinalStatus('Finalspiel konnte nicht geladen werden.');
+                    setPlayoffFinalCountdown('Faceoff in --T --h --m --s');
+                    if (playoffFinalCard) {
+                        playoffFinalCard.innerHTML = '<p class="text-sm text-white/75">Daten konnten nicht geladen werden.</p>';
+                    }
+                    if (playoffFinalUpdated) {
+                        playoffFinalUpdated.textContent = `Stand: ${pageLoadTimeLabel}`;
                     }
                 });
         };
