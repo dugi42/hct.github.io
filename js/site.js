@@ -1334,13 +1334,13 @@ document.addEventListener('DOMContentLoaded', () => {
             content.appendChild(matchup);
             playoffFinalCard.appendChild(content);
 
-            if (gameDate) {
+            if (gameDate && playoffFinalCountdown) {
                 const updateCountdown = () => {
                     setPlayoffFinalCountdown(formatCountdown(gameDate));
                 };
                 updateCountdown();
                 playoffFinalCountdownIntervalId = setInterval(updateCountdown, 1000);
-            } else {
+            } else if (playoffFinalCountdown) {
                 setPlayoffFinalCountdown('Startzeit folgt');
             }
         };
