@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-07T17:20:32.140633",
+  "updated_at": "2026-03-08T03:13:38.854747",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -132,14 +132,14 @@
       "game_id": 224,
       "date": "2026-03-07",
       "time": "17:15:00",
-      "status": "live",
+      "status": "scorekeeper_signed",
       "home_team_id": 6,
       "away_team_id": 11,
       "home_team_name": "EC Sellraintal Wolves",
       "away_team_name": "HC Thaur",
       "arena_name": "TIWAG Arena ",
-      "score_home": 1,
-      "score_away": 1
+      "score_home": 4,
+      "score_away": 6
     }
   ],
   "players": []
