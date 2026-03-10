@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-09T03:15:52.694965",
+  "updated_at": "2026-03-10T03:10:31.324581",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -132,7 +132,7 @@
       "game_id": 224,
       "date": "2026-03-07",
       "time": "17:15:00",
-      "status": "scorekeeper_signed",
+      "status": "closed",
       "home_team_id": 6,
       "away_team_id": 11,
       "home_team_name": "EC Sellraintal Wolves",
@@ -142,5 +142,60 @@
       "score_away": 6
     }
   ],
-  "players": []
+  "players": [
+    {
+      "player_id": 372,
+      "player_name": "Lukas",
+      "player_surname": "Christler",
+      "team_name": "HC Thaur",
+      "goals": 3,
+      "assists": 0,
+      "total_points": 3
+    },
+    {
+      "player_id": 386,
+      "player_name": "Peter",
+      "player_surname": "Krippels",
+      "team_name": "HC Thaur",
+      "goals": 1,
+      "assists": 1,
+      "total_points": 2
+    },
+    {
+      "player_id": 406,
+      "player_name": "Matteo",
+      "player_surname": "W\u00f6ber",
+      "team_name": "HC Thaur",
+      "goals": 1,
+      "assists": 0,
+      "total_points": 1
+    },
+    {
+      "player_id": 564,
+      "player_name": "Marlon",
+      "player_surname": "Mariacher",
+      "team_name": "HC Thaur",
+      "goals": 1,
+      "assists": 0,
+      "total_points": 1
+    },
+    {
+      "player_id": 404,
+      "player_name": "Fabian",
+      "player_surname": "Wessiak",
+      "team_name": "HC Thaur",
+      "goals": 0,
+      "assists": 1,
+      "total_points": 1
+    },
+    {
+      "player_id": 565,
+      "player_name": "Moritz",
+      "player_surname": "Praxmarer",
+      "team_name": "HC Thaur",
+      "goals": 0,
+      "assists": 1,
+      "total_points": 1
+    }
+  ]
 }
