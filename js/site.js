@@ -1436,12 +1436,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 closePopup();
             }
         });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                closePopup();
-            }
-        });
     }
 
     const teamStatsPopup = document.getElementById('teamStatsPopup');
@@ -1460,12 +1454,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         teamStatsPopup.addEventListener('click', event => {
             if (event.target === teamStatsPopup) {
-                closeTeamStatsPopup();
-            }
-        });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
                 closeTeamStatsPopup();
             }
         });
@@ -1490,11 +1478,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeReview202601Popup();
             }
         });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                closeReview202601Popup();
-            }
-        });
     }
+
+    // Shared Escape handler — one listener for all modals
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        if (bookletPopup && bookletPopup.style.display !== 'none' && typeof window.closeBookletPopup === 'function') {
+            window.closeBookletPopup();
+        } else if (teamStatsPopup && teamStatsPopup.style.display !== 'none' && typeof window.closeTeamStatsPopup === 'function') {
+            window.closeTeamStatsPopup();
+        } else if (review202601Popup && review202601Popup.style.display !== 'none' && typeof window.closeReview202601Popup === 'function') {
+            window.closeReview202601Popup();
+        }
+    });
 });

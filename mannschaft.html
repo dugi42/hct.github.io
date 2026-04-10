@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YWXF7HR51T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YWXF7HR51T');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="2.0.0">
+    <title>Unser Verein – HC Thaur</title>
+
+    <link rel="stylesheet" href="css/site.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'hc-red': '#fc0612' } } } }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+
+<body class="bg-[#0f0f12] text-white">
+
+    <!-- Header -->
+    <header class="bg-[#111118] border-b border-[#2a2a35] sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="images/logo.png" alt="HC Thaur Logo" class="h-12 w-12 rounded-full object-contain">
+                <span class="text-lg font-black tracking-widest text-white">HC THAUR</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                <a href="mannschaft.html" class="text-white border-b-2 border-hc-red pb-0.5">Unser Verein</a>
+                <a href="index.html#news"  class="text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="playoffs.html"   class="text-gray-400 hover:text-white transition-colors">Playoffs</a>
+                <a href="index.html#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="index.html#contact"  class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#111118] border-t border-[#2a2a35]">
+            <div class="container mx-auto px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
+                <a href="mannschaft.html"     class="py-2 text-white">Unser Verein</a>
+                <a href="index.html#news"     class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="playoffs.html"       class="py-2 text-gray-400 hover:text-white transition-colors">Playoffs</a>
+                <a href="index.html#sponsors" class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="index.html#contact"  class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Page Hero -->
+        <section class="relative py-20 md:py-28 overflow-hidden border-b border-[#1e1e26]">
+            <div class="hero-glow"></div>
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <img src="images/logo.png" alt="HCT Logo"
+                     class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full shadow-lg mb-8"
+                     style="box-shadow: 0 0 40px rgba(252,6,18,0.2);">
+                <span class="section-label">Gegründet 2017</span>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tight mt-4 mb-6">
+                    Unser <span class="text-hc-red">Verein</span>
+                </h1>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                    Was als kleine Hobbyrunde begann, ist heute ein lebendiger Verein mit knapp 60 aktiven Erwachsenen
+                    und zwei Nachwuchsteams mit 55 begeisterten Spielerinnen und Spielern.
+                </p>
+            </div>
+        </section>
+
+        <!-- Stats Strip -->
+        <section class="border-b border-[#2a2a35] bg-[#111118] py-10">
+            <div class="container mx-auto px-6">
+                <div class="stats-container max-w-5xl mx-auto">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                        <div class="py-4">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
+                                <span class="counter" data-target="233">0</span>
+                            </div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Mitglieder</p>
+                            <p class="text-xs text-green-500 mt-1">(+12)</p>
+                        </div>
+                        <div class="py-4">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
+                                <span class="counter" data-target="57">0</span>
+                            </div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Kids</p>
+                            <p class="text-xs text-green-500 mt-1">(+4)</p>
+                        </div>
+                        <div class="py-4">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
+                                <span class="counter" data-target="58">0</span>
+                            </div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Aktive Spieler</p>
+                            <p class="text-xs text-green-500 mt-1">(+3)</p>
+                        </div>
+                        <div class="py-4">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
+                                <span class="counter" data-target="28">0</span>
+                            </div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Radlfahrer</p>
+                            <p class="text-xs text-green-500 mt-1">(+3)</p>
+                        </div>
+                        <div class="py-4">
+                            <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
+                                <span class="counter" data-target="118">0</span>
+                            </div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Fördermitglieder</p>
+                            <p class="text-xs text-green-500 mt-1">(+5)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Club Description -->
+        <section class="py-20 border-b border-[#1e1e26]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto prose prose-invert prose-lg text-gray-300 leading-relaxed space-y-5">
+                    <p>
+                        Seit unserer Gründung im Jahr 2017 steht beim Hockey Club Thaur die Freude am Sport und das
+                        gemeinsame Vereinsleben im Mittelpunkt. Was als kleine Hobbyrunde begann, ist heute ein lebendiger
+                        Verein mit knapp 60 aktiven Erwachsenen und zwei Nachwuchsteams mit 55 begeisterten Spielerinnen
+                        und Spielern.
+                    </p>
+                    <p>
+                        Im Winter dreht sich bei uns alles um Eishockey – mit Leidenschaft, Teamgeist und jeder Menge Spaß
+                        auf dem Eis. Doch auch abseits der kalten Jahreszeit sind wir sportlich aktiv: gemeinsame Rennrad-
+                        und Mountainbiketouren, die Teilnahme an Laufveranstaltungen und vieles mehr sorgen für Abwechslung
+                        und Bewegung rund ums Jahr.
+                    </p>
+                    <p>
+                        Neben dem Sport ist uns die Gemeinschaft besonders wichtig. Wir sind ein Verein, in dem
+                        Geselligkeit, Zusammenhalt und Freundschaft großgeschrieben werden – sei es bei Spielen,
+                        Ausflügen oder geselligen Abenden.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teams -->
+        <section class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="section-label">Teams</span>
+                        <h2 class="text-4xl md:text-5xl font-black mt-2">Unsere <span class="text-hc-red">Mannschaften</span></h2>
+                    </div>
+
+                    <!-- Nachwuchs -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-20">
+                        <div>
+                            <span class="section-label">U11 &amp; U15</span>
+                            <h3 class="text-3xl font-black mt-3 mb-4">Nachwuchs –<br>die <span class="text-hc-red">Zukunft</span> des Vereins</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Im Hockey Club Thaur sind wir unglaublich stolz auf unsere Nachwuchsarbeit. Unsere zwei
+                                Nachwuchsteams mit 55 jungen, begeisterten Spielerinnen und Spielern sind das Herzstück
+                                des Vereins. Ihre Leidenschaft und ihr Teamgeist sind ansteckend und zeigen, dass die
+                                Zukunft des HCT in den besten Händen liegt.
+                            </p>
+                            <p class="text-gray-500 text-sm mt-4">Ein großes Dankeschön an unseren Nachwuchs – ihr seid unsere Inspiration!</p>
+                        </div>
+                        <div class="h-72 md:h-80 rounded-2xl overflow-hidden"
+                             style="background-image: url('images/teams/hct_minis.jpg'); background-size: cover; background-position: center;">
+                        </div>
+                    </div>
+
+                    <!-- Hockey Club Thaur -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-20">
+                        <div class="order-2 md:order-1 h-72 md:h-80 rounded-2xl overflow-hidden"
+                             style="background-image: url('images/teams/hct_all.jpg'); background-size: cover; background-position: center;">
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <span class="section-label">Der Verein</span>
+                            <h3 class="text-3xl font-black mt-3 mb-4">Unser <span class="text-hc-red">HCT</span> spielt auf!</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Die Mannschaft des Hockey Club Thaur blickt auf eine spannende und sportlich intensive
+                                Saison 2024/25 zurück. Neben den 34 Trainings fanden in der heurigen Saison noch 16
+                                Spiele statt – insgesamt 50 Eiszeiten für alle aktiven Spieler.
+                            </p>
+                            <p class="text-gray-400 leading-relaxed mt-4">
+                                48 Spieler sorgten für viele unvergessliche Stunden voller Teamgeist, Einsatzbereitschaft
+                                und Freude am Spiel. Ein herzliches Dankeschön an alle, die diese Saison zu etwas
+                                Besonderem gemacht haben!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Kampfmannschaft -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-20">
+                        <div>
+                            <span class="section-label">Meisterschaft</span>
+                            <h3 class="text-3xl font-black mt-3 mb-4">Die <span class="text-hc-red">Kampfmannschaft</span> glänzt!</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Ein riesiger Applaus für unsere Kampfmannschaft! Sie hat in der Saison 2024/25 eine
+                                wirklich sensationelle Leistung gezeigt und sich den vierten Tabellenplatz in der 2.
+                                Division des Tiroler Hockey Cups gesichert.
+                            </p>
+                            <p class="text-gray-400 leading-relaxed mt-4">
+                                Mit diesem Erfolg im Rücken stürmte das Team in der Saison 2025/26 zum
+                                <strong class="text-white">Tiroler Meistertitel</strong>!
+                            </p>
+                            <a href="playoffs.html"
+                               class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-hc-red text-white font-bold rounded-xl hover:bg-[#d30510] transition-colors text-sm">
+                                Playoffs ansehen
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                        <div class="h-72 md:h-80 rounded-2xl overflow-hidden"
+                             style="background-image: url('images/teams/hct_kampf.jpg'); background-size: cover; background-position: center;">
+                        </div>
+                    </div>
+
+                    <!-- MTB/Rad -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="order-2 md:order-1 h-72 md:h-80 rounded-2xl overflow-hidden"
+                             style="background-image: url('images/teams/hct_radteam.JPEG'); background-size: cover; background-position: center;">
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <span class="section-label">Sommer</span>
+                            <h3 class="text-3xl font-black mt-3 mb-4">Unsere <span class="text-hc-red">Radler</span> unterwegs!</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Die Radrunde des Hockey Club Thaur blickt auf eine abwechslungsreiche und sportliche
+                                Saison 2024/25 zurück. Von April bis Ende Oktober radelte der HCT wieder regelmäßig mit
+                                dem Rennrad oder (E)MTB auf die Almen der Umgebung.
+                            </p>
+                            <p class="text-gray-400 leading-relaxed mt-4">
+                                Insgesamt gab es 21 HCT-Ausfahrten bzw. Wanderungen! Krönender Abschluss der Saison
+                                war das „Okasn" auf der Thaurer Alm.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Attendance -->
+        <section class="py-20 bg-[#111118] border-y border-[#2a2a35]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <span class="section-label">Saison 2025/26</span>
+                        <h2 class="text-3xl md:text-4xl font-black mt-2">Fleißigste <span class="text-hc-red">Trainingsspieler</span></h2>
+                    </div>
+                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8">
+                        <div id="attendance-rows" class="space-y-5">
+                            <div class="text-sm text-gray-500 text-center">Daten werden geladen...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Saison 2024/25 in Zahlen (static) -->
+        <section class="py-20 border-b border-[#1e1e26]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <span class="section-label">Rückblick</span>
+                        <h2 class="text-3xl md:text-4xl font-black mt-2">Saison 2024/25 <span class="text-hc-red">in Zahlen</span></h2>
+                    </div>
+
+                    <!-- Topscorer 2024/25 -->
+                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8 mb-6">
+                        <h4 class="text-lg font-bold mb-6">Topscorer 2. Division Tiroler Hockey Cup</h4>
+                        <div class="space-y-5">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 text-center sm:text-left">Lukas Christler</span>
+                                <div class="flex-1 flex flex-col gap-2">
+                                    <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex">
+                                        <div class="bar-goals h-full" style="width:48.6%"></div>
+                                        <div class="bar-assists h-full" style="width:51.4%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-500">
+                                        <span>17 Tore</span><span>18 Assists</span>
+                                    </div>
+                                </div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 text-center sm:text-right">35 Pkt</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 text-center sm:text-left">Mario Föger</span>
+                                <div class="flex-1 flex flex-col gap-2">
+                                    <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex">
+                                        <div class="bar-goals h-full" style="width:56.3%"></div>
+                                        <div class="bar-assists h-full" style="width:43.7%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-500">
+                                        <span>9 Tore</span><span>7 Assists</span>
+                                    </div>
+                                </div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 text-center sm:text-right">16 Pkt</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 text-center sm:text-left">Thomas Pipal</span>
+                                <div class="flex-1 flex flex-col gap-2">
+                                    <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex">
+                                        <div class="bar-goals h-full" style="width:38.5%"></div>
+                                        <div class="bar-assists h-full" style="width:61.5%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-500">
+                                        <span>5 Tore</span><span>8 Assists</span>
+                                    </div>
+                                </div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 text-center sm:text-right">13 Pkt</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-center justify-end gap-4 pt-2 text-xs text-gray-500">
+                                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bar-goals"></div><span>Tore</span></div>
+                                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bar-assists"></div><span>Assists</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trainingsattendance 2024/25 static -->
+                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8 mb-6">
+                        <h4 class="text-lg font-bold mb-6">Fleißigste Top 5 Spieler Trainingseinheiten 2024/25</h4>
+                        <div class="space-y-5">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Wolfgang Winkler</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:76.5%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">26/34</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Toni Plank</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:76.5%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">26/34</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Gabriel Thaler</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:73.5%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">25/34</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Niki Christler</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:70.6%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">24/34</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Mario Föger</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:67.7%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">23/34</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Standings 2024/25 static -->
+                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8">
+                        <h4 class="text-lg font-bold mb-6">Hockey Cup Tirol – Grunddurchgang 2024/25</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-[#2a2a35] text-xs text-gray-500 uppercase tracking-wider">
+                                        <th class="py-3 px-4 text-left">Platz</th>
+                                        <th class="py-3 px-4 text-left">Team</th>
+                                        <th class="py-3 px-4 text-center">Sp</th>
+                                        <th class="py-3 px-4 text-right">Pkt</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[#2a2a35]">
+                                    <tr class="text-gray-400"><td class="py-3 px-4">1</td><td class="py-3 px-4">EHC Volders White Hawks</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">18</td></tr>
+                                    <tr class="bg-hc-red/10 text-white font-semibold border-l-2 border-hc-red"><td class="py-3 px-4">2</td><td class="py-3 px-4">Hockey Club Thaur</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">18</td></tr>
+                                    <tr class="text-gray-400"><td class="py-3 px-4">3</td><td class="py-3 px-4">EC Sellraintal Wolves</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">17</td></tr>
+                                    <tr class="text-gray-400"><td class="py-3 px-4">4</td><td class="py-3 px-4">Tyrolean Ice Kings</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">15</td></tr>
+                                    <tr class="text-gray-400"><td class="py-3 px-4">5</td><td class="py-3 px-4">EHC Black Scorpions Strass</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">13</td></tr>
+                                    <tr class="text-gray-400"><td class="py-3 px-4">6</td><td class="py-3 px-4">EC Aschauer Eisbären</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">9</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#080809] border-t border-[#1e1e26]">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="images/logo.png" alt="HCT Logo" class="h-10 w-10 rounded-full object-contain">
+                        <span class="font-black tracking-widest text-white">HC THAUR</span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed">Seit 2017 steht beim Hockey Club Thaur die Freude am Sport im Mittelpunkt.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="index.html"          class="hover:text-hc-red transition-colors">Home</a></li>
+                        <li><a href="playoffs.html"       class="hover:text-hc-red transition-colors">Playoffs</a></li>
+                        <li><a href="index.html#sponsors" class="hover:text-hc-red transition-colors">Sponsoren</a></li>
+                        <li><a href="2025_Datenschutz.html" class="hover:text-hc-red transition-colors">Datenschutz</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Kontakt</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="mailto:hockey@hc-thaur.at" class="hover:text-hc-red transition-colors">hockey@hc-thaur.at</a></li>
+                        <li>Sportplatzweg 1, 6065 Thaur</li>
+                        <li>ZVR. 993472820</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-[#1e1e26] text-center text-xs text-gray-600">
+                <p>&copy; <span id="current-year">2025</span> HC Thaur. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/inline-scripts.js?v=2.0.0"></script>
+    <script src="js/site.js?v=20260221-3"></script>
+</body>
+</html>

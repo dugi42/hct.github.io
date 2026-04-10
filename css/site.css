@@ -1,0 +1,326 @@
+/* ============================================================
+   HC Thaur – site.css  (v2.0.0)
+   Extracted from inline <style>; dark-first redesign tokens added.
+   ============================================================ */
+
+/* --- Design Tokens ----------------------------------------- */
+:root {
+    --hc-red:        #fc0612;
+    --hc-red-dark:   #d30510;
+    --bg-base:       #0f0f12;
+    --bg-card:       #1a1a20;
+    --bg-card-alt:   #13131a;
+    --border:        #2a2a35;
+    --text-primary:  #f0f0f5;
+    --text-secondary:#8a8a9a;
+    --text-muted:    #555568;
+}
+
+/* --- Base -------------------------------------------------- */
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+}
+
+/* --- Club colour utilities --------------------------------- */
+.hc-red               { color: var(--hc-red); }
+.bg-hc-red            { background-color: var(--hc-red); }
+.border-hc-red        { border-color: var(--hc-red); }
+.text-hc-red          { color: var(--hc-red); }
+
+.hover\:bg-hc-red-dark:hover  { background-color: var(--hc-red-dark); }
+.hover\:text-hc-red-dark:hover{ color: var(--hc-red-dark); }
+
+/* --- Dark-theme card helpers ------------------------------- */
+.dark-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+}
+
+.dark-card-alt {
+    background-color: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+}
+
+/* --- News card hover --------------------------------------- */
+.news-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.news-card:hover {
+    border-color: rgba(252, 6, 18, 0.35);
+    box-shadow: 0 0 30px rgba(252, 6, 18, 0.08);
+}
+
+/* --- Hero radial glow -------------------------------------- */
+.hero-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 70% 55% at 50% 60%, rgba(252,6,18,0.06) 0%, transparent 70%);
+}
+
+/* --- Sponsor carousel / carousel-container ----------------- */
+.carousel-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.carousel-container::-webkit-scrollbar { display: none; }
+
+/* Legacy sponsor scrollbar (reused on sponsor-focused pages) */
+.sponsor-carousel::-webkit-scrollbar       { height: 8px; }
+.sponsor-carousel::-webkit-scrollbar-track { background: #e0e0e0; border-radius: 10px; }
+.sponsor-carousel::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+.sponsor-carousel::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* --- Sponsor card visibility animation -------------------- */
+.sponsor-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    scroll-snap-align: center;
+}
+.sponsor-card.is-visible { opacity: 1; transform: translateY(0); }
+
+/* --- Sponsor logo strip (landing) -------------------------- */
+.sponsor-logo-item {
+    opacity: 0.6;
+    filter: grayscale(1);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.sponsor-logo-item:hover { opacity: 1; filter: grayscale(0); }
+
+/* --- Sponsor glow animations ------------------------------- */
+@keyframes sponsorGlowPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(252,6,18,.4), 0 0 30px rgba(252,6,18,.2); }
+    50%       { box-shadow: 0 0 30px rgba(252,6,18,.6), 0 0 45px rgba(252,6,18,.3); }
+}
+.sponsor-card:hover { animation: sponsorGlowPulse 2s ease-in-out infinite; }
+
+.featured-sponsor-card:hover {
+    box-shadow: 0 0 50px rgba(252,6,18,.6), 0 0 30px rgba(252,6,18,.4);
+}
+
+/* --- Head sponsor logo glow ------------------------------- */
+.head-sponsor-logo { cursor: pointer; }
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(252,6,18,.9))
+                drop-shadow(0 0 16px rgba(252,6,18,.7))
+                drop-shadow(0 0 24px rgba(252,6,18,.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 12px rgba(252,6,18,1))
+                drop-shadow(0 0 20px rgba(252,6,18,.8))
+                drop-shadow(0 0 28px rgba(252,6,18,.6));
+    }
+}
+.head-sponsor-logo:hover {
+    animation: glowPulse 2s ease-in-out infinite;
+    transform: scale(1.05);
+}
+
+/* --- Gallery modal ---------------------------------------- */
+.gallery-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background-color: rgba(0,0,0,.9);
+}
+.gallery-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gallery-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    position: relative;
+}
+.gallery-modal-content img { width: 100%; height: auto; border-radius: 8px; }
+
+.gallery-modal-close {
+    position: absolute;
+    top: 20px; right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.gallery-modal-close:hover { opacity: .7; }
+
+/* --- Animations ------------------------------------------- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+.animate-fade-in-up { animation: fadeInUp .8s ease-out; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+.fade-in { animation: fadeIn 1s ease-in-out; }
+
+/* --- Tooltip ----------------------------------------------- */
+.bar-container .tooltip {
+    position: absolute;
+    background-color: rgba(0,0,0,.75);
+    color: #fff;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    font-size: .875rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+    transform: translate(-50%, -120%);
+    left: 50%; top: 0;
+}
+.bar-container:hover .tooltip { opacity: 1; }
+
+/* --- Bar colours ------------------------------------------ */
+.bar-goals      { background-color: #fc0612; }
+.bar-assists    { background-color: #000000; }
+.bar-trainings  { background-color: #fc0612; }
+.bar-trainingsall { background-color: #fc0612; }
+
+/* --- Event cards ------------------------------------------ */
+.event-card {
+    transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+}
+.event-card:hover { transform: translateY(-4px); }
+.event-card.past-event { background-color: #1e1e26; box-shadow: none; }
+.event-card.past-event .event-title,
+.event-card.past-event .event-time,
+.event-card.past-event .event-location { color: var(--text-muted); }
+
+/* --- Game result banner ----------------------------------- */
+.game-result-banner-container {
+    padding: .5rem 0;
+    background-color: #000;
+}
+.game-result-item {
+    flex-shrink: 0;
+    width: 15rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+/* --- Goal celebration (Live Games Big) -------------------- */
+.goal-game-highlight {
+    border-color: rgba(252,6,18,.7);
+    animation: goalCardGlow 1.6s ease-out 2;
+}
+.goal-score-pop  { animation: goalScorePop  1.2s ease-out 2; }
+.goal-logo-pop   { animation: goalLogoPop   1.2s ease-out 2; transform-origin: center; }
+
+.goal-burst-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .3rem .8rem;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #fc0612 0%, #ff4f58 100%);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    box-shadow: 0 6px 20px rgba(252,6,18,.35);
+    animation: goalBadgePop 1.4s ease-out 1;
+}
+
+@keyframes goalCardGlow {
+    0%   { box-shadow: 0 0 0 rgba(252,6,18,0); }
+    35%  { box-shadow: 0 0 0 8px rgba(252,6,18,.18), 0 0 32px rgba(252,6,18,.35); }
+    100% { box-shadow: 0 4px 10px -1px rgba(0,0,0,.12), 0 2px 6px -2px rgba(0,0,0,.08); }
+}
+@keyframes goalScorePop {
+    0%   { transform: scale(1);    }
+    25%  { transform: scale(1.25); }
+    50%  { transform: scale(.96);  }
+    100% { transform: scale(1);    }
+}
+@keyframes goalLogoPop {
+    0%   { transform: scale(1) rotate(0deg);      }
+    25%  { transform: scale(1.17) rotate(-4deg);  }
+    60%  { transform: scale(.97) rotate(2deg);    }
+    100% { transform: scale(1) rotate(0deg);      }
+}
+@keyframes goalBadgePop {
+    0%   { opacity: 0; transform: translateY(8px) scale(.9);  }
+    50%  { opacity: 1; transform: translateY(0)   scale(1.05); }
+    100% { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* --- Playoff finale spotlight ----------------------------- */
+.playoff-final-shell {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(252,6,18,.25);
+    background: radial-gradient(120% 160% at 10% 10%, #1f2937 0%, #0f1115 45%, #000 100%);
+    box-shadow: 0 16px 40px rgba(0,0,0,.3);
+}
+.playoff-final-shell::before {
+    content: '';
+    position: absolute;
+    inset: -60% -20%;
+    background: linear-gradient(120deg, transparent 35%, rgba(252,6,18,.18) 50%, transparent 65%);
+    transform: rotate(8deg);
+    animation: playoffFinalSweep 8s linear infinite;
+    pointer-events: none;
+}
+.playoff-final-logo {
+    filter: drop-shadow(0 0 16px rgba(252,6,18,.25));
+    animation: playoffFinalFloat 3.2s ease-in-out infinite;
+}
+.playoff-final-vs {
+    animation: playoffFinalPulse 1.8s ease-in-out infinite;
+    text-shadow: 0 0 18px rgba(252,6,18,.4);
+}
+
+@keyframes playoffFinalSweep {
+    0%   { transform: translateX(-80%) rotate(8deg); }
+    100% { transform: translateX(80%)  rotate(8deg); }
+}
+@keyframes playoffFinalFloat {
+    0%, 100% { transform: translateY(0);    }
+    50%       { transform: translateY(-6px); }
+}
+@keyframes playoffFinalPulse {
+    0%, 100% { transform: scale(1);    color: #ffffff; }
+    50%       { transform: scale(1.08); color: #fc0612; }
+}
+
+/* --- Section divider -------------------------------------- */
+.section-label {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--hc-red);
+    border: 1px solid rgba(252,6,18,.3);
+    background: rgba(252,6,18,.08);
+    padding: .3rem .8rem;
+    border-radius: 9999px;
+    margin-bottom: 1rem;
+}
