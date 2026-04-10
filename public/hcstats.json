@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-09T03:21:52.229070",
+  "updated_at": "2026-04-10T03:23:25.106745",
   "team_id": 11,
   "context": {
     "league_id": 1,
@@ -180,18 +180,18 @@
       "total_points": 1
     },
     {
-      "player_id": 565,
-      "player_name": "Moritz",
-      "player_surname": "Praxmarer",
+      "player_id": 404,
+      "player_name": "Fabian",
+      "player_surname": "Wessiak",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 1,
       "total_points": 1
     },
     {
-      "player_id": 404,
-      "player_name": "Fabian",
-      "player_surname": "Wessiak",
+      "player_id": 565,
+      "player_name": "Moritz",
+      "player_surname": "Praxmarer",
       "team_name": "HC Thaur",
       "goals": 0,
       "assists": 1,
