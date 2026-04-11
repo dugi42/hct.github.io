@@ -21,18 +21,18 @@
         :root {
             --hc-red: #fc0612;
             --hc-red-dark: #d30510;
-            --hc-black: #000000;
-            --hc-body: #f0f2f5;
-            --hc-card: #ffffff;
-            --hc-border: #e0e0e0;
-            --hc-muted: #888888;
-            --hc-muted-strong: #555555;
-            --hc-muted-light: #9ca3af;
-            --hc-soft: #f1f1f1;
-            --hc-soft-alt: #f3f4f6;
+            --hc-black: #3b82f6;
+            --hc-body: #0f0f12;
+            --hc-card: #1a1a20;
+            --hc-border: #2a2a35;
+            --hc-muted: #8a8a9a;
+            --hc-muted-strong: #9ca3af;
+            --hc-muted-light: #6b7280;
+            --hc-soft: #13131a;
+            --hc-soft-alt: #13131a;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--hc-body); color: var(--hc-black); }
-        .glass { background: var(--hc-card); border: 1px solid var(--hc-border); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--hc-body); color: #f0f0f5; }
+        .glass { background: var(--hc-card); border: 1px solid var(--hc-border); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); }
         .gradient-text { background: linear-gradient(90deg, var(--hc-red), var(--hc-red-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .text-muted { color: var(--hc-muted); }
         .text-muted-strong { color: var(--hc-muted-strong); }
@@ -467,7 +467,7 @@
                             label: 'Gegentore',
                             data: goalsAgainstSeries,
                             borderColor: getCssVar('--hc-black'),
-                            backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.15)',
                             tension: 0.3,
                             fill: true
                         }
