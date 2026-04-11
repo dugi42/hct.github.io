@@ -264,9 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const statsUrlPreSeason = 'public/202526_preseason_hcstats.json';
-    const statsUrlPlayoffsHalfFinals = 'public/202526_playoffs_hcstats.json';
-    const statsUrlPlayoffs = 'public/hcstats.json';
+    const statsUrlPreSeason = 'public/202526_season/raw/202526_preseason_hcstats.json';
+    const statsUrlPlayoffsHalfFinals = 'public/202526_season/raw/202526_playoffs_hcstats.json';
+    const statsUrlPlayoffs = 'public/202526_season/raw/202526_hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
     const liveGamesBigUpdated = document.getElementById('live-games-big-updated');
@@ -1279,7 +1279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!game) {
                 setPlayoffFinalStatus('Kein kommendes Finalspiel gefunden.');
                 setPlayoffFinalCountdown('Faceoff in --T --h --m --s');
-                playoffFinalCard.innerHTML = '<p class="text-sm text-white/75">Bitte public/hcstats.json prüfen.</p>';
+                playoffFinalCard.innerHTML = '<p class="text-sm text-white/75">Bitte public/202526_season/raw/202526_hcstats.json prüfen.</p>';
                 return;
             }
 

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HC Thaur — Hockey Cup Tirol 2025/26 Statistics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ice: #f0f0f5;
+    --blue: #fc0612;
+    --blue-dim: #8a0008;
+    --cold: #d0d0d8;
+    --rink: #0f0f12;
+    --panel: #1a1a20;
+    --panel2: #13131a;
+    --line: rgba(252,6,18,0.12);
+    --line-bright: rgba(252,6,18,0.35);
+    --text: #c8c8d0;
+    --muted: #8a8a9a;
+    --win: #00e676;
+    --loss: #ff5252;
+    --font-head: 'Barlow Condensed', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'Barlow', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--rink);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* rink lines background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(252,6,18,0.03) 79px, rgba(252,6,18,0.03) 80px),
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(252,6,18,0.03) 79px, rgba(252,6,18,0.03) 80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 0;
+    border-bottom: 1px solid var(--line-bright);
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2.5rem;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .hero-title {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(52px, 9vw, 120px);
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .hero-title span { color: var(--blue); text-shadow: 0 0 40px rgba(252,6,18,0.4); }
+  .hero-sub {
+    font-family: var(--font-head);
+    font-weight: 300;
+    font-size: clamp(18px, 3vw, 28px);
+    color: var(--cold);
+    margin-top: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero-record {
+    text-align: right;
+  }
+  .record-big {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1;
+    color: #fff;
+  }
+  .record-big .w { color: var(--win); }
+  .record-big .sep { color: var(--muted); font-weight: 300; }
+  .record-big .l { color: var(--loss); }
+  .record-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* TICKER STRIP */
+  .ticker {
+    background: var(--blue-dim);
+    border-top: 1px solid var(--line-bright);
+    border-bottom: 1px solid var(--line-bright);
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 3rem;
+    animation: scroll 28s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ice);
+  }
+  .ticker-item .val { color: #fff; font-weight: 500; }
+
+  /* MAIN LAYOUT */
+  .page { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+
+  /* SECTION HEADERS */
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .sec-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 0.1em;
+  }
+
+  /* STAT GRID */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--line);
+    margin-bottom: 3rem;
+    background: var(--line);
+  }
+  .stat-cell {
+    background: var(--panel);
+    padding: 1.25rem 1.5rem;
+    transition: background 0.15s;
+  }
+  .stat-cell:hover { background: var(--panel2); }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .stat-val {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1;
+    color: #fff;
+  }
+  .stat-val.win { color: var(--win); }
+  .stat-val.loss { color: var(--loss); }
+  .stat-val.blue { color: var(--blue); }
+  .stat-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* PHASE TABLE */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--line);
+    background: var(--line);
+    margin-bottom: 3rem;
+  }
+  .phase-cell {
+    background: var(--panel);
+    padding: 1.5rem;
+  }
+  .phase-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .phase-early .phase-label { color: #4fc3f7; }
+  .phase-mid .phase-label { color: #ab9df2; }
+  .phase-late .phase-label { color: var(--win); }
+  .phase-name {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 32px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .phase-dates {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .phase-stat { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--line); }
+  .phase-stat:last-child { border-bottom: none; }
+  .phase-stat-k { font-size: 12px; color: var(--muted); }
+  .phase-stat-v { font-family: var(--font-mono); font-size: 12px; color: var(--text); }
+  .phase-winrate {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 48px;
+    margin-top: 1rem;
+    line-height: 1;
+  }
+  .phase-early .phase-winrate { color: #4fc3f7; }
+  .phase-mid .phase-winrate { color: #ab9df2; }
+  .phase-late .phase-winrate { color: var(--win); }
+
+  /* DATA TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 3rem;
+  }
+  .data-table th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line-bright);
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+  }
+  .data-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+  }
+  .data-table tr:hover td { background: var(--panel); }
+  .data-table .num { font-family: var(--font-mono); text-align: right; }
+  .data-table .name { font-weight: 500; color: #fff; }
+  .data-table .rank { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+  .pts-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .pts-bar { height: 4px; background: var(--blue); border-radius: 2px; opacity: 0.75; }
+
+  /* GAME LOG */
+  .game-row { display: grid; grid-template-columns: 80px 1fr 120px 80px 50px; gap: 1rem; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .game-row:last-child { border-bottom: none; }
+  .game-date { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .game-opp { font-size: 14px; font-weight: 500; color: var(--text); }
+  .game-opp small { display: block; font-size: 10px; font-weight: 400; color: var(--muted); }
+  .game-score { font-family: var(--font-head); font-weight: 700; font-size: 22px; color: #fff; text-align: center; }
+  .badge { display: inline-block; font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; letter-spacing: 0.05em; }
+  .badge-w { background: rgba(0,230,118,0.12); color: var(--win); border: 1px solid rgba(0,230,118,0.3); }
+  .badge-l { background: rgba(255,82,82,0.12); color: var(--loss); border: 1px solid rgba(255,82,82,0.3); }
+  .phase-tag { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+  /* DOWNLOADS */
+  .dl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--line);
+    background: var(--line);
+    margin-bottom: 3rem;
+  }
+  .dl-card {
+    background: var(--panel);
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    display: block;
+    transition: background 0.15s;
+    border-left: 3px solid var(--blue-dim);
+  }
+  .dl-card:hover { background: var(--panel2); border-left-color: var(--blue); }
+  .dl-icon { font-size: 20px; margin-bottom: 8px; }
+  .dl-name { font-family: var(--font-head); font-weight: 600; font-size: 16px; text-transform: uppercase; color: #fff; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .dl-desc { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .dl-meta { font-family: var(--font-mono); font-size: 10px; color: var(--blue); letter-spacing: 0.05em; }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--line);
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  footer span { color: var(--blue); }
+
+  @media (max-width: 700px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-record { text-align: left; }
+    .phase-grid { grid-template-columns: 1fr; }
+    .game-row { grid-template-columns: 60px 1fr 90px 60px; }
+    .phase-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Hockey Cup Tirol &nbsp;·&nbsp; Saison 2025/26 &nbsp;·&nbsp; 15 Spiele</div>
+      <div class="hero-title">HC<br><span>Thaur</span></div>
+      <div class="hero-sub">Statistik &amp; Spielberichte</div>
+    </div>
+    <div class="hero-record">
+      <div class="record-big"><span class="w">11</span><span class="sep">–</span><span class="l">4</span></div>
+      <div class="record-label">W&nbsp;&nbsp;L&nbsp;&nbsp;·&nbsp;&nbsp;73% Win Rate</div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">Goals For <span class="val">81</span></span>
+    <span class="ticker-item">Goals Against <span class="val">46</span></span>
+    <span class="ticker-item">Goal Differential <span class="val">+35</span></span>
+    <span class="ticker-item">Top Scorer <span class="val">Christler L. — 17 Pts</span></span>
+    <span class="ticker-item">Avg Goals/Game <span class="val">5.4</span></span>
+    <span class="ticker-item">Power Play Goals <span class="val">7</span></span>
+    <span class="ticker-item">Penalty Minutes <span class="val">81</span></span>
+    <span class="ticker-item">Late Phase Win Rate <span class="val">100%</span></span>
+    <span class="ticker-item">Longest Win Streak <span class="val">8 Games</span></span>
+    <span class="ticker-item">Empty Net Goals <span class="val">3</span></span>
+    <span class="ticker-item">Goals For <span class="val">81</span></span>
+    <span class="ticker-item">Goals Against <span class="val">46</span></span>
+    <span class="ticker-item">Goal Differential <span class="val">+35</span></span>
+    <span class="ticker-item">Top Scorer <span class="val">Christler L. — 17 Pts</span></span>
+    <span class="ticker-item">Avg Goals/Game <span class="val">5.4</span></span>
+    <span class="ticker-item">Power Play Goals <span class="val">7</span></span>
+    <span class="ticker-item">Penalty Minutes <span class="val">81</span></span>
+    <span class="ticker-item">Late Phase Win Rate <span class="val">100%</span></span>
+    <span class="ticker-item">Longest Win Streak <span class="val">8 Games</span></span>
+    <span class="ticker-item">Empty Net Goals <span class="val">3</span></span>
+  </div>
+</div>
+
+<main class="page">
+
+  <!-- OVERVIEW STATS -->
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div class="sec-title">Season overview</div>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-cell"><div class="stat-label">Games played</div><div class="stat-val">15</div></div>
+    <div class="stat-cell"><div class="stat-label">Wins</div><div class="stat-val win">11</div></div>
+    <div class="stat-cell"><div class="stat-label">Losses</div><div class="stat-val loss">4</div></div>
+    <div class="stat-cell"><div class="stat-label">Win rate</div><div class="stat-val blue">73%</div></div>
+    <div class="stat-cell"><div class="stat-label">Goals for</div><div class="stat-val">81</div><div class="stat-note">Ø 5.4 / game</div></div>
+    <div class="stat-cell"><div class="stat-label">Goals against</div><div class="stat-val">46</div><div class="stat-note">Ø 3.1 / game</div></div>
+    <div class="stat-cell"><div class="stat-label">Goal diff.</div><div class="stat-val win">+35</div></div>
+    <div class="stat-cell"><div class="stat-label">Power play G</div><div class="stat-val">7</div></div>
+    <div class="stat-cell"><div class="stat-label">Empty net G</div><div class="stat-val">3</div></div>
+    <div class="stat-cell"><div class="stat-label">HCT PIM</div><div class="stat-val">81</div><div class="stat-note">Ø 5.4 / game</div></div>
+    <div class="stat-cell"><div class="stat-label">Opp. PIM</div><div class="stat-val">112</div><div class="stat-note">Ø 7.5 / game</div></div>
+    <div class="stat-cell"><div class="stat-label">Home record</div><div class="stat-val">6–3</div></div>
+    <div class="stat-cell"><div class="stat-label">Away record</div><div class="stat-val">5–1</div></div>
+    <div class="stat-cell"><div class="stat-label">Opponents faced</div><div class="stat-val">6</div></div>
+    <div class="stat-cell"><div class="stat-label">Shutouts</div><div class="stat-val">1</div><div class="stat-note">25 Feb vs STR</div></div>
+  </div>
+
+  <!-- SEASON PHASES -->
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div class="sec-title">Season phases</div>
+  </div>
+  <div class="phase-grid">
+    <div class="phase-cell phase-early">
+      <div class="phase-label">Phase 1</div>
+      <div class="phase-name">Early</div>
+      <div class="phase-dates">15 Nov – 30 Dez 2025</div>
+      <div class="phase-stat"><span class="phase-stat-k">Games</span><span class="phase-stat-v">6</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Wins / Losses</span><span class="phase-stat-v">2 – 4</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goals For</span><span class="phase-stat-v">20</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goals Against</span><span class="phase-stat-v">27</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goal Diff.</span><span class="phase-stat-v">−7</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">PIM</span><span class="phase-stat-v">16</span></div>
+      <div class="phase-winrate">33%</div>
+    </div>
+    <div class="phase-cell phase-mid">
+      <div class="phase-label">Phase 2</div>
+      <div class="phase-name">Mid</div>
+      <div class="phase-dates">08 Jan – 05 Feb 2026</div>
+      <div class="phase-stat"><span class="phase-stat-k">Games</span><span class="phase-stat-v">5</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Wins / Losses</span><span class="phase-stat-v">4 – 1</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goals For</span><span class="phase-stat-v">29</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goals Against</span><span class="phase-stat-v">11</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goal Diff.</span><span class="phase-stat-v">+18</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">PIM</span><span class="phase-stat-v">24</span></div>
+      <div class="phase-winrate">80%</div>
+    </div>
+    <div class="phase-cell phase-late">
+      <div class="phase-label">Phase 3</div>
+      <div class="phase-name">Late</div>
+      <div class="phase-dates">10 Feb – 07 Mär 2026</div>
+      <div class="phase-stat"><span class="phase-stat-k">Games</span><span class="phase-stat-v">5</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Wins / Losses</span><span class="phase-stat-v">5 – 0</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goals For</span><span class="phase-stat-v">32</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goals Against</span><span class="phase-stat-v">8</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">Goal Diff.</span><span class="phase-stat-v">+24</span></div>
+      <div class="phase-stat"><span class="phase-stat-k">PIM</span><span class="phase-stat-v">41</span></div>
+      <div class="phase-winrate">100%</div>
+    </div>
+  </div>
+
+  <!-- SCORERS -->
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div class="sec-title">Top scorers</div>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Player</th>
+        <th class="num">GP</th>
+        <th class="num">G</th>
+        <th class="num">A</th>
+        <th class="num">PTS</th>
+        <th class="num">PTS/G</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="rank">1</td><td class="name">Christler Lukas <span style="color:var(--muted);font-weight:400;font-size:11px">#8 (C)</span></td><td class="num">15</td><td class="num">13</td><td class="num">4</td><td class="num" style="color:#fff;font-weight:600">17</td><td class="num">1.13</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:120px"></div></div></td></tr>
+      <tr><td class="rank">2</td><td class="name">Gasser Raphael <span style="color:var(--muted);font-weight:400;font-size:11px">#85 (A)</span></td><td class="num">14</td><td class="num">6</td><td class="num">11</td><td class="num" style="color:#fff;font-weight:600">17</td><td class="num">1.21</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:120px"></div></div></td></tr>
+      <tr><td class="rank">3</td><td class="name">Mariacher Marlon <span style="color:var(--muted);font-weight:400;font-size:11px">#89 U18</span></td><td class="num">12</td><td class="num">6</td><td class="num">6</td><td class="num" style="color:#fff;font-weight:600">12</td><td class="num">1.00</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:85px"></div></div></td></tr>
+      <tr><td class="rank">4</td><td class="name">Wöber Matteo <span style="color:var(--muted);font-weight:400;font-size:11px">#9</span></td><td class="num">14</td><td class="num">7</td><td class="num">3</td><td class="num" style="color:#fff;font-weight:600">10</td><td class="num">0.71</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:71px"></div></div></td></tr>
+      <tr><td class="rank">5</td><td class="name">Krippels Peter <span style="color:var(--muted);font-weight:400;font-size:11px">#23</span></td><td class="num">13</td><td class="num">5</td><td class="num">6</td><td class="num" style="color:#fff;font-weight:600">11</td><td class="num">0.85</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:78px"></div></div></td></tr>
+      <tr><td class="rank">6</td><td class="name">Wessiak Fabian <span style="color:var(--muted);font-weight:400;font-size:11px">#32 (A)</span></td><td class="num">10</td><td class="num">3</td><td class="num">5</td><td class="num" style="color:#fff;font-weight:600">8</td><td class="num">0.80</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:56px"></div></div></td></tr>
+      <tr><td class="rank">7</td><td class="name">Föger Mario <span style="color:var(--muted);font-weight:400;font-size:11px">#15 (A)</span></td><td class="num">11</td><td class="num">5</td><td class="num">2</td><td class="num" style="color:#fff;font-weight:600">7</td><td class="num">0.64</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:50px"></div></div></td></tr>
+      <tr><td class="rank">8</td><td class="name">Pipal Thomas <span style="color:var(--muted);font-weight:400;font-size:11px">#75 U18</span></td><td class="num">13</td><td class="num">5</td><td class="num">4</td><td class="num" style="color:#fff;font-weight:600">9</td><td class="num">0.69</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:64px"></div></div></td></tr>
+      <tr><td class="rank">9</td><td class="name">Mayr Stephan <span style="color:var(--muted);font-weight:400;font-size:11px">#22</span></td><td class="num">13</td><td class="num">4</td><td class="num">2</td><td class="num" style="color:#fff;font-weight:600">6</td><td class="num">0.46</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:42px"></div></div></td></tr>
+      <tr><td class="rank">10</td><td class="name">Gufler Christopher <span style="color:var(--muted);font-weight:400;font-size:11px">#98</span></td><td class="num">11</td><td class="num">3</td><td class="num">3</td><td class="num" style="color:#fff;font-weight:600">6</td><td class="num">0.55</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:42px"></div></div></td></tr>
+      <tr><td class="rank">11</td><td class="name">Praxmarer Felix <span style="color:var(--muted);font-weight:400;font-size:11px">#69 U18</span></td><td class="num">12</td><td class="num">0</td><td class="num">5</td><td class="num" style="color:#fff;font-weight:600">5</td><td class="num">0.42</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:35px"></div></div></td></tr>
+      <tr><td class="rank">12</td><td class="name">Praxmarer Moritz <span style="color:var(--muted);font-weight:400;font-size:11px">#55 U18</span></td><td class="num">12</td><td class="num">2</td><td class="num">3</td><td class="num" style="color:#fff;font-weight:600">5</td><td class="num">0.42</td><td><div class="pts-bar-wrap"><div class="pts-bar" style="width:35px"></div></div></td></tr>
+    </tbody>
+  </table>
+
+  <!-- H2H -->
+  <div class="sec-head">
+    <div class="sec-num">04</div>
+    <div class="sec-title">vs. Opponents</div>
+  </div>
+  <table class="data-table" style="margin-bottom:3rem">
+    <thead>
+      <tr>
+        <th>Opponent</th>
+        <th class="num">GP</th>
+        <th class="num">W</th>
+        <th class="num">L</th>
+        <th class="num">GF</th>
+        <th class="num">GA</th>
+        <th class="num">Diff</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="name">EHC Black Scorpions Strass</td><td class="num">4</td><td class="num" style="color:var(--win)">2</td><td class="num" style="color:var(--loss)">2</td><td class="num">10</td><td class="num">7</td><td class="num" style="color:var(--win)">+3</td></tr>
+      <tr><td class="name">EC Sellraintal Wolves</td><td class="num">3</td><td class="num" style="color:var(--win)">2</td><td class="num" style="color:var(--loss)">1</td><td class="num">12</td><td class="num">10</td><td class="num" style="color:var(--win)">+2</td></tr>
+      <tr><td class="name">EC Newcomers II</td><td class="num">2</td><td class="num" style="color:var(--win)">2</td><td class="num">0</td><td class="num">17</td><td class="num">4</td><td class="num" style="color:var(--win)">+13</td></tr>
+      <tr><td class="name">EHC White Hawks Volders</td><td class="num">2</td><td class="num" style="color:var(--win)">1</td><td class="num" style="color:var(--loss)">1</td><td class="num">13</td><td class="num">11</td><td class="num" style="color:var(--win)">+2</td></tr>
+      <tr><td class="name">EC Aschauer Eisbären</td><td class="num">2</td><td class="num" style="color:var(--win)">1</td><td class="num" style="color:var(--loss)">1</td><td class="num">6</td><td class="num">6</td><td class="num">0</td></tr>
+      <tr><td class="name">Tyrolean Ice Kings</td><td class="num">2</td><td class="num" style="color:var(--win)">1</td><td class="num" style="color:var(--loss)">1</td><td class="num">8</td><td class="num">3</td><td class="num" style="color:var(--win)">+5</td></tr>
+    </tbody>
+  </table>
+
+  <!-- GAME LOG -->
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <div class="sec-title">Game log</div>
+  </div>
+  <div id="game-log" style="margin-bottom:3rem">
+    <div class="game-row"><div class="game-date">15 Nov</div><div class="game-opp">EHC Scorpions Strass<small>Away · STR</small></div><div class="game-score">1:2</div><div><span class="badge badge-l">LOSS</span></div><div class="phase-tag" style="color:#4fc3f7">Early</div></div>
+    <div class="game-row"><div class="game-date">24 Nov</div><div class="game-opp">Tyrolean Ice Kings<small>Away · TIK</small></div><div class="game-score">5:2</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#4fc3f7">Early</div></div>
+    <div class="game-row"><div class="game-date">15 Dez</div><div class="game-opp">EC Aschauer Eisbären<small>Away · ECA</small></div><div class="game-score">3:4</div><div><span class="badge badge-l">LOSS</span></div><div class="phase-tag" style="color:#4fc3f7">Early</div></div>
+    <div class="game-row"><div class="game-date">18 Dez</div><div class="game-opp">EC Aschauer Eisbären<small>Home · ECA</small></div><div class="game-score">3:2</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#4fc3f7">Early</div></div>
+    <div class="game-row"><div class="game-date">29 Dez</div><div class="game-opp">EHC Scorpions Strass<small>Home · STR</small></div><div class="game-score">1:4</div><div><span class="badge badge-l">LOSS</span></div><div class="phase-tag" style="color:#4fc3f7">Early</div></div>
+    <div class="game-row"><div class="game-date">30 Dez</div><div class="game-opp">EHC White Hawks Volders<small>Home · EHV</small></div><div class="game-score">7:9</div><div><span class="badge badge-l">LOSS</span></div><div class="phase-tag" style="color:#4fc3f7">Early</div></div>
+    <div class="game-row"><div class="game-date">08 Jan</div><div class="game-opp">EC Newcomers II<small>Away · ECNII</small></div><div class="game-score">9:1</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#ab9df2">Mid</div></div>
+    <div class="game-row"><div class="game-date">20 Jan</div><div class="game-opp">EC Sellraintal Wolves<small>Home · ECS</small></div><div class="game-score">3:4</div><div><span class="badge badge-l">LOSS</span></div><div class="phase-tag" style="color:#ab9df2">Mid</div></div>
+    <div class="game-row"><div class="game-date">25 Jan</div><div class="game-opp">EHC White Hawks Volders<small>Away · EHV</small></div><div class="game-score">6:2</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#ab9df2">Mid</div></div>
+    <div class="game-row"><div class="game-date">27 Jan</div><div class="game-opp">EC Newcomers II<small>Home · ECNII</small></div><div class="game-score">8:3</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#ab9df2">Mid</div></div>
+    <div class="game-row"><div class="game-date">05 Feb</div><div class="game-opp">Tyrolean Ice Kings<small>Home · TIK</small></div><div class="game-score">3:1</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#ab9df2">Mid</div></div>
+    <div class="game-row"><div class="game-date">10 Feb</div><div class="game-opp">EC Sellraintal Wolves<small>Away · ECS</small></div><div class="game-score">3:2</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#00e676">Late</div></div>
+    <div class="game-row"><div class="game-date">21 Feb</div><div class="game-opp">EHC Scorpions Strass<small>Away · STR</small></div><div class="game-score">2:1</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#00e676">Late</div></div>
+    <div class="game-row"><div class="game-date">25 Feb</div><div class="game-opp">EHC Scorpions Strass<small>Home · STR</small></div><div class="game-score">6:0</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#00e676">Late</div></div>
+    <div class="game-row"><div class="game-date">07 Mär</div><div class="game-opp">EC Sellraintal Wolves<small>Away · ECS</small></div><div class="game-score">6:4</div><div><span class="badge badge-w">WIN</span></div><div class="phase-tag" style="color:#00e676">Late</div></div>
+  </div>
+
+  <!-- DOWNLOADS -->
+  <div class="sec-head">
+    <div class="sec-num">06</div>
+    <div class="sec-title">Data downloads</div>
+  </div>
+  <div class="dl-grid">
+    <a class="dl-card" href="202526_cup_hct_game_log.csv" download>
+      <div class="dl-icon">📋</div>
+      <div class="dl-name">Game log</div>
+      <div class="dl-desc">All 15 games with scores, venues, phases, results</div>
+      <div class="dl-meta">CSV · 202526_cup_hct_game_log.csv</div>
+    </a>
+    <a class="dl-card" href="202526_cup_hct_player_scoring.csv" download>
+      <div class="dl-icon">🏒</div>
+      <div class="dl-name">Player scoring</div>
+      <div class="dl-desc">Goals, assists, points, PP/EN breakdown per player</div>
+      <div class="dl-meta">CSV · 202526_cup_hct_player_scoring.csv</div>
+    </a>
+    <a class="dl-card" href="202526_cup_hct_all_goals.csv" download>
+      <div class="dl-icon">🎯</div>
+      <div class="dl-name">All goals</div>
+      <div class="dl-desc">Every goal: time, scorer, assistants, type, game state</div>
+      <div class="dl-meta">CSV · 202526_cup_hct_all_goals.csv</div>
+    </a>
+    <a class="dl-card" href="202526_cup_hct_penalties.csv" download>
+      <div class="dl-icon">⚠️</div>
+      <div class="dl-name">Penalties</div>
+      <div class="dl-desc">Penalty counts and types per player</div>
+      <div class="dl-meta">CSV · 202526_cup_hct_penalties.csv</div>
+    </a>
+    <a class="dl-card" href="202526_cup_hct_phase_summary.csv" download>
+      <div class="dl-icon">📈</div>
+      <div class="dl-name">Phase summary</div>
+      <div class="dl-desc">Early / mid / late season aggregated stats</div>
+      <div class="dl-meta">CSV · 202526_cup_hct_phase_summary.csv</div>
+    </a>
+    <a class="dl-card" href="202526_cup_hct_head_to_head.csv" download>
+      <div class="dl-icon">🆚</div>
+      <div class="dl-name">Head to head</div>
+      <div class="dl-desc">Results and goals vs each opponent</div>
+      <div class="dl-meta">CSV · 202526_cup_hct_head_to_head.csv</div>
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <span>HC Thaur</span> &nbsp;·&nbsp; Hockey Cup Tirol 2025/26 &nbsp;·&nbsp; Data extracted from official Spielberichte &nbsp;·&nbsp; Generated 2026-04-10
+</footer>
+
+</body>
+</html>

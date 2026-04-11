@@ -60,7 +60,7 @@
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
                 <a href="mannschaft.html" class="text-gray-400 hover:text-white transition-colors">Unser Verein</a>
                 <a href="#news" class="text-gray-400 hover:text-white transition-colors">News</a>
-                <a href="playoffs.html" class="text-gray-400 hover:text-white transition-colors">Playoffs</a>
+                <a href="playoffs.html" class="text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
                 <a href="#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
                 <a href="#contact" class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
             </nav>
@@ -95,7 +95,7 @@
             <div class="container mx-auto px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
                 <a href="mannschaft.html" class="py-2 text-gray-400 hover:text-white transition-colors">Unser Verein</a>
                 <a href="#news"           class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
-                <a href="playoffs.html"   class="py-2 text-gray-400 hover:text-white transition-colors">Playoffs</a>
+                <a href="playoffs.html"   class="py-2 text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
                 <a href="#sponsors"       class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
                 <a href="#contact"        class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
             </div>
@@ -138,8 +138,12 @@
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <a href="playoffs.html"
                            class="px-8 py-4 bg-hc-red text-white font-bold uppercase tracking-wider rounded-xl hover:bg-[#d30510] transition-colors">
-                            Playoffs ansehen
+                            Hockey Cup ansehen
                         </a>
+                        <button onclick="openTeamStatsPopup()"
+                                class="px-8 py-4 bg-[#1a1a20] border border-[#2a2a35] text-white font-bold uppercase tracking-wider rounded-xl hover:border-hc-red/40 transition-colors">
+                            Cup Statistik
+                        </button>
                         <a href="mannschaft.html"
                            class="px-8 py-4 bg-[#1a1a20] border border-[#2a2a35] text-white font-bold uppercase tracking-wider rounded-xl hover:border-hc-red/40 transition-colors">
                             Unser Verein
@@ -228,9 +232,62 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                        <!-- Card 1: Playoff-Finale Einzug -->
+                        <!-- Card 0: Cup Statistik -->
+                        <article class="news-card group">
+                            <div class="aspect-video bg-[#13131a] overflow-hidden relative flex items-center justify-center">
+                                <img src="images/news/202526_cup_champions.png"
+                                     alt="HCT Cup Meister 2025/26"
+                                     class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                                <div class="absolute inset-0 flex items-end p-3 pointer-events-none">
+                                    <span class="font-black text-white text-3xl leading-none opacity-20 select-none tracking-tighter">11–4</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Statistik</span>
+                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">Hockey Cup Tirol 2025/26 – Alle Daten</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                                    15 Spiele, 81 Tore, 73 % Siegquote. Spielberichte, Topscorer-Ranking, Head-to-Head und Phasenverlauf der Meistersaison.
+                                </p>
+                                <button onclick="openTeamStatsPopup()"
+                                        class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
+                                    Statistiken ansehen
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- Card 1: Wings4Life Run -->
+                        <article class="news-card group">
+                            <div class="aspect-video bg-[#13131a] overflow-hidden relative flex items-center justify-center">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-hc-red opacity-30" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+                                    </svg>
+                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#13131a]/60"></div>
+                                <div class="absolute bottom-3 left-3">
+                                    <span class="text-xs font-bold bg-hc-red text-white px-2 py-1 rounded-full uppercase tracking-wider">03. Mai 2026</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Laufen für Leben</span>
+                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">HCT beim Wings for Life World Run 2026</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                                    Am 3. Mai 2026 nimmt der HC Thaur am globalen Wings for Life World Run teil –
+                                    Laufen für Rückenmarksforschung und eine Welt ohne Querschnittslähmung.
+                                    Lauft mit uns!
+                                </p>
+                                <a href="https://www.wingsforlifeworldrun.com/at/de" target="_blank"
+                                   class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
+                                    Mehr erfahren
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- Card 2: Playoff-Finale Einzug -->
                         <article class="news-card group">
                             <div class="aspect-video bg-[#13131a] overflow-hidden">
                                 <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500">
@@ -238,14 +295,14 @@
                                 </video>
                             </div>
                             <div class="p-6">
-                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Playoffs</span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Hockey Cup</span>
                                 <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">HC Thaur zieht vorzeitig ins Playoff-Finale ein</h3>
                                 <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
                                     Nach einem überragenden Auftritt gegen die EHC Black Scorpions fixiert HC Thaur vorzeitig den Finaleinzug. Endstand: <strong class="text-white">HC Thaur 6:0</strong>.
                                 </p>
                                 <a href="playoffs.html"
                                    class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
-                                    Playoffs ansehen
+                                    Hockey Cup ansehen
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                                 </a>
                             </div>
@@ -452,7 +509,7 @@
                     <ul class="space-y-2 text-sm text-gray-500">
                         <li><a href="mannschaft.html" class="hover:text-hc-red transition-colors">Unser Verein</a></li>
                         <li><a href="#news"           class="hover:text-hc-red transition-colors">News</a></li>
-                        <li><a href="playoffs.html"   class="hover:text-hc-red transition-colors">Playoffs</a></li>
+                        <li><a href="playoffs.html"   class="hover:text-hc-red transition-colors">Hockey Cup</a></li>
                         <li><a href="#sponsors"       class="hover:text-hc-red transition-colors">Sponsoren</a></li>
                     </ul>
                 </div>
@@ -503,7 +560,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
-            <iframe src="202508_Booklet.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
+            <iframe src="public/202526_season/gold/202508_Booklet.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -516,7 +573,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
-            <iframe src="202526_preseason_hctstats.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
+            <iframe src="public/202526_season/gold/202526_hct_stats.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -529,7 +586,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
-            <iframe src="202601_Review.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
+            <iframe src="public/202526_season/gold/202601_Review.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
         </div>
     </div>
 
