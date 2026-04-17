@@ -716,8 +716,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLiveGamesSection();
     };
 
-    updateBanner();
-    setInterval(updateBanner, 60000);
+    if (document.getElementById('game-result-banner')) {
+        updateBanner();
+        setInterval(updateBanner, 60000);
+    }
 
     const standingsBody = document.getElementById('standings-table-body');
     const gamesCarousel = document.getElementById('hc-games-carousel');
