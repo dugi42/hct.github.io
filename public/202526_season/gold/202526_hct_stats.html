@@ -417,7 +417,7 @@ async function loadData() {
   fetch(FOULS_URL, { cache: 'no-store' })
     .then(r => r.text())
     .then(csv => {
-      const rows = Papa.parse(csv, { header:true, dynamicTyping:true }).data.filter(r => r.player_name || r.name);
+      const rows = Papa.parse(csv, { header:true, dynamicTyping:true }).data.filter(r => r.Spieler);
       buildFoulCharts(rows);
     })
     .catch(() => showChartsError('Strafendaten nicht verfügbar.'));
@@ -530,7 +530,7 @@ function buildFoulCharts(rows) {
   new Chart(document.getElementById('chart-fouls-player'), {
     type:'bar',
     data:{
-      labels: sorted.map(r => r.player_name || r.name || '?'),
+      labels: sorted.map(r => r.Spieler || '?'),
       datasets: types.map((t, i) => ({
         label:t, data: sorted.map(r => r[t] || 0),
         backgroundColor: colors[i], borderRadius:2
