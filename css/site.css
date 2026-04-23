@@ -25,6 +25,10 @@ body {
     color: var(--text-primary);
 }
 
+h1, h2, h3, h4 {
+    font-family: 'Archivo Black', 'Inter', sans-serif;
+}
+
 /* --- Club colour utilities --------------------------------- */
 .hc-red               { color: var(--hc-red); }
 .bg-hc-red            { background-color: var(--hc-red); }

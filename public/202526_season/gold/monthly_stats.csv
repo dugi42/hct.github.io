@@ -1,0 +1,7 @@
+month,num_events,event_types,avg_attendance_pct,total_attendances,total_slots,overall_fill_pct
+2025-10,2,Training,37,45,122,37
+2025-11,8,"Camp, Game, Special, Training",33,159,488,33
+2025-12,9,"Game, Training",23,129,549,23
+2026-01,9,"Game, Training",22,123,549,22
+2026-02,7,"Game, Training",18,80,427,19
+2026-03,1,Training,34,21,61,34

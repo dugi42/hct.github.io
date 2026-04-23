@@ -542,15 +542,17 @@ const IMG = (n) => `p${String(n).padStart(2,'0')}.jpg`;
 
 let currentPage = 1;
 let isFlipping = false;
+const isMobile = () => window.innerWidth < 768;
 
 const book = document.getElementById('book');
 const stage = document.getElementById('bookStage');
 
 function sizeBook() {
-  const maxW = stage.clientWidth - 140;
-  const maxH = stage.clientHeight - 30;
-  const spread = (currentPage === 1 || currentPage === TOTAL);
-  const aspect = spread ? (600/842) : (1200/842);
+  const mobile = isMobile();
+  const maxW = stage.clientWidth - (mobile ? 24 : 140);
+  const maxH = stage.clientHeight - (mobile ? 16 : 30);
+  const singlePage = mobile || (currentPage === 1 || currentPage === TOTAL);
+  const aspect = singlePage ? (600/842) : (1200/842);
   let w = maxW, h = w / aspect;
   if (h > maxH) { h = maxH; w = h * aspect; }
   return { w: Math.floor(w), h: Math.floor(h) };
@@ -562,12 +564,12 @@ function render() {
   book.style.width = w + 'px';
   book.style.height = h + 'px';
 
-  if (currentPage === 1) {
+  if (currentPage === 1 || isMobile()) {
     const page = document.createElement('div');
     page.className = 'page right';
     page.style.cssText = `width:${w}px;height:${h}px;`;
-    page.innerHTML = `<img src="${IMG(1)}" alt="Seite 1"><div class="page-number">01</div>`;
-    page.onclick = () => openZoom(1);
+    page.innerHTML = `<img src="${IMG(currentPage)}" alt="Seite ${currentPage}"><div class="page-number">${String(currentPage).padStart(2,'0')}</div>`;
+    page.onclick = () => openZoom(currentPage);
     book.appendChild(page);
   } else {
     renderSpread(w, h);
@@ -609,7 +611,9 @@ function renderSpread(w, h) {
 function flipPage(dir) {
   if (isFlipping) return;
   let nextPage;
-  if (currentPage === 1) {
+  if (isMobile()) {
+    nextPage = currentPage + dir;
+  } else if (currentPage === 1) {
     nextPage = dir > 0 ? 2 : 1;
   } else if (dir > 0) {
     nextPage = currentPage + 2;
@@ -629,16 +633,17 @@ function flipPage(dir) {
 function animateFlip(dir, onDone) {
   isFlipping = true;
   const {w, h} = sizeBook();
-  const isSingle = (currentPage === 1);
+  const mobile = isMobile();
+  const isSingle = mobile || (currentPage === 1);
   const halfW = isSingle ? w : w / 2;
 
   let startPage, endPage;
   if (dir > 0) {
-    startPage = (currentPage === 1) ? 1 : (currentPage + 1);
-    endPage = (currentPage === 1) ? 2 : (currentPage + 2);
+    startPage = mobile ? currentPage : ((currentPage === 1) ? 1 : (currentPage + 1));
+    endPage   = mobile ? (currentPage + 1) : ((currentPage === 1) ? 2 : (currentPage + 2));
   } else {
     startPage = currentPage;
-    endPage = (currentPage === 2) ? 1 : (currentPage - 1);
+    endPage   = mobile ? (currentPage - 1) : ((currentPage === 2) ? 1 : (currentPage - 1));
   }
   if (endPage < 1 || endPage > TOTAL) { isFlipping = false; return; }
 
@@ -687,7 +692,7 @@ function updateArrows() {
 function updateThumbActive() {
   document.querySelectorAll('.thumb').forEach((t, i) => {
     const p = i + 1;
-    t.classList.toggle('active', p === currentPage || p === currentPage + 1);
+    t.classList.toggle('active', p === currentPage || (!isMobile() && p === currentPage + 1));
   });
 }
 
@@ -698,7 +703,7 @@ function buildThumbs() {
     t.className = 'thumb';
     t.innerHTML = `<img src="${IMG(i)}" loading="lazy"><div class="thumb-num">${String(i).padStart(2,'0')}</div>`;
     t.onclick = () => {
-      currentPage = (i === 1) ? 1 : (i % 2 === 0 ? i : i - 1);
+      currentPage = isMobile() ? i : ((i === 1) ? 1 : (i % 2 === 0 ? i : i - 1));
       render();
       toggleThumbs();
     };
@@ -729,8 +734,10 @@ document.addEventListener('keydown', (e) => {
   }
   if (e.key === 'Home') { currentPage = 1; render(); }
   if (e.key === 'End') {
-    currentPage = (TOTAL % 2 === 0) ? TOTAL - 1 : TOTAL;
-    if (TOTAL === 1) currentPage = 1;
+    if (isMobile()) { currentPage = TOTAL; } else {
+      currentPage = (TOTAL % 2 === 0) ? TOTAL - 1 : TOTAL;
+      if (TOTAL === 1) currentPage = 1;
+    }
     render();
   }
 });
@@ -746,7 +753,7 @@ document.getElementById('progressTrack').addEventListener('click', (e) => {
   const rect = e.currentTarget.getBoundingClientRect();
   const pct = (e.clientX - rect.left) / rect.width;
   const target = Math.max(1, Math.min(TOTAL, Math.round(pct * TOTAL)));
-  currentPage = (target === 1) ? 1 : (target % 2 === 0 ? target : target - 1);
+  currentPage = isMobile() ? target : ((target === 1) ? 1 : (target % 2 === 0 ? target : target - 1));
   render();
 });
 

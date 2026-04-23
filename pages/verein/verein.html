@@ -13,19 +13,20 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="2.0.0">
+    <meta name="version" content="2.1.0">
     <title>Unser Verein – HC Thaur</title>
 
-    <link rel="stylesheet" href="../css/site.css">
+    <link rel="stylesheet" href="../../css/site.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: { colors: { 'hc-red': '#fc0612' } } } }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -37,17 +38,17 @@
     <!-- Header -->
     <header class="bg-[#111118] border-b border-[#2a2a35] sticky top-0 z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="../index.html" class="flex items-center space-x-3">
-                <img src="../images/logo.png" alt="HC Thaur Logo" class="h-12 w-12 rounded-full object-contain">
+            <a href="../../index.html" class="flex items-center space-x-3">
+                <img src="../../images/logo.png" alt="HC Thaur Logo" class="h-12 w-12 rounded-full object-contain">
                 <span class="text-lg font-black tracking-widest text-white">HC THAUR</span>
             </a>
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                <a href="mannschaft.html" class="text-white border-b-2 border-hc-red pb-0.5">Unser Verein</a>
-                <a href="../index.html#news"  class="text-gray-400 hover:text-white transition-colors">News</a>
-                <a href="playoffs.html"   class="text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
-                <a href="magazin/"       class="text-gray-400 hover:text-white transition-colors">Magazin</a>
-                <a href="../index.html#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
-                <a href="../index.html#contact"  class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
+                <a href="verein.html" class="text-white border-b-2 border-hc-red pb-0.5">Unser Verein</a>
+                <a href="../../index.html#news" class="text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="../season/cup/202526_playoffs.html" class="text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
+                <a href="../magazin/" class="text-gray-400 hover:text-white transition-colors">Magazin</a>
+                <a href="../../index.html#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="../../index.html#contact" class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
             </nav>
             <div class="flex items-center gap-3">
                 <a href="#" aria-label="Shop" class="text-gray-500 hover:text-white transition-colors">
@@ -66,13 +67,13 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-[#111118] border-t border-[#2a2a35]">
             <div class="container mx-auto px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
-                <a href="mannschaft.html"     class="py-2 text-white">Unser Verein</a>
-                <a href="../index.html#news"     class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
-                <a href="playoffs.html"       class="py-2 text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
-                <a href="magazin/"            class="py-2 text-gray-400 hover:text-white transition-colors">Magazin</a>
-                <a href="../index.html#sponsors" class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
-                <a href="../index.html#contact"  class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
-                <a href="#"                   class="py-2 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                <a href="verein.html" class="py-2 text-white">Unser Verein</a>
+                <a href="../../index.html#news" class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="../season/cup/202526_playoffs.html" class="py-2 text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
+                <a href="../magazin/" class="py-2 text-gray-400 hover:text-white transition-colors">Magazin</a>
+                <a href="../../index.html#sponsors" class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="../../index.html#contact" class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
+                <a href="#" class="py-2 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
                         <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
@@ -90,7 +91,7 @@
         <section class="relative py-20 md:py-28 overflow-hidden border-b border-[#1e1e26]">
             <div class="hero-glow"></div>
             <div class="container mx-auto px-6 relative z-10 text-center">
-                <img src="../images/logo.png" alt="HCT Logo"
+                <img src="../../images/logo.png" alt="HCT Logo"
                      class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full shadow-lg mb-8"
                      style="box-shadow: 0 0 40px rgba(252,6,18,0.2);">
                 <span class="section-label">Gegründet 2017</span>
@@ -99,7 +100,7 @@
                 </h1>
                 <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
                     Was als kleine Hobbyrunde begann, ist heute ein lebendiger Verein mit knapp 60 aktiven Erwachsenen
-                    und zwei Nachwuchsteams mit 55 begeisterten Spielerinnen und Spielern.
+                    und zwei Nachwuchsteams mit 56 begeisterten Spielerinnen und Spielern.
                 </p>
             </div>
         </section>
@@ -111,24 +112,24 @@
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
-                                <span class="counter" data-target="233">0</span>
+                                <span class="counter" data-target="237">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Mitglieder</p>
-                            <p class="text-xs text-green-500 mt-1">(+12)</p>
+                            <p class="text-xs text-green-500 mt-1">(+7)</p>
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
-                                <span class="counter" data-target="57">0</span>
+                                <span class="counter" data-target="67">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Kids</p>
-                            <p class="text-xs text-green-500 mt-1">(+4)</p>
+                            <p class="text-xs text-green-500 mt-1">(+1)</p>
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
                                 <span class="counter" data-target="58">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Aktive Spieler</p>
-                            <p class="text-xs text-green-500 mt-1">(+3)</p>
+                            <p class="text-xs text-gray-600 mt-1">(+0)</p>
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
@@ -139,10 +140,10 @@
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
-                                <span class="counter" data-target="118">0</span>
+                                <span class="counter" data-target="105">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Fördermitglieder</p>
-                            <p class="text-xs text-green-500 mt-1">(+5)</p>
+                            <p class="text-xs text-green-500 mt-1">(+1)</p>
                         </div>
                     </div>
                 </div>
@@ -156,7 +157,7 @@
                     <p>
                         Seit unserer Gründung im Jahr 2017 steht beim Hockey Club Thaur die Freude am Sport und das
                         gemeinsame Vereinsleben im Mittelpunkt. Was als kleine Hobbyrunde begann, ist heute ein lebendiger
-                        Verein mit knapp 60 aktiven Erwachsenen und zwei Nachwuchsteams mit 55 begeisterten Spielerinnen
+                        Verein mit knapp 60 aktiven Erwachsenen und zwei Nachwuchsteams mit 56 begeisterten Spielerinnen
                         und Spielern.
                     </p>
                     <p>
@@ -170,6 +171,55 @@
                         Geselligkeit, Zusammenhalt und Freundschaft großgeschrieben werden – sei es bei Spielen,
                         Ausflügen oder geselligen Abenden.
                     </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             MITGLIEDERENTWICKLUNG CHART
+             ===================================================== -->
+        <section class="py-20 border-b border-[#1e1e26] bg-[#111118]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-10">
+                        <span class="section-label">Seit 2017</span>
+                        <h2 class="text-3xl md:text-4xl font-black mt-2">Mitglieder­<span class="text-hc-red">entwicklung</span></h2>
+                        <p class="text-gray-500 text-sm mt-2">Bestand Jahresende nach Mitgliedsart · 2017–2026</p>
+                    </div>
+
+                    <!-- KPI strip -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                            <div class="text-2xl font-black text-hc-red mb-1">237</div>
+                            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Gesamt 2026</div>
+                        </div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                            <div class="text-2xl font-black text-blue-400 mb-1">105</div>
+                            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Fördermitglieder</div>
+                        </div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                            <div class="text-2xl font-black text-green-400 mb-1">56</div>
+                            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Nachwuchs</div>
+                        </div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                            <div class="text-2xl font-black" style="color:#f59e0b">+4,2×</div>
+                            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Wachstum seit 2017</div>
+                        </div>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8">
+                        <div style="position:relative; height:340px;">
+                            <canvas id="memberChart" role="img" aria-label="Stacked area chart of HCT membership by type 2017-2026"></canvas>
+                        </div>
+                        <!-- Legend -->
+                        <div class="flex flex-wrap gap-4 mt-4 justify-center text-xs text-gray-400">
+                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm inline-block" style="background:#3b82f6"></span>Fördermitglieder</span>
+                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm inline-block" style="background:#fc0612"></span>Aktive</span>
+                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm inline-block" style="background:#10b981"></span>Nachwuchs</span>
+                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm inline-block" style="background:#f59e0b"></span>Kind</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -190,21 +240,21 @@
                             <h3 class="text-3xl font-black mt-3 mb-4">Nachwuchs –<br>die <span class="text-hc-red">Zukunft</span> des Vereins</h3>
                             <p class="text-gray-400 leading-relaxed">
                                 Im Hockey Club Thaur sind wir unglaublich stolz auf unsere Nachwuchsarbeit. Unsere zwei
-                                Nachwuchsteams mit 55 jungen, begeisterten Spielerinnen und Spielern sind das Herzstück
+                                Nachwuchsteams mit 56 jungen, begeisterten Spielerinnen und Spielern sind das Herzstück
                                 des Vereins. Ihre Leidenschaft und ihr Teamgeist sind ansteckend und zeigen, dass die
                                 Zukunft des HCT in den besten Händen liegt.
                             </p>
                             <p class="text-gray-500 text-sm mt-4">Ein großes Dankeschön an unseren Nachwuchs – ihr seid unsere Inspiration!</p>
                         </div>
                         <div class="h-72 md:h-80 rounded-2xl overflow-hidden"
-                             style="background-image: url('images/teams/hct_minis.jpg'); background-size: cover; background-position: center;">
+                             style="background-image: url('../../images/teams/hct_minis.jpg'); background-size: cover; background-position: center;">
                         </div>
                     </div>
 
                     <!-- Hockey Club Thaur -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-20">
                         <div class="order-2 md:order-1 h-72 md:h-80 rounded-2xl overflow-hidden"
-                             style="background-image: url('images/teams/hct_all.jpg'); background-size: cover; background-position: center;">
+                             style="background-image: url('../../images/teams/hct_all.jpg'); background-size: cover; background-position: center;">
                         </div>
                         <div class="order-1 md:order-2">
                             <span class="section-label">Der Verein</span>
@@ -236,21 +286,21 @@
                                 Mit diesem Erfolg im Rücken stürmte das Team in der Saison 2025/26 zum
                                 <strong class="text-white">Tiroler Meistertitel</strong>!
                             </p>
-                            <a href="playoffs.html"
+                            <a href="../season/cup/202526_playoffs.html"
                                class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-hc-red text-white font-bold rounded-xl hover:bg-[#d30510] transition-colors text-sm">
                                 Hockey Cup ansehen
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                             </a>
                         </div>
                         <div class="h-72 md:h-80 rounded-2xl overflow-hidden"
-                             style="background-image: url('images/teams/hct_kampf.jpg'); background-size: cover; background-position: center;">
+                             style="background-image: url('../../images/teams/hct_kampf.jpg'); background-size: cover; background-position: center;">
                         </div>
                     </div>
 
                     <!-- MTB/Rad -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div class="order-2 md:order-1 h-72 md:h-80 rounded-2xl overflow-hidden"
-                             style="background-image: url('images/teams/hct_radteam.JPEG'); background-size: cover; background-position: center;">
+                             style="background-image: url('../../images/teams/hct_radteam.JPEG'); background-size: cover; background-position: center;">
                         </div>
                         <div class="order-1 md:order-2">
                             <span class="section-label">Sommer</span>
@@ -346,38 +396,6 @@
                         </div>
                     </div>
 
-                    <!-- Trainingsattendance 2024/25 static -->
-                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8 mb-6">
-                        <h4 class="text-lg font-bold mb-6">Fleißigste Top 5 Spieler Trainingseinheiten 2024/25</h4>
-                        <div class="space-y-5">
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Wolfgang Winkler</span>
-                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:76.5%"></div></div></div>
-                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">26/34</span>
-                            </div>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Toni Plank</span>
-                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:76.5%"></div></div></div>
-                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">26/34</span>
-                            </div>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Gabriel Thaler</span>
-                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:73.5%"></div></div></div>
-                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">25/34</span>
-                            </div>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Niki Christler</span>
-                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:70.6%"></div></div></div>
-                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">24/34</span>
-                            </div>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                                <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">Mario Föger</span>
-                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full" style="width:67.7%"></div></div></div>
-                                <span class="sm:w-14 text-sm font-bold text-gray-300 sm:text-right">23/34</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Standings 2024/25 static -->
                     <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8">
                         <h4 class="text-lg font-bold mb-6">Hockey Cup Tirol – Grunddurchgang 2024/25</h4>
@@ -415,7 +433,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div>
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="../images/logo.png" alt="HCT Logo" class="h-10 w-10 rounded-full object-contain">
+                        <img src="../../images/logo.png" alt="HCT Logo" class="h-10 w-10 rounded-full object-contain">
                         <span class="font-black tracking-widest text-white">HC THAUR</span>
                     </div>
                     <p class="text-sm text-gray-500 leading-relaxed">Seit 2017 steht beim Hockey Club Thaur die Freude am Sport im Mittelpunkt.</p>
@@ -423,10 +441,10 @@
                 <div>
                     <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm text-gray-500">
-                        <li><a href="../index.html"          class="hover:text-hc-red transition-colors">Home</a></li>
-                        <li><a href="playoffs.html"       class="hover:text-hc-red transition-colors">Hockey Cup</a></li>
-                        <li><a href="../index.html#sponsors" class="hover:text-hc-red transition-colors">Sponsoren</a></li>
-                        <li><a href="2025_Datenschutz.html" class="hover:text-hc-red transition-colors">Datenschutz</a></li>
+                        <li><a href="../../index.html" class="hover:text-hc-red transition-colors">Home</a></li>
+                        <li><a href="../season/cup/202526_playoffs.html" class="hover:text-hc-red transition-colors">Hockey Cup</a></li>
+                        <li><a href="../../index.html#sponsors" class="hover:text-hc-red transition-colors">Sponsoren</a></li>
+                        <li><a href="../2025_Datenschutz.html" class="hover:text-hc-red transition-colors">Datenschutz</a></li>
                     </ul>
                 </div>
                 <div>
@@ -444,7 +462,60 @@
         </div>
     </footer>
 
-    <script src="../js/inline-scripts.js?v=2.0.0"></script>
-    <script src="../js/site.js?v=20260221-3"></script>
+    <script src="../../js/inline-scripts.js?v=2.0.0"></script>
+    <script src="../../js/site.js?v=20260221-3"></script>
+
+    <script>
+    (function() {
+        const labels = ['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
+        const datasets = [
+            { label: 'Fördermitglieder', data: [17,21,43,52,65,76,83,93,104,105], backgroundColor: 'rgba(59,130,246,0.75)', borderColor: '#3b82f6', borderWidth: 1.5 },
+            { label: 'Aktive',           data: [32,38,44,46,47,49,50,55,58,58],   backgroundColor: 'rgba(252,6,18,0.75)',   borderColor: '#fc0612', borderWidth: 1.5 },
+            { label: 'Nachwuchs',        data: [7,11,12,14,21,23,23,46,55,56],    backgroundColor: 'rgba(16,185,129,0.75)', borderColor: '#10b981', borderWidth: 1.5 },
+            { label: 'Kind',             data: [0,0,1,2,5,8,9,10,11,11],          backgroundColor: 'rgba(245,158,11,0.75)', borderColor: '#f59e0b', borderWidth: 1.5 }
+        ];
+
+        const gridColor = 'rgba(42,42,53,0.8)';
+        const tickColor = '#8a8a9a';
+
+        new Chart(document.getElementById('memberChart'), {
+            type: 'bar',
+            data: { labels, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1a1a20',
+                        borderColor: '#2a2a35',
+                        borderWidth: 1,
+                        titleColor: '#f0f0f5',
+                        bodyColor: '#8a8a9a',
+                        callbacks: {
+                            footer: (items) => {
+                                const total = items.reduce((s, i) => s + i.raw, 0);
+                                return 'Gesamt: ' + total;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { family: "'Inter', sans-serif" } }
+                    },
+                    y: {
+                        stacked: true,
+                        grid: { color: gridColor },
+                        ticks: { color: tickColor, font: { family: "'Inter', sans-serif" } },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })();
+    </script>
 </body>
 </html>

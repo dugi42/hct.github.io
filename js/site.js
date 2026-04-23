@@ -264,9 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const statsUrlPreSeason = 'public/202526_season/raw/202526_preseason_hcstats.json';
-    const statsUrlPlayoffsHalfFinals = 'public/202526_season/raw/202526_playoffs_hcstats.json';
-    const statsUrlPlayoffs = 'public/202526_season/raw/202526_hcstats.json';
+    const statsUrlPreSeason = '/public/202526_season/raw/202526_preseason_hcstats.json';
+    const statsUrlPlayoffsHalfFinals = '/public/202526_season/raw/202526_playoffs_hcstats.json';
+    const statsUrlPlayoffs = '/public/202526_season/raw/202526_hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
     const liveGamesBigUpdated = document.getElementById('live-games-big-updated');

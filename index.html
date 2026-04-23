@@ -13,7 +13,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="2.0.0">
+    <meta name="version" content="2.1.0">
     <title>HC Thaur - Offizielle Homepage</title>
 
     <link rel="stylesheet" href="css/site.css">
@@ -22,9 +22,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        'hc-red': '#fc0612',
-                    }
+                    colors: { 'hc-red': '#fc0612' }
                 }
             }
         }
@@ -32,7 +30,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -42,55 +40,43 @@
 
 <body class="bg-[#0f0f12] text-white">
 
-    <!-- Game Result Banner -->
-    <div class="game-result-banner-container overflow-hidden">
-        <div id="game-result-banner" class="flex"></div>
-    </div>
-
     <!-- Header & Navigation -->
     <header class="bg-[#111118] border-b border-[#2a2a35] sticky top-0 z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <!-- Logo -->
             <a href="index.html" class="flex items-center space-x-3">
                 <img src="images/logo.png" alt="HC Thaur Logo" class="h-12 w-12 rounded-full object-contain">
                 <span class="text-lg font-black tracking-widest text-white">HC THAUR</span>
             </a>
 
-            <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                <a href="pages/mannschaft.html" class="text-gray-400 hover:text-white transition-colors">Unser Verein</a>
+                <a href="pages/verein/verein.html" class="text-gray-400 hover:text-white transition-colors">Unser Verein</a>
                 <a href="#news" class="text-gray-400 hover:text-white transition-colors">News</a>
-                <a href="pages/playoffs.html" class="text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
+                <a href="pages/season/cup/202526_playoffs.html" class="text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
                 <a href="pages/magazin/" class="text-gray-400 hover:text-white transition-colors">Magazin</a>
                 <a href="#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
                 <a href="#contact" class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
             </nav>
 
-            <!-- Social + Mobile -->
             <div class="flex items-center gap-4">
                 <div class="hidden md:flex items-center gap-3">
-                    <a href="#" aria-label="Webshop"
-                        class="text-gray-500 hover:text-white transition-colors">
+                    <a href="#" aria-label="Webshop" class="text-gray-500 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
                             <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/>
                         </svg>
                     </a>
-                    <a href="https://www.facebook.com/HockeyClubThaur/" target="_blank" aria-label="Facebook"
-                        class="text-gray-500 hover:text-white transition-colors">
+                    <a href="https://www.facebook.com/HockeyClubThaur/" target="_blank" aria-label="Facebook" class="text-gray-500 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/hockeyclub_thaur/" target="_blank" aria-label="Instagram"
-                        class="text-gray-500 hover:text-white transition-colors">
+                    <a href="https://www.instagram.com/hockeyclub_thaur/" target="_blank" aria-label="Instagram" class="text-gray-500 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                         </svg>
                     </a>
                 </div>
-                <!-- Mobile hamburger -->
                 <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
@@ -99,16 +85,15 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-[#111118] border-t border-[#2a2a35]">
             <div class="container mx-auto px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
-                <a href="pages/mannschaft.html" class="py-2 text-gray-400 hover:text-white transition-colors">Unser Verein</a>
-                <a href="#news"           class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
-                <a href="pages/playoffs.html"   class="py-2 text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
-                <a href="pages/magazin/"        class="py-2 text-gray-400 hover:text-white transition-colors">Magazin</a>
-                <a href="#sponsors"       class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
-                <a href="#contact"        class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
-                <a href="#"              class="py-2 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                <a href="pages/verein/verein.html" class="py-2 text-gray-400 hover:text-white transition-colors">Unser Verein</a>
+                <a href="#news" class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="pages/season/cup/202526_playoffs.html" class="py-2 text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
+                <a href="pages/magazin/" class="py-2 text-gray-400 hover:text-white transition-colors">Magazin</a>
+                <a href="#sponsors" class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="#contact" class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
+                <a href="#" class="py-2 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
                         <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
@@ -123,81 +108,32 @@
     <main>
 
         <!-- =====================================================
-             HERO — Championship announcement
-             ===================================================== -->
-        <section class="relative py-24 md:py-36 overflow-hidden">
-            <div class="hero-glow"></div>
-            <!-- Subtle grid texture -->
-            <div class="absolute inset-0 pointer-events-none opacity-[0.03]"
-                 style="background-image: linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px); background-size:60px 60px;"></div>
-
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="max-w-4xl mx-auto text-center">
-                    <span class="section-label">
-                        <span class="inline-block w-2 h-2 rounded-full bg-hc-red animate-pulse mr-2"></span>
-                        Tiroler Meister 2025/26
-                    </span>
-
-                    <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tight mt-6 mb-6">
-                        WIR SIND<br>
-                        <span class="text-hc-red">MEISTER!</span>
-                    </h1>
-
-                    <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                        HC Thaur gewinnt den <strong class="text-white">Hockey Cup Tirol – Division 2</strong>!
-                        Eine grandiose Saison 2025/26 mit einer unvergesslichen Meisterfeier.
-                    </p>
-
-                    <img src="images/news/202526_cup_champions.png"
-                         alt="HCT Tiroler Meister 2025/26"
-                         class="w-full max-w-2xl mx-auto rounded-2xl shadow-2xl mb-12"
-                         style="box-shadow: 0 0 60px rgba(252,6,18,0.15);">
-
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="pages/playoffs.html"
-                           class="px-8 py-4 bg-hc-red text-white font-bold uppercase tracking-wider rounded-xl hover:bg-[#d30510] transition-colors">
-                            Hockey Cup ansehen
-                        </a>
-                        <button onclick="openTeamStatsPopup()"
-                                class="px-8 py-4 bg-[#1a1a20] border border-[#2a2a35] text-white font-bold uppercase tracking-wider rounded-xl hover:border-hc-red/40 transition-colors">
-                            Cup Statistik
-                        </button>
-                        <a href="pages/mannschaft.html"
-                           class="px-8 py-4 bg-[#1a1a20] border border-[#2a2a35] text-white font-bold uppercase tracking-wider rounded-xl hover:border-hc-red/40 transition-colors">
-                            Unser Verein
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =====================================================
              STATS STRIP
              ===================================================== -->
-        <section class="border-y border-[#2a2a35] bg-[#111118] py-12">
+        <section class="border-b border-[#2a2a35] bg-[#111118] py-12">
             <div class="container mx-auto px-6">
                 <div class="stats-container max-w-5xl mx-auto">
                     <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
-                                <span class="counter" data-target="233">0</span>
+                                <span class="counter" data-target="237">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Mitglieder</p>
-                            <p class="text-xs text-green-500 mt-1">(+12)</p>
+                            <p class="text-xs text-green-500 mt-1">(+7)</p>
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
-                                <span class="counter" data-target="57">0</span>
+                                <span class="counter" data-target="67">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Kids</p>
-                            <p class="text-xs text-green-500 mt-1">(+4)</p>
+                            <p class="text-xs text-green-500 mt-1">(+1)</p>
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
                                 <span class="counter" data-target="58">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Aktive Spieler</p>
-                            <p class="text-xs text-green-500 mt-1">(+3)</p>
+                            <p class="text-xs text-gray-600 mt-1">(+0)</p>
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
@@ -208,10 +144,10 @@
                         </div>
                         <div class="py-4">
                             <div class="text-3xl md:text-4xl font-black text-hc-red mb-1">
-                                <span class="counter" data-target="118">0</span>
+                                <span class="counter" data-target="105">0</span>
                             </div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Fördermitglieder</p>
-                            <p class="text-xs text-green-500 mt-1">(+5)</p>
+                            <p class="text-xs text-green-500 mt-1">(+1)</p>
                         </div>
                     </div>
                 </div>
@@ -250,33 +186,55 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                        <!-- Card 0: Cup Statistik -->
+                        <!-- Card: Wir sind Meister! -->
                         <article class="news-card group">
-                            <div class="aspect-video bg-[#13131a] overflow-hidden relative flex items-center justify-center">
+                            <div class="aspect-video bg-[#13131a] overflow-hidden relative">
                                 <img src="images/news/202526_cup_champions.png"
-                                     alt="HCT Cup Meister 2025/26"
-                                     class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500">
-                                <div class="absolute inset-0 flex items-end p-3 pointer-events-none">
-                                    <span class="font-black text-white text-3xl leading-none opacity-20 select-none tracking-tighter">11–4</span>
+                                     alt="HCT Tiroler Meister 2025/26"
+                                     class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs font-bold bg-hc-red text-white px-2 py-1 rounded-full uppercase tracking-wider">März 2026</span>
                                 </div>
                             </div>
                             <div class="p-6">
-                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Statistik</span>
-                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">Hockey Cup Tirol 2025/26 – Alle Daten</h3>
+                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Meisterschaft</span>
+                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">HC Thaur – Tiroler Meister 2025/26!</h3>
                                 <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
-                                    15 Spiele, 81 Tore, 73 % Siegquote. Spielberichte, Topscorer-Ranking, Head-to-Head und Phasenverlauf der Meistersaison.
+                                    Mit einer grandiosen Saison und einem unvergesslichen Finale gegen die EC Sellraintal Wolves
+                                    holt HC Thaur den Tiroler Meistertitel in der Division 2. Eine Saison für die Ewigkeit!
                                 </p>
-                                <button onclick="openTeamStatsPopup()"
-                                        class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
-                                    Statistiken ansehen
+                                <a href="pages/season/cup/202526_playoffs.html"
+                                   class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
+                                    Hockey Cup ansehen
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                                </button>
+                                </a>
                             </div>
                         </article>
 
-                        <!-- Card 1: Wings4Life Run -->
+                        <!-- Card: Vereinsmagazin 2025/26 lorem ipsum teaser -->
+                        <article class="news-card group">
+                            <div class="aspect-video bg-[#13131a] flex items-center justify-center">
+                                <img src="images/logo.png" alt="HCT Logo"
+                                     class="w-24 h-24 object-contain opacity-40 group-hover:opacity-70 transition-opacity duration-500">
+                            </div>
+                            <div class="p-6">
+                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Magazin</span>
+                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">Vereinsmagazin 2025/26 – Coming Soon</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Unsere neue Saisonausgabe erscheint
+                                    bald mit spannenden Berichten, exklusiven Interviews und dem großen Meister-Rückblick 2025/26.
+                                </p>
+                                <a href="pages/magazin/"
+                                   class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
+                                    Alle Jahrbücher
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- Card: Wings4Life Run -->
                         <article class="news-card group">
                             <div class="aspect-video bg-[#13131a] overflow-hidden relative flex items-center justify-center">
                                 <div class="absolute inset-0 flex items-center justify-center">
@@ -294,8 +252,7 @@
                                 <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">HCT beim Wings for Life World Run 2026</h3>
                                 <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
                                     Am 3. Mai 2026 nimmt der HC Thaur am globalen Wings for Life World Run teil –
-                                    Laufen für Rückenmarksforschung und eine Welt ohne Querschnittslähmung.
-                                    Lauft mit uns!
+                                    Laufen für Rückenmarksforschung und eine Welt ohne Querschnittslähmung. Lauft mit uns!
                                 </p>
                                 <a href="https://www.wingsforlifeworldrun.com/at/de" target="_blank"
                                    class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
@@ -305,7 +262,31 @@
                             </div>
                         </article>
 
-                        <!-- Card 2: Playoff-Finale Einzug -->
+                        <!-- Card: Cup Statistik -->
+                        <article class="news-card group">
+                            <div class="aspect-video bg-[#13131a] overflow-hidden relative flex items-center justify-center">
+                                <img src="images/news/202526_cup_champions.png"
+                                     alt="HCT Cup Meister 2025/26"
+                                     class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                                <div class="absolute inset-0 flex items-end p-3 pointer-events-none">
+                                    <span class="font-black text-white text-3xl leading-none opacity-20 select-none tracking-tighter">11–4</span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Statistik</span>
+                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">Hockey Cup Tirol 2025/26 – Alle Daten</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                                    15 Spiele, 81 Tore, 73 % Siegquote. Spielberichte, Topscorer-Ranking, Head-to-Head und Phasenverlauf der Meistersaison.
+                                </p>
+                                <a href="pages/season/cup/202526_playoffs.html"
+                                   class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
+                                    Statistiken ansehen
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- Card: Playoff-Finale Einzug -->
                         <article class="news-card group">
                             <div class="aspect-video bg-[#13131a] overflow-hidden">
                                 <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500">
@@ -318,7 +299,7 @@
                                 <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
                                     Nach einem überragenden Auftritt gegen die EHC Black Scorpions fixiert HC Thaur vorzeitig den Finaleinzug. Endstand: <strong class="text-white">HC Thaur 6:0</strong>.
                                 </p>
-                                <a href="pages/playoffs.html"
+                                <a href="pages/season/cup/202526_playoffs.html"
                                    class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
                                     Hockey Cup ansehen
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -326,7 +307,7 @@
                             </div>
                         </article>
 
-                        <!-- Card 2: Winter Rückblick -->
+                        <!-- Card: Winter Rückblick -->
                         <article class="news-card group">
                             <div class="aspect-video bg-[#13131a] flex items-center justify-center overflow-hidden">
                                 <video id="review-video" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
@@ -348,26 +329,51 @@
                             </div>
                         </article>
 
-                        <!-- Card 3: Vereinsmagazin -->
-                        <article class="news-card group">
-                            <div class="aspect-video bg-[#13131a] flex items-center justify-center">
-                                <img src="images/logo.png" alt="HCT Logo"
-                                     class="w-24 h-24 object-contain opacity-40 group-hover:opacity-70 transition-opacity duration-500">
-                            </div>
-                            <div class="p-6">
-                                <span class="text-xs font-bold uppercase tracking-wider text-hc-red">Magazin</span>
-                                <h3 class="text-lg font-bold mt-2 mb-3 leading-snug">Unser Vereinsmagazin ist da!</h3>
-                                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">
-                                    Berichte, Interviews, Spielerporträts und ein Rückblick auf die Saison 2024/25. Jetzt digital lesen!
-                                </p>
-                                <button onclick="openBookletPopup()"
-                                        class="mt-5 inline-flex items-center text-sm font-semibold text-hc-red hover:text-white transition-colors gap-1">
-                                    Magazin ansehen
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                                </button>
-                            </div>
-                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- =====================================================
+             DIE FLEIßIGSTEN RADLER — placeholder
+             ===================================================== -->
+        <section class="py-20 bg-[#111118] border-y border-[#2a2a35]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <span class="section-label">Radsport 2025</span>
+                        <h2 class="text-3xl md:text-4xl font-black mt-2">Die fleißigsten <span class="text-hc-red">Radler</span></h2>
+                    </div>
+                    <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8">
+                        <p class="text-xs text-gray-600 text-center uppercase tracking-wider mb-6">Saison 2025 · Daten werden veröffentlicht</p>
+                        <div class="space-y-5">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-500 sm:text-left">– –</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full rounded-full opacity-20" style="width:0%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-600 sm:text-right">TBD</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-500 sm:text-left">– –</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full rounded-full opacity-20" style="width:0%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-600 sm:text-right">TBD</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-500 sm:text-left">– –</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full rounded-full opacity-20" style="width:0%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-600 sm:text-right">TBD</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-500 sm:text-left">– –</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full rounded-full opacity-20" style="width:0%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-600 sm:text-right">TBD</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                <span class="sm:w-1/4 text-sm font-semibold text-gray-500 sm:text-left">– –</span>
+                                <div class="flex-1"><div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden"><div class="bar-trainings h-full rounded-full opacity-20" style="width:0%"></div></div></div>
+                                <span class="sm:w-14 text-sm font-bold text-gray-600 sm:text-right">TBD</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 text-center mt-6">Daten werden nach Saisonende 2025 veröffentlicht</p>
                     </div>
                 </div>
             </div>
@@ -376,7 +382,7 @@
         <!-- =====================================================
              UPCOMING EVENTS — compact calendar strip
              ===================================================== -->
-        <section class="py-20 bg-[#111118] border-y border-[#2a2a35]">
+        <section class="py-20 border-y border-[#2a2a35]">
             <div class="container mx-auto px-6">
                 <div class="max-w-6xl mx-auto">
                     <div class="flex items-end justify-between mb-10">
@@ -407,11 +413,11 @@
                         </p>
                     </div>
 
-                    <!-- Head sponsor -->
+                    <!-- Head sponsor — reduced size -->
                     <div class="flex justify-center mb-14">
                         <a href="https://www.facebook.com/drucken.tirol" target="_blank"
                            onclick="gtag('event','click',{event_category:'sponsor',event_label:'featured_sponsor_card',value:1});"
-                           class="featured-sponsor-card block bg-white rounded-2xl p-8 w-64 md:w-80 transition-all duration-300 hover:scale-105">
+                           class="featured-sponsor-card block bg-white rounded-2xl p-6 w-48 md:w-60 transition-all duration-300 hover:scale-105">
                             <img src="images/sponsors/drucken-tirol.png"
                                  onerror="this.onerror=null;this.src='https://placehold.co/300x150/ffffff/374151?text=Drucken+Tirol'"
                                  alt="Drucken Tirol – Head Sponsor" class="w-full h-auto object-contain">
@@ -421,84 +427,64 @@
                     <!-- Sponsor logo grid -->
                     <div class="flex flex-wrap justify-center gap-4">
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/db_performance.png" alt="DB Performance" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/db_performance.png" alt="DB Performance" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/raika.png" alt="Raika" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/raika.png" alt="Raika" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/legno.png" alt="Legno" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/legno.png" alt="Legno" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/easydriver.png" alt="EasyDriver" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/easydriver.png" alt="EasyDriver" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/eah.png" alt="EAH" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/eah.png" alt="EAH" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/eine_grafikerin.jpeg" alt="Eine Grafikerin" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/eine_grafikerin.jpeg" alt="Eine Grafikerin" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/gummi_winkler.jpeg" alt="Gummi Winkler" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/gummi_winkler.jpeg" alt="Gummi Winkler" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/generali.JPG" alt="Generali" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/generali.JPG" alt="Generali" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/jaeger.png" alt="Gärtnerei Jäger" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/jaeger.png" alt="Gärtnerei Jäger" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/plank_autohandel.png" alt="Plank Autohandel" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/plank_autohandel.png" alt="Plank Autohandel" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/plank_kanalservice.png" alt="Kanal Service Plank" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/plank_kanalservice.png" alt="Kanal Service Plank" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/binder.jpeg" alt="Binder" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/binder.jpeg" alt="Binder" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/katzenberger.png" alt="Katzenberger" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/katzenberger.png" alt="Katzenberger" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/hoepperger.jpg" alt="Erdbau Hoepperger" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/hoepperger.jpg" alt="Erdbau Hoepperger" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/hp_dental.jpg" alt="HP Dental" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/hp_dental.jpg" alt="HP Dental" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/plattner.png" alt="Zimmerei Plattner" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/plattner.png" alt="Zimmerei Plattner" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/spirit_of_hockey.png" alt="Spirit of Hockey" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/spirit_of_hockey.png" alt="Spirit of Hockey" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/fotobox_tirol.jpeg" alt="Fotobox Tirol" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/fotobox_tirol.jpeg" alt="Fotobox Tirol" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/cafe_schreiner.jpeg" alt="Cafe Schreiner" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/cafe_schreiner.jpeg" alt="Cafe Schreiner" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                         <a class="sponsor-logo-item bg-white rounded-xl p-4 w-32 h-20 flex items-center justify-center">
-                            <img src="images/sponsors/thermo_fertig.jpg" alt="Thermo Fertig" class="max-h-full max-w-full object-contain"
-                                 onerror="this.parentElement.style.display='none'">
+                            <img src="images/sponsors/thermo_fertig.jpg" alt="Thermo Fertig" class="max-h-full max-w-full object-contain" onerror="this.parentElement.style.display='none'">
                         </a>
                     </div>
                 </div>
@@ -525,10 +511,10 @@
                 <div>
                     <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm text-gray-500">
-                        <li><a href="pages/mannschaft.html" class="hover:text-hc-red transition-colors">Unser Verein</a></li>
-                        <li><a href="#news"           class="hover:text-hc-red transition-colors">News</a></li>
-                        <li><a href="pages/playoffs.html"   class="hover:text-hc-red transition-colors">Hockey Cup</a></li>
-                        <li><a href="#sponsors"       class="hover:text-hc-red transition-colors">Sponsoren</a></li>
+                        <li><a href="pages/verein/verein.html" class="hover:text-hc-red transition-colors">Unser Verein</a></li>
+                        <li><a href="#news" class="hover:text-hc-red transition-colors">News</a></li>
+                        <li><a href="pages/season/cup/202526_playoffs.html" class="hover:text-hc-red transition-colors">Hockey Cup</a></li>
+                        <li><a href="#sponsors" class="hover:text-hc-red transition-colors">Sponsoren</a></li>
                     </ul>
                 </div>
                 <div>
@@ -538,21 +524,18 @@
                         <li>Sportplatzweg 1</li>
                         <li>6065 Thaur</li>
                         <li>ZVR. 993472820</li>
-                        <li><a href="https://www.google.com/maps/search/?api=1&query=Sportplatzweg+1%2C+6065+Thaur"
-                               target="_blank" class="hover:text-hc-red transition-colors">Google Maps</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Sportplatzweg+1%2C+6065+Thaur" target="_blank" class="hover:text-hc-red transition-colors">Google Maps</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Folge uns</h4>
                     <div class="flex gap-4">
-                        <a href="https://www.facebook.com/HockeyClubThaur/" target="_blank" aria-label="Facebook"
-                           class="text-gray-500 hover:text-hc-red transition-colors">
+                        <a href="https://www.facebook.com/HockeyClubThaur/" target="_blank" aria-label="Facebook" class="text-gray-500 hover:text-hc-red transition-colors">
                             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
                             </svg>
                         </a>
-                        <a href="https://www.instagram.com/hockeyclub_thaur/" target="_blank" aria-label="Instagram"
-                           class="text-gray-500 hover:text-hc-red transition-colors">
+                        <a href="https://www.instagram.com/hockeyclub_thaur/" target="_blank" aria-label="Instagram" class="text-gray-500 hover:text-hc-red transition-colors">
                             <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                             </svg>
@@ -567,8 +550,6 @@
         </div>
     </footer>
 
-    <!-- Modals (iframe-based, kept for compatibility) -->
-
     <!-- Booklet Popup -->
     <div id="bookletPopup" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" style="display:none;">
         <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden relative">
@@ -579,19 +560,6 @@
                 </svg>
             </button>
             <iframe src="public/202526_season/gold/202508_Booklet.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
-        </div>
-    </div>
-
-    <!-- Team Stats Popup -->
-    <div id="teamStatsPopup" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" style="display:none;">
-        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden relative">
-            <button onclick="closeTeamStatsPopup()"
-                    class="absolute top-4 right-4 z-10 bg-hc-red hover:bg-[#d30510] text-white rounded-full p-2 transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-            <iframe src="public/202526_season/gold/202526_hct_stats.html" class="w-full h-full min-h-screen border-0" frameborder="0"></iframe>
         </div>
     </div>
 

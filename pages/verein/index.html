@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HC Thaur · Mitgliederstatistik · seit 2017</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0908; --bg-2:#12100f; --surface:#1a1816; --surface-2:#222020;
+    --line:#2a2724; --ink:#f4f1ec; --ink-dim:#a8a19a; --ink-mute:#6d6661;
+    --red:#e63946; --red-dark:#b12a35;
+    --ice:#6fb9d4; --gold:#d4a24a; --green:#4caf7a; --amber:#e29b4a; --plum:#8e5a8e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Fraunces",Georgia,serif;-webkit-font-smoothing:antialiased}
+  body{
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(230,57,70,.08), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(111,185,212,.05), transparent 60%),
+      var(--bg);
+    min-height:100vh;overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:.5;
+  }
+  main{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(1rem,3vw,3rem)}
+
+  .masthead{
+    display:grid;grid-template-columns:1fr auto;align-items:end;gap:2rem;
+    padding-bottom:2rem;border-bottom:1px solid var(--line);margin-bottom:2.5rem;position:relative;
+  }
+  .masthead::before{
+    content:"HCT";position:absolute;right:-1rem;top:-2rem;
+    font-family:"Archivo Black",sans-serif;font-size:clamp(7rem,16vw,14rem);
+    color:var(--red);opacity:.06;letter-spacing:-.04em;line-height:.85;pointer-events:none;
+  }
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.3em;
+    color:var(--red);text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;
+  }
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--red)}
+  h1{
+    font-family:"Archivo Black",sans-serif;font-weight:900;
+    font-size:clamp(2.6rem,6vw,5rem);line-height:.92;letter-spacing:-.02em;margin:0;text-transform:uppercase;
+  }
+  h1 .accent{color:var(--red);font-style:italic;font-family:"Fraunces",serif;font-weight:900;text-transform:none;letter-spacing:-.03em}
+  .masthead-meta{
+    font-family:"JetBrains Mono",monospace;font-size:.78rem;line-height:1.8;color:var(--ink-dim);
+    text-align:right;min-width:200px;
+  }
+  .masthead-meta strong{color:var(--ink);font-weight:500}
+
+  section{margin:4rem 0}
+  section > header{margin-bottom:1.75rem;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  h2{
+    font-family:"Archivo Black",sans-serif;font-size:clamp(1.3rem,2.3vw,2rem);
+    margin:0;letter-spacing:-.01em;text-transform:uppercase;display:flex;align-items:center;gap:.8rem;
+  }
+  h2 .num{font-family:"JetBrains Mono",monospace;font-size:.65em;color:var(--red);font-weight:400;letter-spacing:.2em}
+  .sec-sub{font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--ink-mute);letter-spacing:.15em;text-transform:uppercase}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+  .kpi{
+    background:var(--surface);border:1px solid var(--line);padding:1.6rem 1.4rem;
+    position:relative;overflow:hidden;transition:border-color .2s;
+  }
+  .kpi:hover{border-color:var(--red)}
+  .kpi::after{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .3s}
+  .kpi:hover::after{transform:scaleY(1)}
+  .kpi .lbl{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase;margin-bottom:.5rem}
+  .kpi .val{font-family:"Archivo Black",sans-serif;font-size:clamp(2rem,4vw,2.8rem);line-height:1;color:var(--ink)}
+  .kpi .val .u{color:var(--red);font-size:.5em;margin-left:.25rem;vertical-align:baseline;font-weight:400;font-family:"JetBrains Mono",monospace}
+  .kpi .sub{font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--ink-dim);margin-top:.5rem}
+
+  .panel{background:var(--surface);border:1px solid var(--line);padding:1.75rem}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  @media (max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+  .chart-wrap{position:relative;height:360px}
+  .chart-wrap.tall{height:480px}
+  .chart-wrap.short{height:280px}
+
+  /* select dropdown for kind filter */
+  .kind-select{
+    background:var(--bg-2);border:1px solid var(--line);color:var(--ink);
+    padding:.4rem .7rem;font-family:"JetBrains Mono",monospace;font-size:.7rem;
+    letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+    border-radius:0;outline:none;
+    -webkit-appearance:none;-moz-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23e63946' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right .7rem center;
+    padding-right:1.8rem;
+  }
+  .kind-select:hover,.kind-select:focus{border-color:var(--red)}
+  .kind-select option{background:var(--surface);color:var(--ink)}
+
+  /* Timeline controls for pyramide */
+  .timeline{
+    display:flex;align-items:center;gap:1rem;margin:.75rem 0 1rem;padding:.9rem 1.1rem;
+    background:var(--bg-2);border:1px solid var(--line);flex-wrap:wrap;
+  }
+  .timeline .year-display{
+    font-family:"Archivo Black",sans-serif;font-size:1.6rem;color:var(--red);
+    min-width:4.5rem;letter-spacing:-.02em;
+  }
+  .timeline .year-display .lbl{
+    display:block;font-family:"JetBrains Mono",monospace;font-size:.58rem;
+    letter-spacing:.2em;color:var(--ink-mute);font-weight:400;margin-bottom:.15rem;
+    text-transform:uppercase;
+  }
+  .timeline input[type=range]{
+    flex:1;min-width:200px;height:6px;-webkit-appearance:none;appearance:none;
+    background:var(--surface);border:1px solid var(--line);outline:none;cursor:pointer;
+  }
+  .timeline input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:18px;height:18px;
+    background:var(--red);border:2px solid var(--bg);cursor:pointer;border-radius:50%;
+    box-shadow:0 0 0 2px var(--red-dark);
+  }
+  .timeline input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;background:var(--red);border:2px solid var(--bg);
+    cursor:pointer;border-radius:50%;box-shadow:0 0 0 2px var(--red-dark);
+  }
+  .timeline .play-btn{
+    background:var(--red);border:0;color:#fff;width:40px;height:40px;cursor:pointer;
+    font-size:1rem;display:flex;align-items:center;justify-content:center;
+    transition:background .15s;
+  }
+  .timeline .play-btn:hover{background:var(--red-dark)}
+  .timeline .count{
+    font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--ink-dim);
+    min-width:5rem;text-align:right;
+  }
+  .timeline .count strong{color:var(--ink);font-weight:500}
+  .toggle{display:inline-flex;border:1px solid var(--line);background:var(--bg-2);margin-bottom:.75rem}
+  .toggle button{
+    background:transparent;border:0;color:var(--ink-dim);
+    padding:.45rem 1rem;font-family:"JetBrains Mono",monospace;font-size:.7rem;
+    letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s;
+  }
+  .toggle button:hover{color:var(--ink)}
+  .toggle button.active{background:var(--red);color:#fff}
+
+  .note{
+    font-family:"JetBrains Mono",monospace;font-size:.7rem;color:var(--ink-mute);
+    line-height:1.6;margin-top:.75rem;letter-spacing:.02em;
+  }
+  .note strong{color:var(--ink-dim)}
+
+  /* legend pills */
+  .legend-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+  .pill{
+    display:inline-flex;align-items:center;gap:.45rem;font-family:"JetBrains Mono",monospace;
+    font-size:.7rem;color:var(--ink-dim);padding:.25rem .55rem;background:var(--bg-2);
+    border:1px solid var(--line);
+  }
+  .pill .sw{width:10px;height:10px;border-radius:2px}
+
+  footer{
+    margin-top:5rem;padding:2rem 0 1rem;border-top:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--ink-mute);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  }
+
+  .dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+  .dl{display:flex;align-items:center;gap:1rem;padding:1.1rem;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:all .15s}
+  .dl:hover{border-color:var(--red);background:var(--surface-2);transform:translateX(2px)}
+  .dl .icon{width:42px;height:42px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--red);font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.68rem;flex-shrink:0}
+  .dl .meta{flex:1;min-width:0}
+  .dl .ttl{font-family:"Fraunces",serif;font-size:.95rem;font-weight:600}
+  .dl .desc{font-family:"JetBrains Mono",monospace;font-size:.7rem;color:var(--ink-mute);margin-top:.15rem}
+
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .masthead,section{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  section:nth-of-type(1){animation-delay:.05s}
+  section:nth-of-type(2){animation-delay:.1s}
+  section:nth-of-type(3){animation-delay:.15s}
+  section:nth-of-type(4){animation-delay:.2s}
+  section:nth-of-type(5){animation-delay:.25s}
+  section:nth-of-type(6){animation-delay:.3s}
+  section:nth-of-type(7){animation-delay:.35s}
+</style>
+</head>
+<body>
+<main>
+
+<header class="masthead">
+  <div>
+    <div class="eyebrow">HC Thaur · Mitgliederstatistik · 2017—2026</div>
+    <h1>Neun Jahre<br><span class="accent">Wachstum.</span></h1>
+  </div>
+  <div class="masthead-meta" id="mastMeta"></div>
+</header>
+
+<section>
+  <header>
+    <h2><span class="num">01</span>Key Figures</h2>
+    <span class="sec-sub">Stand 17.04.2026</span>
+  </header>
+  <div class="kpi-grid" id="kpiGrid"></div>
+</section>
+
+<section>
+  <header>
+    <h2><span class="num">02</span>Nach Mitgliedsart</h2>
+    <span class="sec-sub">Disjunkte Primärkategorien</span>
+  </header>
+  <div class="grid-2">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div class="sec-sub">Eintritte pro Jahr — gestapelt</div>
+        <div class="toggle" data-target="kindJoins">
+          <button class="active" data-mode="count">Absolut</button>
+          <button data-mode="percent">% Anteil</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chKindJoins"></canvas></div>
+    </div>
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div class="sec-sub">Bestand Jahresende — kumuliert</div>
+        <div class="toggle" data-target="kindStock">
+          <button class="active" data-mode="stacked">Stacked Area</button>
+          <button data-mode="line">Linien</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="chKindStock"></canvas></div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Hinweis:</strong> Primäre Mitgliedsart aus <code>relations.memberships[0].name</code>. Zusatz-Mitgliedschaften wie <em>Eisdeal Plus</em> (45×) oder <em>SB Trainingslager</em> (4×) sind in den Gruppen-Charts unten ausgewiesen, nicht hier — sie werden zusätzlich zu einer Haupt-Mitgliedsart geführt.
+  </div>
+</section>
+
+<section>
+  <header>
+    <h2><span class="num">03</span>Nach Gruppe</h2>
+    <span class="sec-sub">Mehrfachzugehörigkeit möglich · Ø 2,48 Gruppen pro Person</span>
+  </header>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+      <div class="sec-sub">Bestand Jahresende pro Gruppe — gestapelt</div>
+      <div class="toggle" data-target="groupStock">
+        <button class="active" data-mode="stacked">Stacked Bar</button>
+        <button data-mode="area">Stacked Area</button>
+      </div>
+    </div>
+    <div class="chart-wrap tall"><canvas id="chGroupStock"></canvas></div>
+  </div>
+  <div class="grid-2" style="margin-top:1.25rem">
+    <div class="panel">
+      <div class="sec-sub" style="margin-bottom:.75rem">Gruppen heute · Ranking</div>
+      <div class="chart-wrap"><canvas id="chGroupNow"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="sec-sub" style="margin-bottom:.75rem">Eintritte pro Jahr nach Gruppe</div>
+      <div class="chart-wrap"><canvas id="chGroupJoins"></canvas></div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Zur Methodik:</strong> Da die API die Gruppenzugehörigkeit nur für den Ist-Zustand liefert, wird für die historischen Jahresbestände angenommen, dass jede Person ihrer heutigen Gruppen-Liste seit dem Eintrittsdatum angehört. Reine Gruppen-Wechsel (z.B. Mini → Junior) sind in den Rohdaten nicht sichtbar, nur das finale Profil.
+  </div>
+</section>
+
+<section>
+  <header>
+    <h2><span class="num">04</span>Demografie</h2>
+    <span class="sec-sub">Geschlecht · Alter</span>
+  </header>
+  <div class="panel" style="margin-bottom:1.25rem">
+    <div class="sec-sub" style="margin-bottom:.75rem">Eintritte pro Jahr nach Geschlecht</div>
+    <div class="chart-wrap"><canvas id="chGender"></canvas></div>
+  </div>
+  <div class="grid-2">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div class="sec-sub">Altersverteilung heute</div>
+        <select id="selAgeKind" class="kind-select"></select>
+      </div>
+      <div class="chart-wrap"><canvas id="chAge"></canvas></div>
+    </div>
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div class="sec-sub">Alterspyramide · 5-Jahres-Gruppen</div>
+        <select id="selPyramidKind" class="kind-select"></select>
+      </div>
+      <div class="chart-wrap tall"><canvas id="chPyramid"></canvas></div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:1.25rem">
+    <div class="sec-sub" style="margin-bottom:.75rem">Altersgruppen × Mitgliedsart</div>
+    <div class="chart-wrap"><canvas id="chAgeKind"></canvas></div>
+  </div>
+</section>
+
+<section>
+  <header>
+    <h2><span class="num">05</span>Alterspyramide im Zeitverlauf</h2>
+    <span class="sec-sub">Jahresende · Slider + Play</span>
+  </header>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+      <div class="sec-sub">Wie der Verein gealtert (oder verjüngt) ist</div>
+      <select id="selTimelineKind" class="kind-select"></select>
+    </div>
+    <div class="timeline">
+      <button class="play-btn" id="playBtn" aria-label="Abspielen/Pause">▶</button>
+      <div class="year-display">
+        <span class="lbl">Jahresende</span>
+        <span id="yearLabel">—</span>
+      </div>
+      <input type="range" id="yearSlider" min="0" max="0" step="1" value="0">
+      <div class="count"><strong id="yearCount">—</strong><br>Mitglieder</div>
+    </div>
+    <div class="chart-wrap tall"><canvas id="chPyramidTimeline"></canvas></div>
+  </div>
+  <div class="note">
+    <strong>Berechnung:</strong> Für jedes Jahr wird das Alter jedes Mitglieds am 31.12. dieses Jahres ermittelt (laufendes Jahr: Stichtag 17.04.2026). Nur Mitglieder, die zum jeweiligen Stichtag bereits Mitglied waren, fließen ein. Mitglieder ohne Geburtsdatum (9 Personen aktuell) werden ausgeblendet.
+  </div>
+</section>
+
+<section>
+  <header>
+    <h2><span class="num">06</span>Datenprodukte</h2>
+    <span class="sec-sub">CSV · UTF-8 · Semikolon-separiert</span>
+  </header>
+  <div class="dl-grid" id="dlGrid"></div>
+</section>
+
+<footer>
+  <div>HC Thaur · gegründet 2017 · Interne Mitgliederanalyse</div>
+  <div id="genInfo"></div>
+</footer>
+
+</main>
+
+<script id="payload" type="application/json">{"meta": {"generated_at": "2026-04-17T18:59:20", "total_records": 239, "years": [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026], "group_order": ["aktive Mitglieder", "Fördermitglieder", "Fördermitglieder minderjährig", "Activ Team", "Junior Team", "Minis", "Radteam", "Hockey Cup", "Trainingslager", "Trainer", "Eisdeal Plus", "Vorstand", "Dorfschiessen", "Sponsoren"], "kind_order": ["Fördermitglied", "Aktive", "Nachwuchsmitglied", "Fördermitglied Kind", "– keine –"], "gender_order": ["Mann", "Frau", "N/A"], "age_buckets_order": ["0–9", "10–17", "18–29", "30–39", "40–49", "50–59", "60+", "unbekannt"]}, "kpis": {"total_active": 239, "founding_year": 2017, "years_active": 9, "joins_current_year": 7, "joins_prev_year": 26, "peak_year": 2017, "peak_joins": 56, "current_stock_estimated": 237, "avg_age": 32.9, "avg_groups_per_member": 2.48, "oldest_member_join": {"name": "Nikolaus Christler", "date": "2017-04-27", "years": 9}, "distinct_groups": 14, "distinct_kinds": 5, "gender_dist": {"Mann": 181, "Frau": 57, "N/A": 1}}, "joins_by_year_kind": [{"jahr": 2017, "Fördermitglied": 17, "Aktive": 32, "Nachwuchsmitglied": 7, "Fördermitglied Kind": 0, "– keine –": 0}, {"jahr": 2018, "Fördermitglied": 4, "Aktive": 6, "Nachwuchsmitglied": 4, "Fördermitglied Kind": 0, "– keine –": 0}, {"jahr": 2019, "Fördermitglied": 22, "Aktive": 6, "Nachwuchsmitglied": 1, "Fördermitglied Kind": 1, "– keine –": 0}, {"jahr": 2020, "Fördermitglied": 9, "Aktive": 2, "Nachwuchsmitglied": 2, "Fördermitglied Kind": 1, "– keine –": 0}, {"jahr": 2021, "Fördermitglied": 13, "Aktive": 1, "Nachwuchsmitglied": 7, "Fördermitglied Kind": 3, "– keine –": 0}, {"jahr": 2022, "Fördermitglied": 11, "Aktive": 2, "Nachwuchsmitglied": 2, "Fördermitglied Kind": 3, "– keine –": 0}, {"jahr": 2023, "Fördermitglied": 7, "Aktive": 1, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 1, "– keine –": 0}, {"jahr": 2024, "Fördermitglied": 10, "Aktive": 5, "Nachwuchsmitglied": 23, "Fördermitglied Kind": 1, "– keine –": 0}, {"jahr": 2025, "Fördermitglied": 11, "Aktive": 3, "Nachwuchsmitglied": 9, "Fördermitglied Kind": 1, "– keine –": 2}, {"jahr": 2026, "Fördermitglied": 1, "Aktive": 0, "Nachwuchsmitglied": 1, "Fördermitglied Kind": 0, "– keine –": 5}], "stock_by_year_kind": [{"jahr": 2017, "Fördermitglied": 17, "Aktive": 32, "Nachwuchsmitglied": 7, "Fördermitglied Kind": 0, "– keine –": 0}, {"jahr": 2018, "Fördermitglied": 21, "Aktive": 38, "Nachwuchsmitglied": 11, "Fördermitglied Kind": 0, "– keine –": 0}, {"jahr": 2019, "Fördermitglied": 43, "Aktive": 44, "Nachwuchsmitglied": 12, "Fördermitglied Kind": 1, "– keine –": 0}, {"jahr": 2020, "Fördermitglied": 52, "Aktive": 46, "Nachwuchsmitglied": 14, "Fördermitglied Kind": 2, "– keine –": 0}, {"jahr": 2021, "Fördermitglied": 65, "Aktive": 47, "Nachwuchsmitglied": 21, "Fördermitglied Kind": 5, "– keine –": 0}, {"jahr": 2022, "Fördermitglied": 76, "Aktive": 49, "Nachwuchsmitglied": 23, "Fördermitglied Kind": 8, "– keine –": 0}, {"jahr": 2023, "Fördermitglied": 83, "Aktive": 50, "Nachwuchsmitglied": 23, "Fördermitglied Kind": 9, "– keine –": 0}, {"jahr": 2024, "Fördermitglied": 93, "Aktive": 55, "Nachwuchsmitglied": 46, "Fördermitglied Kind": 10, "– keine –": 0}, {"jahr": 2025, "Fördermitglied": 104, "Aktive": 58, "Nachwuchsmitglied": 55, "Fördermitglied Kind": 11, "– keine –": 2}, {"jahr": 2026, "Fördermitglied": 105, "Aktive": 58, "Nachwuchsmitglied": 56, "Fördermitglied Kind": 11, "– keine –": 7}], "joins_by_year_group": [{"jahr": 2017, "aktive Mitglieder": 38, "Fördermitglieder": 20, "Fördermitglieder minderjährig": 1, "Activ Team": 32, "Junior Team": 12, "Minis": 5, "Radteam": 20, "Hockey Cup": 17, "Trainingslager": 19, "Trainer": 6, "Eisdeal Plus": 23, "Vorstand": 11, "Dorfschiessen": 5, "Sponsoren": 1}, {"jahr": 2018, "aktive Mitglieder": 10, "Fördermitglieder": 4, "Fördermitglieder minderjährig": 0, "Activ Team": 6, "Junior Team": 6, "Minis": 2, "Radteam": 3, "Hockey Cup": 5, "Trainingslager": 4, "Trainer": 2, "Eisdeal Plus": 4, "Vorstand": 1, "Dorfschiessen": 1, "Sponsoren": 0}, {"jahr": 2019, "aktive Mitglieder": 7, "Fördermitglieder": 22, "Fördermitglieder minderjährig": 1, "Activ Team": 6, "Junior Team": 2, "Minis": 1, "Radteam": 3, "Hockey Cup": 3, "Trainingslager": 3, "Trainer": 1, "Eisdeal Plus": 5, "Vorstand": 0, "Dorfschiessen": 0, "Sponsoren": 0}, {"jahr": 2020, "aktive Mitglieder": 4, "Fördermitglieder": 9, "Fördermitglieder minderjährig": 1, "Activ Team": 2, "Junior Team": 1, "Minis": 1, "Radteam": 5, "Hockey Cup": 0, "Trainingslager": 0, "Trainer": 0, "Eisdeal Plus": 1, "Vorstand": 0, "Dorfschiessen": 0, "Sponsoren": 0}, {"jahr": 2021, "aktive Mitglieder": 8, "Fördermitglieder": 13, "Fördermitglieder minderjährig": 3, "Activ Team": 2, "Junior Team": 7, "Minis": 0, "Radteam": 10, "Hockey Cup": 3, "Trainingslager": 1, "Trainer": 0, "Eisdeal Plus": 2, "Vorstand": 1, "Dorfschiessen": 2, "Sponsoren": 0}, {"jahr": 2022, "aktive Mitglieder": 4, "Fördermitglieder": 11, "Fördermitglieder minderjährig": 3, "Activ Team": 2, "Junior Team": 2, "Minis": 0, "Radteam": 5, "Hockey Cup": 1, "Trainingslager": 1, "Trainer": 0, "Eisdeal Plus": 1, "Vorstand": 0, "Dorfschiessen": 1, "Sponsoren": 0}, {"jahr": 2023, "aktive Mitglieder": 1, "Fördermitglieder": 7, "Fördermitglieder minderjährig": 1, "Activ Team": 1, "Junior Team": 0, "Minis": 0, "Radteam": 2, "Hockey Cup": 1, "Trainingslager": 0, "Trainer": 0, "Eisdeal Plus": 1, "Vorstand": 0, "Dorfschiessen": 1, "Sponsoren": 0}, {"jahr": 2024, "aktive Mitglieder": 28, "Fördermitglieder": 10, "Fördermitglieder minderjährig": 1, "Activ Team": 5, "Junior Team": 6, "Minis": 17, "Radteam": 5, "Hockey Cup": 5, "Trainingslager": 0, "Trainer": 0, "Eisdeal Plus": 5, "Vorstand": 0, "Dorfschiessen": 1, "Sponsoren": 0}, {"jahr": 2025, "aktive Mitglieder": 9, "Fördermitglieder": 12, "Fördermitglieder minderjährig": 2, "Activ Team": 5, "Junior Team": 3, "Minis": 10, "Radteam": 6, "Hockey Cup": 4, "Trainingslager": 2, "Trainer": 2, "Eisdeal Plus": 5, "Vorstand": 0, "Dorfschiessen": 0, "Sponsoren": 0}, {"jahr": 2026, "aktive Mitglieder": 4, "Fördermitglieder": 2, "Fördermitglieder minderjährig": 0, "Activ Team": 0, "Junior Team": 2, "Minis": 3, "Radteam": 1, "Hockey Cup": 1, "Trainingslager": 0, "Trainer": 0, "Eisdeal Plus": 0, "Vorstand": 0, "Dorfschiessen": 0, "Sponsoren": 0}], "stock_by_year_group": [{"jahr": 2017, "aktive Mitglieder": 38, "Fördermitglieder": 20, "Fördermitglieder minderjährig": 1, "Activ Team": 32, "Junior Team": 12, "Minis": 5, "Radteam": 20, "Hockey Cup": 17, "Trainingslager": 19, "Trainer": 6, "Eisdeal Plus": 23, "Vorstand": 11, "Dorfschiessen": 5, "Sponsoren": 1}, {"jahr": 2018, "aktive Mitglieder": 48, "Fördermitglieder": 24, "Fördermitglieder minderjährig": 1, "Activ Team": 38, "Junior Team": 18, "Minis": 7, "Radteam": 23, "Hockey Cup": 22, "Trainingslager": 23, "Trainer": 8, "Eisdeal Plus": 27, "Vorstand": 12, "Dorfschiessen": 6, "Sponsoren": 1}, {"jahr": 2019, "aktive Mitglieder": 55, "Fördermitglieder": 46, "Fördermitglieder minderjährig": 2, "Activ Team": 44, "Junior Team": 20, "Minis": 8, "Radteam": 26, "Hockey Cup": 25, "Trainingslager": 26, "Trainer": 9, "Eisdeal Plus": 32, "Vorstand": 12, "Dorfschiessen": 6, "Sponsoren": 1}, {"jahr": 2020, "aktive Mitglieder": 59, "Fördermitglieder": 55, "Fördermitglieder minderjährig": 3, "Activ Team": 46, "Junior Team": 21, "Minis": 9, "Radteam": 31, "Hockey Cup": 25, "Trainingslager": 26, "Trainer": 9, "Eisdeal Plus": 33, "Vorstand": 12, "Dorfschiessen": 6, "Sponsoren": 1}, {"jahr": 2021, "aktive Mitglieder": 67, "Fördermitglieder": 68, "Fördermitglieder minderjährig": 6, "Activ Team": 48, "Junior Team": 28, "Minis": 9, "Radteam": 41, "Hockey Cup": 28, "Trainingslager": 27, "Trainer": 9, "Eisdeal Plus": 35, "Vorstand": 13, "Dorfschiessen": 8, "Sponsoren": 1}, {"jahr": 2022, "aktive Mitglieder": 71, "Fördermitglieder": 79, "Fördermitglieder minderjährig": 9, "Activ Team": 50, "Junior Team": 30, "Minis": 9, "Radteam": 46, "Hockey Cup": 29, "Trainingslager": 28, "Trainer": 9, "Eisdeal Plus": 36, "Vorstand": 13, "Dorfschiessen": 9, "Sponsoren": 1}, {"jahr": 2023, "aktive Mitglieder": 72, "Fördermitglieder": 86, "Fördermitglieder minderjährig": 10, "Activ Team": 51, "Junior Team": 30, "Minis": 9, "Radteam": 48, "Hockey Cup": 30, "Trainingslager": 28, "Trainer": 9, "Eisdeal Plus": 37, "Vorstand": 13, "Dorfschiessen": 10, "Sponsoren": 1}, {"jahr": 2024, "aktive Mitglieder": 100, "Fördermitglieder": 96, "Fördermitglieder minderjährig": 11, "Activ Team": 56, "Junior Team": 36, "Minis": 26, "Radteam": 53, "Hockey Cup": 35, "Trainingslager": 28, "Trainer": 9, "Eisdeal Plus": 42, "Vorstand": 13, "Dorfschiessen": 11, "Sponsoren": 1}, {"jahr": 2025, "aktive Mitglieder": 109, "Fördermitglieder": 108, "Fördermitglieder minderjährig": 13, "Activ Team": 61, "Junior Team": 39, "Minis": 36, "Radteam": 59, "Hockey Cup": 39, "Trainingslager": 30, "Trainer": 11, "Eisdeal Plus": 47, "Vorstand": 13, "Dorfschiessen": 11, "Sponsoren": 1}, {"jahr": 2026, "aktive Mitglieder": 113, "Fördermitglieder": 110, "Fördermitglieder minderjährig": 13, "Activ Team": 61, "Junior Team": 41, "Minis": 39, "Radteam": 60, "Hockey Cup": 40, "Trainingslager": 30, "Trainer": 11, "Eisdeal Plus": 47, "Vorstand": 13, "Dorfschiessen": 11, "Sponsoren": 1}], "joins_by_year_gender": [{"jahr": 2017, "Mann": 53, "Frau": 3, "N/A": 0}, {"jahr": 2018, "Mann": 12, "Frau": 2, "N/A": 0}, {"jahr": 2019, "Mann": 14, "Frau": 16, "N/A": 0}, {"jahr": 2020, "Mann": 12, "Frau": 2, "N/A": 0}, {"jahr": 2021, "Mann": 12, "Frau": 12, "N/A": 0}, {"jahr": 2022, "Mann": 11, "Frau": 7, "N/A": 0}, {"jahr": 2023, "Mann": 8, "Frau": 1, "N/A": 0}, {"jahr": 2024, "Mann": 34, "Frau": 5, "N/A": 0}, {"jahr": 2025, "Mann": 18, "Frau": 8, "N/A": 0}, {"jahr": 2026, "Mann": 6, "Frau": 1, "N/A": 0}], "age_buckets_current": [{"bucket": "0–9", "anzahl": 31}, {"bucket": "10–17", "anzahl": 43}, {"bucket": "18–29", "anzahl": 24}, {"bucket": "30–39", "anzahl": 27}, {"bucket": "40–49", "anzahl": 58}, {"bucket": "50–59", "anzahl": 40}, {"bucket": "60+", "anzahl": 8}, {"bucket": "unbekannt", "anzahl": 8}], "age_by_kind": [{"mitgliedsart": "Fördermitglied", "0–9": 1, "10–17": 0, "18–29": 11, "30–39": 17, "40–49": 37, "50–59": 28, "60+": 5, "unbekannt": 6}, {"mitgliedsart": "Aktive", "0–9": 0, "10–17": 3, "18–29": 12, "30–39": 9, "40–49": 20, "50–59": 11, "60+": 3, "unbekannt": 0}, {"mitgliedsart": "Nachwuchsmitglied", "0–9": 23, "10–17": 34, "18–29": 0, "30–39": 0, "40–49": 0, "50–59": 0, "60+": 0, "unbekannt": 0}, {"mitgliedsart": "Fördermitglied Kind", "0–9": 5, "10–17": 5, "18–29": 0, "30–39": 0, "40–49": 0, "50–59": 0, "60+": 0, "unbekannt": 1}, {"mitgliedsart": "– keine –", "0–9": 2, "10–17": 1, "18–29": 1, "30–39": 1, "40–49": 1, "50–59": 1, "60+": 0, "unbekannt": 1}], "age_buckets_by_kind": [{"bucket": "0–9", "Alle": 31, "Fördermitglied": 1, "Aktive": 0, "Nachwuchsmitglied": 23, "Fördermitglied Kind": 5, "– keine –": 2}, {"bucket": "10–17", "Alle": 43, "Fördermitglied": 0, "Aktive": 3, "Nachwuchsmitglied": 34, "Fördermitglied Kind": 5, "– keine –": 1}, {"bucket": "18–29", "Alle": 24, "Fördermitglied": 11, "Aktive": 12, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 0, "– keine –": 1}, {"bucket": "30–39", "Alle": 27, "Fördermitglied": 17, "Aktive": 9, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 0, "– keine –": 1}, {"bucket": "40–49", "Alle": 58, "Fördermitglied": 37, "Aktive": 20, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 0, "– keine –": 1}, {"bucket": "50–59", "Alle": 40, "Fördermitglied": 28, "Aktive": 11, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 0, "– keine –": 1}, {"bucket": "60+", "Alle": 8, "Fördermitglied": 5, "Aktive": 3, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 0, "– keine –": 0}, {"bucket": "unbekannt", "Alle": 8, "Fördermitglied": 6, "Aktive": 0, "Nachwuchsmitglied": 0, "Fördermitglied Kind": 1, "– keine –": 1}], "pyramid": [{"bin": "0–4", "kind": "Alle", "Mann": 3, "Frau": 0, "NA": 0}, {"bin": "0–4", "kind": "Nachwuchsmitglied", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "0–4", "kind": "Fördermitglied Kind", "Mann": 2, "Frau": 0, "NA": 0}, {"bin": "5–9", "kind": "Alle", "Mann": 23, "Frau": 4, "NA": 0}, {"bin": "5–9", "kind": "Nachwuchsmitglied", "Mann": 19, "Frau": 3, "NA": 0}, {"bin": "5–9", "kind": "Fördermitglied Kind", "Mann": 2, "Frau": 1, "NA": 0}, {"bin": "5–9", "kind": "– keine –", "Mann": 2, "Frau": 0, "NA": 0}, {"bin": "10–14", "kind": "Alle", "Mann": 23, "Frau": 4, "NA": 0}, {"bin": "10–14", "kind": "Nachwuchsmitglied", "Mann": 20, "Frau": 3, "NA": 0}, {"bin": "10–14", "kind": "Fördermitglied Kind", "Mann": 2, "Frau": 1, "NA": 0}, {"bin": "10–14", "kind": "– keine –", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "15–19", "kind": "Alle", "Mann": 16, "Frau": 5, "NA": 0}, {"bin": "15–19", "kind": "Fördermitglied", "Mann": 0, "Frau": 1, "NA": 0}, {"bin": "15–19", "kind": "Aktive", "Mann": 7, "Frau": 0, "NA": 0}, {"bin": "15–19", "kind": "Nachwuchsmitglied", "Mann": 9, "Frau": 2, "NA": 0}, {"bin": "15–19", "kind": "Fördermitglied Kind", "Mann": 0, "Frau": 2, "NA": 0}, {"bin": "20–24", "kind": "Alle", "Mann": 7, "Frau": 1, "NA": 0}, {"bin": "20–24", "kind": "Fördermitglied", "Mann": 2, "Frau": 1, "NA": 0}, {"bin": "20–24", "kind": "Aktive", "Mann": 5, "Frau": 0, "NA": 0}, {"bin": "25–29", "kind": "Alle", "Mann": 9, "Frau": 2, "NA": 0}, {"bin": "25–29", "kind": "Fördermitglied", "Mann": 5, "Frau": 2, "NA": 0}, {"bin": "25–29", "kind": "Aktive", "Mann": 3, "Frau": 0, "NA": 0}, {"bin": "25–29", "kind": "– keine –", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "30–34", "kind": "Alle", "Mann": 6, "Frau": 5, "NA": 0}, {"bin": "30–34", "kind": "Fördermitglied", "Mann": 4, "Frau": 5, "NA": 0}, {"bin": "30–34", "kind": "Aktive", "Mann": 2, "Frau": 0, "NA": 0}, {"bin": "35–39", "kind": "Alle", "Mann": 14, "Frau": 2, "NA": 0}, {"bin": "35–39", "kind": "Fördermitglied", "Mann": 6, "Frau": 2, "NA": 0}, {"bin": "35–39", "kind": "Aktive", "Mann": 7, "Frau": 0, "NA": 0}, {"bin": "35–39", "kind": "– keine –", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "40–44", "kind": "Alle", "Mann": 20, "Frau": 6, "NA": 0}, {"bin": "40–44", "kind": "Fördermitglied", "Mann": 10, "Frau": 6, "NA": 0}, {"bin": "40–44", "kind": "Aktive", "Mann": 10, "Frau": 0, "NA": 0}, {"bin": "45–49", "kind": "Alle", "Mann": 22, "Frau": 10, "NA": 0}, {"bin": "45–49", "kind": "Fördermitglied", "Mann": 11, "Frau": 10, "NA": 0}, {"bin": "45–49", "kind": "Aktive", "Mann": 10, "Frau": 0, "NA": 0}, {"bin": "45–49", "kind": "– keine –", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "50–54", "kind": "Alle", "Mann": 20, "Frau": 4, "NA": 0}, {"bin": "50–54", "kind": "Fördermitglied", "Mann": 11, "Frau": 4, "NA": 0}, {"bin": "50–54", "kind": "Aktive", "Mann": 9, "Frau": 0, "NA": 0}, {"bin": "55–59", "kind": "Alle", "Mann": 12, "Frau": 4, "NA": 0}, {"bin": "55–59", "kind": "Fördermitglied", "Mann": 9, "Frau": 4, "NA": 0}, {"bin": "55–59", "kind": "Aktive", "Mann": 2, "Frau": 0, "NA": 0}, {"bin": "55–59", "kind": "– keine –", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "60–64", "kind": "Alle", "Mann": 2, "Frau": 1, "NA": 0}, {"bin": "60–64", "kind": "Fördermitglied", "Mann": 0, "Frau": 1, "NA": 0}, {"bin": "60–64", "kind": "Aktive", "Mann": 2, "Frau": 0, "NA": 0}, {"bin": "65–69", "kind": "Alle", "Mann": 2, "Frau": 0, "NA": 0}, {"bin": "65–69", "kind": "Fördermitglied", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "65–69", "kind": "Aktive", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "75–79", "kind": "Alle", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "75–79", "kind": "Fördermitglied", "Mann": 1, "Frau": 0, "NA": 0}, {"bin": "80+", "kind": "Alle", "Mann": 1, "Frau": 1, "NA": 0}, {"bin": "80+", "kind": "Fördermitglied", "Mann": 1, "Frau": 1, "NA": 0}], "pyramid_meta": {"bin_size": 5, "age_max": 80, "bins": ["0–4", "5–9", "10–14", "15–19", "20–24", "25–29", "30–34", "35–39", "40–44", "45–49", "50–54", "55–59", "60–64", "65–69", "70–74", "75–79", "80+"]}, "pyramid_by_year": {"2017": {"Alle": {"0–4": {"Mann": 2, "Frau": 0, "NA": 0}, "5–9": {"Mann": 5, "Frau": 2, "NA": 0}, "10–14": {"Mann": 2, "Frau": 0, "NA": 0}, "15–19": {"Mann": 2, "Frau": 0, "NA": 0}, "20–24": {"Mann": 1, "Frau": 0, "NA": 0}, "25–29": {"Mann": 1, "Frau": 0, "NA": 0}, "30–34": {"Mann": 8, "Frau": 0, "NA": 0}, "35–39": {"Mann": 10, "Frau": 0, "NA": 0}, "40–44": {"Mann": 12, "Frau": 0, "NA": 0}, "45–49": {"Mann": 8, "Frau": 0, "NA": 0}, "50–54": {"Mann": 2, "Frau": 0, "NA": 0}, "75–79": {"Mann": 0, "Frau": 1, "NA": 0}}, "Fördermitglied": {"10–14": {"Mann": 1, "Frau": 0, "NA": 0}, "30–34": {"Mann": 3, "Frau": 0, "NA": 0}, "35–39": {"Mann": 2, "Frau": 0, "NA": 0}, "40–44": {"Mann": 5, "Frau": 0, "NA": 0}, "45–49": {"Mann": 5, "Frau": 0, "NA": 0}, "75–79": {"Mann": 0, "Frau": 1, "NA": 0}}, "Aktive": {"5–9": {"Mann": 2, "Frau": 0, "NA": 0}, "10–14": {"Mann": 1, "Frau": 0, "NA": 0}, "15–19": {"Mann": 2, "Frau": 0, "NA": 0}, "20–24": {"Mann": 1, "Frau": 0, "NA": 0}, "25–29": {"Mann": 1, "Frau": 0, "NA": 0}, "30–34": {"Mann": 5, "Frau": 0, "NA": 0}, "35–39": {"Mann": 8, "Frau": 0, "NA": 0}, "40–44": {"Mann": 7, "Frau": 0, "NA": 0}, "45–49": {"Mann": 3, "Frau": 0, "NA": 0}, "50–54": {"Mann": 2, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 2, "Frau": 0, "NA": 0}, "5–9": {"Mann": 3, "Frau": 2, "NA": 0}}, "Fördermitglied Kind": {}, "– keine –": {}}, "2018": {"Alle": {"5–9": {"Mann": 10, "Frau": 2, "NA": 0}, "10–14": {"Mann": 3, "Frau": 1, "NA": 0}, "15–19": {"Mann": 3, "Frau": 0, "NA": 0}, "20–24": {"Mann": 1, "Frau": 0, "NA": 0}, "25–29": {"Mann": 2, "Frau": 0, "NA": 0}, "30–34": {"Mann": 10, "Frau": 0, "NA": 0}, "35–39": {"Mann": 9, "Frau": 0, "NA": 0}, "40–44": {"Mann": 14, "Frau": 0, "NA": 0}, "45–49": {"Mann": 9, "Frau": 0, "NA": 0}, "50–54": {"Mann": 3, "Frau": 1, "NA": 0}, "55–59": {"Mann": 1, "Frau": 0, "NA": 0}, "75–79": {"Mann": 0, "Frau": 1, "NA": 0}}, "Fördermitglied": {"10–14": {"Mann": 1, "Frau": 1, "NA": 0}, "15–19": {"Mann": 1, "Frau": 0, "NA": 0}, "30–34": {"Mann": 3, "Frau": 0, "NA": 0}, "35–39": {"Mann": 2, "Frau": 0, "NA": 0}, "40–44": {"Mann": 6, "Frau": 0, "NA": 0}, "45–49": {"Mann": 5, "Frau": 0, "NA": 0}, "50–54": {"Mann": 0, "Frau": 1, "NA": 0}, "75–79": {"Mann": 0, "Frau": 1, "NA": 0}}, "Aktive": {"5–9": {"Mann": 1, "Frau": 0, "NA": 0}, "10–14": {"Mann": 2, "Frau": 0, "NA": 0}, "15–19": {"Mann": 2, "Frau": 0, "NA": 0}, "20–24": {"Mann": 1, "Frau": 0, "NA": 0}, "25–29": {"Mann": 2, "Frau": 0, "NA": 0}, "30–34": {"Mann": 7, "Frau": 0, "NA": 0}, "35–39": {"Mann": 7, "Frau": 0, "NA": 0}, "40–44": {"Mann": 8, "Frau": 0, "NA": 0}, "45–49": {"Mann": 4, "Frau": 0, "NA": 0}, "50–54": {"Mann": 3, "Frau": 0, "NA": 0}, "55–59": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"5–9": {"Mann": 9, "Frau": 2, "NA": 0}}, "Fördermitglied Kind": {}, "– keine –": {}}, "2019": {"Alle": {"0–4": {"Mann": 0, "Frau": 1, "NA": 0}, "5–9": {"Mann": 10, "Frau": 2, "NA": 0}, "10–14": {"Mann": 4, "Frau": 1, "NA": 0}, "15–19": {"Mann": 6, "Frau": 1, "NA": 0}, "20–24": {"Mann": 1, "Frau": 2, "NA": 0}, "25–29": {"Mann": 3, "Frau": 3, "NA": 0}, "30–34": {"Mann": 13, "Frau": 0, "NA": 0}, "35–39": {"Mann": 9, "Frau": 0, "NA": 0}, "40–44": {"Mann": 14, "Frau": 4, "NA": 0}, "45–49": {"Mann": 10, "Frau": 3, "NA": 0}, "50–54": {"Mann": 5, "Frau": 1, "NA": 0}, "55–59": {"Mann": 1, "Frau": 1, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"10–14": {"Mann": 1, "Frau": 1, "NA": 0}, "15–19": {"Mann": 1, "Frau": 1, "NA": 0}, "20–24": {"Mann": 1, "Frau": 2, "NA": 0}, "25–29": {"Mann": 0, "Frau": 3, "NA": 0}, "30–34": {"Mann": 3, "Frau": 0, "NA": 0}, "35–39": {"Mann": 2, "Frau": 0, "NA": 0}, "40–44": {"Mann": 7, "Frau": 4, "NA": 0}, "45–49": {"Mann": 5, "Frau": 3, "NA": 0}, "50–54": {"Mann": 3, "Frau": 1, "NA": 0}, "55–59": {"Mann": 0, "Frau": 1, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"5–9": {"Mann": 1, "Frau": 0, "NA": 0}, "10–14": {"Mann": 2, "Frau": 0, "NA": 0}, "15–19": {"Mann": 5, "Frau": 0, "NA": 0}, "25–29": {"Mann": 3, "Frau": 0, "NA": 0}, "30–34": {"Mann": 10, "Frau": 0, "NA": 0}, "35–39": {"Mann": 7, "Frau": 0, "NA": 0}, "40–44": {"Mann": 7, "Frau": 0, "NA": 0}, "45–49": {"Mann": 5, "Frau": 0, "NA": 0}, "50–54": {"Mann": 2, "Frau": 0, "NA": 0}, "55–59": {"Mann": 1, "Frau": 0, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"5–9": {"Mann": 9, "Frau": 2, "NA": 0}, "10–14": {"Mann": 1, "Frau": 0, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 0, "Frau": 1, "NA": 0}}, "– keine –": {}}, "2020": {"Alle": {"0–4": {"Mann": 2, "Frau": 1, "NA": 0}, "5–9": {"Mann": 8, "Frau": 0, "NA": 0}, "10–14": {"Mann": 6, "Frau": 3, "NA": 0}, "15–19": {"Mann": 6, "Frau": 1, "NA": 0}, "20–24": {"Mann": 3, "Frau": 1, "NA": 0}, "25–29": {"Mann": 4, "Frau": 4, "NA": 0}, "30–34": {"Mann": 10, "Frau": 0, "NA": 0}, "35–39": {"Mann": 13, "Frau": 0, "NA": 0}, "40–44": {"Mann": 14, "Frau": 5, "NA": 0}, "45–49": {"Mann": 14, "Frau": 3, "NA": 0}, "50–54": {"Mann": 6, "Frau": 2, "NA": 0}, "55–59": {"Mann": 2, "Frau": 1, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"10–14": {"Mann": 0, "Frau": 1, "NA": 0}, "15–19": {"Mann": 1, "Frau": 1, "NA": 0}, "20–24": {"Mann": 3, "Frau": 1, "NA": 0}, "25–29": {"Mann": 2, "Frau": 4, "NA": 0}, "30–34": {"Mann": 3, "Frau": 0, "NA": 0}, "35–39": {"Mann": 3, "Frau": 0, "NA": 0}, "40–44": {"Mann": 5, "Frau": 5, "NA": 0}, "45–49": {"Mann": 9, "Frau": 3, "NA": 0}, "50–54": {"Mann": 4, "Frau": 2, "NA": 0}, "55–59": {"Mann": 0, "Frau": 1, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"10–14": {"Mann": 3, "Frau": 0, "NA": 0}, "15–19": {"Mann": 5, "Frau": 0, "NA": 0}, "25–29": {"Mann": 2, "Frau": 0, "NA": 0}, "30–34": {"Mann": 7, "Frau": 0, "NA": 0}, "35–39": {"Mann": 10, "Frau": 0, "NA": 0}, "40–44": {"Mann": 9, "Frau": 0, "NA": 0}, "45–49": {"Mann": 5, "Frau": 0, "NA": 0}, "50–54": {"Mann": 2, "Frau": 0, "NA": 0}, "55–59": {"Mann": 2, "Frau": 0, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 1, "Frau": 0, "NA": 0}, "5–9": {"Mann": 8, "Frau": 0, "NA": 0}, "10–14": {"Mann": 3, "Frau": 2, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 1, "Frau": 1, "NA": 0}}, "– keine –": {}}, "2021": {"Alle": {"0–4": {"Mann": 3, "Frau": 1, "NA": 0}, "5–9": {"Mann": 7, "Frau": 2, "NA": 0}, "10–14": {"Mann": 12, "Frau": 4, "NA": 0}, "15–19": {"Mann": 4, "Frau": 2, "NA": 0}, "20–24": {"Mann": 5, "Frau": 1, "NA": 0}, "25–29": {"Mann": 4, "Frau": 3, "NA": 0}, "30–34": {"Mann": 10, "Frau": 2, "NA": 0}, "35–39": {"Mann": 14, "Frau": 1, "NA": 0}, "40–44": {"Mann": 16, "Frau": 8, "NA": 0}, "45–49": {"Mann": 15, "Frau": 3, "NA": 0}, "50–54": {"Mann": 7, "Frau": 4, "NA": 0}, "55–59": {"Mann": 3, "Frau": 1, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"15–19": {"Mann": 1, "Frau": 2, "NA": 0}, "20–24": {"Mann": 3, "Frau": 1, "NA": 0}, "25–29": {"Mann": 2, "Frau": 3, "NA": 0}, "30–34": {"Mann": 4, "Frau": 2, "NA": 0}, "35–39": {"Mann": 4, "Frau": 1, "NA": 0}, "40–44": {"Mann": 7, "Frau": 8, "NA": 0}, "45–49": {"Mann": 8, "Frau": 3, "NA": 0}, "50–54": {"Mann": 5, "Frau": 4, "NA": 0}, "55–59": {"Mann": 1, "Frau": 1, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"10–14": {"Mann": 3, "Frau": 0, "NA": 0}, "15–19": {"Mann": 3, "Frau": 0, "NA": 0}, "20–24": {"Mann": 2, "Frau": 0, "NA": 0}, "25–29": {"Mann": 2, "Frau": 0, "NA": 0}, "30–34": {"Mann": 6, "Frau": 0, "NA": 0}, "35–39": {"Mann": 10, "Frau": 0, "NA": 0}, "40–44": {"Mann": 9, "Frau": 0, "NA": 0}, "45–49": {"Mann": 7, "Frau": 0, "NA": 0}, "50–54": {"Mann": 2, "Frau": 0, "NA": 0}, "55–59": {"Mann": 2, "Frau": 0, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 1, "Frau": 0, "NA": 0}, "5–9": {"Mann": 7, "Frau": 1, "NA": 0}, "10–14": {"Mann": 9, "Frau": 3, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 2, "Frau": 1, "NA": 0}, "5–9": {"Mann": 0, "Frau": 1, "NA": 0}, "10–14": {"Mann": 0, "Frau": 1, "NA": 0}}, "– keine –": {}}, "2022": {"Alle": {"0–4": {"Mann": 3, "Frau": 1, "NA": 0}, "5–9": {"Mann": 6, "Frau": 0, "NA": 0}, "10–14": {"Mann": 16, "Frau": 7, "NA": 0}, "15–19": {"Mann": 2, "Frau": 2, "NA": 0}, "20–24": {"Mann": 8, "Frau": 0, "NA": 0}, "25–29": {"Mann": 5, "Frau": 4, "NA": 0}, "30–34": {"Mann": 7, "Frau": 2, "NA": 0}, "35–39": {"Mann": 16, "Frau": 1, "NA": 0}, "40–44": {"Mann": 16, "Frau": 8, "NA": 0}, "45–49": {"Mann": 16, "Frau": 3, "NA": 0}, "50–54": {"Mann": 13, "Frau": 7, "NA": 0}, "55–59": {"Mann": 3, "Frau": 1, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"15–19": {"Mann": 1, "Frau": 2, "NA": 0}, "20–24": {"Mann": 3, "Frau": 0, "NA": 0}, "25–29": {"Mann": 3, "Frau": 4, "NA": 0}, "30–34": {"Mann": 3, "Frau": 2, "NA": 0}, "35–39": {"Mann": 7, "Frau": 1, "NA": 0}, "40–44": {"Mann": 6, "Frau": 8, "NA": 0}, "45–49": {"Mann": 7, "Frau": 3, "NA": 0}, "50–54": {"Mann": 10, "Frau": 7, "NA": 0}, "55–59": {"Mann": 1, "Frau": 1, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"10–14": {"Mann": 3, "Frau": 0, "NA": 0}, "15–19": {"Mann": 1, "Frau": 0, "NA": 0}, "20–24": {"Mann": 5, "Frau": 0, "NA": 0}, "25–29": {"Mann": 2, "Frau": 0, "NA": 0}, "30–34": {"Mann": 4, "Frau": 0, "NA": 0}, "35–39": {"Mann": 9, "Frau": 0, "NA": 0}, "40–44": {"Mann": 10, "Frau": 0, "NA": 0}, "45–49": {"Mann": 9, "Frau": 0, "NA": 0}, "50–54": {"Mann": 3, "Frau": 0, "NA": 0}, "55–59": {"Mann": 2, "Frau": 0, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 1, "Frau": 0, "NA": 0}, "5–9": {"Mann": 5, "Frau": 0, "NA": 0}, "10–14": {"Mann": 13, "Frau": 4, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 2, "Frau": 1, "NA": 0}, "5–9": {"Mann": 1, "Frau": 0, "NA": 0}, "10–14": {"Mann": 0, "Frau": 3, "NA": 0}}, "– keine –": {}}, "2023": {"Alle": {"0–4": {"Mann": 4, "Frau": 1, "NA": 0}, "5–9": {"Mann": 1, "Frau": 0, "NA": 0}, "10–14": {"Mann": 19, "Frau": 6, "NA": 0}, "15–19": {"Mann": 4, "Frau": 3, "NA": 0}, "20–24": {"Mann": 8, "Frau": 0, "NA": 0}, "25–29": {"Mann": 4, "Frau": 3, "NA": 0}, "30–34": {"Mann": 7, "Frau": 3, "NA": 0}, "35–39": {"Mann": 16, "Frau": 1, "NA": 0}, "40–44": {"Mann": 17, "Frau": 6, "NA": 0}, "45–49": {"Mann": 19, "Frau": 5, "NA": 0}, "50–54": {"Mann": 15, "Frau": 5, "NA": 0}, "55–59": {"Mann": 5, "Frau": 3, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"15–19": {"Mann": 1, "Frau": 2, "NA": 0}, "20–24": {"Mann": 3, "Frau": 0, "NA": 0}, "25–29": {"Mann": 3, "Frau": 3, "NA": 0}, "30–34": {"Mann": 4, "Frau": 3, "NA": 0}, "35–39": {"Mann": 6, "Frau": 1, "NA": 0}, "40–44": {"Mann": 8, "Frau": 6, "NA": 0}, "45–49": {"Mann": 9, "Frau": 5, "NA": 0}, "50–54": {"Mann": 11, "Frau": 5, "NA": 0}, "55–59": {"Mann": 2, "Frau": 3, "NA": 0}, "70–74": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"10–14": {"Mann": 1, "Frau": 0, "NA": 0}, "15–19": {"Mann": 3, "Frau": 0, "NA": 0}, "20–24": {"Mann": 5, "Frau": 0, "NA": 0}, "25–29": {"Mann": 1, "Frau": 0, "NA": 0}, "30–34": {"Mann": 3, "Frau": 0, "NA": 0}, "35–39": {"Mann": 10, "Frau": 0, "NA": 0}, "40–44": {"Mann": 9, "Frau": 0, "NA": 0}, "45–49": {"Mann": 10, "Frau": 0, "NA": 0}, "50–54": {"Mann": 4, "Frau": 0, "NA": 0}, "55–59": {"Mann": 3, "Frau": 0, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 1, "Frau": 0, "NA": 0}, "10–14": {"Mann": 18, "Frau": 4, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 3, "Frau": 1, "NA": 0}, "5–9": {"Mann": 1, "Frau": 0, "NA": 0}, "10–14": {"Mann": 0, "Frau": 2, "NA": 0}, "15–19": {"Mann": 0, "Frau": 1, "NA": 0}}, "– keine –": {}}, "2024": {"Alle": {"0–4": {"Mann": 3, "Frau": 0, "NA": 0}, "5–9": {"Mann": 17, "Frau": 2, "NA": 0}, "10–14": {"Mann": 26, "Frau": 6, "NA": 0}, "15–19": {"Mann": 8, "Frau": 2, "NA": 0}, "20–24": {"Mann": 9, "Frau": 1, "NA": 0}, "25–29": {"Mann": 3, "Frau": 3, "NA": 0}, "30–34": {"Mann": 7, "Frau": 4, "NA": 0}, "35–39": {"Mann": 19, "Frau": 1, "NA": 0}, "40–44": {"Mann": 15, "Frau": 8, "NA": 0}, "45–49": {"Mann": 18, "Frau": 5, "NA": 0}, "50–54": {"Mann": 17, "Frau": 6, "NA": 0}, "55–59": {"Mann": 9, "Frau": 2, "NA": 0}, "60–64": {"Mann": 1, "Frau": 1, "NA": 0}, "65–69": {"Mann": 2, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"15–19": {"Mann": 1, "Frau": 1, "NA": 0}, "20–24": {"Mann": 3, "Frau": 1, "NA": 0}, "25–29": {"Mann": 3, "Frau": 3, "NA": 0}, "30–34": {"Mann": 4, "Frau": 4, "NA": 0}, "35–39": {"Mann": 8, "Frau": 1, "NA": 0}, "40–44": {"Mann": 6, "Frau": 8, "NA": 0}, "45–49": {"Mann": 11, "Frau": 5, "NA": 0}, "50–54": {"Mann": 9, "Frau": 6, "NA": 0}, "55–59": {"Mann": 7, "Frau": 2, "NA": 0}, "60–64": {"Mann": 0, "Frau": 1, "NA": 0}, "65–69": {"Mann": 1, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"10–14": {"Mann": 1, "Frau": 0, "NA": 0}, "15–19": {"Mann": 6, "Frau": 0, "NA": 0}, "20–24": {"Mann": 6, "Frau": 0, "NA": 0}, "30–34": {"Mann": 3, "Frau": 0, "NA": 0}, "35–39": {"Mann": 11, "Frau": 0, "NA": 0}, "40–44": {"Mann": 9, "Frau": 0, "NA": 0}, "45–49": {"Mann": 7, "Frau": 0, "NA": 0}, "50–54": {"Mann": 8, "Frau": 0, "NA": 0}, "55–59": {"Mann": 2, "Frau": 0, "NA": 0}, "60–64": {"Mann": 1, "Frau": 0, "NA": 0}, "65–69": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"5–9": {"Mann": 16, "Frau": 1, "NA": 0}, "10–14": {"Mann": 24, "Frau": 4, "NA": 0}, "15–19": {"Mann": 1, "Frau": 0, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 3, "Frau": 0, "NA": 0}, "5–9": {"Mann": 1, "Frau": 1, "NA": 0}, "10–14": {"Mann": 1, "Frau": 2, "NA": 0}, "15–19": {"Mann": 0, "Frau": 1, "NA": 0}}, "– keine –": {}}, "2025": {"Alle": {"0–4": {"Mann": 3, "Frau": 0, "NA": 0}, "5–9": {"Mann": 22, "Frau": 4, "NA": 0}, "10–14": {"Mann": 23, "Frau": 4, "NA": 0}, "15–19": {"Mann": 13, "Frau": 5, "NA": 0}, "20–24": {"Mann": 9, "Frau": 1, "NA": 0}, "25–29": {"Mann": 6, "Frau": 2, "NA": 0}, "30–34": {"Mann": 6, "Frau": 5, "NA": 0}, "35–39": {"Mann": 17, "Frau": 2, "NA": 0}, "40–44": {"Mann": 20, "Frau": 8, "NA": 0}, "45–49": {"Mann": 20, "Frau": 8, "NA": 0}, "50–54": {"Mann": 18, "Frau": 5, "NA": 0}, "55–59": {"Mann": 11, "Frau": 3, "NA": 0}, "60–64": {"Mann": 2, "Frau": 1, "NA": 0}, "65–69": {"Mann": 2, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"15–19": {"Mann": 0, "Frau": 1, "NA": 0}, "20–24": {"Mann": 2, "Frau": 1, "NA": 0}, "25–29": {"Mann": 5, "Frau": 2, "NA": 0}, "30–34": {"Mann": 4, "Frau": 5, "NA": 0}, "35–39": {"Mann": 8, "Frau": 2, "NA": 0}, "40–44": {"Mann": 9, "Frau": 8, "NA": 0}, "45–49": {"Mann": 10, "Frau": 8, "NA": 0}, "50–54": {"Mann": 11, "Frau": 5, "NA": 0}, "55–59": {"Mann": 9, "Frau": 3, "NA": 0}, "60–64": {"Mann": 0, "Frau": 1, "NA": 0}, "65–69": {"Mann": 1, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"15–19": {"Mann": 7, "Frau": 0, "NA": 0}, "20–24": {"Mann": 7, "Frau": 0, "NA": 0}, "25–29": {"Mann": 1, "Frau": 0, "NA": 0}, "30–34": {"Mann": 2, "Frau": 0, "NA": 0}, "35–39": {"Mann": 8, "Frau": 0, "NA": 0}, "40–44": {"Mann": 11, "Frau": 0, "NA": 0}, "45–49": {"Mann": 10, "Frau": 0, "NA": 0}, "50–54": {"Mann": 7, "Frau": 0, "NA": 0}, "55–59": {"Mann": 2, "Frau": 0, "NA": 0}, "60–64": {"Mann": 2, "Frau": 0, "NA": 0}, "65–69": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 1, "Frau": 0, "NA": 0}, "5–9": {"Mann": 19, "Frau": 3, "NA": 0}, "10–14": {"Mann": 21, "Frau": 3, "NA": 0}, "15–19": {"Mann": 6, "Frau": 2, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 2, "Frau": 0, "NA": 0}, "5–9": {"Mann": 2, "Frau": 1, "NA": 0}, "10–14": {"Mann": 2, "Frau": 1, "NA": 0}, "15–19": {"Mann": 0, "Frau": 2, "NA": 0}}, "– keine –": {"5–9": {"Mann": 1, "Frau": 0, "NA": 0}, "35–39": {"Mann": 1, "Frau": 0, "NA": 0}}}, "2026": {"Alle": {"0–4": {"Mann": 3, "Frau": 0, "NA": 0}, "5–9": {"Mann": 23, "Frau": 4, "NA": 0}, "10–14": {"Mann": 23, "Frau": 4, "NA": 0}, "15–19": {"Mann": 15, "Frau": 5, "NA": 0}, "20–24": {"Mann": 7, "Frau": 1, "NA": 0}, "25–29": {"Mann": 9, "Frau": 2, "NA": 0}, "30–34": {"Mann": 6, "Frau": 5, "NA": 0}, "35–39": {"Mann": 14, "Frau": 2, "NA": 0}, "40–44": {"Mann": 20, "Frau": 6, "NA": 0}, "45–49": {"Mann": 22, "Frau": 10, "NA": 0}, "50–54": {"Mann": 20, "Frau": 4, "NA": 0}, "55–59": {"Mann": 12, "Frau": 4, "NA": 0}, "60–64": {"Mann": 2, "Frau": 1, "NA": 0}, "65–69": {"Mann": 2, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Fördermitglied": {"15–19": {"Mann": 0, "Frau": 1, "NA": 0}, "20–24": {"Mann": 2, "Frau": 1, "NA": 0}, "25–29": {"Mann": 5, "Frau": 2, "NA": 0}, "30–34": {"Mann": 4, "Frau": 5, "NA": 0}, "35–39": {"Mann": 6, "Frau": 2, "NA": 0}, "40–44": {"Mann": 10, "Frau": 6, "NA": 0}, "45–49": {"Mann": 11, "Frau": 10, "NA": 0}, "50–54": {"Mann": 11, "Frau": 4, "NA": 0}, "55–59": {"Mann": 9, "Frau": 4, "NA": 0}, "60–64": {"Mann": 0, "Frau": 1, "NA": 0}, "65–69": {"Mann": 1, "Frau": 0, "NA": 0}, "75–79": {"Mann": 1, "Frau": 0, "NA": 0}, "80+": {"Mann": 1, "Frau": 1, "NA": 0}}, "Aktive": {"15–19": {"Mann": 7, "Frau": 0, "NA": 0}, "20–24": {"Mann": 5, "Frau": 0, "NA": 0}, "25–29": {"Mann": 3, "Frau": 0, "NA": 0}, "30–34": {"Mann": 2, "Frau": 0, "NA": 0}, "35–39": {"Mann": 7, "Frau": 0, "NA": 0}, "40–44": {"Mann": 10, "Frau": 0, "NA": 0}, "45–49": {"Mann": 10, "Frau": 0, "NA": 0}, "50–54": {"Mann": 9, "Frau": 0, "NA": 0}, "55–59": {"Mann": 2, "Frau": 0, "NA": 0}, "60–64": {"Mann": 2, "Frau": 0, "NA": 0}, "65–69": {"Mann": 1, "Frau": 0, "NA": 0}}, "Nachwuchsmitglied": {"0–4": {"Mann": 1, "Frau": 0, "NA": 0}, "5–9": {"Mann": 19, "Frau": 3, "NA": 0}, "10–14": {"Mann": 20, "Frau": 3, "NA": 0}, "15–19": {"Mann": 8, "Frau": 2, "NA": 0}}, "Fördermitglied Kind": {"0–4": {"Mann": 2, "Frau": 0, "NA": 0}, "5–9": {"Mann": 2, "Frau": 1, "NA": 0}, "10–14": {"Mann": 2, "Frau": 1, "NA": 0}, "15–19": {"Mann": 0, "Frau": 2, "NA": 0}}, "– keine –": {"5–9": {"Mann": 2, "Frau": 0, "NA": 0}, "10–14": {"Mann": 1, "Frau": 0, "NA": 0}, "25–29": {"Mann": 1, "Frau": 0, "NA": 0}, "35–39": {"Mann": 1, "Frau": 0, "NA": 0}, "45–49": {"Mann": 1, "Frau": 0, "NA": 0}, "55–59": {"Mann": 1, "Frau": 0, "NA": 0}}}}, "group_totals_current": [{"gruppe": "aktive Mitglieder", "anzahl": 113}, {"gruppe": "Fördermitglieder", "anzahl": 110}, {"gruppe": "Fördermitglieder minderjährig", "anzahl": 13}, {"gruppe": "Activ Team", "anzahl": 61}, {"gruppe": "Junior Team", "anzahl": 41}, {"gruppe": "Minis", "anzahl": 39}, {"gruppe": "Radteam", "anzahl": 60}, {"gruppe": "Hockey Cup", "anzahl": 40}, {"gruppe": "Trainingslager", "anzahl": 30}, {"gruppe": "Trainer", "anzahl": 11}, {"gruppe": "Eisdeal Plus", "anzahl": 47}, {"gruppe": "Vorstand", "anzahl": 13}, {"gruppe": "Dorfschiessen", "anzahl": 11}, {"gruppe": "Sponsoren", "anzahl": 1}]}</script>
+<script>
+const DATA = JSON.parse(document.getElementById("payload").textContent);
+const K = DATA.kpis;
+const YEARS = DATA.meta.years;
+const KIND_ORDER = DATA.meta.kind_order;
+const GROUP_ORDER = DATA.meta.group_order;
+
+// ===== Masthead =====
+document.getElementById("mastMeta").innerHTML = `
+  <div><strong>${K.total_active}</strong> aktive Mitglieder</div>
+  <div>gegründet <strong>${K.founding_year}</strong> · ${K.years_active} Jahre aktiv</div>
+  <div>${K.distinct_groups} Gruppen · ${K.distinct_kinds} Mitgliedsarten</div>
+`;
+document.getElementById("genInfo").textContent =
+  "Generiert: " + new Date().toLocaleDateString("de-AT",{year:"numeric",month:"short",day:"2-digit"});
+
+// ===== KPIs =====
+const kpis = [
+  {lbl:"Aktive Mitglieder",    val:K.total_active,            sub:"Gesamt-Kader heute"},
+  {lbl:"Gründungsjahr",        val:K.founding_year,           sub:K.years_active+" Jahre Vereinsgeschichte"},
+  {lbl:"Eintritte 2025",       val:K.joins_prev_year,         sub:"voriges Kalenderjahr"},
+  {lbl:"Eintritte 2026 YTD",   val:K.joins_current_year,      sub:"bis 17.04.2026"},
+  {lbl:"Stärkstes Jahr",       val:K.peak_year,               sub:K.peak_joins+" Neueintritte · Gründung"},
+  {lbl:"Ø Alter",              val:K.avg_age, unit:"J",       sub:"über alle Aktiven"},
+  {lbl:"Ø Gruppen / Mitglied", val:K.avg_groups_per_member,   sub:"Mehrfachzugehörigkeit"},
+  {lbl:"Längste Mitgliedschaft", val:K.oldest_member_join.years, unit:"J", sub:K.oldest_member_join.name+" · seit "+K.oldest_member_join.date},
+];
+document.getElementById("kpiGrid").innerHTML = kpis.map(k=>`
+  <div class="kpi">
+    <div class="lbl">${k.lbl}</div>
+    <div class="val">${k.val}${k.unit?`<span class="u">${k.unit}</span>`:""}</div>
+    <div class="sub">${k.sub}</div>
+  </div>
+`).join("");
+
+// ===== Chart defaults =====
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = "#a8a19a";
+Chart.defaults.borderColor = "#2a2724";
+Chart.defaults.plugins.legend.labels.color = "#a8a19a";
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.boxHeight = 12;
+
+// Palette for Mitgliedsart (5 categories)
+const KIND_COLORS = {
+  "Fördermitglied":        "#e63946",
+  "Aktive":                "#6fb9d4",
+  "Nachwuchsmitglied":     "#d4a24a",
+  "Fördermitglied Kind":   "#e29b4a",
+  "– keine –":             "#5a5550",
+};
+// Palette for Groups (14)
+const GROUP_COLORS = {
+  "aktive Mitglieder":              "#e63946",
+  "Fördermitglieder":               "#b12a35",
+  "Fördermitglieder minderjährig":  "#7a1f28",
+  "Activ Team":                     "#6fb9d4",
+  "Junior Team":                    "#4a8aa0",
+  "Minis":                          "#d4a24a",
+  "Radteam":                        "#4caf7a",
+  "Hockey Cup":                     "#3a8560",
+  "Trainingslager":                 "#e29b4a",
+  "Trainer":                        "#8e5a8e",
+  "Eisdeal Plus":                   "#a87bbd",
+  "Vorstand":                       "#5a5550",
+  "Dorfschiessen":                  "#a8a19a",
+  "Sponsoren":                      "#6d6661",
+};
+
+// helpers
+function col(palette, key){ return palette[key] || "#888"; }
+function seriesByKind(rows){
+  return KIND_ORDER.map(k => ({
+    label: k,
+    data: rows.map(r => r[k] || 0),
+    backgroundColor: col(KIND_COLORS, k),
+    borderColor: col(KIND_COLORS, k),
+    borderWidth: 1,
+  }));
+}
+function seriesByGroup(rows){
+  return GROUP_ORDER.map(g => ({
+    label: g,
+    data: rows.map(r => r[g] || 0),
+    backgroundColor: col(GROUP_COLORS, g),
+    borderColor: col(GROUP_COLORS, g),
+    borderWidth: 1,
+  }));
+}
+
+// ========= CHART: Eintritte/Jahr × Mitgliedsart =========
+const kindJoinsData = DATA.joins_by_year_kind;
+let chKindJoins = new Chart(document.getElementById("chKindJoins"), {
+  type: "bar",
+  data: {
+    labels: YEARS,
+    datasets: seriesByKind(kindJoinsData),
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{
+      x:{stacked:true, grid:{display:false}},
+      y:{stacked:true, title:{display:true, text:"Neueintritte", color:"#6d6661"}}
+    },
+    plugins:{legend:{position:"bottom"}}
+  }
+});
+function rebuildKindJoins(mode){
+  if (mode === "percent"){
+    const totals = kindJoinsData.map(r => KIND_ORDER.reduce((s,k)=>s+(r[k]||0),0));
+    chKindJoins.data.datasets = KIND_ORDER.map(k => ({
+      label:k, backgroundColor:col(KIND_COLORS,k), borderColor:col(KIND_COLORS,k), borderWidth:1,
+      data: kindJoinsData.map((r,i)=> totals[i] ? +( (r[k]||0)/totals[i]*100 ).toFixed(1) : 0)
+    }));
+    chKindJoins.options.scales.y.title.text = "Anteil (%)";
+    chKindJoins.options.scales.y.max = 100;
+  } else {
+    chKindJoins.data.datasets = seriesByKind(kindJoinsData);
+    chKindJoins.options.scales.y.title.text = "Neueintritte";
+    delete chKindJoins.options.scales.y.max;
+  }
+  chKindJoins.update();
+}
+
+// ========= CHART: Bestand × Mitgliedsart =========
+const kindStockData = DATA.stock_by_year_kind;
+let chKindStock = new Chart(document.getElementById("chKindStock"), {
+  type: "line",
+  data: {
+    labels: YEARS,
+    datasets: KIND_ORDER.map(k => ({
+      label: k,
+      data: kindStockData.map(r=>r[k]||0),
+      backgroundColor: col(KIND_COLORS,k)+"cc",
+      borderColor: col(KIND_COLORS,k),
+      borderWidth: 2,
+      fill: true,
+      tension: 0.3,
+      pointRadius: 3,
+    }))
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    scales:{
+      x:{grid:{display:false}},
+      y:{stacked:true, title:{display:true,text:"Mitglieder (kumuliert)",color:"#6d6661"}}
+    },
+    plugins:{legend:{position:"bottom"}}
+  }
+});
+function rebuildKindStock(mode){
+  if (mode === "line"){
+    chKindStock.data.datasets.forEach(ds => {ds.fill = false;});
+    chKindStock.options.scales.y.stacked = false;
+  } else {
+    chKindStock.data.datasets.forEach(ds => {ds.fill = true;});
+    chKindStock.options.scales.y.stacked = true;
+  }
+  chKindStock.update();
+}
+
+// ========= CHART: Bestand × Gruppe (stacked) =========
+const groupStockData = DATA.stock_by_year_group;
+let chGroupStock = new Chart(document.getElementById("chGroupStock"), {
+  type: "bar",
+  data: {
+    labels: YEARS,
+    datasets: seriesByGroup(groupStockData),
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{
+      x:{stacked:true, grid:{display:false}},
+      y:{stacked:true, title:{display:true,text:"Gruppenzugehörigkeiten (überlappend)",color:"#6d6661"}}
+    },
+    plugins:{legend:{position:"bottom", labels:{boxWidth:10, padding:8, font:{size:10}}}}
+  }
+});
+function rebuildGroupStock(mode){
+  if (mode === "area"){
+    chGroupStock.config.type = "line";
+    chGroupStock.data.datasets = GROUP_ORDER.map(g => ({
+      label: g,
+      data: groupStockData.map(r=>r[g]||0),
+      backgroundColor: col(GROUP_COLORS,g)+"cc",
+      borderColor: col(GROUP_COLORS,g),
+      borderWidth: 1.5,
+      fill: true,
+      tension: 0.3,
+      pointRadius: 2,
+    }));
+  } else {
+    chGroupStock.config.type = "bar";
+    chGroupStock.data.datasets = seriesByGroup(groupStockData);
+  }
+  chGroupStock.update();
+}
+
+// ========= CHART: Gruppen-Ranking heute =========
+const groupsNow = [...DATA.group_totals_current].sort((a,b)=>b.anzahl - a.anzahl);
+new Chart(document.getElementById("chGroupNow"), {
+  type: "bar",
+  data: {
+    labels: groupsNow.map(r=>r.gruppe),
+    datasets: [{
+      label:"Mitglieder",
+      data: groupsNow.map(r=>r.anzahl),
+      backgroundColor: groupsNow.map(r=>col(GROUP_COLORS, r.gruppe)),
+      borderRadius:2,
+    }]
+  },
+  options:{
+    indexAxis:"y", responsive:true, maintainAspectRatio:false,
+    scales:{x:{title:{display:true,text:"Mitglieder",color:"#6d6661"}}},
+    plugins:{legend:{display:false}}
+  }
+});
+
+// ========= CHART: Eintritte pro Jahr × Gruppe =========
+const groupJoinsData = DATA.joins_by_year_group;
+new Chart(document.getElementById("chGroupJoins"), {
+  type: "bar",
+  data: {
+    labels: YEARS,
+    datasets: seriesByGroup(groupJoinsData),
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    scales:{
+      x:{stacked:true, grid:{display:false}},
+      y:{stacked:true, title:{display:true,text:"Zuordnungen (überlappend)",color:"#6d6661"}}
+    },
+    plugins:{legend:{position:"bottom", labels:{boxWidth:10,font:{size:10}}}}
+  }
+});
+
+// ========= CHART: Gender =========
+const GENDER_COLORS = {"Mann":"#6fb9d4","Frau":"#e63946","N/A":"#5a5550"};
+const genderData = DATA.joins_by_year_gender;
+new Chart(document.getElementById("chGender"), {
+  type:"bar",
+  data:{
+    labels:YEARS,
+    datasets: DATA.meta.gender_order.map(g=>({
+      label:g,
+      data: genderData.map(r=>r[g]||0),
+      backgroundColor: GENDER_COLORS[g]||"#888",
+    }))
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    scales:{x:{stacked:true,grid:{display:false}}, y:{stacked:true, title:{display:true,text:"Eintritte",color:"#6d6661"}}},
+    plugins:{legend:{position:"bottom"}}
+  }
+});
+
+// ========= CHART: Altersverteilung heute × Mitgliedsart (filterbar) =========
+const AGE_BUCKETS = DATA.meta.age_buckets_order;
+const BUCKETS_BY_KIND = DATA.age_buckets_by_kind; // [{bucket, Alle, <kind>, ...}]
+const AGE_BAR_COLOR = ["#d4a24a","#e29b4a","#e63946","#b12a35","#7a1f28","#4a1a1f","#2a0e13","#5a5550"];
+
+const selAgeKind = document.getElementById("selAgeKind");
+["Alle", ...KIND_ORDER].forEach(k => {
+  const opt = document.createElement("option"); opt.value = k; opt.textContent = k;
+  selAgeKind.appendChild(opt);
+});
+selAgeKind.value = "Alle";
+
+let chAge = new Chart(document.getElementById("chAge"), {
+  type:"bar",
+  data:{
+    labels: AGE_BUCKETS,
+    datasets:[{
+      label: "Alle",
+      data: BUCKETS_BY_KIND.map(r => r["Alle"] || 0),
+      backgroundColor: AGE_BUCKETS.map((_,i)=>AGE_BAR_COLOR[i]),
+      borderRadius:2,
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    scales:{x:{grid:{display:false}}, y:{title:{display:true,text:"Mitglieder",color:"#6d6661"}, beginAtZero:true}},
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{title:(items)=>`Altersgruppe ${items[0].label}`,
+                          label:(ctx)=>`${ctx.dataset.label}: ${ctx.parsed.y}`}}}
+  }
+});
+selAgeKind.addEventListener("change", () => {
+  const k = selAgeKind.value;
+  chAge.data.datasets[0].label = k;
+  chAge.data.datasets[0].data = BUCKETS_BY_KIND.map(r => r[k] || 0);
+  chAge.update();
+});
+
+// ========= CHART: Alterspyramide (5-Jahres-Bins) × Mitgliedsart (filterbar) =========
+const PYRAMID = DATA.pyramid; // [{bin, kind, Mann, Frau, NA}]
+const PY_BINS = DATA.pyramid_meta.bins;
+
+const selPyKind = document.getElementById("selPyramidKind");
+["Alle", ...KIND_ORDER].forEach(k => {
+  const opt = document.createElement("option"); opt.value = k; opt.textContent = k;
+  selPyKind.appendChild(opt);
+});
+selPyKind.value = "Alle";
+
+// Build lookup: kind -> bin -> {Mann, Frau, NA}
+const PYRAMID_LOOKUP = {};
+PYRAMID.forEach(r => {
+  if (!PYRAMID_LOOKUP[r.kind]) PYRAMID_LOOKUP[r.kind] = {};
+  PYRAMID_LOOKUP[r.kind][r.bin] = {Mann:r.Mann, Frau:r.Frau, NA:r.NA};
+});
+
+function pyramidSeries(kind){
+  const labels = PY_BINS.slice();
+  const maennerNeg = [];  // negative values for left side
+  const frauenPos = [];
+  labels.forEach(b => {
+    const d = (PYRAMID_LOOKUP[kind] || {})[b] || {Mann:0, Frau:0, NA:0};
+    // Männer links (negativ), Frauen rechts; N/A (1 Fall) bei Frauen angehängt
+    maennerNeg.push(-(d.Mann));
+    frauenPos.push(d.Frau + d.NA);
+  });
+  return {labels, maennerNeg, frauenPos};
+}
+
+const GENDER_PYRAMID_COLORS = {"Mann":"#6fb9d4","Frau":"#e63946"};
+const pySeed = pyramidSeries("Alle");
+
+let chPyramid = new Chart(document.getElementById("chPyramid"), {
+  type:"bar",
+  data:{
+    labels: pySeed.labels,
+    datasets: [
+      {label:"Männer", data: pySeed.maennerNeg, backgroundColor: GENDER_PYRAMID_COLORS.Mann, borderWidth:0, stack:"p"},
+      {label:"Frauen", data: pySeed.frauenPos,  backgroundColor: GENDER_PYRAMID_COLORS.Frau, borderWidth:0, stack:"p"},
+    ],
+  },
+  options:{
+    indexAxis: "y",
+    responsive:true, maintainAspectRatio:false,
+    scales:{
+      x:{
+        stacked:true,
+        title:{display:true, text:"← Männer   |   Frauen →", color:"#6d6661"},
+        ticks:{callback:(v)=>Math.abs(v)},
+        grid:{color:(ctx)=> ctx.tick.value===0 ? "#4a4440" : "#2a2724"},
+      },
+      y:{
+        stacked:true,
+        reverse:true,  // jung oben, alt unten
+        title:{display:true, text:"Altersgruppe", color:"#6d6661"},
+        ticks:{autoSkip:false},
+        grid:{display:false},
+      }
+    },
+    plugins:{
+      legend:{position:"bottom"},
+      tooltip:{callbacks:{
+        title:(items)=>`Altersgruppe ${items[0].label}`,
+        label:(ctx)=>`${ctx.dataset.label}: ${Math.abs(ctx.parsed.x)}`,
+      }}
+    }
+  }
+});
+
+selPyKind.addEventListener("change", () => {
+  const s = pyramidSeries(selPyKind.value);
+  chPyramid.data.labels = s.labels;
+  chPyramid.data.datasets[0].data = s.maennerNeg;
+  chPyramid.data.datasets[1].data = s.frauenPos;
+  chPyramid.update();
+});
+
+// ========= CHART: Alterspyramide im Zeitverlauf =========
+const PYRAMID_BY_YEAR = DATA.pyramid_by_year; // {year: {kind: {bin: {Mann,Frau,NA}}}}
+const TL_YEARS = DATA.meta.years;
+
+const selTlKind = document.getElementById("selTimelineKind");
+["Alle", ...KIND_ORDER].forEach(k => {
+  const o = document.createElement("option"); o.value = k; o.textContent = k;
+  selTlKind.appendChild(o);
+});
+selTlKind.value = "Alle";
+
+const slider = document.getElementById("yearSlider");
+slider.min = 0;
+slider.max = TL_YEARS.length - 1;
+slider.value = TL_YEARS.length - 1; // start am aktuellen Jahresende
+const yearLabel = document.getElementById("yearLabel");
+const yearCount = document.getElementById("yearCount");
+const playBtn = document.getElementById("playBtn");
+
+function timelineSeries(kind, year){
+  const dataForYear = (PYRAMID_BY_YEAR[String(year)] || {})[kind] || {};
+  const labels = PY_BINS.slice();
+  const maennerNeg = [];
+  const frauenPos = [];
+  let total = 0;
+  labels.forEach(b => {
+    const d = dataForYear[b] || {Mann:0, Frau:0, NA:0};
+    maennerNeg.push(-(d.Mann));
+    frauenPos.push(d.Frau + d.NA);
+    total += d.Mann + d.Frau + d.NA;
+  });
+  return {labels, maennerNeg, frauenPos, total};
+}
+
+// Feste X-Achsen-Skala über alle Jahre/Kinds ermitteln, damit Animation nicht zappelt
+function globalMaxForKind(kind){
+  let mx = 0;
+  TL_YEARS.forEach(y => {
+    const s = timelineSeries(kind, y);
+    const m1 = Math.max(...s.maennerNeg.map(v => Math.abs(v)));
+    const m2 = Math.max(...s.frauenPos);
+    mx = Math.max(mx, m1, m2);
+  });
+  return Math.ceil(mx * 1.1) || 5;
+}
+
+const seedY = TL_YEARS[TL_YEARS.length - 1];
+const seedSeries = timelineSeries("Alle", seedY);
+let curMax = globalMaxForKind("Alle");
+yearLabel.textContent = seedY;
+yearCount.textContent = seedSeries.total;
+
+let chPyramidTimeline = new Chart(document.getElementById("chPyramidTimeline"), {
+  type:"bar",
+  data:{
+    labels: seedSeries.labels,
+    datasets: [
+      {label:"Männer", data: seedSeries.maennerNeg, backgroundColor: GENDER_PYRAMID_COLORS.Mann, borderWidth:0, stack:"p"},
+      {label:"Frauen", data: seedSeries.frauenPos,  backgroundColor: GENDER_PYRAMID_COLORS.Frau, borderWidth:0, stack:"p"},
+    ],
+  },
+  options:{
+    indexAxis: "y",
+    responsive:true, maintainAspectRatio:false,
+    animation:{duration: 400},
+    scales:{
+      x:{
+        stacked:true, min:-curMax, max:curMax,
+        title:{display:true, text:"← Männer   |   Frauen →", color:"#6d6661"},
+        ticks:{callback:(v)=>Math.abs(v)},
+        grid:{color:(ctx)=> ctx.tick.value===0 ? "#4a4440" : "#2a2724"},
+      },
+      y:{
+        stacked:true, reverse:true,
+        title:{display:true, text:"Altersgruppe", color:"#6d6661"},
+        ticks:{autoSkip:false},
+        grid:{display:false},
+      }
+    },
+    plugins:{
+      legend:{position:"bottom"},
+      tooltip:{callbacks:{
+        title:(items)=>`Altersgruppe ${items[0].label}`,
+        label:(ctx)=>`${ctx.dataset.label}: ${Math.abs(ctx.parsed.x)}`,
+      }}
+    }
+  }
+});
+
+function updateTimeline(){
+  const kind = selTlKind.value;
+  const year = TL_YEARS[parseInt(slider.value, 10)];
+  const s = timelineSeries(kind, year);
+  yearLabel.textContent = year;
+  yearCount.textContent = s.total;
+  chPyramidTimeline.data.labels = s.labels;
+  chPyramidTimeline.data.datasets[0].data = s.maennerNeg;
+  chPyramidTimeline.data.datasets[1].data = s.frauenPos;
+  chPyramidTimeline.update();
+}
+
+slider.addEventListener("input", updateTimeline);
+selTlKind.addEventListener("change", () => {
+  curMax = globalMaxForKind(selTlKind.value);
+  chPyramidTimeline.options.scales.x.min = -curMax;
+  chPyramidTimeline.options.scales.x.max = curMax;
+  updateTimeline();
+});
+
+// Play/Pause
+let playTimer = null;
+function stopPlay(){
+  if (playTimer){ clearInterval(playTimer); playTimer = null; }
+  playBtn.textContent = "▶";
+}
+playBtn.addEventListener("click", () => {
+  if (playTimer){ stopPlay(); return; }
+  playBtn.textContent = "⏸";
+  // Wenn am Ende: zurück auf Anfang
+  if (parseInt(slider.value,10) >= TL_YEARS.length - 1) slider.value = 0;
+  updateTimeline();
+  playTimer = setInterval(() => {
+    let v = parseInt(slider.value, 10);
+    if (v >= TL_YEARS.length - 1){ stopPlay(); return; }
+    slider.value = v + 1;
+    updateTimeline();
+  }, 900);
+});
+
+// ========= CHART: Alter × Mitgliedsart =========
+const ageByKind = DATA.age_by_kind;
+const ageBuckets = DATA.meta.age_buckets_order;
+new Chart(document.getElementById("chAgeKind"), {
+  type:"bar",
+  data:{
+    labels: ageByKind.map(r=>r.mitgliedsart),
+    datasets: ageBuckets.map((b,i)=>({
+      label:b,
+      data: ageByKind.map(r=>r[b]||0),
+      backgroundColor: ["#d4a24a","#e29b4a","#e63946","#b12a35","#7a1f28","#4a1a1f","#2a0e13","#5a5550"][i],
+    }))
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    scales:{x:{stacked:true,grid:{display:false}}, y:{stacked:true, title:{display:true,text:"Mitglieder",color:"#6d6661"}}},
+    plugins:{legend:{position:"bottom"}}
+  }
+});
+
+// ===== Toggle buttons =====
+document.querySelectorAll(".toggle").forEach(t=>{
+  t.addEventListener("click", e => {
+    const btn = e.target.closest("button"); if (!btn) return;
+    t.querySelectorAll("button").forEach(b => b.classList.toggle("active", b===btn));
+    const mode = btn.dataset.mode;
+    const target = t.dataset.target;
+    if (target === "kindJoins") rebuildKindJoins(mode);
+    else if (target === "kindStock") rebuildKindStock(mode);
+    else if (target === "groupStock") rebuildGroupStock(mode);
+  });
+});
+
+// ===== Downloads =====
+const files = [
+  ["01_mitglieder_flat.csv","Mitglieder-Liste","239 Zeilen · flach"],
+  ["02_eintritte_pro_jahr_nach_mitgliedsart.csv","Eintritte/Jahr × Mitgliedsart","Pivot wide · disjunkt"],
+  ["03_bestand_jahresende_nach_mitgliedsart.csv","Bestand × Mitgliedsart","Pivot wide · kumuliert"],
+  ["04_eintritte_pro_jahr_nach_gruppe.csv","Eintritte/Jahr × Gruppe","Pivot wide · überlappend"],
+  ["05_bestand_jahresende_nach_gruppe.csv","Bestand × Gruppe","Pivot wide · kumuliert überlappend"],
+  ["06_eintritte_pro_jahr_nach_geschlecht.csv","Eintritte/Jahr × Geschlecht","Pivot wide"],
+  ["07_altersverteilung_aktuell.csv","Altersverteilung heute","7 Altersgruppen"],
+  ["08_altersverteilung_nach_mitgliedsart.csv","Altersverteilung × Mitgliedsart","Pivot wide"],
+  ["09_altersverteilung_gruppen_nach_mitgliedsart.csv","Altersgruppen × Mitgliedsart (Filter)","inkl. 'Alle'-Spalte"],
+  ["10_alterspyramide_5jahre_nach_mitgliedsart.csv","Alterspyramide 5-Jahres-Bins","Long · Männer/Frauen/N/A"],
+  ["11_alterspyramide_entwicklung_nach_jahr.csv","Alterspyramide · Zeitverlauf","Long · pro Jahresende"],
+];
+document.getElementById("dlGrid").innerHTML = files.map(([f,t,d])=>`
+  <a class="dl" href="csv/${f}" download>
+    <div class="icon">CSV</div>
+    <div class="meta"><div class="ttl">${t}</div><div class="desc">${d}</div></div>
+  </a>
+`).join("");
+</script>
+</body>
+</html>

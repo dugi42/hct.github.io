@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YWXF7HR51T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YWXF7HR51T');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="2.2.0">
+    <title>Hockey Cup – HC Thaur</title>
+
+    <link rel="stylesheet" href="../../../css/site.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'hc-red': '#fc0612' } } } }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        /* Cup stats inline styles */
+        .cup-sub-nav { background:#0c0c0f; border-bottom:1px solid #1e1e26; overflow-x:auto; scrollbar-width:none; }
+        .cup-sub-nav::-webkit-scrollbar { display:none; }
+        .cup-sub-nav-inner { display:flex; max-width:72rem; margin:0 auto; padding:0 1.5rem; }
+        .cup-nav-link { flex-shrink:0; padding:10px 14px; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:#6b7280; text-decoration:none; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+        .cup-nav-link:hover { color:#f0f0f5; border-bottom-color:#fc0612; }
+        .cup-sec-head { display:flex; align-items:baseline; gap:.75rem; padding-bottom:.75rem; border-bottom:1px solid #2a2a35; margin-bottom:1.5rem; }
+        .cup-sec-n { font-size:.65rem; font-weight:700; letter-spacing:.12em; color:#fc0612; }
+        .cup-sec-t { font-size:1.05rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#f0f0f5; }
+        .cup-kpi-grid { display:grid; gap:0; background:#2a2a35; border-radius:12px; overflow:hidden; border:1px solid #2a2a35; }
+        .cup-kpi-grid.cols-4 { grid-template-columns:repeat(4,1fr); }
+        .cup-kpi-cell { background:#1a1a20; padding:1rem 1.25rem; border-right:1px solid #2a2a35; }
+        .cup-kpi-cell:last-child { border-right:none; }
+        .cup-kpi-val { font-size:1.75rem; font-weight:900; line-height:1; font-variant-numeric:tabular-nums; }
+        .cup-kpi-lbl { font-size:.62rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:#8a8a9a; margin-top:4px; }
+        .cup-kpi-sub { font-size:.62rem; color:#6b7280; margin-top:2px; }
+        .cup-tbl { width:100%; border-collapse:collapse; font-size:.8rem; }
+        .cup-tbl th { font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#6b7280; padding:8px 10px; border-bottom:1px solid #2a2a35; text-align:left; background:#13131a; }
+        .cup-tbl th.r,.cup-tbl td.r { text-align:right; font-variant-numeric:tabular-nums; }
+        .cup-tbl td { padding:8px 10px; border-bottom:1px solid rgba(42,42,53,.5); color:#c8c8d8; }
+        .cup-tbl tr:last-child td { border-bottom:none; }
+        .cup-tbl tr:hover td { background:rgba(255,255,255,.02); }
+        .cup-tbl td.bold { font-weight:700; color:#f0f0f5; }
+        .cup-tbl td.dim { color:#6b7280; font-size:.7rem; }
+        .cup-tbl tr.hct-row td { background:rgba(252,6,18,.04); }
+        .cup-bar-track { height:4px; background:#2a2a35; border-radius:2px; min-width:60px; max-width:100px; }
+        .cup-bar-fill { height:4px; background:#fc0612; border-radius:2px; }
+        .cup-badge { display:inline-block; font-size:.6rem; font-weight:700; letter-spacing:.04em; padding:2px 6px; border-radius:3px; }
+        .cup-badge-w { background:rgba(34,197,94,.12); color:#22c55e; border:1px solid rgba(34,197,94,.25); }
+        .cup-badge-l { background:rgba(239,68,68,.12); color:#ef4444; border:1px solid rgba(239,68,68,.25); }
+        .cup-game-row { display:grid; grid-template-columns:50px 1fr 72px 54px 10px; gap:.75rem; align-items:center; padding:8px 0; border-bottom:1px solid rgba(42,42,53,.45); }
+        .cup-game-row:last-child { border-bottom:none; }
+        .cup-g-date { font-size:.68rem; font-weight:600; color:#6b7280; font-variant-numeric:tabular-nums; }
+        .cup-g-opp { font-size:.8rem; font-weight:600; color:#f0f0f5; line-height:1.3; }
+        .cup-g-opp small { display:block; font-size:.62rem; font-weight:400; color:#6b7280; }
+        .cup-g-score { font-size:.9375rem; font-weight:800; color:#fff; text-align:center; font-variant-numeric:tabular-nums; }
+        .cup-phase-card { background:#1a1a20; border:1px solid #2a2a35; border-radius:12px; padding:1.375rem; }
+        .cup-phase-rate { font-size:2.25rem; font-weight:900; line-height:1; }
+        .cup-ph-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid rgba(42,42,53,.4); font-size:.78rem; }
+        .cup-ph-row:last-child { border-bottom:none; }
+        .cup-ph-k { color:#8a8a9a; }
+        .cup-ph-v { font-weight:600; color:#f0f0f5; font-variant-numeric:tabular-nums; }
+        .cup-chart-card { background:#1a1a20; border:1px solid #2a2a35; border-radius:12px; padding:1.25rem; }
+        .cup-chart-lbl { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#9ca3af; margin-bottom:1rem; }
+        .cup-dl-card { background:#1a1a20; border:1px solid #2a2a35; border-left:3px solid #2a2a35; border-radius:0 8px 8px 0; padding:.875rem 1.125rem; text-decoration:none; display:block; transition:border-left-color .15s,background .15s; }
+        .cup-dl-card:hover { border-left-color:#fc0612; background:#13131a; }
+        .cup-dl-name { font-size:.8rem; font-weight:700; color:#f0f0f5; text-transform:uppercase; letter-spacing:.03em; margin-bottom:2px; }
+        .cup-dl-desc { font-size:.7rem; color:#8a8a9a; margin-bottom:5px; line-height:1.4; }
+        .cup-dl-meta { font-size:.62rem; color:#fc0612; font-weight:600; letter-spacing:.04em; }
+        .c-win { color:#22c55e; } .c-loss { color:#ef4444; } .c-red { color:#fc0612; }
+        .cup-dot { display:inline-block; width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+        @media (max-width:640px) {
+            .cup-kpi-grid.cols-4 { grid-template-columns:repeat(2,1fr); }
+            .cup-kpi-cell:nth-child(even) { border-right:none; }
+            .cup-kpi-cell { border-bottom:1px solid #2a2a35; }
+            .cup-phases-grid { grid-template-columns:1fr !important; }
+            .cup-charts-row { grid-template-columns:1fr !important; }
+            .cup-game-row { grid-template-columns:44px 1fr 60px 46px 8px; gap:.5rem; }
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../../images/favicon.ico" type="image/x-icon">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+
+<body class="bg-[#0f0f12] text-white">
+
+    <!-- Header -->
+    <header class="bg-[#111118] border-b border-[#2a2a35] sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="../../../index.html" class="flex items-center space-x-3">
+                <img src="../../../images/logo.png" alt="HC Thaur Logo" class="h-12 w-12 rounded-full object-contain">
+                <span class="text-lg font-black tracking-widest text-white">HC THAUR</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                <a href="../../verein/verein.html" class="text-gray-400 hover:text-white transition-colors">Unser Verein</a>
+                <a href="../../../index.html#news" class="text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="202526_playoffs.html" class="text-white border-b-2 border-hc-red pb-0.5">Hockey Cup</a>
+                <a href="../../magazin/" class="text-gray-400 hover:text-white transition-colors">Magazin</a>
+                <a href="../../../index.html#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="../../../index.html#contact" class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="#" aria-label="Shop" class="text-gray-500 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#111118] border-t border-[#2a2a35]">
+            <div class="container mx-auto px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
+                <a href="../../verein/verein.html" class="py-2 text-gray-400 hover:text-white">Unser Verein</a>
+                <a href="../../../index.html#news" class="py-2 text-gray-400 hover:text-white">News</a>
+                <a href="202526_playoffs.html" class="py-2 text-white">Hockey Cup</a>
+                <a href="../../magazin/" class="py-2 text-gray-400 hover:text-white">Magazin</a>
+                <a href="../../../index.html#sponsors" class="py-2 text-gray-400 hover:text-white">Sponsoren</a>
+                <a href="../../../index.html#contact" class="py-2 text-gray-400 hover:text-white">Kontakt</a>
+                <a href="#" class="py-2 text-gray-400 hover:text-white flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                    Shop
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Page Hero -->
+        <section class="relative py-20 md:py-28 overflow-hidden border-b border-[#1e1e26]">
+            <div class="hero-glow"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl mx-auto">
+                    <span class="section-label">
+                        <span class="inline-block w-2 h-2 rounded-full bg-hc-red animate-pulse mr-2"></span>
+                        Hockey Cup Tirol – Division 2
+                    </span>
+                    <h1 class="text-5xl md:text-7xl font-black tracking-tight mt-4 mb-6">
+                        Hockey Cup <span class="text-hc-red">Tirol</span>
+                    </h1>
+                    <p class="text-lg text-gray-400 max-w-2xl leading-relaxed">
+                        Alle Spielphasen, Statistiken und Ergebnisse des HC Thaur im Hockey Cup Tirol –
+                        vom Grunddurchgang bis zum <strong class="text-white">Tiroler Meistertitel 2025/26</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Season Tab Switcher -->
+        <div class="bg-[#111118] border-b border-[#2a2a35] sticky top-[57px] z-40">
+            <div class="container mx-auto px-6">
+                <div class="flex gap-0 overflow-x-auto">
+                    <button id="tab-btn-2526"
+                            onclick="switchTab('2526')"
+                            class="season-tab active flex-none px-5 py-4 text-sm font-bold uppercase tracking-wider border-b-2 border-hc-red text-white transition-colors whitespace-nowrap">
+                        Playoffs 2025/26
+                    </button>
+                    <button id="tab-btn-2425"
+                            onclick="switchTab('2425')"
+                            class="season-tab flex-none px-5 py-4 text-sm font-bold uppercase tracking-wider border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
+                        Grunddurchgang
+                    </button>
+                    <button id="tab-btn-stats"
+                            onclick="switchTab('stats')"
+                            class="season-tab flex-none px-5 py-4 text-sm font-bold uppercase tracking-wider border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
+                        Vereins-Statistiken
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             TAB: SAISON 2025/26 — Playoffs & Meisterschaft
+             ===================================================== -->
+        <div id="season-2526">
+
+            <!-- Championship announcement -->
+            <section class="py-16 border-b border-[#1e1e26]">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
+                            <div class="md:flex">
+                                <div class="md:w-2/5 bg-[#13131a] flex items-center justify-center p-6">
+                                    <img src="../../../images/news/202526_cup_champions.png"
+                                         alt="HCT Tiroler Meister 2025/26"
+                                         class="w-full rounded-xl"
+                                         style="box-shadow: 0 0 40px rgba(252,6,18,0.15);">
+                                </div>
+                                <div class="md:w-3/5 p-8 md:p-10">
+                                    <span class="section-label">Meister!</span>
+                                    <h2 class="text-3xl md:text-4xl font-black mt-3 mb-4">
+                                        Wir sind <span class="text-hc-red">Tiroler Meister 2025/26</span>!
+                                    </h2>
+                                    <p class="text-gray-400 leading-relaxed mb-4">
+                                        Mit einer grandiosen Mannschaftsleistung und einem echten Hexer
+                                        <a href="https://www.instagram.com/florian.kogler.25/" target="_blank"
+                                           class="text-hc-red hover:text-white transition-colors font-semibold">@florian.kogler.25</a>
+                                        im Tor holt unser Team den Titel!
+                                    </p>
+                                    <ul class="space-y-1 text-sm text-gray-400 mb-6">
+                                        <li>🏒 Danke an unser Team für eine unglaubliche Saison</li>
+                                        <li>🏒 Danke an die volle HCT-Tribüne für den Support</li>
+                                        <li>🏒 Danke an Hauptsponsor
+                                            <a href="https://www.instagram.com/drucken.tirol/" target="_blank"
+                                               class="text-hc-red hover:text-white transition-colors">@drucken.tirol</a>
+                                        </li>
+                                    </ul>
+                                    <button onclick="switchTab('2425')"
+                                       class="inline-flex items-center gap-2 px-5 py-3 bg-hc-red text-white text-sm font-bold rounded-xl hover:bg-[#d30510] transition-colors">
+                                        Zur Cup-Statistik
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finale -->
+            <section class="py-16 border-b border-[#1e1e26]">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="text-center mb-8">
+                            <span class="section-label">Finale</span>
+                            <h2 class="text-3xl md:text-4xl font-black mt-2">Cup-<span class="text-hc-red">Finale</span></h2>
+                            <p class="text-gray-500 text-sm mt-2">07.03.2026 · TIWAG Arena</p>
+                        </div>
+                        <div class="max-w-lg mx-auto">
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-8">
+                                <div class="text-xs font-bold uppercase tracking-wider text-center text-gray-500 mb-6">Ergebnis</div>
+                                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+                                    <div class="flex flex-col items-center gap-2 text-center">
+                                        <img src="../../../images/cup_logos/ec_sellraintal_wolves.jpg"
+                                             alt="EC Sellraintal Wolves"
+                                             class="w-16 h-16 object-contain">
+                                        <span class="text-sm font-semibold text-gray-300 leading-tight">EC Sellraintal<br>Wolves</span>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-4xl md:text-5xl font-black text-white px-4 py-2 rounded-xl bg-[#13131a]">
+                                            4 <span class="text-hc-red">:</span> <span class="text-hc-red">6</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-2 uppercase tracking-wider">Abgeschlossen</p>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2 text-center">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png"
+                                             alt="HC Thaur"
+                                             class="w-20 h-20 object-contain"
+                                             style="filter: drop-shadow(0 0 12px rgba(252,6,18,0.4));">
+                                        <span class="text-sm font-bold text-white leading-tight">HC Thaur<br><span class="text-hc-red">Meister! 🏆</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Halbfinale -->
+            <section class="py-16 border-b border-[#1e1e26]">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="text-center mb-8">
+                            <span class="section-label">Halbfinale</span>
+                            <h2 class="text-3xl md:text-4xl font-black mt-2">Halbfinale <span class="text-hc-red">2025/26</span></h2>
+                            <p class="text-gray-500 text-sm mt-2">HC Thaur vs. EHC Black Scorpions Strass – Seriesieg 2:0</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                                <div class="flex justify-between items-center text-xs text-gray-500 mb-4 uppercase tracking-wider">
+                                    <span>Spiel 1 · Auswärts</span>
+                                    <span>21.02.2026 · Eishalle Kundl</span>
+                                </div>
+                                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                                    <div class="flex flex-col items-center gap-2 text-center">
+                                        <img src="../../../images/cup_logos/ehc_black_scorpions.jpg" alt="EHC Black Scorpions" class="w-12 h-12 object-contain">
+                                        <span class="text-xs font-semibold text-gray-400 leading-tight">EHC Black Scorpions</span>
+                                    </div>
+                                    <div class="text-3xl font-black text-white px-3 py-1 rounded-lg bg-[#13131a]">
+                                        1 : <span class="text-hc-red">2</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2 text-center">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-14 h-14 object-contain">
+                                        <span class="text-xs font-bold text-white leading-tight">HC Thaur</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-hc-red/30 rounded-2xl p-6 relative overflow-hidden">
+                                <div class="absolute top-3 right-3 bg-hc-red text-white text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Finaleinzug</div>
+                                <div class="flex justify-between items-center text-xs text-gray-500 mb-4 uppercase tracking-wider">
+                                    <span>Spiel 2 · Heim</span>
+                                    <span>25.02.2026 · TIWAG Arena</span>
+                                </div>
+                                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                                    <div class="flex flex-col items-center gap-2 text-center">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-14 h-14 object-contain">
+                                        <span class="text-xs font-bold text-white leading-tight">HC Thaur</span>
+                                    </div>
+                                    <div class="text-3xl font-black text-white px-3 py-1 rounded-lg bg-[#13131a]">
+                                        <span class="text-hc-red">6</span> : 0
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2 text-center">
+                                        <img src="../../../images/cup_logos/ehc_black_scorpions.jpg" alt="EHC Black Scorpions" class="w-12 h-12 object-contain">
+                                        <span class="text-xs font-semibold text-gray-400 leading-tight">EHC Black Scorpions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
+                                <video autoplay loop muted playsinline class="w-full">
+                                    <source src="../../../images/news/202526_playoffs_finals.MP4" type="video/mp4">
+                                </video>
+                                <div class="p-4">
+                                    <p class="text-sm text-gray-400 text-center">HC Thaur zieht vorzeitig ins Finale ein</p>
+                                </div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                                <h3 class="text-lg font-bold text-gray-200 mb-4">Topscorer Halbfinale</h3>
+                                <div id="news-playoff-topscorer" class="space-y-3 text-sm text-gray-500">
+                                    <div class="text-sm text-gray-500">Daten werden geladen…</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- /season-2526 -->
+
+
+        <!-- =====================================================
+             TAB: SAISON 2024/25 — Grunddurchgang + Cup-Statistiken
+             ===================================================== -->
+        <div id="season-2425" class="hidden">
+
+            <!-- In-tab sub-nav -->
+            <div class="cup-sub-nav">
+                <div class="cup-sub-nav-inner">
+                    <a href="#gd-uebersicht" class="cup-nav-link">Übersicht</a>
+                    <a href="#gd-tabelle"    class="cup-nav-link">Tabelle</a>
+                    <a href="#gd-topscorer" class="cup-nav-link">Topscorer</a>
+                    <a href="#gd-spiele"    class="cup-nav-link">Spiele</a>
+                    <a href="#gd-phasen"    class="cup-nav-link">Phasen</a>
+                    <a href="#gd-h2h"       class="cup-nav-link">H2H</a>
+                    <a href="#gd-charts"    class="cup-nav-link">Charts</a>
+                    <a href="#gd-downloads" class="cup-nav-link">Downloads</a>
+                </div>
+            </div>
+
+            <!-- 01 Saisonübersicht KPIs -->
+            <section id="gd-uebersicht" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="mb-8">
+                            <span class="section-label">Grunddurchgang</span>
+                            <h2 class="text-3xl md:text-4xl font-black mt-2">Hockey Cup Tirol – <span class="text-hc-red">Saisonübersicht</span></h2>
+                            <p class="text-gray-500 mt-2 text-sm">Oktober 2025 – März 2026 · Division 2 · 7 Teams &nbsp;·&nbsp; <span class="c-win font-bold">11</span> <span class="text-gray-600">–</span> <span class="c-loss font-bold">4</span> &nbsp;·&nbsp; <span class="c-red font-bold">73 % Siegquote</span></p>
+                        </div>
+                        <div class="cup-kpi-grid cols-4 mb-px" style="border-radius:12px 12px 0 0">
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">15</div><div class="cup-kpi-lbl">Spiele</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val c-win">11</div><div class="cup-kpi-lbl">Siege</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val c-loss">4</div><div class="cup-kpi-lbl">Niederlagen</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val c-red">73 %</div><div class="cup-kpi-lbl">Siegquote</div></div>
+                        </div>
+                        <div class="cup-kpi-grid cols-4 mb-px" style="border-radius:0">
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">81</div><div class="cup-kpi-lbl">Tore erzielt</div><div class="cup-kpi-sub">Ø 5.4 / Spiel</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">46</div><div class="cup-kpi-lbl">Gegentore</div><div class="cup-kpi-sub">Ø 3.1 / Spiel</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val c-win">+35</div><div class="cup-kpi-lbl">Tordifferenz</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">7</div><div class="cup-kpi-lbl">Powerplay-Tore</div></div>
+                        </div>
+                        <div class="cup-kpi-grid cols-4" style="border-radius:0 0 12px 12px">
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">6–3</div><div class="cup-kpi-lbl">Heimspiele</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">5–1</div><div class="cup-kpi-lbl">Auswärtsspiele</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">81</div><div class="cup-kpi-lbl">Strafminuten</div><div class="cup-kpi-sub">Ø 5.4 / Spiel</div></div>
+                            <div class="cup-kpi-cell"><div class="cup-kpi-val">1</div><div class="cup-kpi-lbl">Shutouts</div><div class="cup-kpi-sub">25 Feb vs STR</div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 02 Tabelle -->
+            <section id="gd-tabelle" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">02</span><span class="cup-sec-t">Abschlusstabelle Grunddurchgang</span></div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="cup-tbl">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th><th>Team</th>
+                                            <th class="r">Pkt</th><th class="r">Sp</th>
+                                            <th class="r">S</th><th class="r">N</th>
+                                            <th class="r">OT-S</th><th class="r">OT-N</th>
+                                            <th class="r">T</th><th class="r">GT</th><th class="r">Diff</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="standings-table-body">
+                                        <tr><td colspan="11" class="px-4 py-4 text-gray-500 text-center">Tabellendaten werden geladen…</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 03 Topscorer -->
+            <section id="gd-topscorer" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">03</span><span class="cup-sec-t">Topscorer</span></div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
+                            <table class="cup-tbl">
+                                <thead><tr><th>#</th><th>Spieler</th><th class="r">Sp</th><th class="r">T</th><th class="r">A</th><th class="r">Pkt</th><th class="r">P/Sp</th><th></th></tr></thead>
+                                <tbody>
+                                    <tr><td class="dim">1</td><td class="bold">Christler Lukas <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#8 (C)</span></td><td class="r">15</td><td class="r">13</td><td class="r">4</td><td class="r bold">17</td><td class="r">1.13</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:100%"></div></div></td></tr>
+                                    <tr><td class="dim">2</td><td class="bold">Gasser Raphael <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#85 (A)</span></td><td class="r">14</td><td class="r">6</td><td class="r">11</td><td class="r bold">17</td><td class="r">1.21</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:100%"></div></div></td></tr>
+                                    <tr><td class="dim">3</td><td class="bold">Mariacher Marlon <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#89 U18</span></td><td class="r">12</td><td class="r">6</td><td class="r">6</td><td class="r bold">12</td><td class="r">1.00</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:71%"></div></div></td></tr>
+                                    <tr><td class="dim">4</td><td class="bold">Krippels Peter <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#23</span></td><td class="r">13</td><td class="r">5</td><td class="r">6</td><td class="r bold">11</td><td class="r">0.85</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:65%"></div></div></td></tr>
+                                    <tr><td class="dim">5</td><td class="bold">Wöber Matteo <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#9</span></td><td class="r">14</td><td class="r">7</td><td class="r">3</td><td class="r bold">10</td><td class="r">0.71</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:59%"></div></div></td></tr>
+                                    <tr><td class="dim">6</td><td class="bold">Pipal Thomas <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#75 U18</span></td><td class="r">13</td><td class="r">5</td><td class="r">4</td><td class="r bold">9</td><td class="r">0.69</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:53%"></div></div></td></tr>
+                                    <tr><td class="dim">7</td><td class="bold">Wessiak Fabian <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#32 (A)</span></td><td class="r">10</td><td class="r">3</td><td class="r">5</td><td class="r bold">8</td><td class="r">0.80</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:47%"></div></div></td></tr>
+                                    <tr><td class="dim">8</td><td class="bold">Föger Mario <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#15 (A)</span></td><td class="r">11</td><td class="r">5</td><td class="r">2</td><td class="r bold">7</td><td class="r">0.64</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:41%"></div></div></td></tr>
+                                    <tr><td class="dim">9</td><td class="bold">Mayr Stephan <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#22</span></td><td class="r">13</td><td class="r">4</td><td class="r">2</td><td class="r bold">6</td><td class="r">0.46</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:35%"></div></div></td></tr>
+                                    <tr><td class="dim">10</td><td class="bold">Gufler Christopher <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#98</span></td><td class="r">11</td><td class="r">3</td><td class="r">3</td><td class="r bold">6</td><td class="r">0.55</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:35%"></div></div></td></tr>
+                                    <tr><td class="dim">11</td><td class="bold">Praxmarer Felix <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#69 U18</span></td><td class="r">12</td><td class="r">0</td><td class="r">5</td><td class="r bold">5</td><td class="r">0.42</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:29%"></div></div></td></tr>
+                                    <tr><td class="dim">12</td><td class="bold">Praxmarer Moritz <span style="color:#6b7280;font-weight:400;font-size:.68rem;">#55 U18</span></td><td class="r">12</td><td class="r">2</td><td class="r">3</td><td class="r bold">5</td><td class="r">0.42</td><td><div class="cup-bar-track"><div class="cup-bar-fill" style="width:29%"></div></div></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 04 Spiele -->
+            <section id="gd-spiele" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">04</span><span class="cup-sec-t">Spiellog — Hockey Cup Tirol</span></div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 mb-6">
+                            <div style="display:flex;gap:1.25rem;margin-bottom:1rem;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6b7280;flex-wrap:wrap;">
+                                <span><span class="cup-dot" style="background:#4fc3f7;margin-right:5px;"></span>Early (Nov–Dez)</span>
+                                <span><span class="cup-dot" style="background:#a78bfa;margin-right:5px;"></span>Mid (Jan–Feb)</span>
+                                <span><span class="cup-dot" style="background:#22c55e;margin-right:5px;"></span>Late (Feb–Mär)</span>
+                            </div>
+                            <div class="cup-game-row"><div class="cup-g-date">15 Nov</div><div class="cup-g-opp">EHC Scorpions Strass<small>Auswärts · STR</small></div><div class="cup-g-score">1:2</div><div><span class="cup-badge cup-badge-l">Loss</span></div><div class="cup-dot" style="background:#4fc3f7;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">24 Nov</div><div class="cup-g-opp">Tyrolean Ice Kings<small>Auswärts · TIK</small></div><div class="cup-g-score">5:2</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#4fc3f7;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">15 Dez</div><div class="cup-g-opp">EC Aschauer Eisbären<small>Auswärts · ECA</small></div><div class="cup-g-score">3:4</div><div><span class="cup-badge cup-badge-l">Loss</span></div><div class="cup-dot" style="background:#4fc3f7;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">18 Dez</div><div class="cup-g-opp">EC Aschauer Eisbären<small>Heim · ECA</small></div><div class="cup-g-score">3:2</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#4fc3f7;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">29 Dez</div><div class="cup-g-opp">EHC Scorpions Strass<small>Heim · STR</small></div><div class="cup-g-score">1:4</div><div><span class="cup-badge cup-badge-l">Loss</span></div><div class="cup-dot" style="background:#4fc3f7;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">30 Dez</div><div class="cup-g-opp">EHC White Hawks Volders<small>Heim · EHV</small></div><div class="cup-g-score">7:9</div><div><span class="cup-badge cup-badge-l">Loss</span></div><div class="cup-dot" style="background:#4fc3f7;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">08 Jan</div><div class="cup-g-opp">EC Newcomers II<small>Auswärts · ECNII</small></div><div class="cup-g-score">9:1</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#a78bfa;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">20 Jan</div><div class="cup-g-opp">EC Sellraintal Wolves<small>Heim · ECS</small></div><div class="cup-g-score">3:4</div><div><span class="cup-badge cup-badge-l">Loss</span></div><div class="cup-dot" style="background:#a78bfa;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">25 Jan</div><div class="cup-g-opp">EHC White Hawks Volders<small>Auswärts · EHV</small></div><div class="cup-g-score">6:2</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#a78bfa;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">27 Jan</div><div class="cup-g-opp">EC Newcomers II<small>Heim · ECNII</small></div><div class="cup-g-score">8:3</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#a78bfa;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">05 Feb</div><div class="cup-g-opp">Tyrolean Ice Kings<small>Heim · TIK</small></div><div class="cup-g-score">3:1</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#a78bfa;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">10 Feb</div><div class="cup-g-opp">EC Sellraintal Wolves<small>Auswärts · ECS</small></div><div class="cup-g-score">3:2</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#22c55e;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">21 Feb</div><div class="cup-g-opp">EHC Scorpions Strass<small>Auswärts · STR</small></div><div class="cup-g-score">2:1</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#22c55e;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">25 Feb</div><div class="cup-g-opp">EHC Scorpions Strass <span style="font-size:.6rem;color:#22c55e;font-weight:700;">SHUTOUT</span><small>Heim · STR</small></div><div class="cup-g-score c-win">6:0</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#22c55e;"></div></div>
+                            <div class="cup-game-row"><div class="cup-g-date">07 Mär</div><div class="cup-g-opp">EC Sellraintal Wolves<small>Finale · ECS</small></div><div class="cup-g-score c-win">6:4</div><div><span class="cup-badge cup-badge-w">Win 🏆</span></div><div class="cup-dot" style="background:#22c55e;"></div></div>
+                        </div>
+                        <!-- Games carousel (dynamic) -->
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                            <h3 class="text-lg font-bold mb-4">Alle Spiele – Live-Daten</h3>
+                            <p id="hc-games-status" class="text-sm text-gray-500 mb-4">Spiele werden geladen…</p>
+                            <div id="hc-games-carousel" class="flex overflow-x-auto pb-4 gap-4 snap-x snap-mandatory"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 05 Phasen -->
+            <section id="gd-phasen" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">05</span><span class="cup-sec-t">Saisonphasen</span></div>
+                        <div class="cup-phases-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+                            <div class="cup-phase-card" style="border-top:3px solid #4fc3f7;">
+                                <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4fc3f7;margin-bottom:.5rem;">Phase 1 · Early</div>
+                                <div style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:2px;">Nov – Dez 2025</div>
+                                <div class="cup-phase-rate" style="color:#4fc3f7;margin:.75rem 0 .875rem;">33 %</div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Spiele</span><span class="cup-ph-v">6</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">S / N</span><span class="cup-ph-v">2 – 4</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Tore</span><span class="cup-ph-v">20 : 27</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Diff.</span><span class="cup-ph-v c-loss">−7</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Strafmin.</span><span class="cup-ph-v">16</span></div>
+                            </div>
+                            <div class="cup-phase-card" style="border-top:3px solid #a78bfa;">
+                                <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#a78bfa;margin-bottom:.5rem;">Phase 2 · Mid</div>
+                                <div style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:2px;">Jan – Feb 2026</div>
+                                <div class="cup-phase-rate" style="color:#a78bfa;margin:.75rem 0 .875rem;">80 %</div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Spiele</span><span class="cup-ph-v">5</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">S / N</span><span class="cup-ph-v">4 – 1</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Tore</span><span class="cup-ph-v">29 : 11</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Diff.</span><span class="cup-ph-v c-win">+18</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Strafmin.</span><span class="cup-ph-v">24</span></div>
+                            </div>
+                            <div class="cup-phase-card" style="border-top:3px solid #22c55e;">
+                                <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#22c55e;margin-bottom:.5rem;">Phase 3 · Late</div>
+                                <div style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:2px;">Feb – Mär 2026</div>
+                                <div class="cup-phase-rate" style="color:#22c55e;margin:.75rem 0 .875rem;">100 %</div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Spiele</span><span class="cup-ph-v">5</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">S / N</span><span class="cup-ph-v">5 – 0</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Tore</span><span class="cup-ph-v">32 : 8</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Diff.</span><span class="cup-ph-v c-win">+24</span></div>
+                                <div class="cup-ph-row"><span class="cup-ph-k">Strafmin.</span><span class="cup-ph-v">41</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 06 Head-to-Head -->
+            <section id="gd-h2h" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">06</span><span class="cup-sec-t">Head-to-Head</span></div>
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
+                            <table class="cup-tbl">
+                                <thead><tr><th>Gegner</th><th class="r">Sp</th><th class="r">S</th><th class="r">N</th><th class="r">Tore</th><th class="r">GT</th><th class="r">Diff</th></tr></thead>
+                                <tbody>
+                                    <tr><td class="bold">EHC Black Scorpions Strass</td><td class="r">4</td><td class="r c-win">2</td><td class="r c-loss">2</td><td class="r">10</td><td class="r">7</td><td class="r c-win">+3</td></tr>
+                                    <tr><td class="bold">EC Sellraintal Wolves</td><td class="r">3</td><td class="r c-win">2</td><td class="r c-loss">1</td><td class="r">12</td><td class="r">10</td><td class="r c-win">+2</td></tr>
+                                    <tr><td class="bold">EC Newcomers II</td><td class="r">2</td><td class="r c-win">2</td><td class="r">0</td><td class="r">17</td><td class="r">4</td><td class="r c-win">+13</td></tr>
+                                    <tr><td class="bold">EHC White Hawks Volders</td><td class="r">2</td><td class="r c-win">1</td><td class="r c-loss">1</td><td class="r">13</td><td class="r">11</td><td class="r c-win">+2</td></tr>
+                                    <tr><td class="bold">EC Aschauer Eisbären</td><td class="r">2</td><td class="r c-win">1</td><td class="r c-loss">1</td><td class="r">6</td><td class="r">6</td><td class="r">0</td></tr>
+                                    <tr><td class="bold">Tyrolean Ice Kings</td><td class="r">2</td><td class="r c-win">1</td><td class="r c-loss">1</td><td class="r">8</td><td class="r">3</td><td class="r c-win">+5</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 07 Charts -->
+            <section id="gd-charts" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">07</span><span class="cup-sec-t">Charts</span></div>
+                        <div class="cup-chart-card mb-4">
+                            <div class="cup-chart-lbl">Top Spielerleistung — Tore &amp; Assists</div>
+                            <div style="height:300px"><canvas id="cup-chart-players"></canvas></div>
+                        </div>
+                        <div class="cup-chart-card mb-4">
+                            <div class="cup-chart-lbl">Tor-Entwicklung (kumulativ)</div>
+                            <div style="height:240px"><canvas id="cup-chart-goals"></canvas></div>
+                        </div>
+                        <div class="cup-charts-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                            <div class="cup-chart-card">
+                                <div class="cup-chart-lbl">Strafminuten nach Spieler</div>
+                                <div style="height:300px;overflow-y:auto"><canvas id="cup-chart-fouls-player"></canvas></div>
+                            </div>
+                            <div class="cup-chart-card">
+                                <div class="cup-chart-lbl">Strafen nach Typ</div>
+                                <div style="height:300px"><canvas id="cup-chart-fouls-type"></canvas></div>
+                            </div>
+                        </div>
+                        <p id="cup-charts-error" style="display:none;color:#6b7280;font-size:.8rem;margin-top:.75rem;"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 08 Downloads -->
+            <section id="gd-downloads" class="py-16 border-b border-[#1e1e26]" style="scroll-margin-top:110px">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="cup-sec-head"><span class="cup-sec-n">08</span><span class="cup-sec-t">Daten-Downloads</span></div>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">
+                            <a class="cup-dl-card" href="../../../public/202526_season/gold/202526_hct_cup_stats/202526_cup_hct_game_log.csv" download>
+                                <div class="cup-dl-name">Spiellog</div>
+                                <div class="cup-dl-desc">Alle 15 Spiele mit Ergebnis, Phase, Spielort</div>
+                                <div class="cup-dl-meta">CSV</div>
+                            </a>
+                            <a class="cup-dl-card" href="../../../public/202526_season/gold/202526_hct_cup_stats/202526_cup_hct_player_scoring.csv" download>
+                                <div class="cup-dl-name">Topscorer</div>
+                                <div class="cup-dl-desc">Tore, Assists, Punkte, PP/EN je Spieler</div>
+                                <div class="cup-dl-meta">CSV</div>
+                            </a>
+                            <a class="cup-dl-card" href="../../../public/202526_season/gold/202526_hct_cup_stats/202526_cup_hct_all_goals.csv" download>
+                                <div class="cup-dl-name">Alle Tore</div>
+                                <div class="cup-dl-desc">Zeitpunkt, Schütze, Assistenten, Typ</div>
+                                <div class="cup-dl-meta">CSV</div>
+                            </a>
+                            <a class="cup-dl-card" href="../../../public/202526_season/gold/202526_hct_cup_stats/202526_cup_hct_penalties.csv" download>
+                                <div class="cup-dl-name">Strafen</div>
+                                <div class="cup-dl-desc">Strafminuten und Straftypen je Spieler</div>
+                                <div class="cup-dl-meta">CSV</div>
+                            </a>
+                            <a class="cup-dl-card" href="../../../public/202526_season/gold/202526_hct_cup_stats/202526_cup_hct_phase_summary.csv" download>
+                                <div class="cup-dl-name">Phasenauswertung</div>
+                                <div class="cup-dl-desc">Early / Mid / Late Saisonstatistiken</div>
+                                <div class="cup-dl-meta">CSV</div>
+                            </a>
+                            <a class="cup-dl-card" href="../../../public/202526_season/gold/202526_hct_cup_stats/202526_cup_hct_head_to_head.csv" download>
+                                <div class="cup-dl-name">Head to Head</div>
+                                <div class="cup-dl-desc">Ergebnisse vs. jeden Gegner</div>
+                                <div class="cup-dl-meta">CSV</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Playoff Einzug milestone card -->
+            <section class="py-16 border-b border-[#1e1e26]">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
+                            <div class="md:flex">
+                                <div class="md:w-2/5 bg-[#13131a] flex items-center justify-center p-4">
+                                    <video autoplay loop muted playsinline class="w-full rounded-xl">
+                                        <source src="../../../images/news/Playoff_Einzug_Feiern.mov" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="md:w-3/5 p-8 md:p-10">
+                                    <span class="section-label">Meilenstein</span>
+                                    <h2 class="text-2xl md:text-3xl font-black mt-3 mb-4">
+                                        Playoff-Einzug <span class="text-hc-red">fixiert!</span>
+                                    </h2>
+                                    <p class="text-gray-400 leading-relaxed">
+                                        Mit dem vierten Sieg in Serie fixiert unser Team den Playoffs-Einzug! In einem
+                                        spannenden Spiel gegen @ec_sellraintal_wolves muss man nach 3:0 Führung noch bis
+                                        zur letzten Sekunde zittern!
+                                    </p>
+                                    <p class="mt-3 text-gray-400">
+                                        HC Thaur beendet den Grunddurchgang als <strong class="text-white">Vierter</strong> mit 21 Punkten aus 12 Spielen.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- /season-2425 -->
+
+
+        <!-- =====================================================
+             TAB: VEREINS-STATISTIKEN — Attendance Dashboard
+             ===================================================== -->
+        <div id="season-stats" class="hidden">
+
+            <!-- KPI Row -->
+            <section class="py-16 border-b border-[#1e1e26]">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="text-center mb-10">
+                            <span class="section-label">Saison 2025/26</span>
+                            <h2 class="text-3xl md:text-4xl font-black mt-2">Vereins-<span class="text-hc-red">Statistiken</span></h2>
+                            <p class="text-gray-500 text-sm mt-2">Oktober 2025 – März 2026 · 61 Mitglieder · 36 Events</p>
+                        </div>
+
+                        <!-- KPIs -->
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                                <div class="text-2xl font-black text-blue-400 mb-1">61</div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Mitglieder</div>
+                                <div class="text-xs text-gray-600 mt-1">registriert</div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                                <div class="text-2xl font-black text-blue-400 mb-1">36</div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Events</div>
+                                <div class="text-xs text-gray-600 mt-1">Okt–Mär</div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                                <div class="text-2xl font-black text-green-400 mb-1">557</div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Teilnahmen</div>
+                                <div class="text-xs text-gray-600 mt-1">gesamt</div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                                <div class="text-2xl font-black text-blue-400 mb-1">25%</div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Ø Teilnahme</div>
+                                <div class="text-xs text-gray-600 mt-1">pro Mitglied</div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                                <div class="text-2xl font-black text-green-400 mb-1">15.5</div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Ø pro Event</div>
+                                <div class="text-xs text-gray-600 mt-1">Teilnehmer</div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
+                                <div class="text-2xl font-black text-green-400 mb-1">12</div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Aktiv</div>
+                                <div class="text-xs text-gray-600 mt-1">≥50% Teilnahme</div>
+                            </div>
+                        </div>
+
+                        <!-- Charts grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Monatliche Teilnahmequote</h3>
+                                <div style="position:relative;height:200px"><canvas id="statsMonthChart"></canvas></div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Top 10 Mitglieder nach Teilnahme</h3>
+                                <div style="position:relative;height:200px"><canvas id="statsTopChart"></canvas></div>
+                            </div>
+                        </div>
+
+                        <!-- Top 10 table + streaks -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Top 10 – Detailliert</h3>
+                                <div class="space-y-3" id="statsTopList"></div>
+                            </div>
+                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
+                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Längste Teilnahmeserien</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm">
+                                        <thead>
+                                            <tr class="border-b border-[#2a2a35] text-xs text-gray-500 uppercase">
+                                                <th class="pb-2 text-left">Mitglied</th>
+                                                <th class="pb-2 text-center">Serie</th>
+                                                <th class="pb-2 text-right">Gesamt</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="statsStreakTable" class="divide-y divide-[#2a2a35]"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- /season-stats -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#080809] border-t border-[#1e1e26]">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="../../../images/logo.png" alt="HCT Logo" class="h-10 w-10 rounded-full object-contain">
+                        <span class="font-black tracking-widest text-white">HC THAUR</span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed">Seit 2017 steht beim Hockey Club Thaur die Freude am Sport im Mittelpunkt.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="../../../index.html" class="hover:text-hc-red transition-colors">Home</a></li>
+                        <li><a href="../../verein/verein.html" class="hover:text-hc-red transition-colors">Unser Verein</a></li>
+                        <li><a href="../../../index.html#sponsors" class="hover:text-hc-red transition-colors">Sponsoren</a></li>
+                        <li><a href="../../2025_Datenschutz.html" class="hover:text-hc-red transition-colors">Datenschutz</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Kontakt</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="mailto:hockey@hc-thaur.at" class="hover:text-hc-red transition-colors">hockey@hc-thaur.at</a></li>
+                        <li>Sportplatzweg 1, 6065 Thaur</li>
+                        <li>ZVR. 993472820</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-[#1e1e26] text-center text-xs text-gray-600">
+                <p>&copy; <span id="current-year">2025</span> HC Thaur. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(key) {
+            ['2526','2425','stats'].forEach(k => {
+                const el = document.getElementById('season-' + k);
+                if (el) el.classList.toggle('hidden', k !== key);
+                const btn = document.getElementById('tab-btn-' + k);
+                if (btn) {
+                    btn.classList.toggle('border-hc-red', k === key);
+                    btn.classList.toggle('text-white', k === key);
+                    btn.classList.toggle('border-transparent', k !== key);
+                    btn.classList.toggle('text-gray-500', k !== key);
+                }
+            });
+            if (key === 'stats' && !window._statsChartsBuilt) buildStatsCharts();
+        }
+
+        // ── Attendance stats data ──────────────────────────────────────────────
+        const SD = {
+            month_labels: ["Okt 25","Nov 25","Dez 25","Jan 26","Feb 26","Mär 26"],
+            month_pcts:   [37,33,23,22,19,34],
+            top10_names:  ["Gabriel Thaler","Daniel Hauser","Paul Plank","Mario Föger","Christoph Breuer","Lukas Christler","Wolfgang Winkler","Joachim Steinlechner","Michael Plank","Lukas Nagl"],
+            top10_pcts:   [81,78,67,64,64,58,56,56,56,53],
+            top10_counts: [29,28,24,23,23,21,20,20,20,19],
+            streak_names: ["Gabriel Thaler","Daniel Hauser","Michael Plank","Paul Plank","Matteo Wöber","Lukas Christler","Christoph Breuer","Mario Föger","Nikolaus Christler"],
+            streak_vals:  [14,11,9,8,7,6,6,5,5],
+            members: [
+                {n:"Gabriel Thaler",c:29,p:81},{n:"Daniel Hauser",c:28,p:78},{n:"Paul Plank",c:24,p:67},
+                {n:"Mario Föger",c:23,p:64},{n:"Christoph Breuer",c:23,p:64},{n:"Lukas Christler",c:21,p:58},
+                {n:"Wolfgang Winkler",c:20,p:56},{n:"Joachim Steinlechner",c:20,p:56},{n:"Michael Plank",c:20,p:56},
+                {n:"Lukas Nagl",c:19,p:53}
+            ]
+        };
+
+        function tierColor(p) {
+            if(p>=75) return '#10b981'; if(p>=50) return '#3b82f6'; if(p>=20) return '#f59e0b'; return '#ef4444';
+        }
+
+        function buildStatsCharts() {
+            window._statsChartsBuilt = true;
+            const gridColor = 'rgba(42,42,53,0.8)';
+            const tickColor = '#8a8a9a';
+            const chartDefaults = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false },
+                    tooltip: { backgroundColor:'#1a1a20', borderColor:'#2a2a35', borderWidth:1, titleColor:'#f0f0f5', bodyColor:'#8a8a9a' }
+                }
+            };
+
+            new Chart(document.getElementById('statsMonthChart'), {
+                type: 'line',
+                data: { labels: SD.month_labels, datasets: [{
+                    label: 'Teilnahme %', data: SD.month_pcts,
+                    borderColor: '#fc0612', backgroundColor: 'rgba(252,6,18,0.1)',
+                    tension: 0.4, pointRadius: 5, pointBackgroundColor: '#fc0612', fill: true
+                }]},
+                options: { ...chartDefaults, scales: {
+                    y: { min:0, max:70, ticks:{ callback:v=>v+'%', color:tickColor }, grid:{ color:gridColor } },
+                    x: { ticks:{ color:tickColor }, grid:{ display:false } }
+                }}
+            });
+
+            new Chart(document.getElementById('statsTopChart'), {
+                type: 'bar',
+                data: { labels: SD.top10_names, datasets: [{
+                    label: 'Teilnahme %', data: SD.top10_pcts,
+                    backgroundColor: SD.top10_pcts.map(p => tierColor(p)), borderRadius: 4
+                }]},
+                options: { ...chartDefaults, indexAxis: 'y', scales: {
+                    x: { min:0, max:100, ticks:{ callback:v=>v+'%', color:tickColor }, grid:{ color:gridColor } },
+                    y: { ticks:{ color:tickColor, font:{ size:11 } }, grid:{ display:false } }
+                }}
+            });
+
+            const topList = document.getElementById('statsTopList');
+            topList.innerHTML = SD.members.map((m,i) => `
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-gray-600 w-5 text-right">${i+1}</span>
+                    <span class="text-sm font-semibold text-gray-300 flex-1">${m.n}</span>
+                    <div class="w-24 h-2 bg-[#2a2a35] rounded-full overflow-hidden">
+                        <div class="h-full rounded-full" style="width:${m.p}%;background:${tierColor(m.p)}"></div>
+                    </div>
+                    <span class="text-xs font-bold w-16 text-right" style="color:${tierColor(m.p)}">${m.p}% (${m.c}/36)</span>
+                </div>`).join('');
+
+            const streakBody = document.getElementById('statsStreakTable');
+            streakBody.innerHTML = SD.streak_names.map((n,i) => `
+                <tr>
+                    <td class="py-2 text-gray-300">${n}</td>
+                    <td class="py-2 text-center"><strong class="text-white">${SD.streak_vals[i]}</strong> <span class="text-gray-600 text-xs">Events</span></td>
+                    <td class="py-2 text-right text-gray-400">${SD.members.find(m=>m.n===n)?.p ?? '—'}%</td>
+                </tr>`).join('');
+        }
+
+        // ── Cup statistics charts (Grunddurchgang tab) ─────────────────────────
+        const CUP_STATS_URL = '/public/202526_season/raw/202526_preseason_hcstats.json';
+        const CUP_FOULS_URL = '/public/202526_season/gold/202526_preseason_fouls_static.csv';
+        const HCT_ID = 11;
+
+        Chart.defaults.color       = '#8a8a9a';
+        Chart.defaults.borderColor = '#2a2a35';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.font.size   = 11;
+
+        async function loadCupData() {
+            try {
+                const res  = await fetch(CUP_STATS_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                buildPlayerChart(data.players || []);
+                buildGoalTrend(data.games    || []);
+            } catch (e) {
+                console.warn('[cup-stats]', e);
+                showCupChartsError('Chartdaten konnten nicht geladen werden.');
+            }
+            fetch(CUP_FOULS_URL, { cache: 'no-store' })
+                .then(r => r.text())
+                .then(csv => {
+                    const rows = Papa.parse(csv, { header: true, dynamicTyping: true }).data.filter(r => r.Spieler);
+                    buildFoulCharts(rows);
+                })
+                .catch(() => showCupChartsError('Strafendaten nicht verfügbar.'));
+        }
+
+        function buildPlayerChart(players) {
+            const top = [...players]
+                .filter(p => (p.goals || 0) + (p.assists || 0) > 0)
+                .sort((a, b) => (b.goals + b.assists) - (a.goals + a.assists))
+                .slice(0, 10);
+            if (!top.length) return;
+            new Chart(document.getElementById('cup-chart-players'), {
+                type: 'bar',
+                data: {
+                    labels: top.map(p => p.last_name || p.name || '?'),
+                    datasets: [
+                        { label: 'Tore',    data: top.map(p => p.goals   || 0), backgroundColor: '#fc0612', borderRadius: 3 },
+                        { label: 'Assists', data: top.map(p => p.assists || 0), backgroundColor: '#3b82f6', borderRadius: 3 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 10 } } },
+                    scales: {
+                        x: { stacked: true, grid: { color: 'rgba(42,42,53,0.5)' } },
+                        y: { stacked: true, grid: { color: 'rgba(42,42,53,0.5)' }, beginAtZero: true, ticks: { stepSize: 2 } }
+                    }
+                }
+            });
+        }
+
+        function buildGoalTrend(games) {
+            const played = games
+                .filter(g => g.score_home !== null && g.score_away !== null)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+            if (!played.length) return;
+            let gf = 0, ga = 0;
+            const labels = [], dataGF = [], dataGA = [];
+            played.forEach(g => {
+                const home = g.home_team_id === HCT_ID;
+                gf += home ? (g.score_home || 0) : (g.score_away || 0);
+                ga += home ? (g.score_away || 0) : (g.score_home || 0);
+                const p = (g.date || '').split('-');
+                labels.push(p.length === 3 ? `${p[2]}.${p[1]}.` : g.date);
+                dataGF.push(gf); dataGA.push(ga);
+            });
+            new Chart(document.getElementById('cup-chart-goals'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Tore erzielt (kum.)', data: dataGF, borderColor: '#fc0612', backgroundColor: 'rgba(252,6,18,0.08)',  fill: true, tension: 0.3, pointRadius: 3 },
+                        { label: 'Gegentore (kum.)',    data: dataGA, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.06)', fill: true, tension: 0.3, pointRadius: 3 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 10 } } },
+                    scales: {
+                        x: { grid: { color: 'rgba(42,42,53,0.5)' }, ticks: { maxRotation: 40 } },
+                        y: { grid: { color: 'rgba(42,42,53,0.5)' }, beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function buildFoulCharts(rows) {
+            const types  = ['Beinstellen','Haken','Haerte','Crosscheck','Sonstige'];
+            const colors = ['#fc0612','#f97316','#eab308','#22c55e','#8b5cf6'];
+            const sorted = [...rows]
+                .sort((a, b) => types.reduce((s, k) => s + ((b[k] || 0) - (a[k] || 0)), 0))
+                .slice(0, 12);
+            new Chart(document.getElementById('cup-chart-fouls-player'), {
+                type: 'bar',
+                data: {
+                    labels: sorted.map(r => r.Spieler || '?'),
+                    datasets: types.map((t, i) => ({ label: t, data: sorted.map(r => r[t] || 0), backgroundColor: colors[i], borderRadius: 2 }))
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } },
+                    scales: {
+                        x: { stacked: true, grid: { color: 'rgba(42,42,53,0.5)' }, beginAtZero: true },
+                        y: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+            const totals = types.map(t => rows.reduce((s, r) => s + (r[t] || 0), 0));
+            new Chart(document.getElementById('cup-chart-fouls-type'), {
+                type: 'doughnut',
+                data: { labels: types, datasets: [{ data: totals, backgroundColor: colors, borderColor: '#1a1a20', borderWidth: 2 }] },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 8, font: { size: 11 } } } }
+                }
+            });
+        }
+
+        function showCupChartsError(msg) {
+            const el = document.getElementById('cup-charts-error');
+            if (el) { el.textContent = msg; el.style.display = 'block'; }
+        }
+
+        loadCupData();
+    </script>
+
+    <script src="../../../js/site.js?v=20260221-4"></script>
+</body>
+</html>

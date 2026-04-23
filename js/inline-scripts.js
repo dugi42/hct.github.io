@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Training attendance CSV renderer
     // =========================================================
     (() => {
-        const CSV_URL   = 'public/202526_season/gold/202526_attendance_report.csv';
+        const CSV_URL   = '/public/202526_season/gold/202526_attendance_report.csv';
         const container = document.getElementById('attendance-rows');
         if (!container) return;
 
