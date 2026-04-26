@@ -178,15 +178,15 @@
                             class="season-tab active flex-none px-5 py-4 text-sm font-bold uppercase tracking-wider border-b-2 border-hc-red text-white transition-colors whitespace-nowrap">
                         Playoffs 2025/26
                     </button>
-                    <button id="tab-btn-2425"
-                            onclick="switchTab('2425')"
+                    <button id="tab-btn-2526gd"
+                            onclick="switchTab('2526gd')"
                             class="season-tab flex-none px-5 py-4 text-sm font-bold uppercase tracking-wider border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
-                        Grunddurchgang
+                        Grunddurchgang 2025/26
                     </button>
-                    <button id="tab-btn-stats"
-                            onclick="switchTab('stats')"
+                    <button id="tab-btn-2425prev"
+                            onclick="switchTab('2425prev')"
                             class="season-tab flex-none px-5 py-4 text-sm font-bold uppercase tracking-wider border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
-                        Vereins-Statistiken
+                        Saison 2024/25
                     </button>
                 </div>
             </div>
@@ -228,11 +228,6 @@
                                                class="text-hc-red hover:text-white transition-colors">@drucken.tirol</a>
                                         </li>
                                     </ul>
-                                    <button onclick="switchTab('2425')"
-                                       class="inline-flex items-center gap-2 px-5 py-3 bg-hc-red text-white text-sm font-bold rounded-xl hover:bg-[#d30510] transition-colors">
-                                        Zur Cup-Statistik
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -357,7 +352,7 @@
         <!-- =====================================================
              TAB: SAISON 2024/25 — Grunddurchgang + Cup-Statistiken
              ===================================================== -->
-        <div id="season-2425" class="hidden">
+        <div id="season-2526gd" class="hidden">
 
             <!-- In-tab sub-nav -->
             <div class="cup-sub-nav">
@@ -486,11 +481,191 @@
                             <div class="cup-game-row"><div class="cup-g-date">25 Feb</div><div class="cup-g-opp">EHC Scorpions Strass <span style="font-size:.6rem;color:#22c55e;font-weight:700;">SHUTOUT</span><small>Heim · STR</small></div><div class="cup-g-score c-win">6:0</div><div><span class="cup-badge cup-badge-w">Win</span></div><div class="cup-dot" style="background:#22c55e;"></div></div>
                             <div class="cup-game-row"><div class="cup-g-date">07 Mär</div><div class="cup-g-opp">EC Sellraintal Wolves<small>Finale · ECS</small></div><div class="cup-g-score c-win">6:4</div><div><span class="cup-badge cup-badge-w">Win 🏆</span></div><div class="cup-dot" style="background:#22c55e;"></div></div>
                         </div>
-                        <!-- Games carousel (dynamic) -->
+                        <!-- Games carousel -->
                         <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
-                            <h3 class="text-lg font-bold mb-4">Alle Spiele – Live-Daten</h3>
-                            <p id="hc-games-status" class="text-sm text-gray-500 mb-4">Spiele werden geladen…</p>
-                            <div id="hc-games-carousel" class="flex overflow-x-auto pb-4 gap-4 snap-x snap-mandatory"></div>
+                            <h3 class="text-lg font-bold mb-4">Alle Spiele</h3>
+                            <div class="flex overflow-x-auto pb-4 gap-3 snap-x snap-mandatory" style="scrollbar-width:thin;scrollbar-color:#2a2a35 transparent;">
+                                <!-- 01 · 15 Nov – STR · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#4fc3f7;text-transform:uppercase;">15 Nov · Early</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/ehc_black_scorpions.jpg" alt="EHC Black Scorpions" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;">1<span style="color:#6b7280;font-size:.9rem;"> : </span>2</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · STR</div>
+                                    <span class="cup-badge cup-badge-l" style="font-size:.55rem;">Loss</span>
+                                </div>
+                                <!-- 02 · 24 Nov – TIK · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#4fc3f7;text-transform:uppercase;">24 Nov · Early</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/tyrolean_ice_kings.jpg" alt="Tyrolean Ice Kings" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">5</span><span style="color:#6b7280;font-size:.9rem;"> : </span>2</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · TIK</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 03 · 15 Dez – ECA · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#4fc3f7;text-transform:uppercase;">15 Dez · Early</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/ec_aschauer_eisbaeren.jpg" alt="EC Aschauer Eisbären" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;">3<span style="color:#6b7280;font-size:.9rem;"> : </span>4</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · ECA</div>
+                                    <span class="cup-badge cup-badge-l" style="font-size:.55rem;">Loss</span>
+                                </div>
+                                <!-- 04 · 18 Dez – ECA · Home -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#4fc3f7;text-transform:uppercase;">18 Dez · Early</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ec_aschauer_eisbaeren.jpg" alt="EC Aschauer Eisbären" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">3</span><span style="color:#6b7280;font-size:.9rem;"> : </span>2</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · ECA</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 05 · 29 Dez – STR · Home -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#4fc3f7;text-transform:uppercase;">29 Dez · Early</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ehc_black_scorpions.jpg" alt="EHC Black Scorpions" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;">1<span style="color:#6b7280;font-size:.9rem;"> : </span>4</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · STR</div>
+                                    <span class="cup-badge cup-badge-l" style="font-size:.55rem;">Loss</span>
+                                </div>
+                                <!-- 06 · 30 Dez – EHV · Home -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#4fc3f7;text-transform:uppercase;">30 Dez · Early</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ehc_white_hawks_volders.jpg" alt="EHC White Hawks Volders" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;">7<span style="color:#6b7280;font-size:.9rem;"> : </span>9</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · EHV</div>
+                                    <span class="cup-badge cup-badge-l" style="font-size:.55rem;">Loss</span>
+                                </div>
+                                <!-- 07 · 08 Jan – ECNII · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#a78bfa;text-transform:uppercase;">08 Jan · Mid</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/ec_newcomer_2.jpg" alt="EC Newcomers II" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">9</span><span style="color:#6b7280;font-size:.9rem;"> : </span>1</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · ECNII</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 08 · 20 Jan – ECS · Home -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#a78bfa;text-transform:uppercase;">20 Jan · Mid</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ec_sellraintal_wolves.jpg" alt="EC Sellraintal Wolves" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;">3<span style="color:#6b7280;font-size:.9rem;"> : </span>4</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · ECS</div>
+                                    <span class="cup-badge cup-badge-l" style="font-size:.55rem;">Loss</span>
+                                </div>
+                                <!-- 09 · 25 Jan – EHV · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#a78bfa;text-transform:uppercase;">25 Jan · Mid</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/ehc_white_hawks_volders.jpg" alt="EHC White Hawks Volders" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">6</span><span style="color:#6b7280;font-size:.9rem;"> : </span>2</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · EHV</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 10 · 27 Jan – ECNII · Home -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#a78bfa;text-transform:uppercase;">27 Jan · Mid</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ec_newcomer_2.jpg" alt="EC Newcomers II" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">8</span><span style="color:#6b7280;font-size:.9rem;"> : </span>3</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · ECNII</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 11 · 05 Feb – TIK · Home -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#a78bfa;text-transform:uppercase;">05 Feb · Mid</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/tyrolean_ice_kings.jpg" alt="Tyrolean Ice Kings" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">3</span><span style="color:#6b7280;font-size:.9rem;"> : </span>1</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · TIK</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 12 · 10 Feb – ECS · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#22c55e;text-transform:uppercase;">10 Feb · Late</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/ec_sellraintal_wolves.jpg" alt="EC Sellraintal Wolves" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">3</span><span style="color:#6b7280;font-size:.9rem;"> : </span>2</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · ECS</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 13 · 21 Feb – STR · Away -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#2a2a35] rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#22c55e;text-transform:uppercase;">21 Feb · Late</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">@</span>
+                                        <img src="../../../images/cup_logos/ehc_black_scorpions.jpg" alt="EHC Black Scorpions" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1;"><span style="color:#22c55e;">2</span><span style="color:#6b7280;font-size:.9rem;"> : </span>1</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Auswärts · STR</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win</span>
+                                </div>
+                                <!-- 14 · 25 Feb – STR · Home · Shutout -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-[#22c55e]/40 rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#22c55e;text-transform:uppercase;">25 Feb · Late</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ehc_black_scorpions.jpg" alt="EHC Black Scorpions" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#22c55e;line-height:1;">6<span style="color:#6b7280;font-size:.9rem;"> : </span>0</div>
+                                    <div style="font-size:.6rem;color:#6b7280;">Heim · STR</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win · Shutout</span>
+                                </div>
+                                <!-- 15 · 07 Mär – ECS · Finale -->
+                                <div class="snap-center shrink-0 bg-[#13131a] border border-hc-red/40 rounded-xl p-4 w-44 flex flex-col items-center gap-2 text-center" style="box-shadow:0 0 16px rgba(252,6,18,0.12)">
+                                    <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:#fc0612;text-transform:uppercase;">07 Mär · Finale</div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <img src="../../../images/cup_logos/hockey_club_thaur.png" alt="HC Thaur" class="w-10 h-10 object-contain">
+                                        <span style="font-size:.7rem;color:#6b7280;">vs</span>
+                                        <img src="../../../images/cup_logos/ec_sellraintal_wolves.jpg" alt="EC Sellraintal Wolves" class="w-10 h-10 object-contain">
+                                    </div>
+                                    <div style="font-size:1.4rem;font-weight:900;color:#22c55e;line-height:1;">6<span style="color:#6b7280;font-size:.9rem;"> : </span>4</div>
+                                    <div style="font-size:.6rem;color:#fc0612;font-weight:700;">Finale · ECS</div>
+                                    <span class="cup-badge cup-badge-w" style="font-size:.55rem;">Win 🏆</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -659,97 +834,101 @@
                 </div>
             </section>
 
-        </div><!-- /season-2425 -->
+        </div><!-- /season-2526gd -->
 
 
         <!-- =====================================================
-             TAB: VEREINS-STATISTIKEN — Attendance Dashboard
+             TAB: SAISON 2024/25
              ===================================================== -->
-        <div id="season-stats" class="hidden">
+        <div id="season-2425prev" class="hidden">
 
-            <!-- KPI Row -->
-            <section class="py-16 border-b border-[#1e1e26]">
+            <section class="py-20 border-b border-[#1e1e26]">
                 <div class="container mx-auto px-6">
-                    <div class="max-w-6xl mx-auto">
+                    <div class="max-w-4xl mx-auto">
                         <div class="text-center mb-10">
-                            <span class="section-label">Saison 2025/26</span>
-                            <h2 class="text-3xl md:text-4xl font-black mt-2">Vereins-<span class="text-hc-red">Statistiken</span></h2>
-                            <p class="text-gray-500 text-sm mt-2">Oktober 2025 – März 2026 · 61 Mitglieder · 36 Events</p>
+                            <span class="section-label">Rückblick</span>
+                            <h2 class="text-3xl md:text-4xl font-black mt-2">Saison 2024/25 <span class="text-hc-red">in Zahlen</span></h2>
                         </div>
 
-                        <!-- KPIs -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
-                                <div class="text-2xl font-black text-blue-400 mb-1">61</div>
-                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Mitglieder</div>
-                                <div class="text-xs text-gray-600 mt-1">registriert</div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
-                                <div class="text-2xl font-black text-blue-400 mb-1">36</div>
-                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Events</div>
-                                <div class="text-xs text-gray-600 mt-1">Okt–Mär</div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
-                                <div class="text-2xl font-black text-green-400 mb-1">557</div>
-                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Teilnahmen</div>
-                                <div class="text-xs text-gray-600 mt-1">gesamt</div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
-                                <div class="text-2xl font-black text-blue-400 mb-1">25%</div>
-                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Ø Teilnahme</div>
-                                <div class="text-xs text-gray-600 mt-1">pro Mitglied</div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
-                                <div class="text-2xl font-black text-green-400 mb-1">15.5</div>
-                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Ø pro Event</div>
-                                <div class="text-xs text-gray-600 mt-1">Teilnehmer</div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-xl p-4 text-center">
-                                <div class="text-2xl font-black text-green-400 mb-1">12</div>
-                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500">Aktiv</div>
-                                <div class="text-xs text-gray-600 mt-1">≥50% Teilnahme</div>
-                            </div>
-                        </div>
-
-                        <!-- Charts grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
-                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Monatliche Teilnahmequote</h3>
-                                <div style="position:relative;height:200px"><canvas id="statsMonthChart"></canvas></div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
-                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Top 10 Mitglieder nach Teilnahme</h3>
-                                <div style="position:relative;height:200px"><canvas id="statsTopChart"></canvas></div>
-                            </div>
-                        </div>
-
-                        <!-- Top 10 table + streaks -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
-                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Top 10 – Detailliert</h3>
-                                <div class="space-y-3" id="statsTopList"></div>
-                            </div>
-                            <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6">
-                                <h3 class="text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">Längste Teilnahmeserien</h3>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full text-sm">
-                                        <thead>
-                                            <tr class="border-b border-[#2a2a35] text-xs text-gray-500 uppercase">
-                                                <th class="pb-2 text-left">Mitglied</th>
-                                                <th class="pb-2 text-center">Serie</th>
-                                                <th class="pb-2 text-right">Gesamt</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="statsStreakTable" class="divide-y divide-[#2a2a35]"></tbody>
-                                    </table>
+                        <!-- Topscorer 2024/25 -->
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8 mb-6">
+                            <h4 class="text-lg font-bold mb-6">Topscorer 2. Division Tiroler Hockey Cup</h4>
+                            <div class="space-y-5">
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                    <span class="sm:w-1/4 text-sm font-semibold text-gray-300 text-center sm:text-left">Lukas Christler</span>
+                                    <div class="flex-1 flex flex-col gap-2">
+                                        <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex">
+                                            <div class="bar-goals h-full" style="width:48.6%"></div>
+                                            <div class="bar-assists h-full" style="width:51.4%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500">
+                                            <span>17 Tore</span><span>18 Assists</span>
+                                        </div>
+                                    </div>
+                                    <span class="sm:w-14 text-sm font-bold text-gray-300 text-center sm:text-right">35 Pkt</span>
                                 </div>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                    <span class="sm:w-1/4 text-sm font-semibold text-gray-300 text-center sm:text-left">Mario Föger</span>
+                                    <div class="flex-1 flex flex-col gap-2">
+                                        <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex">
+                                            <div class="bar-goals h-full" style="width:56.3%"></div>
+                                            <div class="bar-assists h-full" style="width:43.7%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500">
+                                            <span>9 Tore</span><span>7 Assists</span>
+                                        </div>
+                                    </div>
+                                    <span class="sm:w-14 text-sm font-bold text-gray-300 text-center sm:text-right">16 Pkt</span>
+                                </div>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                                    <span class="sm:w-1/4 text-sm font-semibold text-gray-300 text-center sm:text-left">Thomas Pipal</span>
+                                    <div class="flex-1 flex flex-col gap-2">
+                                        <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex">
+                                            <div class="bar-goals h-full" style="width:38.5%"></div>
+                                            <div class="bar-assists h-full" style="width:61.5%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500">
+                                            <span>5 Tore</span><span>8 Assists</span>
+                                        </div>
+                                    </div>
+                                    <span class="sm:w-14 text-sm font-bold text-gray-300 text-center sm:text-right">13 Pkt</span>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center justify-end gap-4 pt-2 text-xs text-gray-500">
+                                    <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bar-goals"></div><span>Tore</span></div>
+                                    <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bar-assists"></div><span>Assists</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Standings 2024/25 -->
+                        <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl p-6 md:p-8">
+                            <h4 class="text-lg font-bold mb-6">Hockey Cup Tirol – Grunddurchgang 2024/25</h4>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b border-[#2a2a35] text-xs text-gray-500 uppercase tracking-wider">
+                                            <th class="py-3 px-4 text-left">Platz</th>
+                                            <th class="py-3 px-4 text-left">Team</th>
+                                            <th class="py-3 px-4 text-center">Sp</th>
+                                            <th class="py-3 px-4 text-right">Pkt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-[#2a2a35]">
+                                        <tr class="text-gray-400"><td class="py-3 px-4">1</td><td class="py-3 px-4">EHC Volders White Hawks</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">18</td></tr>
+                                        <tr class="bg-hc-red/10 text-white font-semibold border-l-2 border-hc-red"><td class="py-3 px-4">2</td><td class="py-3 px-4">Hockey Club Thaur</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">18</td></tr>
+                                        <tr class="text-gray-400"><td class="py-3 px-4">3</td><td class="py-3 px-4">EC Sellraintal Wolves</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">17</td></tr>
+                                        <tr class="text-gray-400"><td class="py-3 px-4">4</td><td class="py-3 px-4">Tyrolean Ice Kings</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">15</td></tr>
+                                        <tr class="text-gray-400"><td class="py-3 px-4">5</td><td class="py-3 px-4">EHC Black Scorpions Strass</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">13</td></tr>
+                                        <tr class="text-gray-400"><td class="py-3 px-4">6</td><td class="py-3 px-4">EC Aschauer Eisbären</td><td class="py-3 px-4 text-center">10</td><td class="py-3 px-4 text-right font-bold">9</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-        </div><!-- /season-stats -->
+        </div><!-- /season-2425prev -->
 
     </main>
 
@@ -790,7 +969,7 @@
 
     <script>
         function switchTab(key) {
-            ['2526','2425','stats'].forEach(k => {
+            ['2526','2526gd','2425prev'].forEach(k => {
                 const el = document.getElementById('season-' + k);
                 if (el) el.classList.toggle('hidden', k !== key);
                 const btn = document.getElementById('tab-btn-' + k);
@@ -801,84 +980,6 @@
                     btn.classList.toggle('text-gray-500', k !== key);
                 }
             });
-            if (key === 'stats' && !window._statsChartsBuilt) buildStatsCharts();
-        }
-
-        // ── Attendance stats data ──────────────────────────────────────────────
-        const SD = {
-            month_labels: ["Okt 25","Nov 25","Dez 25","Jan 26","Feb 26","Mär 26"],
-            month_pcts:   [37,33,23,22,19,34],
-            top10_names:  ["Gabriel Thaler","Daniel Hauser","Paul Plank","Mario Föger","Christoph Breuer","Lukas Christler","Wolfgang Winkler","Joachim Steinlechner","Michael Plank","Lukas Nagl"],
-            top10_pcts:   [81,78,67,64,64,58,56,56,56,53],
-            top10_counts: [29,28,24,23,23,21,20,20,20,19],
-            streak_names: ["Gabriel Thaler","Daniel Hauser","Michael Plank","Paul Plank","Matteo Wöber","Lukas Christler","Christoph Breuer","Mario Föger","Nikolaus Christler"],
-            streak_vals:  [14,11,9,8,7,6,6,5,5],
-            members: [
-                {n:"Gabriel Thaler",c:29,p:81},{n:"Daniel Hauser",c:28,p:78},{n:"Paul Plank",c:24,p:67},
-                {n:"Mario Föger",c:23,p:64},{n:"Christoph Breuer",c:23,p:64},{n:"Lukas Christler",c:21,p:58},
-                {n:"Wolfgang Winkler",c:20,p:56},{n:"Joachim Steinlechner",c:20,p:56},{n:"Michael Plank",c:20,p:56},
-                {n:"Lukas Nagl",c:19,p:53}
-            ]
-        };
-
-        function tierColor(p) {
-            if(p>=75) return '#10b981'; if(p>=50) return '#3b82f6'; if(p>=20) return '#f59e0b'; return '#ef4444';
-        }
-
-        function buildStatsCharts() {
-            window._statsChartsBuilt = true;
-            const gridColor = 'rgba(42,42,53,0.8)';
-            const tickColor = '#8a8a9a';
-            const chartDefaults = {
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false },
-                    tooltip: { backgroundColor:'#1a1a20', borderColor:'#2a2a35', borderWidth:1, titleColor:'#f0f0f5', bodyColor:'#8a8a9a' }
-                }
-            };
-
-            new Chart(document.getElementById('statsMonthChart'), {
-                type: 'line',
-                data: { labels: SD.month_labels, datasets: [{
-                    label: 'Teilnahme %', data: SD.month_pcts,
-                    borderColor: '#fc0612', backgroundColor: 'rgba(252,6,18,0.1)',
-                    tension: 0.4, pointRadius: 5, pointBackgroundColor: '#fc0612', fill: true
-                }]},
-                options: { ...chartDefaults, scales: {
-                    y: { min:0, max:70, ticks:{ callback:v=>v+'%', color:tickColor }, grid:{ color:gridColor } },
-                    x: { ticks:{ color:tickColor }, grid:{ display:false } }
-                }}
-            });
-
-            new Chart(document.getElementById('statsTopChart'), {
-                type: 'bar',
-                data: { labels: SD.top10_names, datasets: [{
-                    label: 'Teilnahme %', data: SD.top10_pcts,
-                    backgroundColor: SD.top10_pcts.map(p => tierColor(p)), borderRadius: 4
-                }]},
-                options: { ...chartDefaults, indexAxis: 'y', scales: {
-                    x: { min:0, max:100, ticks:{ callback:v=>v+'%', color:tickColor }, grid:{ color:gridColor } },
-                    y: { ticks:{ color:tickColor, font:{ size:11 } }, grid:{ display:false } }
-                }}
-            });
-
-            const topList = document.getElementById('statsTopList');
-            topList.innerHTML = SD.members.map((m,i) => `
-                <div class="flex items-center gap-3">
-                    <span class="text-xs text-gray-600 w-5 text-right">${i+1}</span>
-                    <span class="text-sm font-semibold text-gray-300 flex-1">${m.n}</span>
-                    <div class="w-24 h-2 bg-[#2a2a35] rounded-full overflow-hidden">
-                        <div class="h-full rounded-full" style="width:${m.p}%;background:${tierColor(m.p)}"></div>
-                    </div>
-                    <span class="text-xs font-bold w-16 text-right" style="color:${tierColor(m.p)}">${m.p}% (${m.c}/36)</span>
-                </div>`).join('');
-
-            const streakBody = document.getElementById('statsStreakTable');
-            streakBody.innerHTML = SD.streak_names.map((n,i) => `
-                <tr>
-                    <td class="py-2 text-gray-300">${n}</td>
-                    <td class="py-2 text-center"><strong class="text-white">${SD.streak_vals[i]}</strong> <span class="text-gray-600 text-xs">Events</span></td>
-                    <td class="py-2 text-right text-gray-400">${SD.members.find(m=>m.n===n)?.p ?? '—'}%</td>
-                </tr>`).join('');
         }
 
         // ── Cup statistics charts (Grunddurchgang tab) ─────────────────────────
