@@ -204,7 +204,7 @@
                         <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
                             <div class="md:flex">
                                 <div class="md:w-2/5 bg-[#13131a] flex items-center justify-center p-6">
-                                    <img src="../../../images/news/202526_cup_champions.png"
+                                    <img src="../../../images/news/202526/202526_cup_champions.png"
                                          alt="HCT Tiroler Meister 2025/26"
                                          class="w-full rounded-xl"
                                          style="box-shadow: 0 0 40px rgba(252,6,18,0.15);">
@@ -329,7 +329,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="bg-[#1a1a20] border border-[#2a2a35] rounded-2xl overflow-hidden">
                                 <video autoplay loop muted playsinline class="w-full">
-                                    <source src="../../../images/news/202526_playoffs_finals.MP4" type="video/mp4">
+                                    <source src="../../../images/news/202526/202526_playoffs_finals.MP4" type="video/mp4">
                                 </video>
                                 <div class="p-4">
                                     <p class="text-sm text-gray-400 text-center">HC Thaur zieht vorzeitig ins Finale ein</p>
@@ -811,7 +811,7 @@
                             <div class="md:flex">
                                 <div class="md:w-2/5 bg-[#13131a] flex items-center justify-center p-4">
                                     <video autoplay loop muted playsinline class="w-full rounded-xl">
-                                        <source src="../../../images/news/Playoff_Einzug_Feiern.mov" type="video/mp4">
+                                        <source src="../../../images/news/202526/Playoff_Einzug_Feiern.mov" type="video/mp4">
                                     </video>
                                 </div>
                                 <div class="md:w-3/5 p-8 md:p-10">
@@ -1021,7 +1021,7 @@
             new Chart(document.getElementById('cup-chart-players'), {
                 type: 'bar',
                 data: {
-                    labels: top.map(p => p.last_name || p.name || '?'),
+                    labels: top.map(p => p.player_surname || p.last_name || p.name || '?'),
                     datasets: [
                         { label: 'Tore',    data: top.map(p => p.goals   || 0), backgroundColor: '#fc0612', borderRadius: 3 },
                         { label: 'Assists', data: top.map(p => p.assists || 0), backgroundColor: '#3b82f6', borderRadius: 3 }
