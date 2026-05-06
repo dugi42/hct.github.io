@@ -419,4 +419,62 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     })();
 
+
+    // =========================================================
+    // 4. Bike attendance CSV renderer
+    //    Reads from /public/202526_season/gold/202526_top10_bikers.csv
+    //    and renders top-10 riders into #bike-attendance-rows.
+    // =========================================================
+    (() => {
+        const CSV_URL   = '/public/202526_season/gold/202526_top10_bikers.csv';
+        const container = document.getElementById('bike-attendance-rows');
+        if (!container) return;
+
+        const init = async () => {
+            try {
+                const r = await fetch(`${CSV_URL}?_=${Date.now()}`, { cache: 'no-store' });
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                const text = await r.text();
+                const lines = text.trim().split('\n');
+                // skip header row
+                const rows = lines.slice(1).map(line => {
+                    const [name, attendance_count, attendance_in_percent] = line.split(',');
+                    return {
+                        name: name.trim(),
+                        attendance_count: parseInt(attendance_count, 10),
+                        attendance_in_percent: parseFloat(attendance_in_percent),
+                    };
+                }).filter(u => u.attendance_count > 0);
+
+                if (!rows.length) throw new Error('no data');
+
+                const maxCount = rows[0].attendance_count;
+                container.innerHTML = '';
+
+                rows.forEach((u, i) => {
+                    const barPct = Math.round((u.attendance_count / maxCount) * 100);
+                    const div    = document.createElement('div');
+                    div.className = 'flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4';
+                    div.innerHTML = `
+                        <span class="sm:w-1/4 text-sm font-semibold text-gray-300 sm:text-left">${i + 1}. ${u.name}</span>
+                        <div class="flex-1">
+                            <div class="bar-container relative">
+                                <div class="tooltip">${u.attendance_count} Einheiten (${u.attendance_in_percent}%)</div>
+                                <div class="w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden shadow-inner">
+                                    <div class="bar-trainings h-full rounded-full transition-all duration-700" style="width:${barPct}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="sm:w-24 text-sm font-bold text-gray-300 sm:text-right">${u.attendance_count}×</span>`;
+                    container.appendChild(div);
+                });
+            } catch (err) {
+                console.error('[Bike Attendance]', err);
+                container.innerHTML = '<div class="text-sm text-gray-500 text-center">Daten konnten nicht geladen werden.</div>';
+            }
+        };
+
+        init();
+    })();
+
 }); // end DOMContentLoaded

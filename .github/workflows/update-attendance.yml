@@ -1,8 +1,8 @@
 name: Update Training Attendance
 
 on:
-  schedule:
-    - cron: "20 2 * * *"
+  # schedule:
+  #   - cron: "20 2 * * *"
   workflow_dispatch:
 
 permissions:

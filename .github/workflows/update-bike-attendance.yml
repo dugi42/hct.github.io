@@ -1,15 +1,15 @@
-name: Update HC Stats
+name: Update Bike Attendance
 
 on:
-  # schedule:
-  #   - cron: "15 2 * * *"
+  schedule:
+    - cron: "35 2 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  update-hcstats:
+  update-bike-attendance:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,15 +21,12 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        # uv reads 'requires-python' and dependencies from pyproject.toml
         run: uv sync
 
-      - name: Fetch stats
+      - name: Fetch bike attendance
         env:
-          HC_REPORT_API_URL: ${{ secrets.HC_REPORT_API_URL }}
-          HC_REPORT_TOKEN: ${{ secrets.HC_REPORT_TOKEN }}
-        # 'uv run' ensures the script uses the environment we just synced
-        run: uv run python/fetch_hcstats.py --config python/config_season.json
+          VEREINSPLANER_API_TOKEN: ${{ secrets.VEREINSPLANER_API_TOKEN }}
+        run: uv run python/fetch_bike_attendance.py
 
       - name: Commit updates
         run: |
@@ -39,6 +36,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/hcstats.json
-          git commit -m "Update hcstats.json"
+          git add public/202526_season/raw/202526_bike_attendance.json \
+                  public/202526_season/gold/202526_top10_bikers.csv
+          git commit -m "chore: update bike attendance data ($(date +%Y-%m-%d))"
           git push
