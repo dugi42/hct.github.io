@@ -304,20 +304,16 @@ html, body {
 
 .flipper {
   position:absolute; top:0;
-  transform-style:preserve-3d;
-  transition:transform 0.9s cubic-bezier(0.55, 0.05, 0.3, 1);
   pointer-events:none;
   z-index:5;
 }
 .flipper-face {
   position:absolute; inset:0;
-  backface-visibility:hidden;
+  backface-visibility:visible;
   overflow:hidden;
   background:var(--paper);
 }
 .flipper-face img { width:100%; height:100%; object-fit:contain; background:#fff; }
-.flipper-face.back { transform:rotateY(180deg); }
-.flipper-face.back img { display:none; }
 
 .nav-arrow {
   position:absolute;
@@ -652,38 +648,99 @@ function animateFlip(dir, onDone) {
   }
   if (endPage < 1 || endPage > TOTAL) { isFlipping = false; return; }
 
+  new Image().src = IMG(endPage);
+
+  const HALF = 420;
+
+  // Snapshot static pages BEFORE appending the flipper
+  const staticPages = book.querySelectorAll('.page');
+
   const flipper = document.createElement('div');
   flipper.className = 'flipper';
-  flipper.style.width = halfW + 'px';
-  flipper.style.height = h + 'px';
+  flipper.style.cssText = `width:${halfW}px;height:${h}px;transition:none;`;
 
   if (dir > 0) {
     if (isSingle) { flipper.style.left = '0px'; flipper.style.transformOrigin = 'left center'; }
-    else { flipper.style.left = halfW + 'px'; flipper.style.transformOrigin = 'left center'; }
+    else          { flipper.style.left = halfW + 'px'; flipper.style.transformOrigin = 'left center'; }
   } else {
     flipper.style.left = '0px';
     flipper.style.transformOrigin = 'right center';
   }
 
-  const front = document.createElement('div');
-  front.className = 'flipper-face front';
-  front.innerHTML = `<img src="${IMG(startPage)}" alt="">`;
-  const back = document.createElement('div');
-  back.className = 'flipper-face back';
-  back.innerHTML = `<img src="${IMG(endPage)}" alt="">`;
-  flipper.appendChild(front);
-  flipper.appendChild(back);
+  const face = document.createElement('div');
+  face.className = 'flipper-face';
+  face.innerHTML = `<img src="${IMG(startPage)}" alt="">`;
+
+  // Fold-crease shadow: dark at the spine edge, fades as page lifts/lands
+  const crease = document.createElement('div');
+  const gradDir = dir > 0 ? '90deg' : '270deg';
+  crease.style.cssText = `position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;transition:opacity ${Math.round(HALF*0.75)}ms ease;background:linear-gradient(${gradDir},rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.15) 22%,transparent 52%);`;
+  face.appendChild(crease);
+
+  flipper.appendChild(face);
   book.appendChild(flipper);
 
-  requestAnimationFrame(() => {
-    flipper.style.transform = (dir > 0 ? 'rotateY(-180deg)' : 'rotateY(180deg)');
-  });
+  // Pre-correct the static page that becomes visible during phase 2, and hide the one the flipper covers
+  let revealPage = null;
+  if (dir > 0) {
+    const rp = staticPages[staticPages.length - 1];
+    if (rp) {
+      // Update to new right page so it's ready when the flipper sweeps away
+      const nextRight = endPage + 1;
+      if (nextRight <= TOTAL) {
+        const ri = rp.querySelector('img');
+        if (ri) ri.src = IMG(nextRight);
+        const rn = rp.querySelector('.page-number');
+        if (rn) rn.textContent = String(nextRight).padStart(2, '0');
+      }
+      rp.style.visibility = 'hidden';
+      revealPage = rp;
+    }
+  } else {
+    // Fix: right page becomes visible during phase 1 — correct it immediately
+    const rp = staticPages[1];
+    if (rp) {
+      const ri = rp.querySelector('img');
+      if (ri) ri.src = IMG(endPage);
+      const rn = rp.querySelector('.page-number');
+      if (rn) rn.textContent = String(endPage).padStart(2, '0');
+    }
+    const lp = staticPages[0];
+    if (lp) {
+      if (endPage > 1) {
+        const li = lp.querySelector('img');
+        if (li) li.src = IMG(endPage - 1);
+        const ln = lp.querySelector('.page-number');
+        if (ln) ln.textContent = String(endPage - 1).padStart(2, '0');
+      }
+      lp.style.visibility = 'hidden';
+      revealPage = lp;
+    }
+  }
 
+  // Phase 1 — ease-in to edge-on (90°), crease shadow builds
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    flipper.style.transition = `transform ${HALF}ms ease-in`;
+    flipper.style.transform  = dir > 0 ? 'rotateY(-90deg)' : 'rotateY(90deg)';
+    crease.style.opacity = '1';
+  }));
+
+  // Phase 2 — swap image at invisible midpoint, ease-out to flat; reveal pre-corrected static page
   setTimeout(() => {
-    flipper.remove();
-    isFlipping = false;
-    onDone();
-  }, 900);
+    if (revealPage) revealPage.style.visibility = 'visible';
+    const img = face.querySelector('img');
+    img.src = IMG(endPage);
+    img.style.transform = 'scaleX(-1)';
+    crease.style.opacity = '0';
+    flipper.style.transition = `transform ${HALF}ms ease-out`;
+    flipper.style.transform  = dir > 0 ? 'rotateY(-180deg)' : 'rotateY(180deg)';
+
+    setTimeout(() => {
+      flipper.remove();
+      isFlipping = false;
+      onDone();
+    }, HALF + 60);
+  }, HALF + 60);
 }
 
 function updateIndicator() {
