@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //    and renders top-10 riders into #bike-attendance-rows.
     // =========================================================
     (() => {
-        const CSV_URL   = '/public/202526_season/gold/202526_top10_bikers.csv';
+        const CSV_URL   = 'public/202526_season/gold/202526_top10_bikers.csv';
         const container = document.getElementById('bike-attendance-rows');
         if (!container) return;
 
