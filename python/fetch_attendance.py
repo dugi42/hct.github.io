@@ -16,7 +16,7 @@ today = datetime.date.today().strftime("%Y-%m-%d")
 params = {
     "start": "2025-09-01",
     "end": today,
-    "category_ids": 24507 # category for training sessions
+    #"category_ids": 24507 # category for training sessions
 }
 
 headers = {

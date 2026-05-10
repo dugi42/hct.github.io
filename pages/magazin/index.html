@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YWXF7HR51T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YWXF7HR51T');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="2.0.0">
+    <title>Magazin – HC Thaur</title>
+
+    <link rel="stylesheet" href="../../css/site.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'hc-red': '#fc0612' } } } }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <style>
+    :root {
+      --red: #dc2626;
+      --red-dark: #991b1b;
+      --red-light: #ef4444;
+      --ink: #0a0a0a;
+      --paper: #fafaf7;
+    }
+    a { color:inherit; text-decoration:none; }
+    html { scroll-behavior:smooth; }
+
+    .hero {
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(220,38,38,0.25), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(220,38,38,0.15), transparent 60%),
+        linear-gradient(135deg, #0a0a0a 0%, #1a0505 100%);
+    }
+    .ice-lines {
+      position:absolute; inset:0;
+      opacity:0.5;
+      pointer-events:none;
+      background:linear-gradient(90deg, transparent 49.85%, rgba(255,255,255,0.05) 49.85%, rgba(255,255,255,0.05) 50.15%, transparent 50.15%);
+    }
+    .ice-circles { position:absolute; inset:0; pointer-events:none; opacity:0.25; }
+    .ice-circles::before, .ice-circles::after {
+      content:'';
+      position:absolute;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:50%;
+    }
+    .ice-circles::before { width:400px; height:400px; top:10%; left:-100px; }
+    .ice-circles::after { width:500px; height:500px; bottom:-100px; right:-150px; }
+
+    .hero-main {
+      position:relative; z-index:2;
+      flex:1;
+      display:flex;
+      align-items:center;
+      padding:40px 48px 80px;
+    }
+    .hero-content {
+      max-width:1400px;
+      margin:0 auto;
+      width:100%;
+      display:grid;
+      grid-template-columns:1.2fr 1fr;
+      gap:80px;
+      align-items:center;
+    }
+    .hero-text .tag {
+      display:inline-block;
+      padding:8px 18px;
+      background:var(--red);
+      color:#fff;
+      font-family:'Archivo Black',sans-serif;
+      font-size:11px;
+      letter-spacing:0.3em;
+      text-transform:uppercase;
+      margin-bottom:32px;
+      transform:skewX(-8deg);
+      box-shadow:4px 4px 0 #000;
+      animation:slideIn 0.8s cubic-bezier(0.2,0.9,0.3,1) both;
+    }
+    .hero-text .tag span { display:inline-block; transform:skewX(8deg); }
+
+    .hero-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(56px, 9vw, 140px);
+      line-height:0.9;
+      letter-spacing:-0.01em;
+      margin-bottom:24px;
+      animation:slideIn 0.9s 0.1s cubic-bezier(0.2,0.9,0.3,1) both;
+    }
+    .hero-title .line1 {
+      display:block;
+      background:linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.5) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .hero-title .line2 {
+      display:block;
+      color:var(--red);
+      font-family:'Playfair Display',serif;
+      font-style:italic;
+      font-weight:900;
+      font-size:0.6em;
+      letter-spacing:0;
+    }
+    .hero-desc {
+      font-weight:300;
+      font-size:18px;
+      color:rgba(255,255,255,0.75);
+      max-width:560px;
+      line-height:1.7;
+      margin-bottom:40px;
+      animation:slideIn 1s 0.2s cubic-bezier(0.2,0.9,0.3,1) both;
+    }
+    .hero-stats {
+      display:flex;
+      gap:48px;
+      flex-wrap:wrap;
+      animation:slideIn 1.1s 0.3s cubic-bezier(0.2,0.9,0.3,1) both;
+    }
+    .hero-stat-num {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:56px;
+      line-height:1;
+      color:var(--red-light);
+    }
+    .hero-stat-label {
+      font-size:10px;
+      letter-spacing:0.25em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,0.55);
+      margin-top:6px;
+    }
+
+    .hero-visual {
+      position:relative;
+      height:500px;
+      perspective:1600px;
+      animation:fadeIn 1.2s 0.4s both;
+    }
+    .stack-book {
+      position:absolute;
+      width:260px;
+      height:365px;
+      background:#fff;
+      box-shadow:0 20px 50px rgba(0,0,0,0.6);
+      transition:transform 0.6s cubic-bezier(0.2,0.9,0.3,1);
+      transform-style:preserve-3d;
+      overflow:hidden;
+      top:50%; left:50%;
+    }
+    .stack-book img { width:100%; height:100%; object-fit:contain; background:#fff; }
+
+    .stack-book:nth-child(1) { transform:translate(-50%,-50%) rotate(-16deg) translateY(-28px); z-index:1; }
+    .stack-book:nth-child(2) { transform:translate(-50%,-50%) rotate(-12deg) translateY(-21px); z-index:2; }
+    .stack-book:nth-child(3) { transform:translate(-50%,-50%) rotate(-8deg) translateY(-14px); z-index:3; }
+    .stack-book:nth-child(4) { transform:translate(-50%,-50%) rotate(-4deg) translateY(-7px); z-index:4; }
+    .stack-book:nth-child(5) { transform:translate(-50%,-50%) rotate(0deg) translateY(0px); z-index:5; }
+    .stack-book:nth-child(6) { transform:translate(-50%,-50%) rotate(4deg) translateY(7px); z-index:6; }
+    .stack-book:nth-child(7) { transform:translate(-50%,-50%) rotate(8deg) translateY(14px); z-index:7; }
+    .stack-book:nth-child(8) { transform:translate(-50%,-50%) rotate(12deg) translateY(21px); z-index:8; }
+    .stack-book:nth-child(9) { transform:translate(-50%,-50%) rotate(16deg) translateY(28px); z-index:9; box-shadow:0 25px 60px rgba(220,38,38,0.3), 0 20px 50px rgba(0,0,0,0.6); }
+
+    .hero-visual:hover .stack-book:nth-child(1) { transform:translate(-260%, -50%) rotate(-28deg); }
+    .hero-visual:hover .stack-book:nth-child(2) { transform:translate(-195%, -50%) rotate(-21deg); }
+    .hero-visual:hover .stack-book:nth-child(3) { transform:translate(-130%, -50%) rotate(-14deg); }
+    .hero-visual:hover .stack-book:nth-child(4) { transform:translate(-65%, -50%) rotate(-7deg); }
+    .hero-visual:hover .stack-book:nth-child(5) { transform:translate(0%, -50%) rotate(0deg); }
+    .hero-visual:hover .stack-book:nth-child(6) { transform:translate(65%, -50%) rotate(7deg); }
+    .hero-visual:hover .stack-book:nth-child(7) { transform:translate(130%, -50%) rotate(14deg); }
+    .hero-visual:hover .stack-book:nth-child(8) { transform:translate(195%, -50%) rotate(21deg); }
+    .hero-visual:hover .stack-book:nth-child(9) { transform:translate(260%, -50%) rotate(28deg); }
+
+    .scroll-hint {
+      position:absolute;
+      bottom:24px; left:50%;
+      transform:translateX(-50%);
+      font-size:10px;
+      letter-spacing:0.3em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,0.4);
+      z-index:5;
+      animation:bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform:translateX(-50%) translateY(0); opacity:0.4; }
+      50% { transform:translateX(-50%) translateY(8px); opacity:0.8; }
+    }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    @keyframes slideIn {
+      from { opacity:0; transform:translateY(30px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    .timeline-strip {
+      padding:28px 48px;
+      border-top:1px solid rgba(255,255,255,0.05);
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      position:sticky;
+      top:57px;
+      z-index:30;
+      backdrop-filter:blur(20px);
+      background:rgba(5,5,5,0.9);
+    }
+    .timeline-inner {
+      max-width:1400px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .timeline-label {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:13px;
+      letter-spacing:0.25em;
+      color:rgba(255,255,255,0.4);
+      padding-right:14px;
+      border-right:1px solid rgba(255,255,255,0.1);
+    }
+    .timeline-pill {
+      padding:8px 14px;
+      border:1px solid rgba(255,255,255,0.12);
+      font-family:'Bebas Neue',sans-serif;
+      font-size:13px;
+      letter-spacing:0.15em;
+      color:rgba(255,255,255,0.75);
+      transition:all 0.2s;
+      cursor:pointer;
+    }
+    .timeline-pill:hover {
+      border-color:var(--red);
+      color:#fff;
+      background:rgba(220,38,38,0.1);
+    }
+    .timeline-pill.latest {
+      background:var(--red);
+      color:#fff;
+      border-color:var(--red);
+      box-shadow:3px 3px 0 #000;
+    }
+
+    .archive {
+      padding:120px 48px;
+      background:#0a0a0a;
+      position:relative;
+    }
+    .archive-header {
+      max-width:1400px;
+      margin:0 auto 80px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      flex-wrap:wrap;
+      gap:32px;
+    }
+    .archive-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(48px, 6vw, 88px);
+      line-height:0.95;
+      letter-spacing:-0.01em;
+    }
+    .archive-title em {
+      font-family:'Playfair Display',serif;
+      font-style:italic;
+      font-weight:900;
+      color:var(--red-light);
+      font-size:0.85em;
+    }
+    .archive-intro {
+      max-width:440px;
+      color:rgba(255,255,255,0.65);
+      font-weight:300;
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    .mag-grid {
+      max-width:1400px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:32px;
+    }
+    @media (max-width:1100px){ .mag-grid{ grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:700px){ .mag-grid{ grid-template-columns:1fr;} }
+
+    .card {
+      position:relative;
+      background:#1a1a1a;
+      border:1px solid rgba(255,255,255,0.06);
+      overflow:hidden;
+      transition:all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+      cursor:pointer;
+      display:block;
+      scroll-margin-top:100px;
+    }
+    .card:hover {
+      transform:translateY(-6px);
+      border-color:var(--red);
+      box-shadow:0 30px 60px -20px rgba(220,38,38,0.3);
+    }
+    .card-cover {
+      position:relative;
+      aspect-ratio:600/842;
+      overflow:hidden;
+      background:#fff;
+    }
+    .card-cover img {
+      width:100%; height:100%;
+      object-fit:contain;
+      background:#fff;
+      transition:transform 0.6s cubic-bezier(0.2,0.9,0.3,1);
+    }
+    .card:hover .card-cover img { transform:scale(1.03); }
+    .card-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
+      opacity:0;
+      transition:opacity 0.3s;
+      display:flex;
+      align-items:flex-end;
+      padding:24px;
+    }
+    .card:hover .card-overlay { opacity:1; }
+    .card-cta {
+      color:#fff;
+      font-family:'Archivo Black',sans-serif;
+      font-size:11px;
+      letter-spacing:0.25em;
+      text-transform:uppercase;
+      display:flex; align-items:center; gap:10px;
+      transform:translateY(10px);
+      transition:transform 0.3s;
+    }
+    .card:hover .card-cta { transform:translateY(0); }
+    .card-cta svg { width:14px; height:14px; }
+
+    .card-body { padding:24px; }
+    .card-year-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      margin-bottom:12px;
+    }
+    .card-year {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:36px;
+      line-height:1;
+      letter-spacing:0.02em;
+      color:#fff;
+    }
+    .card-issue {
+      font-size:10px;
+      letter-spacing:0.25em;
+      color:var(--red-light);
+      font-weight:700;
+      text-transform:uppercase;
+    }
+    .card-title {
+      font-family:'Playfair Display',serif;
+      font-size:17px;
+      font-weight:700;
+      font-style:italic;
+      color:#fff;
+      margin-bottom:10px;
+      line-height:1.3;
+    }
+    .card-sub {
+      font-size:13px;
+      color:rgba(255,255,255,0.55);
+      line-height:1.5;
+      margin-bottom:20px;
+    }
+    .card-meta {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding-top:16px;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .card-pages {
+      font-size:11px;
+      letter-spacing:0.2em;
+      color:rgba(255,255,255,0.5);
+      text-transform:uppercase;
+      font-weight:600;
+    }
+    .card-arrow {
+      width:32px; height:32px;
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      transition:all 0.3s;
+    }
+    .card:hover .card-arrow {
+      background:var(--red);
+      border-color:var(--red);
+      transform:translateX(4px);
+    }
+    .card-arrow svg { width:12px; height:12px; }
+
+    .card.featured {
+      grid-column:span 2;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      position:relative;
+    }
+    .card.featured::before {
+      content:'';
+      position:absolute;
+      top:-1px; left:-1px; right:-1px; bottom:-1px;
+      background:linear-gradient(135deg, rgba(220,38,38,0.4), transparent 50%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .card.featured > * { position:relative; z-index:1; }
+    .card.featured .card-cover { aspect-ratio:auto; height:100%; }
+    .card.featured .card-body {
+      padding:40px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .card.featured .card-year { font-size:64px; }
+    .card.featured .card-title { font-size:26px; }
+    .card.featured .card-sub { font-size:15px; }
+    .card-badge {
+      display:inline-block;
+      padding:6px 14px;
+      background:var(--red);
+      color:#fff;
+      font-family:'Archivo Black',sans-serif;
+      font-size:10px;
+      letter-spacing:0.3em;
+      text-transform:uppercase;
+      margin-bottom:20px;
+      transform:skewX(-8deg);
+      box-shadow:3px 3px 0 #000;
+      width:fit-content;
+      animation:pulse 2.5s ease-in-out infinite;
+    }
+    .card-badge span { display:inline-block; transform:skewX(8deg); }
+    @keyframes pulse {
+      0%,100% { box-shadow:3px 3px 0 #000; }
+      50% { box-shadow:3px 3px 0 #000, 0 0 24px rgba(220,38,38,0.6); }
+    }
+
+    @media (max-width:1100px){
+      .card.featured { grid-column:span 2; grid-template-columns:1fr; }
+    }
+    @media (max-width:900px){
+      .hero-content { grid-template-columns:1fr; gap:40px; }
+      .hero-visual { height:400px; order:-1; }
+      .hero-main { padding:20px 20px 60px; }
+      .archive { padding:80px 20px; }
+      .hero-stats { gap:28px; }
+      .hero-stat-num { font-size:40px; }
+      .timeline-strip { padding:20px 16px; }
+      .timeline-label { display:none; }
+    }
+    @media (max-width:700px){
+      .card.featured { grid-column:span 1; }
+      .card.featured .card-year { font-size:44px; }
+      .card.featured .card-title { font-size:19px; }
+    }
+    </style>
+</head>
+
+<body class="bg-[#0a0a0a] text-white">
+
+    <!-- Header -->
+    <header class="bg-[#111118] border-b border-[#2a2a35] sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="../../index.html" class="flex items-center space-x-3">
+                <img src="../../images/logo.png" alt="HC Thaur Logo" class="h-12 w-12 rounded-full object-contain">
+                <span class="text-lg font-black tracking-widest text-white">HC THAUR</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                <a href="../verein/verein.html"       class="text-gray-400 hover:text-white transition-colors">Unser Verein</a>
+                <a href="../../index.html#news"     class="text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="../season/cup/202526_playoffs.html" class="text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
+                <a href="index.html"                class="text-white border-b-2 border-hc-red pb-0.5">Magazin</a>
+                <a href="../../index.html#sponsors" class="text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="../../index.html#contact"  class="text-gray-400 hover:text-white transition-colors">Kontakt</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="#" aria-label="Shop" class="text-gray-500 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#111118] border-t border-[#2a2a35]">
+            <div class="container mx-auto px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
+                <a href="../verein/verein.html"       class="py-2 text-gray-400 hover:text-white transition-colors">Unser Verein</a>
+                <a href="../../index.html#news"     class="py-2 text-gray-400 hover:text-white transition-colors">News</a>
+                <a href="../season/cup/202526_playoffs.html" class="py-2 text-gray-400 hover:text-white transition-colors">Hockey Cup</a>
+                <a href="index.html"                class="py-2 text-white">Magazin</a>
+                <a href="../../index.html#sponsors" class="py-2 text-gray-400 hover:text-white transition-colors">Sponsoren</a>
+                <a href="../../index.html#contact"  class="py-2 text-gray-400 hover:text-white transition-colors">Kontakt</a>
+                <a href="#" class="py-2 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                    Shop
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="ice-lines"></div>
+            <div class="ice-circles"></div>
+
+            <div class="hero-main">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="tag"><span>PLAY HOCKEY · 9 AUSGABEN</span></div>
+                        <h1 class="hero-title">
+                            <span class="line1">PLAY</span>
+                            <span class="line1">HOCKEY</span>
+                            <span class="line2">das Archiv des HC Thaur</span>
+                        </h1>
+                        <p class="hero-desc">
+                            Neun Jahre Vereinsgeschichte in neun Ausgaben — von der
+                            Gründungsversammlung im Mai 2017 bis zum ersten Meistertitel
+                            der Vereinsgeschichte in der Saison 2025/26.
+                        </p>
+                        <div class="hero-stats">
+                            <div>
+                                <div class="hero-stat-num">9</div>
+                                <div class="hero-stat-label">Ausgaben</div>
+                            </div>
+                            <div>
+                                <div class="hero-stat-num">260</div>
+                                <div class="hero-stat-label">Seiten gesamt</div>
+                            </div>
+                            <div>
+                                <div class="hero-stat-num">2017</div>
+                                <div class="hero-stat-label">seit</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="stack-book"><img src="2017-18/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2018-19/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2019-20/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2020-21/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2021-22/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2022-23/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2023-24/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2024-25/p01.jpg" alt=""></div>
+                        <div class="stack-book"><img src="2025-26/p01.jpg" alt=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-hint">↓ alle Jahrgänge</div>
+        </section>
+
+        <div class="timeline-strip">
+            <div class="timeline-inner">
+                <div class="timeline-label">Schnell-Navigation</div>
+                <a href="#y2025-26" class="timeline-pill latest">NEU · 25/26</a>
+                <a href="#y2024-25" class="timeline-pill">24/25</a>
+                <a href="#y2023-24" class="timeline-pill">23/24</a>
+                <a href="#y2022-23" class="timeline-pill">22/23</a>
+                <a href="#y2021-22" class="timeline-pill">21/22</a>
+                <a href="#y2020-21" class="timeline-pill">20/21</a>
+                <a href="#y2019-20" class="timeline-pill">19/20</a>
+                <a href="#y2018-19" class="timeline-pill">18/19</a>
+                <a href="#y2017-18" class="timeline-pill">17/18</a>
+            </div>
+        </div>
+
+        <section class="archive">
+            <div class="archive-header">
+                <h2 class="archive-title">Das <em>Archiv</em><br>Neueste zuerst.</h2>
+                <p class="archive-intro">
+                    Jede Ausgabe von Play Hockey dokumentiert ein Vereinsjahr — Trainingslager,
+                    Derbys, Nachwuchs, Sommeraktionen und alles dazwischen. Die aktuellste
+                    Ausgabe oben, dann geht's chronologisch zurück bis zur Gründungssaison.
+                </p>
+            </div>
+
+            <div class="mag-grid">
+
+                <a href="2025-26/index.html" id="y2025-26" class="card featured">
+                    <div class="card-cover">
+                        <img src="2025-26/p01.jpg" alt="Play Hockey 2025/26">
+                        <div class="card-overlay">
+                            <div class="card-cta">
+                                Jahrbuch öffnen
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-badge"><span>NEUESTE AUSGABE</span></div>
+                        <div class="card-year-row">
+                            <div class="card-year">2025/26</div>
+                            <div class="card-issue">Ausgabe 09</div>
+                        </div>
+                        <h3 class="card-title">Meister der Division 2</h3>
+                        <p class="card-sub">Der erste Titel der Vereinsgeschichte: Hockey Cup Tirol 2 gewonnen. Dazu ein neuer Hauptsponsor, die erste Vereinshomepage, das erste Nachwuchsturnier in Thaur und 62 begeisterte Nachwuchsspieler:innen.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">44 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2024-25/index.html" id="y2024-25" class="card">
+                    <div class="card-cover">
+                        <img src="2024-25/p01.jpg" alt="Play Hockey 2024/25">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2024/25</div>
+                            <div class="card-issue">Ausgabe 08</div>
+                        </div>
+                        <h3 class="card-title">Eine neue Ära</h3>
+                        <p class="card-sub">55 aktive Erwachsene, 53 Nachwuchsspieler:innen — Rekordzahlen. Dazu ein modernisiertes HCT-Logo samt Bär.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">40 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2023-24/index.html" id="y2023-24" class="card">
+                    <div class="card-cover">
+                        <img src="2023-24/p01.jpg" alt="Play Hockey 2023/24">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2023/24</div>
+                            <div class="card-issue">Nr. 07</div>
+                        </div>
+                        <h3 class="card-title">Premiere im Meisterschaftsbetrieb</h3>
+                        <p class="card-sub">Erste Teilnahme am Hockey Cup Tirol — die neue Saisonform.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">32 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2022-23/index.html" id="y2022-23" class="card">
+                    <div class="card-cover">
+                        <img src="2022-23/p01.jpg" alt="Play Hockey 2022/23">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2022/23</div>
+                            <div class="card-issue">Nr. 06</div>
+                        </div>
+                        <h3 class="card-title">Ein Ganzjahresverein</h3>
+                        <p class="card-sub">Hockey im Winter, Radsport im Sommer. 28 Radfahrer:innen im HCT-Trikot.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">32 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2021-22/index.html" id="y2021-22" class="card">
+                    <div class="card-cover">
+                        <img src="2021-22/p01.jpg" alt="Play Hockey 2021/22">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2021/22</div>
+                            <div class="card-issue">Nr. 05</div>
+                        </div>
+                        <h3 class="card-title">5 Jahre Hockey in Thaur</h3>
+                        <p class="card-sub">Das erste kleine Jubiläum: 30 Kinder, 43 aktive Erwachsene, unzählige Erinnerungen.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">36 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2020-21/index.html" id="y2020-21" class="card">
+                    <div class="card-cover">
+                        <img src="2020-21/p01.jpg" alt="Play Hockey 2020/21">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2020/21</div>
+                            <div class="card-issue">Nr. 04</div>
+                        </div>
+                        <h3 class="card-title">Ein Jahr geprägt von einem Virus</h3>
+                        <p class="card-sub">Die kürzeste Ausgabe: Kaum Training, keine Veranstaltungen — aber viel Einfallsreichtum.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">8 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2019-20/index.html" id="y2019-20" class="card">
+                    <div class="card-cover">
+                        <img src="2019-20/p01.jpg" alt="Play Hockey 2019/20">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2019/20</div>
+                            <div class="card-issue">Nr. 03</div>
+                        </div>
+                        <h3 class="card-title">Der HC Thaur nimmt Fahrt auf</h3>
+                        <p class="card-sub">Spiele gegen sechs Tiroler Teams und das erste U10-Turnier in Zirl.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">28 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2018-19/index.html" id="y2018-19" class="card">
+                    <div class="card-cover">
+                        <img src="2018-19/p01.jpg" alt="Play Hockey 2018/19">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2018/19</div>
+                            <div class="card-issue">Nr. 02</div>
+                        </div>
+                        <h3 class="card-title">Das zweite Kapitel</h3>
+                        <p class="card-sub">Freundschaftsspiele, Vereinsausflug nach Bozen und 20 Trainings im Oberland.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">24 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="2017-18/index.html" id="y2017-18" class="card">
+                    <div class="card-cover">
+                        <img src="2017-18/p01.jpg" alt="Play Hockey 2017/18">
+                        <div class="card-overlay"><div class="card-cta">Öffnen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-year-row">
+                            <div class="card-year">2017/18</div>
+                            <div class="card-issue">Nr. 01 · Premiere</div>
+                        </div>
+                        <h3 class="card-title">Ein neuer Verein entsteht</h3>
+                        <p class="card-sub">Die allererste Ausgabe: Gründungsversammlung mit 18 Mitgliedern, das erste Trainingslager in Gröden.</p>
+                        <div class="card-meta">
+                            <div class="card-pages">16 Seiten</div>
+                            <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#080809] border-t border-[#1e1e26]">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="../../images/logo.png" alt="HCT Logo" class="h-10 w-10 rounded-full object-contain">
+                        <span class="font-black tracking-widest text-white">HC THAUR</span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed">Seit 2017 steht beim Hockey Club Thaur die Freude am Sport im Mittelpunkt.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="../../index.html"          class="hover:text-hc-red transition-colors">Home</a></li>
+                        <li><a href="../season/cup/202526_playoffs.html" class="hover:text-hc-red transition-colors">Hockey Cup</a></li>
+                        <li><a href="../../index.html#sponsors" class="hover:text-hc-red transition-colors">Sponsoren</a></li>
+                        <li><a href="../2025_Datenschutz.html"  class="hover:text-hc-red transition-colors">Datenschutz</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Kontakt</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="mailto:hockey@hc-thaur.at" class="hover:text-hc-red transition-colors">hockey@hc-thaur.at</a></li>
+                        <li>Sportplatzweg 1, 6065 Thaur</li>
+                        <li>ZVR. 993472820</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-[#1e1e26] text-center text-xs text-gray-600">
+                <p>&copy; <span id="current-year">2025</span> HC Thaur. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/inline-scripts.js?v=2.0.0"></script>
+    <script src="../../js/site.js?v=20260221-3"></script>
+</body>
+</html>

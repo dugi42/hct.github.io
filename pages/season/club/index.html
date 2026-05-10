@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vereins-Statistiken – HC Thaur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-base:       #0f0f12;
+    --bg-card:       #1a1a20;
+    --bg-card-alt:   #13131a;
+    --border:        #2a2a35;
+    --hc-red:        #fc0612;
+    --text-primary:  #f0f0f5;
+    --text-secondary:#8a8a9a;
+    --text-muted:    #555568;
+    --green:         #10b981;
+    --blue:          #3b82f6;
+    --amber:         #f59e0b;
+    --red:           #ef4444;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* Nav */
+  .top-nav {
+    background: rgba(15,15,18,0.9);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .top-nav a:hover { color: var(--text-primary); }
+  .top-nav .sep { color: var(--text-muted); }
+
+  .page { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* Header */
+  .page-header { margin-bottom: 2rem; }
+  .page-header .section-pill {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--hc-red);
+    border: 1px solid rgba(252,6,18,.3);
+    background: rgba(252,6,18,.08);
+    padding: .3rem .8rem;
+    border-radius: 9999px;
+    margin-bottom: 0.75rem;
+  }
+  .page-header h1 {
+    font-family: 'Archivo Black', 'Inter', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+  .page-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 0.4rem;
+  }
+
+  /* KPI Row */
+  .metric-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 2rem; }
+  .metric {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .metric-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; }
+  .metric-sub { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+  .v-green { color: var(--green); }
+  .v-blue  { color: var(--blue); }
+
+  /* Grids */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .card-title {
+    font-family: 'Archivo Black', 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+  .chart-wrap { position: relative; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; font-size: 11px; color: var(--text-secondary); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+  /* Tables */
+  table.stats { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.stats th {
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  table.stats td { padding: 6px 8px; border-bottom: 1px solid rgba(42,42,53,0.6); color: var(--text-primary); }
+  table.stats tr:last-child td { border: none; }
+
+  /* Tier badges */
+  .tier { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+  .tier-top  { background: rgba(16,185,129,0.15); color: #10b981; }
+  .tier-h    { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .tier-m    { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .tier-z    { background: rgba(239,68,68,0.12);  color: #ef4444; }
+
+  /* Section labels */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .metric-row { grid-template-columns: repeat(3,1fr); }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .metric-row { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../../../index.html">← HC Thaur</a>
+  <span class="sep">/</span>
+  <a href="../../verein/verein.html">Unser Verein</a>
+  <span class="sep">/</span>
+  <a href="../cup/202526_playoffs.html">Hockey Cup</a>
+  <span class="sep">/</span>
+  <span style="color:var(--text-primary)">Vereins-Statistiken</span>
+</nav>
+
+<div class="page">
+
+  <div class="page-header">
+    <div class="section-pill">Saison 2025/26</div>
+    <h1>Vereins-Statistiken</h1>
+    <p class="subtitle">Okt 2025 – Mär 2026 &nbsp;·&nbsp; 61 Mitglieder &nbsp;·&nbsp; 36 Veranstaltungen &nbsp;·&nbsp; Stand Apr 2026</p>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="metric-row">
+    <div class="metric"><div class="metric-label">Mitglieder</div><div class="metric-value v-blue">61</div><div class="metric-sub">registriert</div></div>
+    <div class="metric"><div class="metric-label">Veranstaltungen</div><div class="metric-value v-blue">36</div><div class="metric-sub">Okt – Mär</div></div>
+    <div class="metric"><div class="metric-label">Teilnahmen</div><div class="metric-value v-green">557</div><div class="metric-sub">gesamt</div></div>
+    <div class="metric"><div class="metric-label">Ø Anwesenheit</div><div class="metric-value v-blue">25%</div><div class="metric-sub">pro Mitglied</div></div>
+    <div class="metric"><div class="metric-label">Ø pro Event</div><div class="metric-value v-green">15.5</div><div class="metric-sub">Mitglieder</div></div>
+    <div class="metric"><div class="metric-label">Aktiv ≥50%</div><div class="metric-value v-green">12</div><div class="metric-sub">Mitglieder</div></div>
+  </div>
+
+  <div class="section-label">Monatliche &amp; Event-Trends</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Monatliche Anwesenheitsrate</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="monthChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Anwesenheit pro Veranstaltung (chronologisch)</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="eventChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-label">Mitglieder-Verteilung &amp; Aktivität</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">Verteilung nach Tier</div>
+      <div class="legend">
+        <span><span class="legend-dot" style="background:#ef4444"></span>Inaktiv 0%</span>
+        <span><span class="legend-dot" style="background:#f59e0b"></span>1–19%</span>
+        <span><span class="legend-dot" style="background:#3b82f6"></span>20–49%</span>
+        <span><span class="legend-dot" style="background:#10b981"></span>50–74%</span>
+        <span><span class="legend-dot" style="background:#34d399"></span>75%+</span>
+      </div>
+      <div class="chart-wrap" style="height:170px"><canvas id="distChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Anwesenheit nach Veranstaltungstyp</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="etypeChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top 10 längste Serien</div>
+      <table class="stats">
+        <thead><tr><th>Mitglied</th><th>Serie</th><th>Gesamt</th></tr></thead>
+        <tbody id="streakTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-label">Top-Performer &amp; Gesamtübersicht</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Top 10 nach Anwesenheit %</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="topChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Alle Mitglieder – Übersicht</div>
+      <div style="max-height:270px;overflow-y:auto;">
+        <table class="stats">
+          <thead><tr><th>#</th><th>Name</th><th>Events</th><th>%</th><th>Tier</th></tr></thead>
+          <tbody id="memberTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const D = {
+  month_labels: ["Okt 25","Nov 25","Dez 25","Jan 26","Feb 26","Mär 26"],
+  month_pcts:   [37,33,23,22,19,34],
+  month_att:    [45,159,129,123,80,21],
+  dist_labels:  ["0%","1–19%","20–49%","50–74%","75–100%"],
+  dist_values:  [10,22,17,10,2],
+  top10_names:  ["Gabriel Thaler","Daniel Hauser","Paul Plank","Mario Föger","Christoph Breuer","Lukas Christler","Wolfgang Winkler","Joachim Steinlechner","Michael Plank","Lukas Nagl"],
+  top10_pcts:   [81,78,67,64,64,58,56,56,56,53],
+  top10_counts: [29,28,24,23,23,21,20,20,20,19],
+  event_pcts:   [44,30,30,18,11,48,43,31,23,57,31,34,25,26,16,16,10,23,30,21,18,18,36,16,23,20,33,16,11,16,11,18,13,26,34,34],
+  event_labels: ["Telfs 10-23","Telfs 10-30","Telfs 11-06","Steinach 11-07","Schleifen 11-10","Telfs 11-13","Telfs 11-20","IBK 11-22","Telfs 11-27","Lager 11-28","Mils 12-02","Telfs 12-04","Telfs 12-08","Telfs 12-11","Thaur 12-12","Thaur 12-15","Thaur 12-19","Telfs 12-22","Weihn. 12-27","Telfs 01-01","Telfs 01-08","Thaur 01-12","Telfs 01-15","Thaur 01-19","Telfs 01-22","Thaur 01-26","Telfs 01-29","Rinn 01-30","Thaur 02-02","v.Rinn 02-06","Thaur 02-11","Saison 02-14","Rum 02-16","Telfs 02-19","Telfs 02-26","Telfs 03-05"],
+  event_types:  ["Training","Training","Training","Game","Special","Training","Training","Training","Training","Camp","Training","Training","Training","Training","Game","Game","Game","Training","Game","Training","Training","Game","Training","Game","Training","Game","Training","Game","Game","Game","Game","Game","Game","Training","Training","Training"],
+  etype_names:  ["Training","Spiel","Special","Camp"],
+  etype_pcts:   [31,17,11,57],
+  etype_counts: [20,14,1,1],
+  streak_names: ["Gabriel Thaler","Daniel Hauser","Michael Plank","Paul Plank","Matteo Wöber","Lukas Christler","Christoph Breuer","Mario Föger","Nikolaus Christler"],
+  streak_vals:  [14,11,9,8,7,6,6,5,5],
+  members: [
+    {n:"Gabriel Thaler",c:29,p:81},{n:"Daniel Hauser",c:28,p:78},{n:"Paul Plank",c:24,p:67},{n:"Mario Föger",c:23,p:64},{n:"Christoph Breuer",c:23,p:64},{n:"Lukas Christler",c:21,p:58},{n:"Wolfgang Winkler",c:20,p:56},{n:"Joachim Steinlechner",c:20,p:56},{n:"Michael Plank",c:20,p:56},{n:"Lukas Nagl",c:19,p:53},{n:"Toni Plank",c:18,p:50},{n:"Manuel Marzinek",c:17,p:47},{n:"Julian Zehenter",c:17,p:47},{n:"Martin Jun. Felderer",c:15,p:42},{n:"Christian Plattner",c:14,p:39},{n:"Michael Jäger",c:14,p:39},{n:"Moritz Praxmarer",c:13,p:36},{n:"Michael Krautgasser",c:12,p:33},{n:"Nikolaus Christler",c:12,p:33},{n:"Paul Hörtnagl",c:11,p:31},{n:"Raphael Gasser",c:11,p:31},{n:"Matteo Wöber",c:11,p:31},{n:"Daniel Delmonego",c:10,p:28},{n:"Jonathan Skillen",c:10,p:28},{n:"Ulrich Reisenbauer",c:10,p:28},{n:"Hannes Weidmann",c:9,p:25},{n:"Simon Weidmann",c:9,p:25},{n:"Fabian Hintringer",c:8,p:22},{n:"Joachim Staudacher",c:7,p:19},{n:"Florian Kogler",c:7,p:19},{n:"Stephan Mayr",c:7,p:19},{n:"Hannes Hauser",c:7,p:19},{n:"Hannes Schmidbauer",c:7,p:19},{n:"Daniel Schreiner",c:6,p:17},{n:"Fabian Wessiak",c:6,p:17},{n:"Thomas Pipal",c:6,p:17},{n:"Lukas Steiner",c:5,p:14},{n:"Robert Eichler",c:5,p:14},{n:"Felix Praxmarer",c:5,p:14},{n:"Peter Krippels",c:4,p:11},{n:"Andreas Föger",c:4,p:11},{n:"Dennis Mayr",c:4,p:11},{n:"Marlon Mariacher",c:3,p:8},{n:"Daniel Thielmann",c:2,p:6},{n:"Günther Huber",c:1,p:3},{n:"Wolfgang Isser",c:1,p:3},{n:"Thomas Gufler",c:1,p:3},{n:"Hannes Feichtner",c:1,p:3},{n:"Martin Papst",c:1,p:3},{n:"Christoph Felderer",c:1,p:3},{n:"Peter Schaur",c:0,p:0},{n:"Dominik Birk",c:0,p:0},{n:"Lukas Ebenbichler",c:0,p:0},{n:"Claus Gallrauner",c:0,p:0},{n:"Harald Pichler",c:0,p:0},{n:"Christian Eberherr",c:0,p:0},{n:"Maximilian Breuer",c:0,p:0},{n:"Martin Felderer",c:0,p:0},{n:"Markus Schlinke",c:0,p:0},{n:"Rene Huber",c:0,p:0}
+  ]
+};
+
+const GRID_COLOR = 'rgba(255,255,255,0.05)';
+const TICK_COLOR = '#8a8a9a';
+
+function tierColor(p) {
+  if (p >= 75) return '#34d399';
+  if (p >= 50) return '#10b981';
+  if (p >= 20) return '#3b82f6';
+  if (p > 0)   return '#f59e0b';
+  return '#ef4444';
+}
+function tierLabel(p) {
+  if (p >= 75) return '<span class="tier tier-top">Top</span>';
+  if (p >= 50) return '<span class="tier tier-h">High</span>';
+  if (p >= 20) return '<span class="tier tier-m">Mid</span>';
+  if (p > 0)   return '<span class="tier tier-m" style="color:#f59e0b;background:rgba(245,158,11,0.15)">Low</span>';
+  return '<span class="tier tier-z">Inaktiv</span>';
+}
+
+const tooltipDark = {
+  backgroundColor: '#1a1a20',
+  borderColor: '#2a2a35',
+  borderWidth: 1,
+  titleColor: '#f0f0f5',
+  bodyColor: '#8a8a9a',
+  padding: 10
+};
+
+// Monthly line chart
+new Chart(document.getElementById('monthChart'), {
+  type: 'line',
+  data: {
+    labels: D.month_labels,
+    datasets: [{
+      label: 'Anwesenheit %',
+      data: D.month_pcts,
+      borderColor: '#fc0612',
+      backgroundColor: 'rgba(252,6,18,0.08)',
+      tension: 0.4,
+      pointRadius: 5,
+      pointBackgroundColor: '#fc0612',
+      fill: true
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...tooltipDark, callbacks: { label: ctx => ctx.raw + '%' } } },
+    scales: {
+      y: { min: 0, max: 70, ticks: { callback: v => v + '%', color: TICK_COLOR }, grid: { color: GRID_COLOR }, border: { color: 'transparent' } },
+      x: { ticks: { color: TICK_COLOR }, grid: { display: false }, border: { color: 'transparent' } }
+    }
+  }
+});
+
+// Event bar chart
+const evColors = D.event_types.map(t => t === 'Training' ? '#3b82f6' : t === 'Game' ? '#10b981' : t === 'Camp' ? '#f59e0b' : '#8a8a9a');
+new Chart(document.getElementById('eventChart'), {
+  type: 'bar',
+  data: { labels: D.event_labels, datasets: [{ label: 'Anwesenheit %', data: D.event_pcts, backgroundColor: evColors, borderRadius: 2 }] },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...tooltipDark, callbacks: { label: ctx => `${ctx.raw}% (${D.event_types[ctx.dataIndex]})` } }
+    },
+    scales: {
+      y: { min: 0, max: 70, ticks: { callback: v => v + '%', color: TICK_COLOR }, grid: { color: GRID_COLOR }, border: { color: 'transparent' } },
+      x: { ticks: { maxRotation: 45, font: { size: 9 }, color: TICK_COLOR }, grid: { display: false }, border: { color: 'transparent' } }
+    }
+  }
+});
+
+// Distribution bar
+new Chart(document.getElementById('distChart'), {
+  type: 'bar',
+  data: {
+    labels: D.dist_labels,
+    datasets: [{ data: D.dist_values, backgroundColor: ['#ef4444','#f59e0b','#3b82f6','#10b981','#34d399'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: tooltipDark },
+    scales: {
+      y: { beginAtZero: true, ticks: { stepSize: 5, color: TICK_COLOR }, grid: { color: GRID_COLOR }, border: { color: 'transparent' } },
+      x: { ticks: { color: TICK_COLOR }, grid: { display: false }, border: { color: 'transparent' } }
+    }
+  }
+});
+
+// Event type polar area
+new Chart(document.getElementById('etypeChart'), {
+  type: 'polarArea',
+  data: {
+    labels: D.etype_names.map((n, i) => `${n} (${D.etype_counts[i]})`),
+    datasets: [{
+      data: D.etype_pcts,
+      backgroundColor: ['rgba(59,130,246,0.55)','rgba(16,185,129,0.55)','rgba(139,92,246,0.55)','rgba(245,158,11,0.55)']
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12, color: TICK_COLOR } },
+      tooltip: tooltipDark
+    },
+    scales: {
+      r: { ticks: { callback: v => v + '%', font: { size: 10 }, color: TICK_COLOR, backdropColor: 'transparent' }, grid: { color: GRID_COLOR } }
+    }
+  }
+});
+
+// Top 10 horizontal bar
+new Chart(document.getElementById('topChart'), {
+  type: 'bar',
+  data: {
+    labels: D.top10_names,
+    datasets: [{ label: 'Anwesenheit %', data: D.top10_pcts, backgroundColor: D.top10_pcts.map(p => tierColor(p)), borderRadius: 4 }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...tooltipDark, callbacks: { label: ctx => `${ctx.raw}% — ${D.top10_counts[ctx.dataIndex]}/36 Events` } }
+    },
+    scales: {
+      x: { min: 0, max: 100, ticks: { callback: v => v + '%', color: TICK_COLOR }, grid: { color: GRID_COLOR }, border: { color: 'transparent' } },
+      y: { ticks: { color: TICK_COLOR, font: { size: 11 } }, grid: { display: false }, border: { color: 'transparent' } }
+    }
+  }
+});
+
+// Streak table
+const stBody = document.getElementById('streakTable');
+stBody.innerHTML = D.streak_names.map((n, i) => `
+  <tr>
+    <td>${n}</td>
+    <td><strong style="color:var(--text-primary)">${D.streak_vals[i]}</strong> <span style="color:var(--text-muted);font-size:10px">Events</span></td>
+    <td style="color:${tierColor(D.members.find(m => m.n === n)?.p ?? 0)};font-weight:600">${D.members.find(m => m.n === n)?.p ?? '—'}%</td>
+  </tr>`).join('');
+
+// Member table
+const mBody = document.getElementById('memberTable');
+mBody.innerHTML = D.members.map((m, i) => `
+  <tr>
+    <td style="color:var(--text-muted)">${i + 1}</td>
+    <td>${m.n}</td>
+    <td style="color:var(--text-secondary)">${m.c}/36</td>
+    <td style="color:${tierColor(m.p)};font-weight:600">${m.p}%</td>
+    <td>${tierLabel(m.p)}</td>
+  </tr>`).join('');
+</script>
+</body>
+</html>

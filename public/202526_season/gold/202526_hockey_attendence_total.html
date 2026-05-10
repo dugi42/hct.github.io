@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HC Thaur · Anwesenheit 2025/26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ice-0:   #05080d;
+    --ice-1:   #0a0f1a;
+    --ice-2:   #111826;
+    --ice-3:   #1a2436;
+    --line:    #233148;
+    --line-2:  #2d3d57;
+    --text:    #e8eef7;
+    --muted:   #8a9bb4;
+    --dim:     #5b6b85;
+    --accent:  #00e5ff;
+    --accent-2:#7ef9ff;
+    --gold:    #ffcb47;
+    --red:     #ff4d6d;
+    --green:   #4ade80;
+    --amber:   #fbbf24;
+    --bg-grid: rgba(255,255,255,0.025);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ice-0); color: var(--text); font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    background:
+      radial-gradient(ellipse 60% 50% at 80% -10%, rgba(0,229,255,0.08), transparent 60%),
+      radial-gradient(ellipse 50% 60% at 0% 110%, rgba(126,249,255,0.05), transparent 60%),
+      linear-gradient(180deg, #04070c 0%, #05080d 100%);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 0%, transparent 80%);
+  }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header.hero { padding: 72px 0 40px; border-bottom: 1px solid var(--line); position: relative; }
+  .crest-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .crest {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 8px; position: relative;
+    box-shadow: 0 0 24px rgba(0,229,255,0.35);
+  }
+  .crest::after {
+    content: "T"; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--ice-0);
+  }
+  .club { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
+
+  h1.title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 9vw, 128px);
+    line-height: 0.88; letter-spacing: -0.02em; color: var(--text);
+  }
+  h1.title .pct { color: var(--accent); }
+  .subtitle { margin-top: 18px; font-size: 15px; color: var(--muted); max-width: 700px; line-height: 1.6; }
+  .subtitle b { color: var(--text); font-weight: 700; }
+
+  .meta-strip {
+    margin-top: 36px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .meta-cell { background: var(--ice-0); padding: 18px 22px; }
+  .meta-cell .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; }
+  .meta-cell .v { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--text); margin-top: 4px; }
+  .meta-cell .u { font-size: 12px; color: var(--muted); margin-left: 6px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+
+  /* methodology callout */
+  .method {
+    margin-top: 28px;
+    background: linear-gradient(180deg, rgba(0,229,255,0.05), transparent);
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 13px; color: var(--muted); line-height: 1.55;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .method .ic {
+    flex: 0 0 auto;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--accent); border: 1px solid var(--accent); padding: 3px 7px; border-radius: 4px;
+    letter-spacing: 0.1em;
+  }
+  .method b { color: var(--text); font-weight: 700; }
+
+  /* SECTION */
+  section { padding: 72px 0 8px; }
+  .section-head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 28px; gap: 24px; flex-wrap: wrap; }
+  .section-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em; color: var(--accent); text-transform: uppercase; }
+  h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 60px); letter-spacing: -0.01em; line-height: 1; }
+  .section-sub { font-size: 14px; color: var(--muted); max-width: 380px; line-height: 1.5; }
+
+  /* CATEGORY CARDS */
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 980px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .cat-grid { grid-template-columns: 1fr; } }
+
+  .cat-card {
+    position: relative;
+    background: linear-gradient(180deg, var(--ice-2), var(--ice-1));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 22px 22px;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .cat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .cat-card::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 50% at 100% 0%, var(--accent-glow, transparent), transparent 60%);
+    opacity: 0.45;
+  }
+  .cat-card[data-cat="trainings"]   { --accent-glow: rgba(0,229,255,0.18); }
+  .cat-card[data-cat="lager"]       { --accent-glow: rgba(255,203,71,0.18); }
+  .cat-card[data-cat="friendly"]    { --accent-glow: rgba(126,249,255,0.16); }
+  .cat-card[data-cat="cup"]         { --accent-glow: rgba(255,77,109,0.16); }
+
+  .cat-icon {
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; background: var(--ice-3); color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+  }
+  .cat-card[data-cat="lager"]    .cat-icon { color: var(--gold); }
+  .cat-card[data-cat="friendly"] .cat-icon { color: var(--accent-2); }
+  .cat-card[data-cat="cup"]      .cat-icon { color: var(--red); }
+
+  .cat-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.02em; margin-top: 14px; line-height: 1; }
+  .cat-row { display: flex; align-items: baseline; gap: 12px; margin-top: 14px; }
+  .cat-big { font-family: 'Bebas Neue', sans-serif; font-size: 56px; letter-spacing: -0.02em; line-height: 0.9; color: var(--text); }
+  .cat-unit { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+  .cat-stats {
+    margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line);
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 18px;
+  }
+  .cat-stats .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 0.18em; text-transform: uppercase; }
+  .cat-stats .val { font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 600; color: var(--text); margin-top: 2px; }
+  .cat-top {
+    margin-top: 16px; padding: 12px 14px;
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 10px;
+  }
+  .cat-card[data-cat="lager"]    .cat-top { background: rgba(255,203,71,0.06); border-color: rgba(255,203,71,0.18); }
+  .cat-card[data-cat="friendly"] .cat-top { background: rgba(126,249,255,0.05); border-color: rgba(126,249,255,0.16); }
+  .cat-card[data-cat="cup"]      .cat-top { background: rgba(255,77,109,0.06); border-color: rgba(255,77,109,0.18); }
+  .cat-top .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; }
+  .cat-top .name { font-weight: 700; font-size: 15px; margin-top: 4px; }
+  .cat-top .stat { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); margin-top: 2px; }
+  .cat-card[data-cat="lager"]    .cat-top .stat { color: var(--gold); }
+  .cat-card[data-cat="friendly"] .cat-top .stat { color: var(--accent-2); }
+  .cat-card[data-cat="cup"]      .cat-top .stat { color: var(--red); }
+
+  /* CONTROLS */
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; align-items: center; }
+  .search {
+    flex: 1; min-width: 200px;
+    background: var(--ice-1); border: 1px solid var(--line); color: var(--text);
+    padding: 11px 14px; border-radius: 10px; font-family: 'Manrope', sans-serif; font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,229,255,0.15); }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    background: var(--ice-1); border: 1px solid var(--line); color: var(--muted);
+    padding: 9px 14px; border-radius: 999px; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; cursor: pointer; transition: all 0.18s;
+    text-transform: uppercase;
+  }
+  .chip:hover { color: var(--text); border-color: var(--line-2); }
+  .chip.active { background: var(--accent); color: var(--ice-0); border-color: var(--accent); font-weight: 700; }
+
+  /* TABLE */
+  .tbl-wrap { background: var(--ice-1); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .tbl-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 980px; }
+  thead th {
+    text-align: left; background: var(--ice-2);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em;
+    color: var(--muted); text-transform: uppercase; font-weight: 500;
+    padding: 14px 12px; border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+    cursor: pointer; user-select: none;
+    transition: color 0.15s;
+  }
+  thead th:first-child { padding-left: 22px; cursor: default; }
+  thead th.sortable:hover { color: var(--accent); }
+  thead th.sorted { color: var(--accent); }
+  thead th.sorted::after { content: " ↓"; }
+  thead th.sorted.asc::after { content: " ↑"; }
+  tbody td {
+    padding: 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.03);
+    font-size: 14px; vertical-align: middle;
+  }
+  tbody td:first-child { padding-left: 22px; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: rgba(0,229,255,0.03); }
+  tbody tr.inactive { opacity: 0.5; }
+  .rank { font-family: 'JetBrains Mono', monospace; color: var(--dim); font-size: 12px; width: 28px; }
+  .name { font-weight: 600; color: var(--text); }
+  .badges { margin-left: 8px; display: inline-flex; gap: 4px; vertical-align: middle; }
+  .b {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em;
+    border-radius: 3px; padding: 1px 4px; line-height: 1.4;
+  }
+  .b-cup  { color: var(--red);     border: 1px solid var(--red); }
+  .b-tl   { color: var(--gold);    border: 1px solid var(--gold); }
+  .b-jr   { color: var(--accent-2); border: 1px solid var(--accent-2); }
+
+  .att-cell { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .att-cell .num { color: var(--text); font-weight: 700; }
+  .att-cell .denom { color: var(--dim); }
+  .na { color: var(--dim); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  .pct-bar { display: flex; align-items: center; gap: 10px; min-width: 100px; }
+  .pct-bar .bar {
+    flex: 1; height: 6px; background: var(--ice-3); border-radius: 999px; overflow: hidden;
+    position: relative;
+  }
+  .pct-bar .fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 999px; transition: width 0.4s ease;
+  }
+  .pct-bar.gold .fill   { background: linear-gradient(90deg, var(--gold), #ffe896); }
+  .pct-bar.green .fill  { background: linear-gradient(90deg, var(--green), #86efac); }
+  .pct-bar.red .fill    { background: linear-gradient(90deg, var(--red), #ff8da3); }
+  .pct-bar .v {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+    min-width: 30px; text-align: right;
+  }
+
+  .total-cell {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+    color: var(--text); letter-spacing: -0.01em;
+  }
+  .total-cell .of { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); margin-left: 6px; letter-spacing: 0.05em; }
+
+  .no-results { padding: 60px 20px; text-align: center; color: var(--muted); font-size: 14px; }
+
+  /* LEGEND */
+  .legend {
+    margin-top: 22px; display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em;
+    color: var(--dim); text-transform: uppercase;
+  }
+  .legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .legend .b { font-size: 9px; padding: 1px 4px; }
+
+  footer {
+    margin-top: 80px; padding: 32px 0; border-top: 1px solid var(--line);
+    color: var(--dim); font-size: 12px; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+
+  /* DETAIL MODAL */
+  .detail-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+    z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .detail-overlay.show { display: flex; }
+  .detail {
+    background: linear-gradient(180deg, var(--ice-2), var(--ice-1));
+    border: 1px solid var(--line); border-radius: 16px;
+    width: 100%; max-width: 580px; padding: 32px;
+    position: relative;
+  }
+  .detail .close {
+    position: absolute; top: 14px; right: 14px;
+    background: none; border: 1px solid var(--line); color: var(--muted);
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    transition: all 0.15s; font-size: 18px;
+  }
+  .detail .close:hover { color: var(--text); border-color: var(--accent); }
+  .detail h3 { font-family: 'Bebas Neue', sans-serif; font-size: 38px; line-height: 1; }
+  .detail .sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 6px; }
+  .detail .elig { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
+  .detail-row {
+    background: rgba(255,255,255,0.02); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px 16px; position: relative;
+  }
+  .detail-row.dimmed { opacity: 0.4; }
+  .detail-row .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+  .detail-row .val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--text); margin-top: 4px; line-height: 1; }
+  .detail-row .pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); margin-top: 2px; }
+  .detail-row .pct.dim { color: var(--dim); }
+  .detail-cup {
+    margin-top: 18px; padding: 14px 16px;
+    background: rgba(255,77,109,0.06); border: 1px solid rgba(255,77,109,0.2); border-radius: 10px;
+    display: flex; gap: 24px; align-items: baseline; flex-wrap: wrap;
+  }
+  .detail-cup .stat { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--text); }
+  .detail-cup .stat .lab { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; line-height: 1; margin-bottom: 4px; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .rise { animation: rise 0.5s ease both; }
+  .rise:nth-child(1) { animation-delay: 0.05s; }
+  .rise:nth-child(2) { animation-delay: 0.10s; }
+  .rise:nth-child(3) { animation-delay: 0.15s; }
+  .rise:nth-child(4) { animation-delay: 0.20s; }
+
+  @media (max-width: 720px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); }
+    h1.title { font-size: 64px; }
+    table { min-width: 720px; }
+    #excluded-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 980px) and (min-width: 721px) {
+    #excluded-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="crest-row">
+      <div class="crest"></div>
+      <div class="club">HC THAUR · HOCKEY CUP TIROL · SAISON 2025/26</div>
+    </div>
+    <h1 class="title">Anwesenheit<br><span class="pct">in Zahlen.</span></h1>
+    <p class="subtitle">
+      Komplette Anwesenheitsstatistik aller Spieler über Trainings, Trainingslager,
+      Freundschaftsspiele und Cup&nbsp;Spiele. Jede Kategorie wird gegen ihren <b>echten Roster</b>
+      gerechnet — also gegen die in der Mitgliederdatenbank zugeordnete Gruppe, nicht
+      gegen die Gesamtzahl aller Eingeladenen.
+    </p>
+
+    <div class="meta-strip">
+      <div class="meta-cell"><div class="k">Master-Roster</div><div class="v" id="m-players"></div></div>
+      <div class="meta-cell"><div class="k">Termine gesamt</div><div class="v" id="m-events"></div></div>
+      <div class="meta-cell"><div class="k">Anwesenheiten</div><div class="v" id="m-att"></div></div>
+      <div class="meta-cell"><div class="k">Cup-Roster</div><div class="v" id="m-cup"></div></div>
+    </div>
+
+    <div class="method">
+      <div class="ic">METHODE</div>
+      <div>
+        Roster-Größen kommen aus den <b>Gruppen-Zuordnungen</b> in der Mitglieder­datenbank.
+        Trainings &amp; Freundschaftsspiele zählen gegen die <b>Activ-Team-Gruppe</b>,
+        Trainingslager gegen die <b>Trainingslager-Gruppe</b>, Cup&nbsp;Spiele gegen die
+        <b>Hockey-Cup-Gruppe</b>. Trainings umfassen alle <i>Training Telfs/IBK/Mils</i>
+        sowie die Heimtrainings <i>Thaur</i> und <i>TR Thaur</i>. Freundschaftsspiele
+        sind ausschließlich die vier echten Vergleichsspiele
+        (<i>Steinach Altherren · 2× Rinn · Rum</i>). Drei weitere Termine (Schleifen,
+        Weihnachtsturnier, internes Saisonabschlussturnier) sind separat ausgewiesen.
+      </div>
+    </div>
+  </header>
+
+  <!-- CATEGORY CARDS -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-tag">// 01 · KATEGORIEN</div>
+        <h2>Vier Bereiche, eine Saison</h2>
+      </div>
+      <div class="section-sub">Aufschlüsselung der Anwesenheit nach Termintyp. Top-Performer pro Kategorie hervorgehoben.</div>
+    </div>
+    <div class="cat-grid" id="cat-grid"></div>
+  </section>
+
+  <!-- PLAYER TABLE -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-tag">// 02 · SPIELER-RANGLISTE</div>
+        <h2>Jeder Spieler, jede Kategorie</h2>
+      </div>
+      <div class="section-sub">Klick auf eine Zeile für die Detailansicht. Header-Klick sortiert die Tabelle. Zellen ohne Werte = Spieler nicht für diese Kategorie eingeteilt.</div>
+    </div>
+
+    <div class="controls">
+      <input class="search" type="text" id="search" placeholder="Spieler suchen…">
+      <div class="filters" id="filters">
+        <button class="chip active" data-filter="all">Alle</button>
+        <button class="chip" data-filter="cup">Cup-Roster</button>
+        <button class="chip" data-filter="lager">Trainingslager</button>
+        <button class="chip" data-filter="active">Nur Aktive</button>
+        <button class="chip" data-filter="high">≥ 50%</button>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <div class="tbl-scroll">
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Spieler</th>
+              <th class="sortable" data-key="Trainings_attended">Trainings</th>
+              <th class="sortable" data-key="Trainings_pct">% T</th>
+              <th class="sortable" data-key="Trainingslager_attended">Trainingsl.</th>
+              <th class="sortable" data-key="Freundschaftsspiele_attended">Freundsch.</th>
+              <th class="sortable" data-key="Freundschaftsspiele_pct">% F</th>
+              <th class="sortable" data-key="Cup Spiele_attended">Cup</th>
+              <th class="sortable" data-key="Cup Spiele_pct">% C</th>
+              <th class="sortable sorted" data-key="combined_attended">Gesamt</th>
+              <th class="sortable" data-key="combined_pct">%</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot" style="background: var(--accent)"></span>≥ 60% Quote</span>
+      <span><span class="dot" style="background: var(--green)"></span>40–59%</span>
+      <span><span class="dot" style="background: var(--gold)"></span>20–39%</span>
+      <span><span class="dot" style="background: var(--red)"></span>&lt; 20%</span>
+      <span><span class="b b-cup">CUP</span>Hockey Cup Roster</span>
+      <span><span class="b b-tl">TL</span>Trainingslager</span>
+    </div>
+  </section>
+
+  <!-- EXCLUDED EVENTS -->
+  <section id="excluded-section" style="padding-top: 56px;">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">// 03 · WEITERE TERMINE</div>
+        <h2>Außerhalb der vier Kategorien</h2>
+      </div>
+      <div class="section-sub">Diese Termine werden nicht in die Schnitt-Quoten der vier Hauptkategorien eingerechnet — der Vollständigkeit halber hier die Anwesenheiten.</div>
+    </div>
+    <div id="excluded-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;"></div>
+  </section>
+
+  <footer>
+    <div>HC THAUR · DASHBOARD GENERIERT AUS PARTICIPATION-DATEN + MITGLIEDERDATENBANK</div>
+    <div>SAISON 2025/26</div>
+  </footer>
+
+</div>
+
+<!-- DETAIL OVERLAY -->
+<div class="detail-overlay" id="overlay">
+  <div class="detail" id="detail">
+    <button class="close" id="close-btn">×</button>
+    <div class="sub" id="d-rank">RANG</div>
+    <h3 id="d-name">Name</h3>
+    <div class="elig" id="d-elig"></div>
+    <div class="detail-grid">
+      <div class="detail-row" id="d-row-tr"><div class="lbl">Trainings</div><div class="val" id="d-tr"></div><div class="pct" id="d-tr-p"></div></div>
+      <div class="detail-row" id="d-row-tl"><div class="lbl">Trainingslager</div><div class="val" id="d-tl"></div><div class="pct" id="d-tl-p"></div></div>
+      <div class="detail-row" id="d-row-fr"><div class="lbl">Freundschaftsspiele</div><div class="val" id="d-fr"></div><div class="pct" id="d-fr-p"></div></div>
+      <div class="detail-row" id="d-row-cu"><div class="lbl">Cup Spiele</div><div class="val" id="d-cu"></div><div class="pct" id="d-cu-p"></div></div>
+    </div>
+    <div class="detail-cup" id="d-cup-stats" style="display:none">
+      <div class="stat"><span class="lab">Tore</span><span id="d-goals"></span></div>
+      <div class="stat"><span class="lab">Assists</span><span id="d-assists"></span></div>
+      <div class="stat"><span class="lab">Punkte</span><span id="d-points"></span></div>
+      <div class="stat" id="d-jersey-wrap" style="display:none"><span class="lab">Trikot</span>#<span id="d-jersey"></span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {"meta": {"season": "2025/26", "club": "HC Thaur", "total_events_categorised": 33, "total_excluded_events": 3, "total_cup_games": 15, "total_players_master": 62, "roster_activ_team": 61, "roster_hockey_cup": 36, "roster_trainingslager": 29}, "category_counts": {"Trainings": 28, "Freundschaftsspiele": 4, "Ausgeschlossen": 3, "Trainingslager": 1, "Cup Spiele": 15}, "totals": {"Trainings": {"events": 28, "roster_size": 61, "total_attendances": 447, "total_slots": 1708, "avg_per_event": 16.0, "avg_pct": 26.2}, "Trainingslager": {"events": 1, "roster_size": 29, "total_attendances": 27, "total_slots": 29, "avg_per_event": 27.0, "avg_pct": 93.1}, "Freundschaftsspiele": {"events": 4, "roster_size": 61, "total_attendances": 39, "total_slots": 244, "avg_per_event": 9.8, "avg_pct": 16.0}, "Cup Spiele": {"events": 15, "roster_size": 36, "total_attendances": 214, "total_slots": 540, "avg_per_event": 14.3, "avg_pct": 39.6}}, "top_per_category": {"Trainings": {"name": "Gabriel Thaler", "attended": 23, "total": 28, "pct": 82}, "Trainingslager": {"name": "Daniel Hauser", "attended": 1, "total": 1, "pct": 100}, "Freundschaftsspiele": {"name": "Paul Plank", "attended": 4, "total": 4, "pct": 100}, "Cup Spiele": {"name": "Lukas Christler", "attended": 15, "total": 15, "pct": 100}}, "excluded_events": [{"title": "Schleifen!", "date": "2025-11-10", "attended": 7}, {"title": "Weihnachtsspiel/turnier", "date": "2025-12-27", "attended": 18}, {"title": "internes Saisonabschlussturnier in Thaur", "date": "2026-02-14", "attended": 11}], "players": [{"user_id": 708846, "full_name": "Lukas Christler", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 14, "Trainings_declined": 10, "Trainings_noreply": 4, "Trainings_total": 28, "Trainings_pct": 50, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 4, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 100, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 15, "Cup Spiele_total": 15, "Cup Spiele_pct": 100, "cup_goals": 13, "cup_assists": 4, "cup_points": 17, "jersey": 8, "position": "F", "notes": "Captain (C)", "combined_attended": 34, "combined_total": 48, "combined_pct": 71}, {"user_id": 662838, "full_name": "Mario Föger", "groups": ["Activ Team", "Dorfschiessen", "Eisdeal Plus", "Fördermitglieder", "Fördermitglieder minderjährig", "Hockey Cup", "Junior Team", "Minis", "Nachwuchs", "Radteam", "Sponsoren", "Trainer", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 17, "Trainings_declined": 7, "Trainings_noreply": 4, "Trainings_total": 28, "Trainings_pct": 61, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 2, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 50, "excluded_attended": 3, "excluded_total": 3, "Cup Spiele_attended": 11, "Cup Spiele_total": 15, "Cup Spiele_pct": 73, "cup_goals": 5, "cup_assists": 2, "cup_points": 7, "jersey": 15, "position": "F", "notes": "Alternate (A)", "combined_attended": 31, "combined_total": 48, "combined_pct": 65}, {"user_id": 709059, "full_name": "Gabriel Thaler", "groups": ["Activ Team", "Eisdeal Plus", "Fördermitglieder", "Hockey Cup", "Junior Team", "Minis", "Radteam", "Trainer", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 23, "Trainings_declined": 5, "Trainings_noreply": 0, "Trainings_total": 28, "Trainings_pct": 82, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 3, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 75, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 27, "combined_total": 48, "combined_pct": 56}, {"user_id": 708879, "full_name": "Lukas Nagl", "groups": ["Activ Team", "Dorfschiessen", "Eisdeal Plus", "Hockey Cup", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 14, "Trainings_declined": 12, "Trainings_noreply": 2, "Trainings_total": 28, "Trainings_pct": 50, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 2, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 50, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 10, "Cup Spiele_total": 15, "Cup Spiele_pct": 67, "cup_goals": 1, "cup_assists": 3, "cup_points": 4, "jersey": 48, "position": "F", "notes": "U18", "combined_attended": 27, "combined_total": 48, "combined_pct": 56}, {"user_id": 989180, "full_name": "Julian Zehenter", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 17, "Trainings_declined": 7, "Trainings_noreply": 4, "Trainings_total": 28, "Trainings_pct": 61, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 9, "Cup Spiele_total": 15, "Cup Spiele_pct": 60, "cup_goals": 1, "cup_assists": 3, "cup_points": 4, "jersey": 67, "position": "F", "notes": "", "combined_attended": 26, "combined_total": 47, "combined_pct": 55}, {"user_id": 708864, "full_name": "Daniel Hauser", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Junior Team", "Minis", "Radteam", "Trainer", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 22, "Trainings_declined": 6, "Trainings_noreply": 0, "Trainings_total": 28, "Trainings_pct": 79, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 3, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 75, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 26, "combined_total": 48, "combined_pct": 54}, {"user_id": 708884, "full_name": "Raphael Gasser", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 10, "Trainings_declined": 10, "Trainings_noreply": 8, "Trainings_total": 28, "Trainings_pct": 36, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 14, "Cup Spiele_total": 15, "Cup Spiele_pct": 93, "cup_goals": 6, "cup_assists": 11, "cup_points": 17, "jersey": 85, "position": "F", "notes": "Alternate (A) — highest assist total", "combined_attended": 25, "combined_total": 47, "combined_pct": 53}, {"user_id": 708867, "full_name": "Matteo Wöber", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 9, "Trainings_declined": 15, "Trainings_noreply": 4, "Trainings_total": 28, "Trainings_pct": 32, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 14, "Cup Spiele_total": 15, "Cup Spiele_pct": 93, "cup_goals": 7, "cup_assists": 3, "cup_points": 10, "jersey": 9, "position": "F", "notes": "", "combined_attended": 24, "combined_total": 48, "combined_pct": 50}, {"user_id": 708881, "full_name": "Moritz Praxmarer", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 9, "Trainings_declined": 9, "Trainings_noreply": 10, "Trainings_total": 28, "Trainings_pct": 32, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 2, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 50, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 12, "Cup Spiele_total": 15, "Cup Spiele_pct": 80, "cup_goals": 2, "cup_assists": 3, "cup_points": 5, "jersey": 55, "position": "D", "notes": "U18", "combined_attended": 23, "combined_total": 47, "combined_pct": 49}, {"user_id": 709012, "full_name": "Paul Plank", "groups": ["Activ Team", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 18, "Trainings_declined": 6, "Trainings_noreply": 4, "Trainings_total": 28, "Trainings_pct": 64, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 4, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 100, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 22, "combined_total": 32, "combined_pct": 69}, {"user_id": 708875, "full_name": "Jonathan Skillen", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 10, "Trainings_declined": 10, "Trainings_noreply": 8, "Trainings_total": 28, "Trainings_pct": 36, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 10, "Cup Spiele_total": 15, "Cup Spiele_pct": 67, "cup_goals": 0, "cup_assists": 3, "cup_points": 3, "jersey": 64, "position": "D", "notes": "", "combined_attended": 20, "combined_total": 47, "combined_pct": 43}, {"user_id": 709061, "full_name": "Christoph Breuer", "groups": ["Activ Team", "Dorfschiessen", "Eisdeal Plus", "Hockey Cup", "Junior Team", "Minis", "Radteam", "Trainer", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 18, "Trainings_declined": 9, "Trainings_noreply": 1, "Trainings_total": 28, "Trainings_pct": 64, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 3, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 3, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 20, "combined_total": 48, "combined_pct": 42}, {"user_id": 708863, "full_name": "Stephan Mayr", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Junior Team", "Minis", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 6, "Trainings_declined": 14, "Trainings_noreply": 8, "Trainings_total": 28, "Trainings_pct": 21, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 13, "Cup Spiele_total": 15, "Cup Spiele_pct": 87, "cup_goals": 4, "cup_assists": 2, "cup_points": 6, "jersey": 22, "position": "D", "notes": "", "combined_attended": 20, "combined_total": 48, "combined_pct": 42}, {"user_id": 1067230, "full_name": "Hannes Schmidbauer", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 7, "Trainings_declined": 13, "Trainings_noreply": 8, "Trainings_total": 28, "Trainings_pct": 25, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 12, "Cup Spiele_total": 15, "Cup Spiele_pct": 80, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": 30, "position": "G", "notes": "Goalkeeper", "combined_attended": 19, "combined_total": 47, "combined_pct": 40}, {"user_id": 709060, "full_name": "Michael Plank", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Junior Team", "Minis", "Radteam", "Trainer", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 18, "Trainings_declined": 2, "Trainings_noreply": 8, "Trainings_total": 28, "Trainings_pct": 64, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 19, "combined_total": 48, "combined_pct": 40}, {"user_id": 721323, "full_name": "Thomas Pipal", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 6, "Trainings_declined": 16, "Trainings_noreply": 6, "Trainings_total": 28, "Trainings_pct": 21, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 3, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 13, "Cup Spiele_total": 15, "Cup Spiele_pct": 87, "cup_goals": 5, "cup_assists": 4, "cup_points": 9, "jersey": 75, "position": "D", "notes": "U18", "combined_attended": 19, "combined_total": 47, "combined_pct": 40}, {"user_id": 709052, "full_name": "Wolfgang Winkler", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 17, "Trainings_declined": 10, "Trainings_noreply": 1, "Trainings_total": 28, "Trainings_pct": 61, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 3, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 19, "combined_total": 48, "combined_pct": 40}, {"user_id": 709057, "full_name": "Joachim Steinlechner", "groups": ["Activ Team", "Dorfschiessen", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 17, "Trainings_declined": 10, "Trainings_noreply": 1, "Trainings_total": 28, "Trainings_pct": 61, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 18, "combined_total": 48, "combined_pct": 38}, {"user_id": 708882, "full_name": "Felix Praxmarer", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 4, "Trainings_declined": 18, "Trainings_noreply": 6, "Trainings_total": 28, "Trainings_pct": 14, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 12, "Cup Spiele_total": 15, "Cup Spiele_pct": 80, "cup_goals": 0, "cup_assists": 5, "cup_points": 5, "jersey": 69, "position": "D", "notes": "U18", "combined_attended": 17, "combined_total": 47, "combined_pct": 36}, {"user_id": 708866, "full_name": "Michael Krautgasser", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 11, "Trainings_declined": 17, "Trainings_noreply": 0, "Trainings_total": 28, "Trainings_pct": 39, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 5, "Cup Spiele_total": 15, "Cup Spiele_pct": 33, "cup_goals": 0, "cup_assists": 1, "cup_points": 1, "jersey": 44, "position": "D", "notes": "", "combined_attended": 17, "combined_total": 48, "combined_pct": 35}, {"user_id": 708870, "full_name": "Manuel Marzinek", "groups": ["Activ Team", "Eisdeal Plus", "Junior Team", "Minis", "Trainer", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 16, "Trainings_declined": 11, "Trainings_noreply": 1, "Trainings_total": 28, "Trainings_pct": 57, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 16, "combined_total": 32, "combined_pct": 50}, {"user_id": 708849, "full_name": "Toni Plank", "groups": ["Activ Team", "Eisdeal Plus", "Radteam", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 12, "Trainings_declined": 10, "Trainings_noreply": 6, "Trainings_total": 28, "Trainings_pct": 43, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 3, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 75, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 16, "combined_total": 33, "combined_pct": 48}, {"user_id": 708871, "full_name": "Fabian Wessiak", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 5, "Trainings_declined": 3, "Trainings_noreply": 20, "Trainings_total": 28, "Trainings_pct": 18, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 10, "Cup Spiele_total": 15, "Cup Spiele_pct": 67, "cup_goals": 3, "cup_assists": 5, "cup_points": 8, "jersey": 32, "position": "F", "notes": "Alternate (A)", "combined_attended": 16, "combined_total": 48, "combined_pct": 33}, {"user_id": 1041232, "full_name": "Max Mitglied", "groups": ["Activ Team", "Eisdeal Plus", "Fördermitglieder", "Fördermitglieder minderjährig", "Hockey Cup", "Junior Team", "Minis", "Radteam", "Trainer", "Trainingslager"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 14, "Trainings_declined": 1, "Trainings_noreply": 13, "Trainings_total": 28, "Trainings_pct": 50, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 2, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 50, "excluded_attended": 2, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 16, "combined_total": 48, "combined_pct": 33}, {"user_id": 708845, "full_name": "Peter Krippels", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 2, "Trainings_declined": 24, "Trainings_noreply": 2, "Trainings_total": 28, "Trainings_pct": 7, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 13, "Cup Spiele_total": 15, "Cup Spiele_pct": 87, "cup_goals": 5, "cup_assists": 6, "cup_points": 11, "jersey": 23, "position": "F", "notes": "", "combined_attended": 15, "combined_total": 47, "combined_pct": 32}, {"user_id": 708859, "full_name": "Paul Hörtnagl", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 9, "Trainings_declined": 16, "Trainings_noreply": 3, "Trainings_total": 28, "Trainings_pct": 32, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 5, "Cup Spiele_total": 15, "Cup Spiele_pct": 33, "cup_goals": 1, "cup_assists": 0, "cup_points": 1, "jersey": 17, "position": "D", "notes": "Listed as #17 in 08Jan game", "combined_attended": 15, "combined_total": 48, "combined_pct": 31}, {"user_id": 709055, "full_name": "Christian Plattner", "groups": ["Activ Team", "Eisdeal Plus", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 13, "Trainings_declined": 13, "Trainings_noreply": 2, "Trainings_total": 28, "Trainings_pct": 46, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 14, "combined_total": 33, "combined_pct": 42}, {"user_id": 708883, "full_name": "Marlon Mariacher", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 1, "Trainings_declined": 9, "Trainings_noreply": 18, "Trainings_total": 28, "Trainings_pct": 4, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 12, "Cup Spiele_total": 15, "Cup Spiele_pct": 80, "cup_goals": 6, "cup_assists": 6, "cup_points": 12, "jersey": 89, "position": "F", "notes": "U18", "combined_attended": 14, "combined_total": 47, "combined_pct": 30}, {"user_id": 708885, "full_name": "Martin Jun. Felderer", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 14, "Trainings_declined": 14, "Trainings_noreply": 0, "Trainings_total": 28, "Trainings_pct": 50, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 4, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 14, "combined_total": 47, "combined_pct": 30}, {"user_id": 709053, "full_name": "Michael Jäger", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 12, "Trainings_declined": 11, "Trainings_noreply": 5, "Trainings_total": 28, "Trainings_pct": 43, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 14, "combined_total": 48, "combined_pct": 29}, {"user_id": 709049, "full_name": "Nikolaus Christler", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainer", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 7, "Trainings_declined": 9, "Trainings_noreply": 12, "Trainings_total": 28, "Trainings_pct": 25, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 3, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 75, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 3, "Cup Spiele_total": 15, "Cup Spiele_pct": 20, "cup_goals": 1, "cup_assists": 0, "cup_points": 1, "jersey": 29, "position": "D", "notes": "", "combined_attended": 14, "combined_total": 48, "combined_pct": 29}, {"user_id": 708858, "full_name": "Florian Kogler", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 6, "Trainings_declined": 12, "Trainings_noreply": 10, "Trainings_total": 28, "Trainings_pct": 21, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 6, "Cup Spiele_total": 15, "Cup Spiele_pct": 40, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": 25, "position": "G", "notes": "Goalkeeper", "combined_attended": 13, "combined_total": 48, "combined_pct": 27}, {"user_id": 1185276, "full_name": "Christopher Gufler", "groups": ["Hockey Cup"], "in_activ": false, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": false, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 0, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 11, "Cup Spiele_total": 15, "Cup Spiele_pct": 73, "cup_goals": 3, "cup_assists": 3, "cup_points": 6, "jersey": 98, "position": "F", "notes": "", "combined_attended": 11, "combined_total": 15, "combined_pct": 73}, {"user_id": 835947, "full_name": "Ulrich Reisenbauer", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 9, "Trainings_declined": 6, "Trainings_noreply": 13, "Trainings_total": 28, "Trainings_pct": 32, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 10, "combined_total": 47, "combined_pct": 21}, {"user_id": 708844, "full_name": "Daniel Delmonego", "groups": ["Activ Team", "Eisdeal Plus", "Radteam", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 8, "Trainings_declined": 20, "Trainings_noreply": 0, "Trainings_total": 28, "Trainings_pct": 29, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 3, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 9, "combined_total": 33, "combined_pct": 27}, {"user_id": 708850, "full_name": "Hannes Weidmann", "groups": ["Activ Team", "Eisdeal Plus", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 7, "Trainings_declined": 4, "Trainings_noreply": 17, "Trainings_total": 28, "Trainings_pct": 25, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 8, "combined_total": 33, "combined_pct": 24}, {"user_id": 849742, "full_name": "Simon Weidmann", "groups": ["Activ Team", "Eisdeal Plus", "Trainingslager"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 7, "Trainings_declined": 9, "Trainings_noreply": 12, "Trainings_total": 28, "Trainings_pct": 25, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 8, "combined_total": 33, "combined_pct": 24}, {"user_id": 708880, "full_name": "Robert Eichler", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 4, "Trainings_declined": 10, "Trainings_noreply": 14, "Trainings_total": 28, "Trainings_pct": 14, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 4, "Cup Spiele_total": 15, "Cup Spiele_pct": 27, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": 74, "position": "F", "notes": "", "combined_attended": 8, "combined_total": 47, "combined_pct": 17}, {"user_id": 708853, "full_name": "Joachim Staudacher", "groups": ["Activ Team", "Eisdeal Plus", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 6, "Trainings_declined": 9, "Trainings_noreply": 13, "Trainings_total": 28, "Trainings_pct": 21, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 1, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 7, "combined_total": 32, "combined_pct": 22}, {"user_id": 708877, "full_name": "Hannes Hauser", "groups": ["Activ Team", "Dorfschiessen", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 6, "Trainings_declined": 10, "Trainings_noreply": 12, "Trainings_total": 28, "Trainings_pct": 21, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 7, "combined_total": 48, "combined_pct": 15}, {"user_id": 708869, "full_name": "Fabian Hintringer", "groups": ["Activ Team", "Eisdeal Plus", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 6, "Trainings_declined": 6, "Trainings_noreply": 16, "Trainings_total": 28, "Trainings_pct": 21, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 6, "combined_total": 32, "combined_pct": 19}, {"user_id": 664378, "full_name": "Daniel Schreiner", "groups": ["Activ Team", "Dorfschiessen", "Eisdeal Plus", "Hockey Cup", "Radteam", "Trainingslager", "Vorstand", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 3, "Trainings_declined": 19, "Trainings_noreply": 6, "Trainings_total": 28, "Trainings_pct": 11, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 2, "Freundschaftsspiele_declined": 2, "Freundschaftsspiele_noreply": 0, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 50, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 6, "combined_total": 48, "combined_pct": 12}, {"user_id": 708848, "full_name": "Lukas Steiner", "groups": ["Activ Team", "Eisdeal Plus", "Junior Team", "Minis", "Trainer", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 3, "Trainings_declined": 16, "Trainings_noreply": 9, "Trainings_total": 28, "Trainings_pct": 11, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 1, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 2, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 25, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 5, "combined_total": 33, "combined_pct": 15}, {"user_id": 708862, "full_name": "Dennis Mayr", "groups": ["Activ Team", "Eisdeal Plus", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 3, "Trainings_declined": 8, "Trainings_noreply": 17, "Trainings_total": 28, "Trainings_pct": 11, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 4, "combined_total": 33, "combined_pct": 12}, {"user_id": 708847, "full_name": "Andreas Föger", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 4, "Trainings_declined": 2, "Trainings_noreply": 22, "Trainings_total": 28, "Trainings_pct": 14, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 4, "combined_total": 47, "combined_pct": 9}, {"user_id": 708860, "full_name": "Daniel Thielmann", "groups": ["Activ Team", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 1, "Trainings_declined": 14, "Trainings_noreply": 13, "Trainings_total": 28, "Trainings_pct": 4, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 2, "combined_total": 33, "combined_pct": 6}, {"user_id": 709058, "full_name": "Christoph Felderer", "groups": ["Activ Team", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 1, "Trainings_declined": 0, "Trainings_noreply": 27, "Trainings_total": 28, "Trainings_pct": 4, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 1, "combined_total": 32, "combined_pct": 3}, {"user_id": 708856, "full_name": "Hannes Feichtner", "groups": ["Activ Team", "Dorfschiessen", "Radteam", "Trainingslager", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": true, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 1, "Trainings_declined": 7, "Trainings_noreply": 20, "Trainings_total": 28, "Trainings_pct": 4, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 1, "combined_total": 33, "combined_pct": 3}, {"user_id": 708874, "full_name": "Christian Eberherr", "groups": ["Activ Team", "Eisdeal Plus", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708865, "full_name": "Claus Gallrauner", "groups": ["Activ Team", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708857, "full_name": "Dominik Birk", "groups": ["Activ Team", "Eisdeal Plus", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 20, "Trainings_noreply": 8, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708851, "full_name": "Günther Huber", "groups": ["Activ Team", "Junior Team", "Minis", "Trainer", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 1, "Trainings_noreply": 27, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 1, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708868, "full_name": "Harald Pichler", "groups": ["Activ Team", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708861, "full_name": "Lukas Ebenbichler", "groups": ["Activ Team", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 709056, "full_name": "Markus \"Hatti\" Schlinke", "groups": ["Activ Team", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 709054, "full_name": "Martin Felderer", "groups": ["Activ Team", "Fördermitglieder", "Radteam"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 3, "Cup Spiele_total": 15, "Cup Spiele_pct": 20, "cup_goals": 1, "cup_assists": 0, "cup_points": 1, "jersey": 24, "position": "F", "notes": "U18", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708873, "full_name": "Martin Papst", "groups": ["Activ Team", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708878, "full_name": "Maximilian Breuer", "groups": ["Activ Team", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708854, "full_name": "Peter Schaur", "groups": ["Activ Team", "Radteam", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 0, "Trainings_noreply": 28, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 0, "Trainingslager_noreply": 1, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}, {"user_id": 708958, "full_name": "Rene Huber", "groups": ["Activ Team", "Eisdeal Plus", "Fördermitglieder", "Hockey Cup"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 7, "Trainings_noreply": 21, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 0, "Trainingslager_declined": 1, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 0, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 47, "combined_pct": 0}, {"user_id": 708855, "full_name": "Thomas Gufler", "groups": ["Activ Team", "Eisdeal Plus", "Hockey Cup", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": true, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 6, "Trainings_noreply": 22, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 1, "Freundschaftsspiele_noreply": 3, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 47, "combined_pct": 0}, {"user_id": 708852, "full_name": "Wolfgang Isser", "groups": ["Activ Team", "aktive Mitglieder"], "in_activ": true, "in_trainingslager": false, "in_hockey_cup": false, "in_participation": true, "Trainings_attended": 0, "Trainings_declined": 2, "Trainings_noreply": 26, "Trainings_total": 28, "Trainings_pct": 0, "Trainingslager_attended": 1, "Trainingslager_declined": 0, "Trainingslager_noreply": 0, "Trainingslager_total": 1, "Trainingslager_pct": 100, "Freundschaftsspiele_attended": 0, "Freundschaftsspiele_declined": 0, "Freundschaftsspiele_noreply": 4, "Freundschaftsspiele_total": 4, "Freundschaftsspiele_pct": 0, "excluded_attended": 0, "excluded_total": 3, "Cup Spiele_attended": 0, "Cup Spiele_total": 15, "Cup Spiele_pct": 0, "cup_goals": 0, "cup_assists": 0, "cup_points": 0, "jersey": null, "position": null, "notes": "", "combined_attended": 0, "combined_total": 32, "combined_pct": 0}]};
+
+// --- META STRIP ---
+document.getElementById('m-players').textContent = DATA.meta.total_players_master;
+document.getElementById('m-events').textContent  =
+  (DATA.totals.Trainings.events + DATA.totals.Trainingslager.events +
+   DATA.totals.Freundschaftsspiele.events + DATA.totals['Cup Spiele'].events);
+const totalAtt = Object.values(DATA.totals).reduce((s, t) => s + t.total_attendances, 0);
+document.getElementById('m-att').textContent = totalAtt.toLocaleString('de-AT');
+document.getElementById('m-cup').textContent = DATA.totals['Cup Spiele'].roster_size;
+
+// --- CATEGORY CARDS ---
+const catMeta = [
+  {key: "Trainings",          icon: "T", cls: "trainings"},
+  {key: "Trainingslager",     icon: "★", cls: "lager"},
+  {key: "Freundschaftsspiele",icon: "F", cls: "friendly"},
+  {key: "Cup Spiele",         icon: "✦", cls: "cup"}
+];
+const grid = document.getElementById('cat-grid');
+catMeta.forEach((c) => {
+  const t = DATA.totals[c.key];
+  const top = DATA.top_per_category[c.key];
+  grid.insertAdjacentHTML('beforeend', `
+    <div class="cat-card rise" data-cat="${c.cls}">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-name">${c.key}</div>
+      <div class="cat-row">
+        <div class="cat-big">${t.events}</div>
+        <div class="cat-unit">Termine</div>
+      </div>
+      <div class="cat-stats">
+        <div><div class="label">Roster</div><div class="val">${t.roster_size}</div></div>
+        <div><div class="label">Anwesenh.</div><div class="val">${t.total_attendances}</div></div>
+        <div><div class="label">Ø pro Termin</div><div class="val">${t.avg_per_event}</div></div>
+        <div><div class="label">Quote</div><div class="val">${t.avg_pct}%</div></div>
+      </div>
+      <div class="cat-top">
+        <div class="lbl">TOP-PERFORMER</div>
+        <div class="name">${top.name}</div>
+        <div class="stat">${top.attended}/${top.total}  ·  ${top.pct}%</div>
+      </div>
+    </div>
+  `);
+});
+
+// --- EXCLUDED EVENTS ---
+const excludedGrid = document.getElementById('excluded-grid');
+if (DATA.excluded_events && DATA.excluded_events.length) {
+  DATA.excluded_events.forEach(ev => {
+    const dt = new Date(ev.date);
+    const formatted = dt.toLocaleDateString('de-AT', { day: '2-digit', month: 'short', year: 'numeric' });
+    excludedGrid.insertAdjacentHTML('beforeend', `
+      <div style="background: var(--ice-1); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 0.18em; text-transform: uppercase;">${formatted}</div>
+        <div style="font-weight: 600; font-size: 15px; margin-top: 6px; color: var(--text);">${ev.title}</div>
+        <div style="margin-top: 10px; font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--accent); line-height: 1;">${ev.attended}<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: 6px; letter-spacing: 0.1em;">/ 61 anwesend</span></div>
+      </div>
+    `);
+  });
+} else {
+  document.getElementById('excluded-section').style.display = 'none';
+}
+
+// --- PLAYER TABLE ---
+const tbody = document.getElementById('tbody');
+let sortKey = 'combined_attended';
+let sortAsc = false;
+let currentFilter = 'all';
+let currentSearch = '';
+
+function pctClass(p) {
+  if (p >= 60) return '';
+  if (p >= 40) return 'green';
+  if (p >= 20) return 'gold';
+  return 'red';
+}
+
+function filterPlayers() {
+  return DATA.players.filter(p => {
+    if (currentSearch && !p.full_name.toLowerCase().includes(currentSearch.toLowerCase())) return false;
+    if (currentFilter === 'cup' && !p.in_hockey_cup) return false;
+    if (currentFilter === 'lager' && !p.in_trainingslager) return false;
+    if (currentFilter === 'active' && p.combined_attended === 0) return false;
+    if (currentFilter === 'high' && p.combined_pct < 50) return false;
+    return true;
+  });
+}
+
+function pctCell(pct, eligible) {
+  if (!eligible) return '<span class="na">—</span>';
+  return `
+    <div class="pct-bar ${pctClass(pct)}">
+      <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+      <div class="v">${pct}%</div>
+    </div>`;
+}
+
+function attCell(att, total, eligible) {
+  if (!eligible) return '<span class="na">—</span>';
+  return `<span class="num">${att}</span><span class="denom">/${total}</span>`;
+}
+
+function tlCell(p) {
+  if (!p.in_trainingslager) return '<span class="na">—</span>';
+  if (p.Trainingslager_attended) return '<span style="color: var(--gold); font-weight:700; font-size:16px">✓</span>';
+  return '<span style="color: var(--red); font-weight:700">✗</span>';
+}
+
+function renderTable() {
+  const list = filterPlayers().slice().sort((a, b) => {
+    const va = a[sortKey], vb = b[sortKey];
+    if (va === vb) return a.full_name.localeCompare(b.full_name);
+    return sortAsc ? va - vb : vb - va;
+  });
+
+  if (list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="11" class="no-results">Keine Spieler gefunden.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map((p, i) => {
+    const inactive = p.combined_attended === 0 ? 'inactive' : '';
+    const badges = [
+      p.in_hockey_cup    ? '<span class="b b-cup">CUP</span>' : '',
+      p.in_trainingslager? '<span class="b b-tl">TL</span>'  : '',
+    ].join('');
+    return `
+      <tr data-id="${p.user_id}" class="${inactive}">
+        <td class="rank">${i + 1}</td>
+        <td class="name">${p.full_name}<span class="badges">${badges}</span></td>
+        <td class="att-cell">${attCell(p.Trainings_attended, p.Trainings_total, p.in_activ)}</td>
+        <td>${pctCell(p.Trainings_pct, p.in_activ)}</td>
+        <td>${tlCell(p)}</td>
+        <td class="att-cell">${attCell(p.Freundschaftsspiele_attended, p.Freundschaftsspiele_total, p.in_activ)}</td>
+        <td>${pctCell(p.Freundschaftsspiele_pct, p.in_activ)}</td>
+        <td class="att-cell">${attCell(p['Cup Spiele_attended'], p['Cup Spiele_total'], p.in_hockey_cup)}</td>
+        <td>${pctCell(p['Cup Spiele_pct'], p.in_hockey_cup)}</td>
+        <td class="total-cell">${p.combined_attended}<span class="of">/${p.combined_total}</span></td>
+        <td>${pctCell(p.combined_pct, p.combined_total > 0)}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// --- SORT HEADERS ---
+document.querySelectorAll('thead th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.key;
+    if (sortKey === key) {
+      sortAsc = !sortAsc;
+    } else {
+      sortKey = key;
+      sortAsc = false;
+    }
+    document.querySelectorAll('thead th').forEach(h => h.classList.remove('sorted', 'asc'));
+    th.classList.add('sorted');
+    if (sortAsc) th.classList.add('asc');
+    renderTable();
+  });
+});
+
+// --- FILTERS / SEARCH ---
+document.getElementById('search').addEventListener('input', e => {
+  currentSearch = e.target.value;
+  renderTable();
+});
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    currentFilter = c.dataset.filter;
+    renderTable();
+  });
+});
+
+// --- DETAIL OVERLAY ---
+const overlay = document.getElementById('overlay');
+tbody.addEventListener('click', e => {
+  const tr = e.target.closest('tr[data-id]');
+  if (!tr) return;
+  const p = DATA.players.find(x => x.user_id == tr.dataset.id);
+  if (!p) return;
+  const sorted = DATA.players.slice().sort((a,b) => b.combined_attended - a.combined_attended);
+  const rank = sorted.findIndex(x => x.user_id === p.user_id) + 1;
+
+  document.getElementById('d-rank').textContent = `RANG ${rank} VON ${DATA.players.length}`;
+  document.getElementById('d-name').textContent = p.full_name;
+
+  // Eligibility badges
+  const eligEl = document.getElementById('d-elig');
+  const eligs = [];
+  if (p.in_activ) eligs.push('<span class="b b-jr">ACTIV TEAM</span>');
+  if (p.in_trainingslager) eligs.push('<span class="b b-tl">TRAININGSLAGER</span>');
+  if (p.in_hockey_cup) eligs.push('<span class="b b-cup">HOCKEY CUP</span>');
+  if (!eligs.length) eligs.push('<span class="b b-jr">EXTERN</span>');
+  eligEl.innerHTML = eligs.join('');
+
+  // Trainings
+  if (p.in_activ) {
+    document.getElementById('d-tr').textContent = `${p.Trainings_attended} / ${p.Trainings_total}`;
+    document.getElementById('d-tr-p').textContent = `${p.Trainings_pct}%`;
+    document.getElementById('d-row-tr').classList.remove('dimmed');
+  } else {
+    document.getElementById('d-tr').textContent = '—';
+    document.getElementById('d-tr-p').textContent = 'NICHT IM ACTIV TEAM';
+    document.getElementById('d-row-tr').classList.add('dimmed');
+  }
+
+  // Trainingslager
+  if (p.in_trainingslager) {
+    document.getElementById('d-tl').textContent = `${p.Trainingslager_attended} / ${p.Trainingslager_total}`;
+    document.getElementById('d-tl-p').textContent = p.Trainingslager_attended ? 'TEILGENOMMEN' : 'NICHT TEILGENOMMEN';
+    document.getElementById('d-row-tl').classList.remove('dimmed');
+  } else {
+    document.getElementById('d-tl').textContent = '—';
+    document.getElementById('d-tl-p').textContent = 'NICHT ANGEMELDET';
+    document.getElementById('d-row-tl').classList.add('dimmed');
+  }
+
+  // Freundschaftsspiele
+  if (p.in_activ) {
+    document.getElementById('d-fr').textContent = `${p.Freundschaftsspiele_attended} / ${p.Freundschaftsspiele_total}`;
+    document.getElementById('d-fr-p').textContent = `${p.Freundschaftsspiele_pct}%`;
+    document.getElementById('d-row-fr').classList.remove('dimmed');
+  } else {
+    document.getElementById('d-fr').textContent = '—';
+    document.getElementById('d-fr-p').textContent = 'NICHT IM ACTIV TEAM';
+    document.getElementById('d-row-fr').classList.add('dimmed');
+  }
+
+  // Cup
+  if (p.in_hockey_cup) {
+    document.getElementById('d-cu').textContent = `${p['Cup Spiele_attended']} / ${p['Cup Spiele_total']}`;
+    document.getElementById('d-cu-p').textContent = `${p['Cup Spiele_pct']}%`;
+    document.getElementById('d-row-cu').classList.remove('dimmed');
+    if (p['Cup Spiele_attended'] > 0) {
+      document.getElementById('d-cup-stats').style.display = 'flex';
+      document.getElementById('d-goals').textContent = p.cup_goals;
+      document.getElementById('d-assists').textContent = p.cup_assists;
+      document.getElementById('d-points').textContent = p.cup_points;
+      if (p.jersey) {
+        document.getElementById('d-jersey-wrap').style.display = 'block';
+        document.getElementById('d-jersey').textContent = p.jersey;
+      } else {
+        document.getElementById('d-jersey-wrap').style.display = 'none';
+      }
+    } else {
+      document.getElementById('d-cup-stats').style.display = 'none';
+    }
+  } else {
+    document.getElementById('d-cu').textContent = '—';
+    document.getElementById('d-cu-p').textContent = 'NICHT IM HOCKEY-CUP-ROSTER';
+    document.getElementById('d-row-cu').classList.add('dimmed');
+    document.getElementById('d-cup-stats').style.display = 'none';
+  }
+
+  overlay.classList.add('show');
+});
+document.getElementById('close-btn').addEventListener('click', () => overlay.classList.remove('show'));
+overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('show'); });
+
+// --- INITIAL RENDER ---
+renderTable();
+</script>
+</body>
+</html>
