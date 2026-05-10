@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play Hockey 2022/23 · HC Thaur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #dc2626;
+  --red-dark: #991b1b;
+  --red-light: #ef4444;
+  --ink: #0a0a0a;
+  --paper: #fafaf7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  height:100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  background:#0a0a0a;
+  color:#fff;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+#cover-screen {
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.25), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(220,38,38,0.15), transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a0505 100%);
+  z-index:50;
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+#cover-screen.hidden { opacity:0; pointer-events:none; transform:scale(1.05); }
+
+.ice-pattern {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(90deg, transparent 49.8%, rgba(255,255,255,0.04) 49.8%, rgba(255,255,255,0.04) 50.2%, transparent 50.2%);
+  pointer-events:none;
+}
+
+.cover-content {
+  position:relative;
+  max-width:900px;
+  padding:40px;
+  text-align:center;
+  z-index:2;
+}
+
+.cover-tag {
+  display:inline-block;
+  padding:8px 20px;
+  background:var(--red);
+  color:#fff;
+  font-family:'Archivo Black',sans-serif;
+  font-size:11px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  margin-bottom:32px;
+  transform:skewX(-8deg);
+  box-shadow:4px 4px 0 #000;
+  animation:slideIn 0.8s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+.cover-tag span { display:inline-block; transform:skewX(8deg); }
+
+.cover-year {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(90px, 18vw, 220px);
+  line-height:0.85;
+  letter-spacing:-0.02em;
+  background:linear-gradient(180deg, #fff 0%, #fff 60%, rgba(255,255,255,0.4) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:8px;
+  animation:slideIn 0.9s 0.1s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+
+.cover-title {
+  font-family:'Playfair Display', serif;
+  font-weight:900;
+  font-style:italic;
+  font-size:clamp(24px, 4vw, 44px);
+  color:var(--red-light);
+  margin-bottom:12px;
+  animation:slideIn 1s 0.2s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+
+.cover-subtitle {
+  font-weight:300;
+  font-size:clamp(14px, 2vw, 18px);
+  color:rgba(255,255,255,0.75);
+  max-width:600px;
+  margin:0 auto 40px;
+  line-height:1.6;
+  animation:slideIn 1.1s 0.3s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+
+.cover-highlight {
+  max-width:640px;
+  margin:0 auto 48px;
+  padding:20px 28px;
+  border-left:3px solid var(--red);
+  background:rgba(255,255,255,0.03);
+  text-align:left;
+  font-size:14px;
+  line-height:1.7;
+  color:rgba(255,255,255,0.85);
+  font-style:italic;
+  animation:slideIn 1.2s 0.4s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+
+.cover-stats {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+  max-width:600px;
+  margin:0 auto 48px;
+  animation:slideIn 1.3s 0.5s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+.cover-stat {
+  padding:24px 16px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.02);
+  backdrop-filter:blur(10px);
+}
+.cover-stat-num {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px;
+  line-height:1;
+  color:var(--red-light);
+  margin-bottom:6px;
+}
+.cover-stat-label {
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.6);
+}
+
+.cover-cta {
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:18px 40px;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  font-family:'Archivo Black',sans-serif;
+  font-size:13px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.25s;
+  box-shadow:6px 6px 0 #000;
+  animation:slideIn 1.4s 0.6s cubic-bezier(0.2,0.9,0.3,1) both;
+}
+.cover-cta:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 #000; background:var(--red-light); }
+.cover-cta:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #000; }
+
+.cover-back {
+  position:absolute;
+  top:24px; left:24px;
+  color:rgba(255,255,255,0.6);
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  font-weight:500;
+  transition:color 0.2s;
+  z-index:3;
+}
+.cover-back:hover { color:#fff; }
+
+@keyframes slideIn {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+#viewer {
+  position:fixed; inset:0;
+  display:flex; flex-direction:column;
+  background:radial-gradient(ellipse at top, #1a1a1a 0%, #0a0a0a 60%, #000 100%);
+  opacity:0;
+  transition:opacity 0.6s ease;
+}
+#viewer.active { opacity:1; }
+
+.viewer-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 24px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  flex-shrink:0;
+  z-index:10;
+}
+.viewer-brand { display:flex; align-items:center; gap:16px; }
+.brand-mark {
+  width:36px; height:36px;
+  background:var(--red);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Archivo Black',sans-serif;
+  font-size:14px;
+  color:#fff;
+  transform:skewX(-8deg);
+}
+.brand-mark span { transform:skewX(8deg); }
+.brand-text {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;
+  letter-spacing:0.1em;
+  line-height:1;
+}
+.brand-text .year {
+  display:block;
+  font-size:10px;
+  letter-spacing:0.3em;
+  color:var(--red-light);
+  margin-top:4px;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+}
+
+.viewer-controls { display:flex; align-items:center; gap:8px; }
+.ctrl-btn {
+  padding:8px 12px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#fff;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.ctrl-btn:hover { background:var(--red); border-color:var(--red); }
+.ctrl-btn svg { width:14px; height:14px; }
+
+.book-stage {
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  perspective:2400px;
+}
+.book {
+  position:relative;
+  display:flex;
+  transform-style:preserve-3d;
+  transition:transform 0.4s ease;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,0.5));
+}
+.page {
+  position:relative;
+  background:var(--paper);
+  overflow:hidden;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  user-select:none;
+}
+.page img {
+  display:block;
+  width:100%; height:100%;
+  object-fit:contain;
+  background:#fff;
+  pointer-events:none;
+}
+.page-number {
+  position:absolute;
+  bottom:12px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:13px;
+  letter-spacing:0.2em;
+  color:var(--ink);
+  opacity:0.5;
+  z-index:3;
+}
+.page.left .page-number { right:20px; }
+.page.right .page-number { left:20px; }
+.page.left::after {
+  content:''; position:absolute; top:0; right:0; bottom:0; width:40px;
+  background:linear-gradient(270deg, rgba(0,0,0,0.25), transparent);
+  pointer-events:none; z-index:2;
+}
+.page.right::after {
+  content:''; position:absolute; top:0; left:0; bottom:0; width:40px;
+  background:linear-gradient(90deg, rgba(0,0,0,0.25), transparent);
+  pointer-events:none; z-index:2;
+}
+
+.flipper {
+  position:absolute; top:0;
+  pointer-events:none;
+  z-index:5;
+}
+.flipper-face {
+  position:absolute; inset:0;
+  backface-visibility:visible;
+  overflow:hidden;
+  background:var(--paper);
+}
+.flipper-face img { width:100%; height:100%; object-fit:contain; background:#fff; }
+
+.nav-arrow {
+  position:absolute;
+  top:50%; transform:translateY(-50%);
+  width:56px; height:56px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff;
+  cursor:pointer;
+  z-index:20;
+  transition:all 0.25s;
+}
+.nav-arrow:hover {
+  background:var(--red);
+  border-color:var(--red);
+  transform:translateY(-50%) scale(1.08);
+}
+.nav-arrow:disabled { opacity:0.25; cursor:not-allowed; pointer-events:none; }
+.nav-arrow.prev { left:24px; }
+.nav-arrow.next { right:24px; }
+.nav-arrow svg { width:22px; height:22px; }
+
+.viewer-footer {
+  display:flex; align-items:center; justify-content:center; gap:20px;
+  padding:12px 24px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,0.06);
+  flex-shrink:0;
+}
+.page-indicator {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;
+  letter-spacing:0.2em;
+  color:rgba(255,255,255,0.75);
+}
+.page-indicator .current { color:var(--red-light); }
+.progress-track {
+  flex:1; max-width:400px; height:2px;
+  background:rgba(255,255,255,0.1);
+  position:relative;
+  cursor:pointer;
+}
+.progress-fill {
+  position:absolute; left:0; top:0; bottom:0;
+  background:var(--red);
+  transition:width 0.4s ease;
+}
+
+.thumbs-panel {
+  position:fixed;
+  top:0; right:-420px;
+  width:400px; height:100%;
+  background:rgba(10,10,10,0.95);
+  backdrop-filter:blur(20px);
+  border-left:1px solid rgba(255,255,255,0.08);
+  transition:right 0.4s cubic-bezier(0.2,0.9,0.3,1);
+  z-index:30;
+  display:flex; flex-direction:column;
+}
+.thumbs-panel.open { right:0; }
+.thumbs-header {
+  padding:24px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.thumbs-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;
+  letter-spacing:0.15em;
+}
+.thumbs-close {
+  background:none; border:none; color:#fff; cursor:pointer;
+  font-size:24px; padding:4px 10px; transition:color 0.2s;
+}
+.thumbs-close:hover { color:var(--red-light); }
+.thumbs-grid {
+  flex:1; overflow-y:auto;
+  padding:20px;
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;
+}
+.thumb {
+  cursor:pointer; position:relative;
+  aspect-ratio:600/842;
+  background:#fff; overflow:hidden;
+  transition:all 0.2s;
+  border:2px solid transparent;
+}
+.thumb img { width:100%; height:100%; object-fit:contain; }
+.thumb:hover { transform:translateY(-2px); border-color:rgba(255,255,255,0.3); }
+.thumb.active { border-color:var(--red); box-shadow:0 0 0 2px rgba(220,38,38,0.3); }
+.thumb-num {
+  position:absolute; bottom:4px; left:4px;
+  background:rgba(0,0,0,0.8); color:#fff;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px; padding:2px 6px; letter-spacing:0.1em;
+}
+
+.zoom-overlay {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.96);
+  display:none;
+  align-items:center; justify-content:center;
+  z-index:100; cursor:zoom-out;
+}
+.zoom-overlay.open { display:flex; }
+.zoom-overlay img {
+  max-width:95vw; max-height:95vh;
+  object-fit:contain;
+  box-shadow:0 0 80px rgba(0,0,0,0.8);
+}
+.zoom-close {
+  position:absolute; top:24px; right:24px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;
+  width:44px; height:44px; border-radius:50%;
+  font-size:20px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+
+@media (max-width: 900px) {
+  .book-stage { padding:10px; }
+  .nav-arrow { width:44px; height:44px; }
+  .nav-arrow.prev { left:8px; }
+  .nav-arrow.next { right:8px; }
+  .viewer-header { padding:10px 14px; }
+  .brand-text { font-size:14px; }
+  .ctrl-btn span { display:none; }
+  .ctrl-btn { padding:8px; }
+  .thumbs-panel { width:100%; right:-100%; }
+  .page-number { font-size:10px; }
+  .page.left::after, .page.right::after { width:20px; }
+  .cover-stats { grid-template-columns:repeat(3, 1fr); gap:10px; }
+  .cover-stat { padding:14px 6px; }
+  .cover-stat-num { font-size:30px; }
+  .cover-stat-label { font-size:8px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cover-screen">
+  <div class="ice-pattern"></div>
+  <a href="../index.html" class="cover-back">← Alle Jahrbücher</a>
+  <div class="cover-content">
+    <div class="cover-tag"><span>HC THAUR · Ausgabe 06</span></div>
+    <div class="cover-year">2022/23</div>
+    <div class="cover-title">Ein Ganzjahresverein</div>
+    <div class="cover-subtitle">Hockey im Winter — Radsport im Sommer</div>
+    <div class="cover-highlight">30 Kinder, 44 Erwachsene auf dem Eis — und 28 Radfahrer:innen im HCT-Trikot. Das vierte Derby gegen Rum, Beachvolleyball, Sommerfest.</div>
+    <div class="cover-stats"><div class="cover-stat"><div class="cover-stat-num">30</div><div class="cover-stat-label">Kinder</div></div>
+<div class="cover-stat"><div class="cover-stat-num">44</div><div class="cover-stat-label">Erwachsene</div></div>
+<div class="cover-stat"><div class="cover-stat-num">28</div><div class="cover-stat-label">Radfahrer:innen</div></div></div>
+    <button class="cover-cta" onclick="openBook()">
+      Jahrbuch öffnen
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="viewer">
+  <header class="viewer-header">
+    <div class="viewer-brand">
+      <div class="brand-mark"><span>HCT</span></div>
+      <div class="brand-text">
+        PLAY HOCKEY
+        <span class="year">2022/23 · Ausgabe 06</span>
+      </div>
+    </div>
+    <div class="viewer-controls">
+      <button class="ctrl-btn" onclick="toggleThumbs()" title="Übersicht">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Übersicht</span>
+      </button>
+      <button class="ctrl-btn" onclick="goHome()" title="Zur Startseite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Alle Jahre</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="book-stage" id="bookStage">
+    <button class="nav-arrow prev" onclick="flipPage(-1)" aria-label="Vorherige Seite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="book" id="book"></div>
+    <button class="nav-arrow next" onclick="flipPage(1)" aria-label="Nächste Seite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <footer class="viewer-footer">
+    <div class="page-indicator">
+      <span class="current" id="curPage">1</span> / <span id="totalPages">32</span>
+    </div>
+    <div class="progress-track" id="progressTrack">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </footer>
+</div>
+
+<div class="thumbs-panel" id="thumbsPanel">
+  <div class="thumbs-header">
+    <div class="thumbs-title">Alle Seiten</div>
+    <button class="thumbs-close" onclick="toggleThumbs()">×</button>
+  </div>
+  <div class="thumbs-grid" id="thumbsGrid"></div>
+</div>
+
+<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+  <button class="zoom-close" onclick="closeZoom()">×</button>
+  <img id="zoomImg" src="" alt="">
+</div>
+
+<script>
+const TOTAL = 32;
+const IMG = (n) => `p${String(n).padStart(2,'0')}.jpg`;
+
+let currentPage = 1;
+let isFlipping = false;
+const isMobile = () => window.innerWidth < 768;
+
+const book = document.getElementById('book');
+const stage = document.getElementById('bookStage');
+
+function sizeBook() {
+  const mobile = isMobile();
+  const maxW = stage.clientWidth - (mobile ? 24 : 140);
+  const maxH = stage.clientHeight - (mobile ? 16 : 30);
+  const singlePage = mobile || (currentPage === 1 || currentPage === TOTAL);
+  const aspect = singlePage ? (600/842) : (1200/842);
+  let w = maxW, h = w / aspect;
+  if (h > maxH) { h = maxH; w = h * aspect; }
+  return { w: Math.floor(w), h: Math.floor(h) };
+}
+
+function render() {
+  const {w, h} = sizeBook();
+  book.innerHTML = '';
+  book.style.width = w + 'px';
+  book.style.height = h + 'px';
+
+  if (currentPage === 1 || isMobile()) {
+    const page = document.createElement('div');
+    page.className = 'page right';
+    page.style.cssText = `width:${w}px;height:${h}px;`;
+    page.innerHTML = `<img src="${IMG(currentPage)}" alt="Seite ${currentPage}"><div class="page-number">${String(currentPage).padStart(2,'0')}</div>`;
+    page.onclick = () => openZoom(currentPage);
+    book.appendChild(page);
+  } else {
+    renderSpread(w, h);
+  }
+
+  updateIndicator();
+  updateArrows();
+  updateThumbActive();
+}
+
+function renderSpread(w, h) {
+  const halfW = w / 2;
+  const left = currentPage;
+  const right = currentPage + 1;
+  const hasRight = right <= TOTAL;
+
+  const lp = document.createElement('div');
+  lp.className = 'page left';
+  lp.style.cssText = `width:${halfW}px;height:${h}px;`;
+  lp.innerHTML = `<img src="${IMG(left)}" alt="Seite ${left}"><div class="page-number">${String(left).padStart(2,'0')}</div>`;
+  lp.onclick = () => openZoom(left);
+  book.appendChild(lp);
+
+  if (hasRight) {
+    const rp = document.createElement('div');
+    rp.className = 'page right';
+    rp.style.cssText = `width:${halfW}px;height:${h}px;`;
+    rp.innerHTML = `<img src="${IMG(right)}" alt="Seite ${right}"><div class="page-number">${String(right).padStart(2,'0')}</div>`;
+    rp.onclick = () => openZoom(right);
+    book.appendChild(rp);
+  } else {
+    const rp = document.createElement('div');
+    rp.className = 'page right';
+    rp.style.cssText = `width:${halfW}px;height:${h}px;background:#f0ede4;`;
+    book.appendChild(rp);
+  }
+}
+
+function flipPage(dir) {
+  if (isFlipping) return;
+  if (isMobile()) {
+    const nextPage = Math.max(1, Math.min(TOTAL, currentPage + dir));
+    if (nextPage === currentPage) return;
+    currentPage = nextPage;
+    render();
+    return;
+  }
+  let nextPage;
+  if (currentPage === 1) {
+    nextPage = dir > 0 ? 2 : 1;
+  } else if (dir > 0) {
+    nextPage = currentPage + 2;
+  } else {
+    nextPage = currentPage - 2;
+    if (nextPage <= 1) nextPage = 1;
+  }
+  if (nextPage < 1) nextPage = 1;
+  if (nextPage > TOTAL) return;
+
+  animateFlip(dir, () => {
+    currentPage = nextPage;
+    render();
+  });
+}
+
+function animateFlip(dir, onDone) {
+  isFlipping = true;
+  const {w, h} = sizeBook();
+  const mobile = isMobile();
+  const isSingle = mobile || (currentPage === 1);
+  const halfW = isSingle ? w : w / 2;
+
+  let startPage, endPage;
+  if (dir > 0) {
+    startPage = mobile ? currentPage : ((currentPage === 1) ? 1 : (currentPage + 1));
+    endPage   = mobile ? (currentPage + 1) : ((currentPage === 1) ? 2 : (currentPage + 2));
+  } else {
+    startPage = currentPage;
+    endPage   = mobile ? (currentPage - 1) : ((currentPage === 2) ? 1 : (currentPage - 1));
+  }
+  if (endPage < 1 || endPage > TOTAL) { isFlipping = false; return; }
+
+  new Image().src = IMG(endPage);
+
+  const HALF = 420;
+
+  // Snapshot static pages BEFORE appending the flipper
+  const staticPages = book.querySelectorAll('.page');
+
+  const flipper = document.createElement('div');
+  flipper.className = 'flipper';
+  flipper.style.cssText = `width:${halfW}px;height:${h}px;transition:none;`;
+
+  if (dir > 0) {
+    if (isSingle) { flipper.style.left = '0px'; flipper.style.transformOrigin = 'left center'; }
+    else          { flipper.style.left = halfW + 'px'; flipper.style.transformOrigin = 'left center'; }
+  } else {
+    flipper.style.left = '0px';
+    flipper.style.transformOrigin = 'right center';
+  }
+
+  const face = document.createElement('div');
+  face.className = 'flipper-face';
+  face.innerHTML = `<img src="${IMG(startPage)}" alt="">`;
+
+  // Fold-crease shadow: dark at the spine edge, fades as page lifts/lands
+  const crease = document.createElement('div');
+  const gradDir = dir > 0 ? '90deg' : '270deg';
+  crease.style.cssText = `position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;transition:opacity ${Math.round(HALF*0.75)}ms ease;background:linear-gradient(${gradDir},rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.15) 22%,transparent 52%);`;
+  face.appendChild(crease);
+
+  flipper.appendChild(face);
+  book.appendChild(flipper);
+
+  // Pre-correct the static page that becomes visible during phase 2, and hide the one the flipper covers
+  let revealPage = null;
+  if (dir > 0) {
+    const rp = staticPages[staticPages.length - 1];
+    if (rp) {
+      // Update to new right page so it's ready when the flipper sweeps away
+      const nextRight = endPage + 1;
+      if (nextRight <= TOTAL) {
+        const ri = rp.querySelector('img');
+        if (ri) ri.src = IMG(nextRight);
+        const rn = rp.querySelector('.page-number');
+        if (rn) rn.textContent = String(nextRight).padStart(2, '0');
+      }
+      rp.style.visibility = 'hidden';
+      revealPage = rp;
+    }
+  } else {
+    // Fix: right page becomes visible during phase 1 — correct it immediately
+    const rp = staticPages[1];
+    if (rp) {
+      const ri = rp.querySelector('img');
+      if (ri) ri.src = IMG(endPage);
+      const rn = rp.querySelector('.page-number');
+      if (rn) rn.textContent = String(endPage).padStart(2, '0');
+    }
+    const lp = staticPages[0];
+    if (lp) {
+      if (endPage > 1) {
+        const li = lp.querySelector('img');
+        if (li) li.src = IMG(endPage - 1);
+        const ln = lp.querySelector('.page-number');
+        if (ln) ln.textContent = String(endPage - 1).padStart(2, '0');
+      }
+      lp.style.visibility = 'hidden';
+      revealPage = lp;
+    }
+  }
+
+  // Phase 1 — ease-in to edge-on (90°), crease shadow builds
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    flipper.style.transition = `transform ${HALF}ms ease-in`;
+    flipper.style.transform  = dir > 0 ? 'rotateY(-90deg)' : 'rotateY(90deg)';
+    crease.style.opacity = '1';
+  }));
+
+  // Phase 2 — swap image at invisible midpoint, ease-out to flat; reveal pre-corrected static page
+  setTimeout(() => {
+    if (revealPage) revealPage.style.visibility = 'visible';
+    const img = face.querySelector('img');
+    img.src = IMG(endPage);
+    img.style.transform = 'scaleX(-1)';
+    crease.style.opacity = '0';
+    flipper.style.transition = `transform ${HALF}ms ease-out`;
+    flipper.style.transform  = dir > 0 ? 'rotateY(-180deg)' : 'rotateY(180deg)';
+
+    setTimeout(() => {
+      flipper.remove();
+      isFlipping = false;
+      onDone();
+    }, HALF + 60);
+  }, HALF + 60);
+}
+
+function updateIndicator() {
+  document.getElementById('curPage').textContent = currentPage;
+  document.getElementById('progressFill').style.width = (currentPage / TOTAL * 100) + '%';
+}
+function updateArrows() {
+  document.querySelector('.nav-arrow.prev').disabled = (currentPage === 1);
+  document.querySelector('.nav-arrow.next').disabled = (currentPage >= TOTAL);
+}
+function updateThumbActive() {
+  document.querySelectorAll('.thumb').forEach((t, i) => {
+    const p = i + 1;
+    t.classList.toggle('active', p === currentPage || (!isMobile() && p === currentPage + 1));
+  });
+}
+
+function buildThumbs() {
+  const grid = document.getElementById('thumbsGrid');
+  for (let i = 1; i <= TOTAL; i++) {
+    const t = document.createElement('div');
+    t.className = 'thumb';
+    t.innerHTML = `<img src="${IMG(i)}" loading="lazy"><div class="thumb-num">${String(i).padStart(2,'0')}</div>`;
+    t.onclick = () => {
+      currentPage = isMobile() ? i : ((i === 1) ? 1 : (i % 2 === 0 ? i : i - 1));
+      render();
+      toggleThumbs();
+    };
+    grid.appendChild(t);
+  }
+}
+
+function toggleThumbs() { document.getElementById('thumbsPanel').classList.toggle('open'); }
+function goHome() { window.location.href = '../index.html'; }
+function openZoom(n) {
+  document.getElementById('zoomImg').src = IMG(n);
+  document.getElementById('zoomOverlay').classList.add('open');
+}
+function closeZoom() { document.getElementById('zoomOverlay').classList.remove('open'); }
+function openBook() {
+  document.getElementById('cover-screen').classList.add('hidden');
+  document.getElementById('viewer').classList.add('active');
+  setTimeout(() => render(), 200);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('cover-screen').classList.contains('hidden')) return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); flipPage(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); flipPage(-1); }
+  if (e.key === 'Escape') {
+    closeZoom();
+    if (document.getElementById('thumbsPanel').classList.contains('open')) toggleThumbs();
+  }
+  if (e.key === 'Home') { currentPage = 1; render(); }
+  if (e.key === 'End') {
+    if (isMobile()) { currentPage = TOTAL; } else {
+      currentPage = (TOTAL % 2 === 0) ? TOTAL - 1 : TOTAL;
+      if (TOTAL === 1) currentPage = 1;
+    }
+    render();
+  }
+});
+
+let touchStartX = 0;
+stage.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, {passive:true});
+stage.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) flipPage(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+document.getElementById('progressTrack').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  const target = Math.max(1, Math.min(TOTAL, Math.round(pct * TOTAL)));
+  currentPage = isMobile() ? target : ((target === 1) ? 1 : (target % 2 === 0 ? target : target - 1));
+  render();
+});
+
+window.addEventListener('resize', () => {
+  if (document.getElementById('viewer').classList.contains('active')) render();
+});
+
+buildThumbs();
+</script>
+</body>
+</html>

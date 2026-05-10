@@ -1,8 +1,8 @@
 name: Update HC Stats
 
 on:
-  schedule:
-    - cron: "15 2 * * *" # Uncomment this line to run the workflow daily at 2:15 AM
+  # schedule:
+  #   - cron: "15 2 * * *"
   workflow_dispatch:
 
 permissions:

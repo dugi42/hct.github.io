@@ -1,0 +1,146 @@
+{
+  "updated_at": "2026-03-08T03:13:38.854747",
+  "team_id": 11,
+  "context": {
+    "league_id": 1,
+    "division_id": 2,
+    "season_id": 2,
+    "phase_id": 3
+  },
+  "response_contexts": {
+    "table": {
+      "league_id": 1,
+      "division_id": 2,
+      "season_id": 2,
+      "phase_id": 1
+    },
+    "games": {
+      "league_id": 1,
+      "division_id": 2,
+      "season_id": 2,
+      "phase_id": 3
+    },
+    "players": {
+      "league_id": 1,
+      "division_id": 2,
+      "season_id": 2,
+      "phase_id": 1
+    }
+  },
+  "standings": [
+    {
+      "team_id": 15,
+      "team_name": "Tyrolean Ice Kings",
+      "points": 27,
+      "games_played": 12,
+      "goals_for": 67,
+      "goals_against": 29,
+      "wins": 8,
+      "losses": 2,
+      "overtime_wins": 1,
+      "overtime_losses": 1,
+      "rank": 1,
+      "goal_diff": 38
+    },
+    {
+      "team_id": 8,
+      "team_name": "EHC Black Scorpions Strass",
+      "points": 24,
+      "games_played": 12,
+      "goals_for": 47,
+      "goals_against": 36,
+      "wins": 8,
+      "losses": 4,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
+      "rank": 2,
+      "goal_diff": 11
+    },
+    {
+      "team_id": 6,
+      "team_name": "EC Sellraintal Wolves",
+      "points": 23,
+      "games_played": 12,
+      "goals_for": 61,
+      "goals_against": 31,
+      "wins": 7,
+      "losses": 4,
+      "overtime_wins": 1,
+      "overtime_losses": 0,
+      "rank": 3,
+      "goal_diff": 30
+    },
+    {
+      "team_id": 11,
+      "team_name": "HC Thaur",
+      "points": 21,
+      "games_played": 12,
+      "goals_for": 52,
+      "goals_against": 36,
+      "wins": 7,
+      "losses": 5,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
+      "rank": 4,
+      "goal_diff": 16
+    },
+    {
+      "team_id": 10,
+      "team_name": "EHC White Hawks Volders",
+      "points": 19,
+      "games_played": 12,
+      "goals_for": 59,
+      "goals_against": 53,
+      "wins": 6,
+      "losses": 5,
+      "overtime_wins": 0,
+      "overtime_losses": 1,
+      "rank": 5,
+      "goal_diff": 6
+    },
+    {
+      "team_id": 3,
+      "team_name": "EC Aschauer Eisb\u00e4ren",
+      "points": 9,
+      "games_played": 12,
+      "goals_for": 43,
+      "goals_against": 70,
+      "wins": 3,
+      "losses": 9,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
+      "rank": 6,
+      "goal_diff": -27
+    },
+    {
+      "team_id": 29,
+      "team_name": "EC Newcomers II",
+      "points": 3,
+      "games_played": 12,
+      "goals_for": 15,
+      "goals_against": 89,
+      "wins": 1,
+      "losses": 11,
+      "overtime_wins": 0,
+      "overtime_losses": 0,
+      "rank": 7,
+      "goal_diff": -74
+    }
+  ],
+  "games": [
+    {
+      "game_id": 224,
+      "date": "2026-03-07",
+      "time": "17:15:00",
+      "status": "scorekeeper_signed",
+      "home_team_id": 6,
+      "away_team_id": 11,
+      "home_team_name": "EC Sellraintal Wolves",
+      "away_team_name": "HC Thaur",
+      "arena_name": "TIWAG Arena ",
+      "score_home": 4,
+      "score_away": 6
+    }
+  ],
+  "players": []
+}

@@ -1,0 +1,42 @@
+name: Update Bike Attendance
+
+on:
+  schedule:
+    - cron: "35 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-bike-attendance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Fetch bike attendance
+        env:
+          VEREINSPLANER_API_TOKEN: ${{ secrets.VEREINSPLANER_API_TOKEN }}
+        run: uv run python/fetch_bike_attendance.py
+
+      - name: Commit updates
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/202526_season/raw/202526_bike_attendance.json \
+                  public/202526_season/gold/202526_top10_bikers.csv
+          git commit -m "chore: update bike attendance data ($(date +%Y-%m-%d))"
+          git push

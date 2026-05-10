@@ -1,0 +1,37 @@
+event_id,title,date,weekday,month,event_type,total_members,attended,declined,no_reply,attendance_pct,response_rate_pct
+643111,Training Telfs,2025-10-23,Thursday,2025-10,Training,61,27,15,19,44,69
+643112,Training Telfs,2025-10-30,Thursday,2025-10,Training,61,18,20,23,30,62
+643113,Training Telfs,2025-11-06,Thursday,2025-11,Training,61,18,22,21,30,66
+643127,SPIEL Steinach Altherren,2025-11-07,Friday,2025-11,Game,61,11,24,26,18,57
+713996,Schleifen!,2025-11-10,Monday,2025-11,Special,61,7,5,49,11,20
+643114,Training Telfs,2025-11-13,Thursday,2025-11,Training,61,29,15,17,48,72
+643115,Training Telfs,2025-11-20,Thursday,2025-11,Training,61,26,19,16,43,74
+721734,Training IBK,2025-11-22,Saturday,2025-11,Training,61,19,15,27,31,56
+643116,Training Telfs,2025-11-27,Thursday,2025-11,Training,61,14,28,19,23,69
+671014,Trainingslager,2025-11-28,Friday,2025-11,Camp,61,35,7,19,57,69
+729743,Training Mils,2025-12-02,Tuesday,2025-12,Training,61,19,25,17,31,72
+643117,Training Telfs,2025-12-04,Thursday,2025-12,Training,61,21,19,21,34,66
+668016,Training Telfs,2025-12-08,Monday,2025-12,Training,61,15,22,24,25,61
+738177,Training Telfs,2025-12-11,Thursday,2025-12,Training,61,16,23,22,26,64
+741183,Thaur,2025-12-12,Friday,2025-12,Game,61,10,18,33,16,46
+743367,Thaur,2025-12-15,Monday,2025-12,Game,61,10,14,37,16,39
+741185,Thaur,2025-12-19,Friday,2025-12,Game,61,6,19,36,10,41
+668018,Training Telfs,2025-12-22,Monday,2025-12,Training,61,14,28,19,23,69
+749094,Weihnachtsspiel/turnier,2025-12-27,Saturday,2025-12,Game,61,18,11,32,30,48
+643121,Training Telfs,2026-01-01,Thursday,2026-01,Training,61,13,26,22,21,64
+643122,Training Telfs,2026-01-08,Thursday,2026-01,Training,61,11,27,23,18,62
+772863,TR Thaur,2026-01-12,Monday,2026-01,Game,61,11,14,36,18,41
+758128,Training Telfs,2026-01-15,Thursday,2026-01,Training,61,22,14,25,36,59
+762050,TR Thaur,2026-01-19,Monday,2026-01,Game,61,10,20,31,16,49
+643124,Training Telfs,2026-01-22,Thursday,2026-01,Training,61,14,21,26,23,57
+668023,TR Thaur,2026-01-26,Monday,2026-01,Game,61,12,14,35,20,43
+643125,Training Telfs,2026-01-29,Thursday,2026-01,Training,61,20,14,27,33,56
+783976,Spiel in Rinn,2026-01-30,Friday,2026-01,Game,61,10,20,31,16,49
+668024,TR Thaur,2026-02-02,Monday,2026-02,Game,61,7,17,37,11,39
+793024,Spiel gegen Rinn,2026-02-06,Friday,2026-02,Game,61,10,13,38,16,38
+791042,TR Thaur,2026-02-11,Wednesday,2026-02,Game,61,7,11,43,11,30
+791789,internes Saisonabschlussturnier in Thaur,2026-02-14,Saturday,2026-02,Game,61,11,18,32,18,48
+796255,gemischtes Spiel mit Rum,2026-02-16,Monday,2026-02,Game,61,8,19,34,13,44
+778792,Training Telfs,2026-02-19,Thursday,2026-02,Training,61,16,16,29,26,52
+778794,Training Telfs,2026-02-26,Thursday,2026-02,Training,61,21,10,30,34,51
+795748,Training Telfs,2026-03-05,Thursday,2026-03,Training,61,21,9,31,34,49

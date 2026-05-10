@@ -264,9 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const statsUrlPreSeason = 'public/202526_preseason_hcstats.json';
-    const statsUrlPlayoffsHalfFinals = 'public/202526_playoffs_hcstats.json';
-    const statsUrlPlayoffs = 'public/hcstats.json';
+    const statsUrlPreSeason = '/public/202526_season/raw/202526_preseason_hcstats.json';
+    const statsUrlPlayoffsHalfFinals = '/public/202526_season/raw/202526_playoffs_hcstats.json';
+    const statsUrlPlayoffs = '/public/202526_season/raw/202526_hcstats.json';
     const liveTickerContent = document.getElementById('live-ticker-content');
     const liveTickerUpdated = document.getElementById('live-ticker-updated');
     const liveGamesBigUpdated = document.getElementById('live-games-big-updated');
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const goalEvent = goalEvents.get(gameId);
 
             const gameDiv = document.createElement('article');
-            gameDiv.className = 'rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 md:p-6 shadow-sm';
+            gameDiv.className = 'rounded-2xl border border-[#2a2a35] bg-[#1a1a20] p-4 md:p-6';
             if (goalEvent) {
                 gameDiv.classList.add('goal-game-highlight');
             }
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
             liveBadge.appendChild(document.createTextNode('Live'));
 
             const details = document.createElement('span');
-            details.className = 'text-sm font-medium text-gray-600';
+            details.className = 'text-sm font-medium text-gray-400';
             const timeLabel = game.time ? game.time.slice(0, 5) : '--:--';
             const arenaLabel = (game.arena_name || '').trim();
             details.textContent = arenaLabel ? `${timeLabel} Uhr, ${arenaLabel}` : `${timeLabel} Uhr`;
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             homeTeamDiv.className = 'flex min-w-0 flex-col items-center gap-3 text-center';
             const homeLogo = createLogoNode(game.home_team_id, game.home_team_name, getLiveGameLogoSize(game.home_team_id));
             const homeName = document.createElement('div');
-            homeName.className = 'text-base md:text-xl font-semibold text-gray-900 leading-tight';
+            homeName.className = 'text-base md:text-xl font-semibold text-gray-100 leading-tight';
             homeName.textContent = game.home_team_name || '';
             if (goalEvent && goalEvent.teamSide === 'home') {
                 homeLogo.classList.add('goal-logo-pop');
@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
             awayTeamDiv.className = 'flex min-w-0 flex-col items-center gap-3 text-center';
             const awayLogo = createLogoNode(game.away_team_id, game.away_team_name, getLiveGameLogoSize(game.away_team_id));
             const awayName = document.createElement('div');
-            awayName.className = 'text-base md:text-xl font-semibold text-gray-900 leading-tight';
+            awayName.className = 'text-base md:text-xl font-semibold text-gray-100 leading-tight';
             awayName.textContent = game.away_team_name || '';
             if (goalEvent && goalEvent.teamSide === 'away') {
                 awayLogo.classList.add('goal-logo-pop');
@@ -716,8 +716,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLiveGamesSection();
     };
 
-    updateBanner();
-    setInterval(updateBanner, 60000);
+    if (document.getElementById('game-result-banner')) {
+        updateBanner();
+        setInterval(updateBanner, 60000);
+    }
 
     const standingsBody = document.getElementById('standings-table-body');
     const gamesCarousel = document.getElementById('hc-games-carousel');
@@ -778,7 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isHighlighted) {
                     row.className = 'bg-hc-red text-white font-semibold';
                 } else {
-                    row.className = index % 2 === 1 ? 'bg-gray-50' : 'bg-white';
+                    row.className = index % 2 === 1 ? 'bg-[#13131a]' : '';
                 }
 
                 appendCell(row, team.rank, true);
@@ -946,13 +948,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             const isHomeGame = Number(game.home_team_id) === Number(teamId);
             const borderClass = isHomeGame ? 'border-hc-red' : 'border-gray-500';
-            card.className = `flex-none w-64 p-4 rounded-xl shadow bg-white border-t-4 snap-center ${borderClass}`;
+            card.className = `flex-none w-64 p-4 rounded-xl bg-[#1a1a20] border border-[#2a2a35] border-t-4 snap-center ${borderClass}`;
 
             const header = document.createElement('div');
             header.className = 'flex justify-between items-center text-sm font-semibold mb-2';
 
             const location = document.createElement('span');
-            location.className = `${isHomeGame ? 'text-hc-red' : 'text-gray-600'} uppercase`;
+            location.className = `${isHomeGame ? 'text-hc-red' : 'text-gray-400'} uppercase`;
             location.textContent = isHomeGame ? 'HEIM' : 'AUSWÄRTS';
 
             const date = document.createElement('span');
@@ -970,7 +972,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(status);
 
             const homeName = document.createElement('p');
-            homeName.className = 'text-lg font-bold text-gray-900 mb-1 text-center';
+            homeName.className = 'text-lg font-bold text-gray-100 mb-1 text-center';
             homeName.textContent = game.home_team_name || '';
             card.appendChild(homeName);
 
@@ -988,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
             vs.textContent = 'vs';
 
             const score = document.createElement('span');
-            score.className = 'text-sm font-semibold text-gray-700';
+            score.className = 'text-sm font-semibold text-gray-300';
             const hideScoreStatuses = new Set(['upcoming', 'active']);
             const shouldHideScore = hideScoreStatuses.has(normalizedStatus)
                 && Number(game.score_home) === 0
@@ -1008,12 +1010,12 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(logos);
 
             const awayName = document.createElement('p');
-            awayName.className = 'text-lg font-bold text-gray-900 mb-1 text-center';
+            awayName.className = 'text-lg font-bold text-gray-100 mb-1 text-center';
             awayName.textContent = game.away_team_name || '';
             card.appendChild(awayName);
 
             const details = document.createElement('p');
-            details.className = 'text-sm text-gray-600 text-center';
+            details.className = 'text-sm text-gray-400 text-center';
             const timeLabel = formatTime(game.time);
             const arenaLabel = (game.arena_name || '').trim();
             const timeText = timeLabel ? `${timeLabel} Uhr` : '--';
@@ -1079,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isHighlighted) {
                     row.className = 'bg-hc-red text-white font-semibold';
                 } else {
-                    row.className = index % 2 === 1 ? 'bg-gray-50' : 'bg-white';
+                    row.className = index % 2 === 1 ? 'bg-[#13131a]' : '';
                 }
 
                 appendCell(row, team.rank, true);
@@ -1129,12 +1131,12 @@ document.addEventListener('DOMContentLoaded', () => {
             playoffSeriesStats.innerHTML = '';
             statCards.forEach(card => {
                 const node = document.createElement('div');
-                node.className = 'rounded-lg bg-white border border-gray-200 px-3 py-2';
+                node.className = 'rounded-lg bg-[#13131a] border border-[#2a2a35] px-3 py-2';
                 const label = document.createElement('p');
                 label.className = 'text-xs uppercase tracking-wide text-gray-500';
                 label.textContent = card.label;
                 const value = document.createElement('p');
-                value.className = 'text-xl font-black text-gray-900';
+                value.className = 'text-xl font-black text-gray-100';
                 value.textContent = String(card.value);
                 node.appendChild(label);
                 node.appendChild(value);
@@ -1161,7 +1163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sortedPlayers.forEach((player, index) => {
                 const row = document.createElement('div');
-                row.className = 'flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3';
+                row.className = 'flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 rounded-lg border border-[#2a2a35] bg-[#13131a] px-4 py-3';
 
                 const goals = parseScore(player.goals);
                 const assists = parseScore(player.assists);
@@ -1171,14 +1173,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const assistsPct = barTotal > 0 ? 100 - goalsPct : 0;
 
                 const name = document.createElement('span');
-                name.className = 'sm:w-1/3 text-sm font-semibold text-gray-700 text-center sm:text-left';
+                name.className = 'sm:w-1/3 text-sm font-semibold text-gray-300 text-center sm:text-left';
                 name.textContent = `${index + 1}. ${`${player.player_name || ''} ${player.player_surname || ''}`.trim()}`;
 
                 const barsWrap = document.createElement('div');
                 barsWrap.className = 'flex-1 flex flex-col gap-2';
 
                 const barTrack = document.createElement('div');
-                barTrack.className = 'w-full h-4 bg-gray-100 border border-gray-200 rounded-full overflow-hidden shadow-sm flex';
+                barTrack.className = 'w-full h-4 bg-[#2a2a35] rounded-full overflow-hidden flex';
 
                 const goalsBar = document.createElement('div');
                 goalsBar.className = 'bar-goals h-full';
@@ -1192,14 +1194,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 barTrack.appendChild(assistsBar);
 
                 const counts = document.createElement('div');
-                counts.className = 'flex justify-between text-xs text-gray-600';
+                counts.className = 'flex justify-between text-xs text-gray-400';
 
                 const goalsLabel = document.createElement('span');
-                goalsLabel.className = 'font-medium text-gray-700';
+                goalsLabel.className = 'font-medium text-gray-400';
                 goalsLabel.textContent = `${goals} Tore`;
 
                 const assistsLabel = document.createElement('span');
-                assistsLabel.className = 'font-medium text-gray-700';
+                assistsLabel.className = 'font-medium text-gray-400';
                 assistsLabel.textContent = `${assists} Assists`;
 
                 counts.appendChild(goalsLabel);
@@ -1209,7 +1211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 barsWrap.appendChild(counts);
 
                 const points = document.createElement('span');
-                points.className = 'sm:w-14 text-sm font-bold text-gray-800 text-center sm:text-right';
+                points.className = 'sm:w-14 text-sm font-bold text-gray-200 text-center sm:text-right';
                 points.textContent = `${totalPoints} Pkt`;
 
                 row.appendChild(name);
@@ -1219,7 +1221,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const legend = document.createElement('div');
-            legend.className = 'flex flex-col items-center justify-center gap-3 pt-2 text-xs text-gray-600 sm:flex-row sm:justify-end sm:gap-6';
+            legend.className = 'flex flex-col items-center justify-center gap-3 pt-2 text-xs text-gray-500 sm:flex-row sm:justify-end sm:gap-6';
 
             const goalsLegend = document.createElement('div');
             goalsLegend.className = 'flex items-center gap-2';
@@ -1279,7 +1281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!game) {
                 setPlayoffFinalStatus('Kein kommendes Finalspiel gefunden.');
                 setPlayoffFinalCountdown('Faceoff in --T --h --m --s');
-                playoffFinalCard.innerHTML = '<p class="text-sm text-white/75">Bitte public/hcstats.json prüfen.</p>';
+                playoffFinalCard.innerHTML = '<p class="text-sm text-white/75">Bitte public/202526_season/raw/202526_hcstats.json prüfen.</p>';
                 return;
             }
 
@@ -1364,7 +1366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         setPlayoffStandingsEmpty('Tabellendaten konnten nicht geladen werden.');
                     }
                     if (playoffSeriesStats) {
-                        playoffSeriesStats.innerHTML = '<div class="rounded-lg bg-white border border-gray-200 px-3 py-2 text-sm text-gray-500">Statistik konnte nicht geladen werden.</div>';
+                        playoffSeriesStats.innerHTML = '<div class="rounded-lg bg-[#13131a] border border-[#2a2a35] px-3 py-2 text-sm text-gray-400">Statistik konnte nicht geladen werden.</div>';
                     }
                     if (playoffTopScorer) {
                         playoffTopScorer.innerHTML = '<p class="text-sm text-gray-500">Spielerstatistik konnte nicht geladen werden.</p>';
@@ -1436,12 +1438,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 closePopup();
             }
         });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                closePopup();
-            }
-        });
     }
 
     const teamStatsPopup = document.getElementById('teamStatsPopup');
@@ -1460,12 +1456,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         teamStatsPopup.addEventListener('click', event => {
             if (event.target === teamStatsPopup) {
-                closeTeamStatsPopup();
-            }
-        });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
                 closeTeamStatsPopup();
             }
         });
@@ -1490,11 +1480,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeReview202601Popup();
             }
         });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                closeReview202601Popup();
-            }
-        });
     }
+
+    // Shared Escape handler — one listener for all modals
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        if (bookletPopup && bookletPopup.style.display !== 'none' && typeof window.closeBookletPopup === 'function') {
+            window.closeBookletPopup();
+        } else if (teamStatsPopup && teamStatsPopup.style.display !== 'none' && typeof window.closeTeamStatsPopup === 'function') {
+            window.closeTeamStatsPopup();
+        } else if (review202601Popup && review202601Popup.style.display !== 'none' && typeof window.closeReview202601Popup === 'function') {
+            window.closeReview202601Popup();
+        }
+    });
 });
