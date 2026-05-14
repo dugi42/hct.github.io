@@ -897,6 +897,20 @@
         },
         "attendance_count": 0,
         "attendance_in_percent": 0
+      },
+      {
+        "user_id": 1404406,
+        "first_name": "David",
+        "last_name": "Braito",
+        "profile_image": {
+          "thumbnail": "https://cdn.vereinsplaner.at/avatar.svg",
+          "small": "https://cdn.vereinsplaner.at/avatar.svg",
+          "medium": "https://cdn.vereinsplaner.at/avatar.svg",
+          "large": "https://cdn.vereinsplaner.at/avatar.svg",
+          "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
+        },
+        "attendance_count": 0,
+        "attendance_in_percent": 0
       }
     ],
     "detail": [
@@ -1286,6 +1300,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -1681,6 +1701,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -2070,6 +2096,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -2465,6 +2497,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -2854,6 +2892,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -3249,6 +3293,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -3638,6 +3688,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -4033,6 +4089,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -4422,6 +4484,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -4817,6 +4885,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -5206,6 +5280,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -5601,6 +5681,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -5990,6 +6076,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -6385,6 +6477,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -6777,6 +6875,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -6784,7 +6888,7 @@
         "event_id": 874837,
         "title": "(E)MTB Thaurer Alm",
         "start": "2026-05-13T17:00:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
@@ -6794,7 +6898,7 @@
           },
           {
             "user_id": 708943,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -6830,7 +6934,7 @@
           },
           {
             "user_id": 709057,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -6884,7 +6988,7 @@
           },
           {
             "user_id": 786004,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -7028,7 +7132,7 @@
           },
           {
             "user_id": 709053,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -7076,7 +7180,7 @@
           },
           {
             "user_id": 803477,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -7166,6 +7270,12 @@
           },
           {
             "user_id": 708850,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1404406,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
