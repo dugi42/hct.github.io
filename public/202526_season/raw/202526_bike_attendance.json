@@ -433,8 +433,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 5,
-        "attendance_in_percent": 29
+        "attendance_count": 6,
+        "attendance_in_percent": 35
       },
       {
         "user_id": 708974,
@@ -475,8 +475,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 0,
-        "attendance_in_percent": 0
+        "attendance_count": 1,
+        "attendance_in_percent": 6
       },
       {
         "user_id": 708956,
@@ -7286,7 +7286,7 @@
         "event_id": 880517,
         "title": "Kerschbaumer Sattel",
         "start": "2026-05-17T10:30:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
@@ -7470,8 +7470,8 @@
           },
           {
             "user_id": 708930,
-            "participation_status": 0,
-            "with_comment": null,
+            "participation_status": 1,
+            "with_comment": "",
             "admin_comment": null
           },
           {
@@ -7488,7 +7488,7 @@
           },
           {
             "user_id": 709060,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
