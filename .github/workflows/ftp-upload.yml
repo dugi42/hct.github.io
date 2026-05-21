@@ -6,6 +6,12 @@ on:
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Re-upload every tracked file, ignoring size diff"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -34,4 +40,5 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+          FTP_FORCE: ${{ github.event.inputs.force || 'false' }}
         run: uv run python/ftp_upload.py

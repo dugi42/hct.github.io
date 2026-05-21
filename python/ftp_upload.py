@@ -2,13 +2,14 @@
 """Mirror the git-tracked website tree to the FTP server.
 
 The script walks the list of files tracked in the current git working tree,
-compares each one against the remote file on the FTP server (size + modtime),
+compares each one against the remote file on the FTP server by size,
 uploads anything that's missing or different, and deletes any remote file or
 directory that isn't tracked locally.
 
-This replaces the previous behaviour of trusting a git SHA range — that
-approach silently skipped files whenever the FTP state had drifted from
-what we last pushed.
+Modtime is deliberately ignored: in CI the local mtime is the checkout time
+(always "now"), so any mtime-based comparison would re-upload every file on
+every run. Same-size content edits are not detected automatically — use the
+workflow_dispatch `force` input to republish everything when needed.
 """
 
 from __future__ import annotations
@@ -21,7 +22,6 @@ import subprocess
 import sys
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -42,11 +42,6 @@ EXCLUDED_TOP_LEVEL = {
     "package-lock.json",
     "README.md",
 }
-
-# Tolerance for modtime comparison — FTP MLSD timestamps are second-precision
-# and some servers round, so anything within this window is treated as equal.
-MTIME_TOLERANCE_SECONDS = 2
-
 
 def get_required_env(name: str) -> str:
     value = os.getenv(name, "").strip()
@@ -111,26 +106,14 @@ class RemoteEntry:
     name: str
     is_dir: bool
     size: int | None
-    mtime: float | None  # epoch seconds, UTC
-
-
-def parse_mlsd_modify(value: str) -> float | None:
-    # MLSD "modify" facts are YYYYMMDDHHMMSS in UTC, optionally fractional.
-    if not value:
-        return None
-    main = value.split(".")[0]
-    try:
-        dt = datetime.strptime(main, "%Y%m%d%H%M%S").replace(tzinfo=timezone.utc)
-    except ValueError:
-        return None
-    return dt.timestamp()
 
 
 def list_remote(ftp: ftplib.FTP_TLS, remote_dir: str) -> dict[str, RemoteEntry]:
     """Return {name: RemoteEntry} for the given remote directory.
 
-    Falls back gracefully when MLSD isn't supported: size comes from SIZE and
-    modtime from MDTM. Returns an empty dict if the directory doesn't exist.
+    Uses MLSD when available (one round-trip for the whole listing) and falls
+    back to NLST + per-file SIZE otherwise. Returns an empty dict if the
+    directory doesn't exist.
     """
     entries: dict[str, RemoteEntry] = {}
 
@@ -147,11 +130,10 @@ def list_remote(ftp: ftplib.FTP_TLS, remote_dir: str) -> dict[str, RemoteEntry]:
             is_dir = entry_type in {"dir", "cdir", "pdir"}
             size_raw = facts.get("size")
             size = int(size_raw) if size_raw and size_raw.isdigit() else None
-            mtime = parse_mlsd_modify(facts.get("modify", ""))
-            entries[name] = RemoteEntry(name=name, is_dir=is_dir, size=size, mtime=mtime)
+            entries[name] = RemoteEntry(name=name, is_dir=is_dir, size=size)
         return entries
     except ftplib.error_perm:
-        # MLSD not supported — fall back to LIST + per-file SIZE/MDTM.
+        # MLSD not supported — fall back to NLST + SIZE.
         pass
 
     names: list[str] = []
@@ -164,31 +146,15 @@ def list_remote(ftp: ftplib.FTP_TLS, remote_dir: str) -> dict[str, RemoteEntry]:
         name = posixpath.basename(raw.strip())
         if name in (".", "..", ""):
             continue
+        size: int | None = None
         is_dir = False
         try:
-            ftp.cwd(name)
+            size = ftp.size(name)
+        except (ftplib.error_perm, ftplib.error_reply):
+            # SIZE on a directory usually errors — treat as directory.
             is_dir = True
-            ftp.cwd("..")
-        except ftplib.error_perm:
-            is_dir = False
 
-        size: int | None = None
-        mtime: float | None = None
-        if not is_dir:
-            try:
-                size = ftp.size(name)
-            except (ftplib.error_perm, ftplib.error_reply):
-                size = None
-            try:
-                resp = ftp.sendcmd(f"MDTM {name}")
-                # Response form: "213 YYYYMMDDHHMMSS"
-                parts = resp.split(maxsplit=1)
-                if len(parts) == 2:
-                    mtime = parse_mlsd_modify(parts[1].strip())
-            except (ftplib.error_perm, ftplib.error_reply):
-                mtime = None
-
-        entries[name] = RemoteEntry(name=name, is_dir=is_dir, size=size, mtime=mtime)
+        entries[name] = RemoteEntry(name=name, is_dir=is_dir, size=size)
 
     return entries
 
@@ -217,21 +183,17 @@ def ensure_remote_dir(ftp: ftplib.FTP_TLS, remote_dir: str) -> None:
                 raise
 
 
-def needs_upload(local_path: Path, remote: RemoteEntry | None) -> bool:
-    if remote is None or remote.is_dir:
+def needs_upload(local_path: Path, remote: RemoteEntry | None, force: bool) -> bool:
+    if force or remote is None or remote.is_dir:
         return True
     try:
         local_size = local_path.stat().st_size
-        local_mtime = local_path.stat().st_mtime
     except OSError:
         return True
-    if remote.size != local_size:
+    if remote.size is None:
+        # No reliable remote size — be safe and re-upload.
         return True
-    if remote.mtime is None:
-        # No reliable remote modtime — size matched, trust it.
-        return False
-    # Re-upload if local is strictly newer than remote (beyond tolerance).
-    return local_mtime - remote.mtime > MTIME_TOLERANCE_SECONDS
+    return remote.size != local_size
 
 
 def remote_path_join(*parts: str) -> str:
@@ -300,11 +262,14 @@ def sync_directory(
     local_tree: dict[str, set[str]],
     rel_dir: str,
     stats: dict[str, int],
+    force: bool,
 ) -> None:
     """Sync one directory level, then recurse into subdirectories."""
     remote_dir = remote_path_join(remote_base, rel_dir) if rel_dir else remote_base
     ensure_remote_dir(ftp, remote_dir)
     remote_entries = list_remote(ftp, remote_dir)
+    # list_remote left us CWD'd into remote_dir, so subsequent STORs don't need
+    # to re-issue CWD for each file.
 
     expected = local_tree.get(rel_dir, set())
 
@@ -316,6 +281,8 @@ def sync_directory(
         delete_remote_tree(ftp, target)
         remote_entries.pop(name, None)
         stats["deleted"] += 1
+        # delete_remote_tree may have CWD'd elsewhere — restore.
+        ftp.cwd(remote_dir)
 
     # 2. Upload / refresh files at this level.
     for name in expected:
@@ -328,9 +295,8 @@ def sync_directory(
                 delete_remote_tree(ftp, remote_path_join(remote_dir, name))
                 remote_entry = None
                 stats["deleted"] += 1
-            if needs_upload(local_path, remote_entry):
-                ensure_remote_dir(ftp, remote_dir)
                 ftp.cwd(remote_dir)
+            if needs_upload(local_path, remote_entry, force):
                 with local_path.open("rb") as source:
                     ftp.storbinary(f"STOR {name}", source)
                 stats["uploaded"] += 1
@@ -351,7 +317,7 @@ def sync_directory(
                     stats["deleted"] += 1
                 except ftplib.error_perm:
                     pass
-            sync_directory(ftp, repo_root, remote_base, local_tree, child_rel, stats)
+            sync_directory(ftp, repo_root, remote_base, local_tree, child_rel, stats, force)
 
 
 def sync_once(
@@ -364,6 +330,7 @@ def sync_once(
     remote_base: str,
     timeout_seconds: int,
     verify_certificate: bool,
+    force: bool,
 ) -> dict[str, int]:
     context = ssl.create_default_context() if verify_certificate else ssl._create_unverified_context()
     ftp = ftplib.FTP_TLS(timeout=timeout_seconds, context=context)
@@ -374,7 +341,7 @@ def sync_once(
         ftp.login(user=user, passwd=password)
         ftp.prot_p()
         local_tree = build_local_tree(files)
-        sync_directory(ftp, repo_root, remote_base, local_tree, "", stats)
+        sync_directory(ftp, repo_root, remote_base, local_tree, "", stats, force)
     finally:
         try:
             ftp.quit()
@@ -396,6 +363,7 @@ def main() -> int:
     max_retries = get_int_env("FTP_MAX_RETRIES", 10)
     retry_delay_seconds = get_int_env("FTP_RETRY_DELAY_SECONDS", 2)
     verify_certificate = get_bool_env("FTP_VERIFY_CERTIFICATE", False)
+    force = get_bool_env("FTP_FORCE", False)
 
     remote_base = remote_dir.rstrip("/")
     if not remote_base:
@@ -406,7 +374,8 @@ def main() -> int:
         print("No tracked publishable files found — refusing to sync.")
         return 1
 
-    print(f"Mirroring {len(files)} tracked files to {host}:{port}{remote_base} ...")
+    mode = "force-republish" if force else "size-diff"
+    print(f"Mirroring {len(files)} tracked files to {host}:{port}{remote_base} ({mode}) ...")
 
     last_error: Exception | None = None
     for attempt in range(1, max_retries + 1):
@@ -421,6 +390,7 @@ def main() -> int:
                 remote_base=remote_base,
                 timeout_seconds=timeout_seconds,
                 verify_certificate=verify_certificate,
+                force=force,
             )
             print(
                 "FTP mirror completed: "
