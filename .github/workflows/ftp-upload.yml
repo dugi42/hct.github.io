@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -27,30 +27,11 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Resolve SHA range
-        id: range
-        run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            echo "before=${{ github.event.before }}" >> $GITHUB_OUTPUT
-            echo "current=${{ github.sha }}" >> $GITHUB_OUTPUT
-          else
-            # For scheduled / manual runs: diff against the commit from ~26h ago
-            # so we always pick up the bike-attendance commit that lands at ~02:35.
-            before_sha=$(git rev-list -1 --before='26 hours ago' HEAD || true)
-            if [ -z "$before_sha" ]; then
-              before_sha=$(git rev-parse HEAD~1 || true)
-            fi
-            echo "before=$before_sha" >> $GITHUB_OUTPUT
-            echo "current=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Upload changed files via FTP
+      - name: Mirror tracked files to FTP
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
-          BEFORE_SHA: ${{ steps.range.outputs.before }}
-          CURRENT_SHA: ${{ steps.range.outputs.current }}
         run: uv run python/ftp_upload.py
