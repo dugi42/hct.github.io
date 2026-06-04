@@ -13,8 +13,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 10,
-        "attendance_in_percent": 50
+        "attendance_count": 9,
+        "attendance_in_percent": 45
       },
       {
         "user_id": 708943,
@@ -237,8 +237,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 3,
-        "attendance_in_percent": 15
+        "attendance_count": 4,
+        "attendance_in_percent": 20
       },
       {
         "user_id": 708894,
@@ -8992,11 +8992,11 @@
         "event_id": 888661,
         "title": "(E)MTB",
         "start": "2026-06-03T17:00:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
-            "participation_status": 1,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -9092,7 +9092,7 @@
           },
           {
             "user_id": 786004,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -9230,7 +9230,7 @@
           },
           {
             "user_id": 709059,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -9284,7 +9284,7 @@
           },
           {
             "user_id": 803477,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
