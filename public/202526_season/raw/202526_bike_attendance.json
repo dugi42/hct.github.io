@@ -9414,7 +9414,7 @@
         "event_id": 891173,
         "title": "Vormittags-Mittelgebirgstour",
         "start": "2026-06-06T08:00:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
@@ -9460,7 +9460,7 @@
           },
           {
             "user_id": 709057,
-            "participation_status": 5,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
