@@ -153,8 +153,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 12,
-        "attendance_in_percent": 52
+        "attendance_count": 13,
+        "attendance_in_percent": 57
       },
       {
         "user_id": 709061,
@@ -433,8 +433,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 9,
-        "attendance_in_percent": 39
+        "attendance_count": 10,
+        "attendance_in_percent": 43
       },
       {
         "user_id": 708974,
@@ -461,8 +461,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 0,
-        "attendance_in_percent": 0
+        "attendance_count": 1,
+        "attendance_in_percent": 4
       },
       {
         "user_id": 709060,
@@ -545,8 +545,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 0,
-        "attendance_in_percent": 0
+        "attendance_count": 1,
+        "attendance_in_percent": 4
       },
       {
         "user_id": 709059,
@@ -853,8 +853,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 3,
-        "attendance_in_percent": 13
+        "attendance_count": 4,
+        "attendance_in_percent": 17
       },
       {
         "user_id": 1371717,
@@ -895,8 +895,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 0,
-        "attendance_in_percent": 0
+        "attendance_count": 1,
+        "attendance_in_percent": 4
       },
       {
         "user_id": 1404406,
@@ -967,6 +967,20 @@
         },
         "attendance_count": 0,
         "attendance_in_percent": 0
+      },
+      {
+        "user_id": 849742,
+        "first_name": "Simon",
+        "last_name": "Weidmann",
+        "profile_image": {
+          "thumbnail": "https://cdn.vereinsplaner.at/avatar.svg",
+          "small": "https://cdn.vereinsplaner.at/avatar.svg",
+          "medium": "https://cdn.vereinsplaner.at/avatar.svg",
+          "large": "https://cdn.vereinsplaner.at/avatar.svg",
+          "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
+        },
+        "attendance_count": 1,
+        "attendance_in_percent": 4
       }
     ],
     "detail": [
@@ -1386,6 +1400,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -1811,6 +1831,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -2230,6 +2256,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -2655,6 +2687,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -3074,6 +3112,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -3499,6 +3543,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -3918,6 +3968,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -4343,6 +4399,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -4762,6 +4824,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -5187,6 +5255,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -5606,6 +5680,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -6031,6 +6111,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -6450,6 +6536,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -6875,6 +6967,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -7294,6 +7392,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -7719,6 +7823,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -8138,6 +8248,12 @@
           },
           {
             "user_id": 708867,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -8563,6 +8679,12 @@
             "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -8983,6 +9105,12 @@
           {
             "user_id": 708867,
             "participation_status": -1,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
           }
@@ -9407,6 +9535,12 @@
             "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -9827,6 +9961,12 @@
           {
             "user_id": 708867,
             "participation_status": -1,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
           }
@@ -10251,6 +10391,12 @@
             "participation_status": -1,
             "with_comment": "",
             "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -10258,7 +10404,7 @@
         "event_id": 895797,
         "title": "(E) MTB Thaurer Alm",
         "start": "2026-06-17T17:00:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
@@ -10322,7 +10468,7 @@
           },
           {
             "user_id": 708856,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -10442,7 +10588,7 @@
           },
           {
             "user_id": 708930,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -10454,7 +10600,7 @@
           },
           {
             "user_id": 708849,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -10490,7 +10636,7 @@
           },
           {
             "user_id": 708961,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -10622,7 +10768,7 @@
           },
           {
             "user_id": 1365333,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -10640,7 +10786,7 @@
           },
           {
             "user_id": 708850,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -10671,6 +10817,12 @@
           {
             "user_id": 708867,
             "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 849742,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           }
