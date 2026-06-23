@@ -83,8 +83,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 1,
-        "attendance_in_percent": 4
+        "attendance_count": 2,
+        "attendance_in_percent": 8
       },
       {
         "user_id": 708942,
@@ -111,8 +111,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 13,
-        "attendance_in_percent": 50
+        "attendance_count": 14,
+        "attendance_in_percent": 54
       },
       {
         "user_id": 708872,
@@ -223,8 +223,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 3,
-        "attendance_in_percent": 12
+        "attendance_count": 4,
+        "attendance_in_percent": 15
       },
       {
         "user_id": 786004,
@@ -265,8 +265,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 0,
-        "attendance_in_percent": 0
+        "attendance_count": 1,
+        "attendance_in_percent": 4
       },
       {
         "user_id": 708866,
@@ -755,8 +755,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 0,
-        "attendance_in_percent": 0
+        "attendance_count": 1,
+        "attendance_in_percent": 4
       },
       {
         "user_id": 877130,
@@ -11688,7 +11688,7 @@
         "event_id": 897201,
         "title": "🇦🇹🇦🇷 auf 1464m - Thaurer Alm",
         "start": "2026-06-22T16:45:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
@@ -11722,7 +11722,7 @@
           },
           {
             "user_id": 708986,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -11734,7 +11734,7 @@
           },
           {
             "user_id": 709057,
-            "participation_status": -1,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -11782,7 +11782,7 @@
           },
           {
             "user_id": 708936,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -11800,7 +11800,7 @@
           },
           {
             "user_id": 709054,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -12010,7 +12010,7 @@
           },
           {
             "user_id": 849793,
-            "participation_status": -1,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
