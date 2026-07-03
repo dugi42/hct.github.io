@@ -111,8 +111,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 17,
-        "attendance_in_percent": 57
+        "attendance_count": 18,
+        "attendance_in_percent": 60
       },
       {
         "user_id": 708872,
@@ -433,8 +433,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 12,
-        "attendance_in_percent": 40
+        "attendance_count": 13,
+        "attendance_in_percent": 43
       },
       {
         "user_id": 708974,
@@ -447,8 +447,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 2,
-        "attendance_in_percent": 7
+        "attendance_count": 3,
+        "attendance_in_percent": 10
       },
       {
         "user_id": 708849,
@@ -475,8 +475,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 2,
-        "attendance_in_percent": 7
+        "attendance_count": 3,
+        "attendance_in_percent": 10
       },
       {
         "user_id": 708956,
@@ -489,8 +489,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 1,
-        "attendance_in_percent": 3
+        "attendance_count": 2,
+        "attendance_in_percent": 7
       },
       {
         "user_id": 708962,
@@ -741,8 +741,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 6,
-        "attendance_in_percent": 20
+        "attendance_count": 7,
+        "attendance_in_percent": 23
       },
       {
         "user_id": 849793,
@@ -972,6 +972,20 @@
         "user_id": 849742,
         "first_name": "Simon",
         "last_name": "Weidmann",
+        "profile_image": {
+          "thumbnail": "https://cdn.vereinsplaner.at/avatar.svg",
+          "small": "https://cdn.vereinsplaner.at/avatar.svg",
+          "medium": "https://cdn.vereinsplaner.at/avatar.svg",
+          "large": "https://cdn.vereinsplaner.at/avatar.svg",
+          "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
+        },
+        "attendance_count": 1,
+        "attendance_in_percent": 3
+      },
+      {
+        "user_id": 1178928,
+        "first_name": "Veronika",
+        "last_name": "Nindl",
         "profile_image": {
           "thumbnail": "https://cdn.vereinsplaner.at/avatar.svg",
           "small": "https://cdn.vereinsplaner.at/avatar.svg",
@@ -1409,6 +1423,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -1834,6 +1854,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -2265,6 +2291,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -2690,6 +2722,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -3121,6 +3159,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -3546,6 +3590,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -3977,6 +4027,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -4402,6 +4458,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -4833,6 +4895,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -5258,6 +5326,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -5689,6 +5763,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -6114,6 +6194,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -6545,6 +6631,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -6970,6 +7062,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -7401,6 +7499,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -7826,6 +7930,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -8257,6 +8367,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -8682,6 +8798,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -9113,6 +9235,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -9538,6 +9666,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -9969,6 +10103,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -10394,6 +10534,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -10825,6 +10971,12 @@
             "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -11250,6 +11402,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -11681,6 +11839,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -12106,6 +12270,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -12537,6 +12707,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -12962,6 +13138,12 @@
           },
           {
             "user_id": 849742,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
@@ -13393,6 +13575,12 @@
             "participation_status": 0,
             "with_comment": null,
             "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
           }
         ]
       },
@@ -13400,7 +13588,7 @@
         "event_id": 902758,
         "title": "(E)MTB Thaurer Alm 🇦🇹 🇪🇸",
         "start": "2026-07-02T18:30:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
@@ -13434,7 +13622,7 @@
           },
           {
             "user_id": 708986,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13446,7 +13634,7 @@
           },
           {
             "user_id": 709057,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13470,7 +13658,7 @@
           },
           {
             "user_id": 709061,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13584,13 +13772,13 @@
           },
           {
             "user_id": 708930,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
           {
             "user_id": 708974,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13602,13 +13790,13 @@
           },
           {
             "user_id": 709060,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
           {
             "user_id": 708956,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13716,13 +13904,13 @@
           },
           {
             "user_id": 835947,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
           {
             "user_id": 849793,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13734,7 +13922,7 @@
           },
           {
             "user_id": 932727,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -13812,13 +14000,19 @@
           },
           {
             "user_id": 708867,
-            "participation_status": 0,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
           {
             "user_id": 849742,
             "participation_status": 0,
+            "with_comment": null,
+            "admin_comment": null
+          },
+          {
+            "user_id": 1178928,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           }
