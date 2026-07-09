@@ -13,8 +13,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 18,
-        "attendance_in_percent": 56
+        "attendance_count": 19,
+        "attendance_in_percent": 59
       },
       {
         "user_id": 708943,
@@ -125,8 +125,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 8,
-        "attendance_in_percent": 25
+        "attendance_count": 9,
+        "attendance_in_percent": 28
       },
       {
         "user_id": 708946,
@@ -153,8 +153,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 19,
-        "attendance_in_percent": 59
+        "attendance_count": 18,
+        "attendance_in_percent": 56
       },
       {
         "user_id": 709061,
@@ -433,8 +433,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 13,
-        "attendance_in_percent": 41
+        "attendance_count": 14,
+        "attendance_in_percent": 44
       },
       {
         "user_id": 708974,
@@ -671,8 +671,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 4,
-        "attendance_in_percent": 13
+        "attendance_count": 5,
+        "attendance_in_percent": 16
       },
       {
         "user_id": 803477,
@@ -14456,11 +14456,11 @@
         "event_id": 906383,
         "title": "(E)MTB Thaurer Alm",
         "start": "2026-07-08T17:00:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -14508,7 +14508,7 @@
           },
           {
             "user_id": 708872,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -14520,7 +14520,7 @@
           },
           {
             "user_id": 708856,
-            "participation_status": 1,
+            "participation_status": -1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -14640,7 +14640,7 @@
           },
           {
             "user_id": 708930,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -14742,7 +14742,7 @@
           },
           {
             "user_id": 8999,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
