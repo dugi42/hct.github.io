@@ -15324,7 +15324,7 @@
         "event_id": 909944,
         "title": "(E)MTB Ganrunde",
         "start": "2026-07-11T08:00:00+02:00",
-        "registration_over": false,
+        "registration_over": true,
         "participations": [
           {
             "user_id": 662838,
