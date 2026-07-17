@@ -209,8 +209,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 3,
-        "attendance_in_percent": 9
+        "attendance_count": 4,
+        "attendance_in_percent": 11
       },
       {
         "user_id": 708936,
@@ -853,8 +853,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 8,
-        "attendance_in_percent": 23
+        "attendance_count": 9,
+        "attendance_in_percent": 26
       },
       {
         "user_id": 1371717,
@@ -867,8 +867,8 @@
           "large": "https://cdn.vereinsplaner.at/avatar.svg",
           "xlarge": "https://cdn.vereinsplaner.at/avatar.svg"
         },
-        "attendance_count": 5,
-        "attendance_in_percent": 14
+        "attendance_count": 6,
+        "attendance_in_percent": 17
       },
       {
         "user_id": 1374738,
@@ -15846,7 +15846,7 @@
           },
           {
             "user_id": 708973,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
@@ -16122,13 +16122,13 @@
           },
           {
             "user_id": 1365333,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
           {
             "user_id": 1371717,
-            "participation_status": 0,
+            "participation_status": 1,
             "with_comment": null,
             "admin_comment": null
           },
