@@ -22,7 +22,8 @@ headers = {
 }
 
 RAW_PATH  = "public/202526_season/raw/202526_bike_attendance.json"
-GOLD_PATH = "public/202526_season/gold/202526_top10_bikers.csv"
+GOLD_PATH = "public/202526_season/gold/202526_top_bikers.csv"
+TOP_N = 15
 
 # --- MAIN ---
 print(f"Fetching bike attendance from {params['start']} to {params['end']}...")
@@ -48,8 +49,8 @@ df = df.sort_values(
     by=["attendance_count", "attendance_in_percent"],
     ascending=[False, False],
 )
-top10 = df[["name", "attendance_count", "attendance_in_percent"]].head(10).reset_index(drop=True)
+top = df[["name", "attendance_count", "attendance_in_percent"]].head(TOP_N).reset_index(drop=True)
 
-top10.to_csv(GOLD_PATH, index=False)
-print(f"Top-10 CSV saved to {GOLD_PATH}")
-print(top10.to_string(index=False))
+top.to_csv(GOLD_PATH, index=False)
+print(f"Top-{TOP_N} CSV saved to {GOLD_PATH}")
+print(top.to_string(index=False))
