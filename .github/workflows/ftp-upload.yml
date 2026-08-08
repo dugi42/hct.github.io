@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Re-upload every tracked file, ignoring size diff"
+        description: "Re-upload every tracked file, ignoring the hash manifest"
         required: false
         default: false
         type: boolean
