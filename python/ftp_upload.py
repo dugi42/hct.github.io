@@ -2,19 +2,28 @@
 """Mirror the git-tracked website tree to the FTP server.
 
 The script walks the list of files tracked in the current git working tree,
-compares each one against the remote file on the FTP server by size,
+compares each one against the content hash recorded for it on the server,
 uploads anything that's missing or different, and deletes any remote file or
 directory that isn't tracked locally.
 
-Modtime is deliberately ignored: in CI the local mtime is the checkout time
-(always "now"), so any mtime-based comparison would re-upload every file on
-every run. Same-size content edits are not detected automatically — use the
-workflow_dispatch `force` input to republish everything when needed.
+Content is compared via a SHA-256 manifest stored at the remote base as
+`.ftp-sync-manifest.json`, written at the end of every successful run. Size
+alone is not enough: a daily-regenerated CSV frequently changes content while
+keeping the exact same byte count, and those edits were silently skipped.
+Modtime is unusable too — in CI the local mtime is the checkout time (always
+"now"), so any mtime comparison re-uploads everything on every run.
+
+A file whose hash is absent from the manifest is always uploaded, so the
+first run after this change (and any run against a server whose manifest was
+lost) republishes the whole tree and re-syncs anything that had gone stale.
 """
 
 from __future__ import annotations
 
 import ftplib
+import hashlib
+import io
+import json
 import os
 import posixpath
 import ssl
@@ -23,6 +32,10 @@ import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
+
+
+# Remote-only bookkeeping file: path -> sha256 of the content last uploaded.
+MANIFEST_NAME = ".ftp-sync-manifest.json"
 
 
 # Repo-root paths that should never be published to the web server.
@@ -183,8 +196,51 @@ def ensure_remote_dir(ftp: ftplib.FTP_TLS, remote_dir: str) -> None:
                 raise
 
 
-def needs_upload(local_path: Path, remote: RemoteEntry | None, force: bool) -> bool:
+def hash_file(local_path: Path) -> str:
+    digest = hashlib.sha256()
+    with local_path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def load_remote_manifest(ftp: ftplib.FTP_TLS, remote_base: str) -> dict[str, str]:
+    """Read the remote hash manifest. Missing/corrupt manifest == empty dict."""
+    buffer = io.BytesIO()
+    try:
+        ftp.cwd(remote_base)
+        ftp.retrbinary(f"RETR {MANIFEST_NAME}", buffer.write)
+    except (ftplib.error_perm, ftplib.error_temp, OSError):
+        return {}
+
+    try:
+        payload = json.loads(buffer.getvalue().decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {}
+
+    files = payload.get("files") if isinstance(payload, dict) else None
+    if not isinstance(files, dict):
+        return {}
+    return {k: v for k, v in files.items() if isinstance(k, str) and isinstance(v, str)}
+
+
+def store_remote_manifest(ftp: ftplib.FTP_TLS, remote_base: str, manifest: dict[str, str]) -> None:
+    payload = json.dumps({"version": 1, "files": manifest}, sort_keys=True).encode("utf-8")
+    ftp.cwd(remote_base)
+    ftp.storbinary(f"STOR {MANIFEST_NAME}", io.BytesIO(payload))
+
+
+def needs_upload(
+    local_path: Path,
+    local_hash: str,
+    known_hash: str | None,
+    remote: RemoteEntry | None,
+    force: bool,
+) -> bool:
     if force or remote is None or remote.is_dir:
+        return True
+    if known_hash is None or known_hash != local_hash:
+        # Never uploaded by a hash-aware run, or content changed since.
         return True
     try:
         local_size = local_path.stat().st_size
@@ -193,6 +249,7 @@ def needs_upload(local_path: Path, remote: RemoteEntry | None, force: bool) -> b
     if remote.size is None:
         # No reliable remote size — be safe and re-upload.
         return True
+    # Manifest agrees but the server disagrees: something changed out of band.
     return remote.size != local_size
 
 
@@ -263,6 +320,8 @@ def sync_directory(
     rel_dir: str,
     stats: dict[str, int],
     force: bool,
+    known_hashes: dict[str, str],
+    new_hashes: dict[str, str],
 ) -> None:
     """Sync one directory level, then recurse into subdirectories."""
     remote_dir = remote_path_join(remote_base, rel_dir) if rel_dir else remote_base
@@ -276,6 +335,10 @@ def sync_directory(
     # 1. Delete remote entries that shouldn't be here.
     for name, entry in list(remote_entries.items()):
         if name in expected:
+            continue
+        if rel_dir == "" and name == MANIFEST_NAME:
+            # Our own bookkeeping file — never tracked locally, never deleted.
+            remote_entries.pop(name, None)
             continue
         target = remote_path_join(remote_dir, name)
         delete_remote_tree(ftp, target)
@@ -296,13 +359,15 @@ def sync_directory(
                 remote_entry = None
                 stats["deleted"] += 1
                 ftp.cwd(remote_dir)
-            if needs_upload(local_path, remote_entry, force):
+            local_hash = hash_file(local_path)
+            if needs_upload(local_path, local_hash, known_hashes.get(child_rel), remote_entry, force):
                 with local_path.open("rb") as source:
                     ftp.storbinary(f"STOR {name}", source)
                 stats["uploaded"] += 1
                 print(f"Uploaded: {child_rel} -> {remote_dir}/{name}")
             else:
                 stats["skipped"] += 1
+            new_hashes[child_rel] = local_hash
 
     # 3. Recurse into subdirectories.
     for name in expected:
@@ -317,7 +382,17 @@ def sync_directory(
                     stats["deleted"] += 1
                 except ftplib.error_perm:
                     pass
-            sync_directory(ftp, repo_root, remote_base, local_tree, child_rel, stats, force)
+            sync_directory(
+                ftp,
+                repo_root,
+                remote_base,
+                local_tree,
+                child_rel,
+                stats,
+                force,
+                known_hashes,
+                new_hashes,
+            )
 
 
 def sync_once(
@@ -340,8 +415,25 @@ def sync_once(
         ftp.auth()
         ftp.login(user=user, passwd=password)
         ftp.prot_p()
+        known_hashes = load_remote_manifest(ftp, remote_base)
+        if not known_hashes:
+            print(f"No usable {MANIFEST_NAME} on the server — republishing every file this run.")
+        new_hashes: dict[str, str] = {}
         local_tree = build_local_tree(files)
-        sync_directory(ftp, repo_root, remote_base, local_tree, "", stats, force)
+        sync_directory(
+            ftp,
+            repo_root,
+            remote_base,
+            local_tree,
+            "",
+            stats,
+            force,
+            known_hashes,
+            new_hashes,
+        )
+        # Only after a complete pass, so a mid-run failure can't record hashes
+        # for files that never made it to the server.
+        store_remote_manifest(ftp, remote_base, new_hashes)
     finally:
         try:
             ftp.quit()
@@ -374,7 +466,7 @@ def main() -> int:
         print("No tracked publishable files found — refusing to sync.")
         return 1
 
-    mode = "force-republish" if force else "size-diff"
+    mode = "force-republish" if force else "hash-diff"
     print(f"Mirroring {len(files)} tracked files to {host}:{port}{remote_base} ({mode}) ...")
 
     last_error: Exception | None = None

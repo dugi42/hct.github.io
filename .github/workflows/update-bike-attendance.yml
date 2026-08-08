@@ -2,14 +2,38 @@ name: Update Bike Attendance
 
 on:
   schedule:
-    - cron: "35 2 * * *"
+    # Target is 20:00 Europe/Vienna every day, but cron here is UTC only and
+    # Vienna shifts with DST: 18:00 UTC during CEST, 19:00 UTC during CET.
+    # Both fire year-round; the gate job below drops whichever one isn't
+    # 20:00 local, so exactly one run per day survives.
+    - cron: "0 18 * * *"
+    - cron: "0 19 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - name: Check Vienna local hour
+        id: check
+        run: |
+          hour=$(TZ=Europe/Vienna date +%H)
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "$hour" = "20" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Proceeding (Vienna hour: $hour, event: ${{ github.event_name }})."
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping: Vienna hour is $hour, not 20."
+          fi
+
   update-bike-attendance:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,6 +61,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/202526_season/raw/202526_bike_attendance.json \
-                  public/202526_season/gold/202526_top10_bikers.csv
+                  public/202526_season/gold/202526_top_bikers.csv
           git commit -m "chore: update bike attendance data ($(date +%Y-%m-%d))"
           git push
