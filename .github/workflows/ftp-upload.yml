@@ -12,6 +12,14 @@ on:
         required: false
         default: false
         type: boolean
+  # Callable by the jobs that commit new data, because a push made with
+  # GITHUB_TOKEN does not trigger the `push` event above.
+  workflow_call:
+    inputs:
+      force:
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -40,5 +48,5 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
           FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
-          FTP_FORCE: ${{ github.event.inputs.force || 'false' }}
+          FTP_FORCE: ${{ inputs.force || 'false' }}
         run: uv run python/ftp_upload.py
