@@ -1,0 +1,50 @@
+name: Stamp Asset Cache Keys
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "**.html"
+      - "css/**"
+      - "js/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stamp:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.stamp.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+
+      - name: Stamp asset references
+        id: stamp
+        run: |
+          python python/stamp_assets.py
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No stamp changes."
+            exit 0
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          git commit -m "chore: refresh asset cache stamps"
+          git push
+
+  publish:
+    needs: stamp
+    if: needs.stamp.outputs.changed == 'true'
+    # A GITHUB_TOKEN push does not fire the `push` trigger, so publish here.
+    uses: ./.github/workflows/ftp-upload.yml
+    secrets: inherit
