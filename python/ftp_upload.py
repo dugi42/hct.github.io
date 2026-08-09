@@ -26,6 +26,7 @@ import io
 import json
 import os
 import posixpath
+import random
 import ssl
 import subprocess
 import sys
@@ -451,9 +452,10 @@ def main() -> int:
     remote_dir = get_required_env("FTP_REMOTE_DIR")
     port = get_int_env("FTP_PORT", 21)
 
-    timeout_seconds = get_int_env("FTP_TIMEOUT_SECONDS", 30)
-    max_retries = get_int_env("FTP_MAX_RETRIES", 10)
-    retry_delay_seconds = get_int_env("FTP_RETRY_DELAY_SECONDS", 2)
+    timeout_seconds = get_int_env("FTP_TIMEOUT_SECONDS", 60)
+    max_retries = get_int_env("FTP_MAX_RETRIES", 8)
+    retry_delay_seconds = get_int_env("FTP_RETRY_DELAY_SECONDS", 5)
+    retry_max_delay_seconds = get_int_env("FTP_RETRY_MAX_DELAY_SECONDS", 120)
     verify_certificate = get_bool_env("FTP_VERIFY_CERTIFICATE", False)
     force = get_bool_env("FTP_FORCE", False)
 
@@ -495,9 +497,18 @@ def main() -> int:
             last_error = exc
             if attempt >= max_retries:
                 break
-            print(f"Sync attempt {attempt}/{max_retries} failed: {exc}")
-            print(f"Retrying in {retry_delay_seconds} seconds...")
-            time.sleep(retry_delay_seconds)
+            # Back off exponentially: when the server refuses connections it is
+            # usually holding a dead session or throttling us, and neither
+            # clears within the couple of seconds a flat delay would wait.
+            # Jitter keeps the scheduled and push-triggered runs from lining up.
+            delay = min(retry_delay_seconds * 2 ** (attempt - 1), retry_max_delay_seconds)
+            delay += random.uniform(0, delay * 0.25)
+            print(
+                f"Sync attempt {attempt}/{max_retries} failed: "
+                f"{type(exc).__name__}: {exc}"
+            )
+            print(f"Retrying in {delay:.0f} seconds...")
+            time.sleep(delay)
 
     raise RuntimeError(f"FTP mirror failed after {max_retries} attempts: {last_error}")
 
