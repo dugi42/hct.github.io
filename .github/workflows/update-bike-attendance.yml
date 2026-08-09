@@ -35,6 +35,8 @@ jobs:
     needs: gate
     if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,14 +55,25 @@ jobs:
         run: uv run python/fetch_bike_attendance.py
 
       - name: Commit updates
+        id: commit
         run: |
           if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes to commit."
             exit 0
           fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/202526_season/raw/202526_bike_attendance.json \
                   public/202526_season/gold/202526_top_bikers.csv
-          git commit -m "chore: update bike attendance data ($(date +%Y-%m-%d))"
+          git commit -m "chore: update bike attendance data ($(TZ=Europe/Vienna date +%Y-%m-%d))"
           git push
+
+  publish:
+    needs: update-bike-attendance
+    if: needs.update-bike-attendance.outputs.changed == 'true'
+    # A GITHUB_TOKEN push does not fire the FTP workflow's `push` trigger, so
+    # without this the fresh data would sit unpublished until 03:00 UTC.
+    uses: ./.github/workflows/ftp-upload.yml
+    secrets: inherit
