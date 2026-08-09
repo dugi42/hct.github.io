@@ -24,6 +24,12 @@ on:
 permissions:
   contents: read
 
+# The FTP account tolerates one session at a time; queue overlapping runs
+# instead of letting a push-triggered mirror collide with the scheduled one.
+concurrency:
+  group: ftp-publish
+  cancel-in-progress: false
+
 jobs:
   ftp-publish:
     runs-on: ubuntu-latest
