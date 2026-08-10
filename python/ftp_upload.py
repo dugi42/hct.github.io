@@ -27,6 +27,7 @@ import json
 import os
 import posixpath
 import random
+import socket
 import ssl
 import subprocess
 import sys
@@ -37,6 +38,54 @@ from pathlib import Path
 
 # Remote-only bookkeeping file: path -> sha256 of the content last uploaded.
 MANIFEST_NAME = ".ftp-sync-manifest.json"
+
+
+def log(message: str) -> None:
+    """Timestamped, unbuffered progress line.
+
+    CI captures stdout as a block and flushes it when the step ends, so a run
+    that hangs shows nothing until it dies and every line then carries the same
+    useless end-of-step timestamp. Printing the clock ourselves and flushing
+    makes the log usable while the run is still going.
+    """
+    print(f"[{time.strftime('%H:%M:%S')}] {message}", flush=True)
+
+
+class SyncFailure(RuntimeError):
+    """Carries which step of the sync failed alongside the original error."""
+
+    def __init__(self, phase: str, original: BaseException):
+        super().__init__(f"{phase}: {type(original).__name__}: {original}")
+        self.phase = phase
+        self.original = original
+
+
+def describe_host(host: str, port: int) -> None:
+    """Log where the hostname points and whether the port answers.
+
+    A host behind round-robin DNS can hand out one dead address, which looks
+    exactly like the intermittent timeouts seen on 2026-08-09: same config,
+    same code, works on one run and stalls on the next. Recording the address
+    actually used makes that visible instead of guessable.
+    """
+    try:
+        infos = socket.getaddrinfo(host, port, proto=socket.IPPROTO_TCP)
+    except OSError as exc:
+        log(f"DNS lookup for {host} failed: {exc}")
+        return
+
+    addresses = sorted({info[4][0] for info in infos})
+    log(f"{host} resolves to: {', '.join(addresses)}")
+
+    for address in addresses:
+        started = time.monotonic()
+        try:
+            with socket.create_connection((address, port), timeout=15):
+                elapsed = time.monotonic() - started
+                log(f"  {address}:{port} accepted a connection in {elapsed:.1f}s")
+        except OSError as exc:
+            elapsed = time.monotonic() - started
+            log(f"  {address}:{port} unreachable after {elapsed:.1f}s: {type(exc).__name__}: {exc}")
 
 
 # Repo-root paths that should never be published to the web server.
@@ -411,30 +460,54 @@ def sync_once(
     context = ssl.create_default_context() if verify_certificate else ssl._create_unverified_context()
     ftp = ftplib.FTP_TLS(timeout=timeout_seconds, context=context)
     stats = {"uploaded": 0, "skipped": 0, "deleted": 0}
+    phase = "connect"
     try:
-        ftp.connect(host=host, port=port)
-        ftp.auth()
-        ftp.login(user=user, passwd=password)
-        ftp.prot_p()
-        known_hashes = load_remote_manifest(ftp, remote_base)
-        if not known_hashes:
-            print(f"No usable {MANIFEST_NAME} on the server — republishing every file this run.")
-        new_hashes: dict[str, str] = {}
-        local_tree = build_local_tree(files)
-        sync_directory(
-            ftp,
-            repo_root,
-            remote_base,
-            local_tree,
-            "",
-            stats,
-            force,
-            known_hashes,
-            new_hashes,
-        )
-        # Only after a complete pass, so a mid-run failure can't record hashes
-        # for files that never made it to the server.
-        store_remote_manifest(ftp, remote_base, new_hashes)
+        try:
+            log(f"connecting to {host}:{port} (timeout {timeout_seconds}s)")
+            ftp.connect(host=host, port=port)
+
+            phase = "tls-handshake"
+            log("negotiating TLS")
+            ftp.auth()
+
+            phase = "login"
+            log("logging in")
+            ftp.login(user=user, passwd=password)
+
+            phase = "protect-data-channel"
+            ftp.prot_p()
+
+            phase = "read-manifest"
+            log(f"reading {MANIFEST_NAME}")
+            known_hashes = load_remote_manifest(ftp, remote_base)
+            if not known_hashes:
+                log(f"No usable {MANIFEST_NAME} on the server — republishing every file this run.")
+
+            phase = "sync"
+            log("mirroring tree")
+            new_hashes: dict[str, str] = {}
+            local_tree = build_local_tree(files)
+            sync_directory(
+                ftp,
+                repo_root,
+                remote_base,
+                local_tree,
+                "",
+                stats,
+                force,
+                known_hashes,
+                new_hashes,
+            )
+
+            phase = "write-manifest"
+            # Only after a complete pass, so a mid-run failure can't record
+            # hashes for files that never made it to the server.
+            store_remote_manifest(ftp, remote_base, new_hashes)
+        except Exception as exc:
+            # Which step hung matters: a stall in `connect` or `tls-handshake`
+            # is the network or the host refusing us, while one in `sync` is a
+            # transfer that died partway. The bare message never said which.
+            raise SyncFailure(phase, exc) from exc
     finally:
         try:
             ftp.quit()
@@ -453,9 +526,9 @@ def main() -> int:
     port = get_int_env("FTP_PORT", 21)
 
     timeout_seconds = get_int_env("FTP_TIMEOUT_SECONDS", 60)
-    max_retries = get_int_env("FTP_MAX_RETRIES", 8)
+    max_retries = get_int_env("FTP_MAX_RETRIES", 10)
     retry_delay_seconds = get_int_env("FTP_RETRY_DELAY_SECONDS", 5)
-    retry_max_delay_seconds = get_int_env("FTP_RETRY_MAX_DELAY_SECONDS", 120)
+    retry_max_delay_seconds = get_int_env("FTP_RETRY_MAX_DELAY_SECONDS", 300)
     verify_certificate = get_bool_env("FTP_VERIFY_CERTIFICATE", False)
     force = get_bool_env("FTP_FORCE", False)
 
@@ -469,10 +542,12 @@ def main() -> int:
         return 1
 
     mode = "force-republish" if force else "hash-diff"
-    print(f"Mirroring {len(files)} tracked files to {host}:{port}{remote_base} ({mode}) ...")
+    log(f"Mirroring {len(files)} tracked files to {host}:{port}{remote_base} ({mode}) ...")
+    describe_host(host, port)
 
     last_error: Exception | None = None
     for attempt in range(1, max_retries + 1):
+        attempt_started = time.monotonic()
         try:
             stats = sync_once(
                 files=files,
@@ -486,7 +561,7 @@ def main() -> int:
                 verify_certificate=verify_certificate,
                 force=force,
             )
-            print(
+            log(
                 "FTP mirror completed: "
                 f"{stats['uploaded']} uploaded, "
                 f"{stats['skipped']} unchanged, "
@@ -495,6 +570,8 @@ def main() -> int:
             return 0
         except Exception as exc:
             last_error = exc
+            elapsed = time.monotonic() - attempt_started
+            log(f"Sync attempt {attempt}/{max_retries} failed after {elapsed:.0f}s: {exc}")
             if attempt >= max_retries:
                 break
             # Back off exponentially: when the server refuses connections it is
@@ -503,12 +580,14 @@ def main() -> int:
             # Jitter keeps the scheduled and push-triggered runs from lining up.
             delay = min(retry_delay_seconds * 2 ** (attempt - 1), retry_max_delay_seconds)
             delay += random.uniform(0, delay * 0.25)
-            print(
-                f"Sync attempt {attempt}/{max_retries} failed: "
-                f"{type(exc).__name__}: {exc}"
-            )
-            print(f"Retrying in {delay:.0f} seconds...")
+            log(f"Retrying in {delay:.0f} seconds...")
             time.sleep(delay)
+
+    if isinstance(last_error, SyncFailure) and last_error.phase in {"connect", "tls-handshake"}:
+        # Every attempt died before we ever spoke FTP — re-probe so the log ends
+        # with the state of the host rather than another anonymous timeout.
+        log("All attempts failed before the FTP session opened. Re-probing host:")
+        describe_host(host, port)
 
     raise RuntimeError(f"FTP mirror failed after {max_retries} attempts: {last_error}")
 
