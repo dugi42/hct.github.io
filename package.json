@@ -5,10 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "python3 -m http.server 8080",
-    "build": "echo 'Build process for production'",
-    "lint": "echo 'Linting CSS and JS files'",
-    "optimize": "echo 'Optimize images and assets'",
-    "fetch:hcstats": "node scripts/fetch-hcstats.mjs"
+    "build:css": "tailwindcss -c tailwind.config.js -i css/tailwind.input.css -o css/tailwind.css --minify"
   },
   "repository": {
     "type": "git",
@@ -25,8 +22,9 @@
   ],
   "author": "Hockey Club Thaur",
   "license": "MIT",
-  "devDependencies": {},
-  "dependencies": {},
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
