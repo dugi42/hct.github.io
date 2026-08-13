@@ -1419,6 +1419,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // Popup iframes carry data-src instead of src so the embedded documents
+    // are only fetched when the popup is first opened.
+    const loadPopupFrame = popup => {
+        const frame = popup.querySelector('iframe[data-src]');
+        if (frame && !frame.getAttribute('src')) {
+            frame.setAttribute('src', frame.dataset.src);
+        }
+    };
+
     const bookletPopup = document.getElementById('bookletPopup');
     if (bookletPopup) {
         const closePopup = () => {
@@ -1427,6 +1436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         window.openBookletPopup = () => {
+            loadPopupFrame(bookletPopup);
             bookletPopup.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         };
@@ -1448,6 +1458,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         window.openTeamStatsPopup = () => {
+            loadPopupFrame(teamStatsPopup);
             teamStatsPopup.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         };
@@ -1469,6 +1480,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         window.openReview202601Popup = () => {
+            loadPopupFrame(review202601Popup);
             review202601Popup.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         };
