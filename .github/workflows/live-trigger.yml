@@ -9,16 +9,18 @@ permissions:
   contents: write
 
 jobs:
-  update-and-deploy:
+  update-stats:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1 # Faster checkout as we only need the latest state
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
 
@@ -32,10 +34,10 @@ jobs:
         run: uv run python/fetch_hcstats.py --config python/config_season.json
 
       - name: Commit and Push (If changed)
-        id: commit_step
+        id: commit
         run: |
           if git diff --quiet public/hcstats.json; then
-            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes to hcstats.json."
           else
             git config user.name "github-actions[bot]"
@@ -43,29 +45,15 @@ jobs:
             git add public/hcstats.json
             git commit -m "Update hcstats.json"
             git push
-            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Install lftp
-        if: steps.commit_step.outputs.changed == 'true'
-        run: sudo apt-get update && sudo apt-get install -y lftp
-
-      - name: Upload Single File via LFTP
-        if: steps.commit_step.outputs.changed == 'true'
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_PORT: ${{ secrets.FTP_PORT || 21 }}
-          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
-        run: |
-          # Use 'put' to upload only the specific file. 
-          # -O specifies the remote directory to put the file into.
-          lftp -e "
-            set ftp:ssl-allow no;
-            set net:timeout 30;
-            set net:max-retries 10;
-            open -p ${FTP_PORT} -u ${FTP_USER},${FTP_PASSWORD} ${FTP_HOST};
-            put -O ${FTP_REMOTE_DIR}/public/ public/hcstats.json;
-            bye
-          "
+  publish:
+    needs: update-stats
+    if: needs.update-stats.outputs.changed == 'true'
+    # Reuse the TLS mirror instead of a plaintext lftp upload: the hash-diff
+    # mirror uploads only the changed file anyway, respects the ftp-publish
+    # concurrency group (one FTP session at a time), and keeps credentials
+    # off the wire.
+    uses: ./.github/workflows/ftp-upload.yml
+    secrets: inherit
