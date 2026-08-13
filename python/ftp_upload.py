@@ -103,6 +103,8 @@ EXCLUDED_TOP_LEVEL = {
     "uv.lock",
     "package.json",
     "package-lock.json",
+    "node_modules",
+    "tailwind.config.js",
     "README.md",
 }
 
