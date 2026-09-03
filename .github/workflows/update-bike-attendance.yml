@@ -4,8 +4,8 @@ on:
   schedule:
     # Target is 20:00 Europe/Vienna every day, but cron here is UTC only and
     # Vienna shifts with DST: 18:00 UTC during CEST, 19:00 UTC during CET.
-    # Both fire year-round; the gate job below drops whichever one isn't
-    # 20:00 local, so exactly one run per day survives.
+    # Both fire year-round; the gate job below keeps whichever one matches the
+    # current offset, so exactly one run per day survives.
     - cron: "0 18 * * *"
     - cron: "0 19 * * *"
   workflow_dispatch:
@@ -19,16 +19,29 @@ jobs:
     outputs:
       run: ${{ steps.check.outputs.run }}
     steps:
-      - name: Check Vienna local hour
+      - name: Pick the cron that means 20:00 in Vienna
         id: check
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
         run: |
-          hour=$(TZ=Europe/Vienna date +%H)
-          if [ "${{ github.event_name }}" != "schedule" ] || [ "$hour" = "20" ]; then
+          # GitHub queues scheduled runs and routinely starts them one to three
+          # hours late, so the wall clock at start time says nothing about which
+          # cron fired -- reading it here skipped every run from 2026-08-26 on.
+          # Decide from the cron expression instead: Vienna is UTC+2 in CEST and
+          # UTC+1 in CET, so exactly one entry is 20:00 local on any given day.
+          offset=$(TZ=Europe/Vienna date +%z)
+          case "$offset" in
+            +0200) want="0 18 * * *" ;;
+            +0100) want="0 19 * * *" ;;
+            *) echo "Unexpected Europe/Vienna UTC offset: $offset" >&2; exit 1 ;;
+          esac
+          if [ "$EVENT_NAME" != "schedule" ] || [ "$SCHEDULE" = "$want" ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "Proceeding (Vienna hour: $hour, event: ${{ github.event_name }})."
+            echo "Proceeding (event: $EVENT_NAME, cron: ${SCHEDULE:-n/a}, Vienna offset: $offset)."
           else
             echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping: Vienna hour is $hour, not 20."
+            echo "Skipping: cron '$SCHEDULE' is not 20:00 Vienna at offset $offset."
           fi
 
   update-bike-attendance:
